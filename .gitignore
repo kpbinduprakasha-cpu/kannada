@@ -1,0 +1,22 @@
+# Virtual Environment
+.venv/
+env/
+venv/
+ENV/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Database (optional local state)
+bbmp_waste.db
+
+# Uploads cache
+uploads/*
+!uploads/.gitkeep
+
+# Logs and OS files
+*.log
+.DS_Store
+Thumbs.db
