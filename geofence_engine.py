@@ -1,6 +1,6 @@
 """
-BBMP Swachha Bengaluru - Geofencing Engine
-Computes 5km Worker Alert Radius and 500m Household Waste Vehicle Proximity.
+BCC Swachha Belagavi - Geofencing Engine
+Computes 5km Worker Alert Radius and 500m Household Waste Vehicle Proximity in Belagavi.
 """
 
 import math
@@ -31,7 +31,7 @@ class GeofenceEngine:
 
     @classmethod
     def find_nearby_workers(cls, incident_lat, incident_lng, active_workers, radius_km=5.0):
-        """Finds all active on-duty workers within the specified radius (default 5km)."""
+        """Finds all active on-duty workers within the specified radius (default 5km in Belagavi)."""
         nearby = []
         for worker in active_workers:
             w_lat = worker.get('lat') or worker.get('current_lat')
@@ -42,6 +42,7 @@ class GeofenceEngine:
                     nearby.append({
                         'worker_id': worker.get('id') or worker.get('worker_id'),
                         'name': worker.get('name') or worker.get('worker_name'),
+                        'emp_id': worker.get('worker_emp_id', 'BCC-W000'),
                         'distance_km': dist,
                         'distance_meters': round(dist * 1000.0, 1)
                     })
@@ -49,10 +50,9 @@ class GeofenceEngine:
 
 if __name__ == "__main__":
     print("="*65)
-    print("📍 BBMP GEOFENCE ENGINE TEST (5KM RADAR & 500M PROXIMITY)")
+    print("📍 BELAGAVI GEOFENCE ENGINE TEST (5KM RADAR & 500M PROXIMITY)")
     print("="*65)
-    
-    # Indiranagar 100ft Rd to HAL 2nd Stage
-    d_m = GeofenceEngine.haversine_distance_meters(12.9735, 77.6405, 12.9725, 77.6420)
-    print(f"Distance between Indiranagar points: {d_m} meters")
+    # Tilakwadi 1st Gate to Congress Road in Belagavi
+    d_m = GeofenceEngine.haversine_distance_meters(15.8340, 74.5020, 15.8345, 74.5015)
+    print(f"Distance in Tilakwadi, Belagavi: {d_m} meters")
     print(f"Is within 500m vehicle alert zone? {d_m <= 500.0}")

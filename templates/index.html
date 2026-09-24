@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BBMP Swachha Bengaluru - Smart Waste & Blockchain Ecosystem</title>
+  <title>SWACHHA BELAGAVI (ಸ್ವಚ್ಛ ಬೆಳಗಾವಿ) - Belagavi City Corporation</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Leaflet CSS & JS for Live GPS GIS Map -->
@@ -47,8 +47,8 @@
           <i data-lucide="trash-2" class="w-6 h-6"></i>
         </div>
         <div>
-          <h2 class="text-xl font-extrabold text-white tracking-tight">SWACHHA BENGALURU</h2>
-          <p class="text-xs text-slate-400">ಬೆಂಗಳೂರು ಮಹಾನಗರ ಪಾಲಿಕೆ • Citizen Login & Home Center Setup</p>
+          <h2 class="text-xl font-extrabold text-white tracking-tight">SWACHHA BELAGAVI</h2>
+          <p class="text-xs text-slate-400">ಬೆಳಗಾವಿ ಮಹಾನಗರ ಪಾಲಿಕೆ • Belagavi City Corporation (BCC)</p>
         </div>
       </div>
 
@@ -56,7 +56,7 @@
       <div id="auth-step-1" class="space-y-4">
         <div>
           <h3 class="text-base font-bold text-white">Step 1: Enter Mobile Number or Email</h3>
-          <p class="text-xs text-slate-400 mt-1">We will send a 6-digit OTP for identity and Aadhaar link verification.</p>
+          <p class="text-xs text-slate-400 mt-1">Receive a 6-digit OTP for identity and Belagavi citizen/worker login.</p>
         </div>
 
         <div>
@@ -70,18 +70,21 @@
           </div>
         </div>
 
-        <!-- Quick Demo Profiles -->
+        <!-- Quick Demo Profiles for Belagavi -->
         <div class="bg-slate-950/60 border border-slate-800 rounded-2xl p-3.5 space-y-2">
-          <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">Quick Demo Logins:</span>
-          <div class="grid grid-cols-3 gap-2">
+          <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">Quick Demo Logins (Belagavi Accounts):</span>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
             <button type="button" onclick="fillDemoIdentifier('9880011111')" class="px-2 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-semibold transition text-left truncate">
-              👤 Citizen
+              👤 Praveen (Citizen)
             </button>
-            <button type="button" onclick="fillDemoIdentifier('9880098765')" class="px-2 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-semibold transition text-left truncate">
-              👷 Worker
+            <button type="button" onclick="fillDemoIdentifier('9845011001')" class="px-2 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-semibold transition text-left truncate">
+              👷 Basavaraj (W2101)
+            </button>
+            <button type="button" onclick="fillDemoIdentifier('9845011002')" class="px-2 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-semibold transition text-left truncate">
+              👷 Yallappa (W3402)
             </button>
             <button type="button" onclick="fillDemoIdentifier('9880012345')" class="px-2 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-semibold transition text-left truncate">
-              🏛️ BBMP Officer
+              🏛️ Anand (Officer)
             </button>
           </div>
         </div>
@@ -122,22 +125,22 @@
         </div>
       </div>
 
-      <!-- STEP 3: FIRST NAME, LAST NAME, MOBILE & HOME CENTER SETUP -->
+      <!-- STEP 3: SETUP BELAGAVI PROFILE & HOME CENTER -->
       <div id="auth-step-3" class="hidden space-y-4">
         <div>
-          <h3 class="text-base font-bold text-white">Step 3: Setup Profile & Home Center</h3>
-          <p class="text-xs text-slate-400 mt-0.5">Your 500m vehicle proximity alert is anchored to your Home Center.</p>
+          <h3 class="text-base font-bold text-white">Step 3: Setup Profile & Belagavi Home Center</h3>
+          <p class="text-xs text-slate-400 mt-0.5">Your 500m vehicle proximity alert is anchored to your Belagavi Home Center.</p>
         </div>
 
         <!-- Name Inputs -->
         <div class="grid grid-cols-2 gap-2.5">
           <div>
             <label class="block text-xs font-semibold text-slate-300 mb-1">First Name</label>
-            <input type="text" id="onboard-first-name" required placeholder="Ramesh" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
+            <input type="text" id="onboard-first-name" required placeholder="Praveen" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
           </div>
           <div>
             <label class="block text-xs font-semibold text-slate-300 mb-1">Last Name</label>
-            <input type="text" id="onboard-last-name" required placeholder="Gowda" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
+            <input type="text" id="onboard-last-name" required placeholder="Kulkarni" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
           </div>
         </div>
 
@@ -153,12 +156,12 @@
           </div>
         </div>
 
-        <!-- Home Center Location Section -->
+        <!-- Belagavi Home Center Location Section -->
         <div class="bg-slate-950/80 border border-slate-800 rounded-2xl p-4 space-y-3">
           <div class="flex items-center justify-between">
             <span class="text-xs font-bold text-emerald-400 flex items-center space-x-1.5">
               <i data-lucide="map-pin" class="w-4 h-4"></i>
-              <span>Home Center Location (ಮನೆ ಕೇಂದ್ರ)</span>
+              <span>Belagavi Home Center (ಮನೆ ಕೇಂದ್ರ)</span>
             </span>
             <button type="button" onclick="detectHomeCenterGps()" class="text-[11px] text-sky-400 hover:underline flex items-center space-x-1">
               <i data-lucide="crosshair" class="w-3 h-3"></i>
@@ -166,29 +169,30 @@
             </button>
           </div>
 
-          <!-- Quick Neighborhood Presets -->
+          <!-- Quick Belagavi Wards & Landmarks Presets -->
           <div class="flex flex-wrap gap-1.5 text-[11px]">
-            <button type="button" onclick="setHomePreset(12.9735, 77.6405, '100 Feet Rd, Indiranagar')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300">Indiranagar</button>
-            <button type="button" onclick="setHomePreset(12.9352, 77.6245, '80 Feet Rd, 4th Block, Koramangala')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300">Koramangala</button>
-            <button type="button" onclick="setHomePreset(12.9299, 77.5824, '4th Block, Jayanagar')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300">Jayanagar</button>
-            <button type="button" onclick="setHomePreset(12.9116, 77.6389, 'Sector 2, HSR Layout')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300">HSR Layout</button>
-            <button type="button" onclick="setHomePreset(12.9698, 77.7499, 'ITPL Main Rd, Whitefield')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300">Whitefield</button>
+            <button type="button" onclick="setHomePreset(15.8345, 74.5015, 'Congress Road, Tilakwadi, Belagavi')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300">Tilakwadi</button>
+            <button type="button" onclick="setHomePreset(15.8380, 74.5180, 'Shahapur Bazaar, Belagavi')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300">Shahapur</button>
+            <button type="button" onclick="setHomePreset(15.8530, 74.5100, 'Rani Channamma Circle, Belagavi')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300">Channamma Circle</button>
+            <button type="button" onclick="setHomePreset(15.8540, 74.5080, 'Camp / Bogarves, Belagavi')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300">Camp</button>
+            <button type="button" onclick="setHomePreset(15.8420, 74.4980, 'Hindwadi Main Rd, Belagavi')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300">Hindwadi</button>
+            <button type="button" onclick="setHomePreset(15.8240, 74.5150, 'Vadgaon, Belagavi')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300">Vadgaon</button>
           </div>
 
           <!-- Lat/Lng and Address inputs -->
           <div class="grid grid-cols-2 gap-2">
-            <input type="text" id="onboard-home-lat" value="12.9735" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-slate-300 font-mono" readonly>
-            <input type="text" id="onboard-home-lng" value="77.6405" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-slate-300 font-mono" readonly>
+            <input type="text" id="onboard-home-lat" value="15.8345" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-slate-300 font-mono" readonly>
+            <input type="text" id="onboard-home-lng" value="74.5015" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-slate-300 font-mono" readonly>
           </div>
-          <input type="text" id="onboard-home-address" value="100 Feet Rd, Indiranagar, Bengaluru" placeholder="House No, Street, Ward, Bengaluru" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200">
+          <input type="text" id="onboard-home-address" value="Congress Road, Tilakwadi, Belagavi" placeholder="House No, Ward, Belagavi" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200">
 
           <p class="text-[10px] text-slate-400">
-            🔔 <strong>Notice:</strong> When the BBMP collection truck moves within 500m of this spot, your phone will chime and announce in Kannada & English.
+            🔔 <strong>Belagavi City Alert:</strong> When the BCC collection truck enters within 500m of this spot, your phone will chime and announce in Kannada & English.
           </p>
         </div>
 
         <button type="button" onclick="handleSaveProfileAndOpenApp()" id="btn-open-app" class="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-xl font-bold text-sm shadow-xl shadow-emerald-600/30 transition flex items-center justify-center space-x-2">
-          <span>Open App & Enter Swachha Bengaluru</span>
+          <span>Open App & Enter Swachha Belagavi</span>
           <i data-lucide="sparkles" class="w-4 h-4"></i>
         </button>
       </div>
@@ -202,33 +206,33 @@
   <header class="bg-slate-950 border-b border-slate-800 sticky top-0 z-50 shadow-lg">
     <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
       
-      <!-- Brand -->
+      <!-- Brand: Swachha Belagavi -->
       <div class="flex items-center space-x-3">
         <div class="w-11 h-11 bg-emerald-600 rounded-xl flex items-center justify-center text-white shadow-emerald-500/30 shadow-lg">
           <i data-lucide="trash-2" class="w-6 h-6"></i>
         </div>
         <div>
           <div class="flex items-center space-x-2">
-            <h1 class="text-xl font-bold tracking-tight text-white">SWACHHA BENGALURU</h1>
-            <span class="bg-emerald-500/20 text-emerald-400 text-xs px-2 py-0.5 rounded-full border border-emerald-500/30 font-medium">BBMP Smart Waste</span>
+            <h1 class="text-xl font-bold tracking-tight text-white">SWACHHA BELAGAVI</h1>
+            <span class="bg-emerald-500/20 text-emerald-400 text-xs px-2 py-0.5 rounded-full border border-emerald-500/30 font-medium">BCC Clean City</span>
           </div>
-          <p class="text-xs text-slate-400">ಬೃಹತ್ ಬೆಂಗಳೂರು ಮಹಾನಗರ ಪಾಲಿಕೆ • AI & Blockchain Waste Monitoring</p>
+          <p class="text-xs text-slate-400">ಬೆಳಗಾವಿ ಮಹಾನಗರ ಪಾಲಿಕೆ • Belagavi City Corporation</p>
         </div>
       </div>
 
-      <!-- User Chip & Home Center Display -->
+      <!-- User Chip & Belagavi Home Center Display -->
       <div id="header-user-card" class="flex items-center space-x-3 bg-slate-900 border border-slate-800 px-3.5 py-1.5 rounded-2xl">
         <div class="w-8 h-8 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center font-bold text-xs" id="header-user-avatar">
-          SK
+          PK
         </div>
         <div>
           <div class="flex items-center space-x-1.5">
-            <span id="header-user-name" class="text-xs font-bold text-white">Suresh Kumar</span>
+            <span id="header-user-name" class="text-xs font-bold text-white">Praveen Kulkarni</span>
             <span id="header-user-role" class="text-[10px] bg-slate-800 text-slate-400 px-1.5 py-0.2 rounded font-mono uppercase">Citizen</span>
           </div>
           <div class="flex items-center space-x-1 text-[11px] text-emerald-400">
             <i data-lucide="map-pin" class="w-3 h-3"></i>
-            <span id="header-user-home">Indiranagar 100ft Rd</span>
+            <span id="header-user-home">Congress Road, Tilakwadi, Belagavi</span>
             <button onclick="openChangeHomeCenterModal()" class="text-sky-400 hover:underline text-[10px] ml-1">[Edit Home]</button>
           </div>
         </div>
@@ -249,7 +253,7 @@
         </button>
         <button onclick="switchRole('officer')" id="btn-role-officer" class="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center space-x-1.5 text-slate-300 hover:text-white">
           <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
-          <span>BBMP Officer</span>
+          <span>BCC Officer</span>
         </button>
       </div>
 
@@ -263,10 +267,10 @@
     </div>
   </header>
 
-  <!-- NOTIFICATION BANNER (Proximity Alert for Household Waste) -->
+  <!-- NOTIFICATION BANNER (Proximity Alert for Belagavi Household Waste) -->
   <div id="proximity-banner" class="hidden bg-gradient-to-r from-amber-600 via-orange-600 to-amber-700 text-white px-4 py-2.5 text-center text-sm font-semibold shadow-md flex items-center justify-center space-x-3 transition-all">
     <i data-lucide="alert-triangle" class="w-5 h-5 animate-bounce"></i>
-    <span id="proximity-text">ALERT: BBMP Garbage Vehicle is within 500m of your Home Center! Bring out plastic, bottle & wet waste.</span>
+    <span id="proximity-text">ALERT: Belagavi City Corporation (BCC) Garbage Vehicle is within 500m of your Home Center! Bring out plastic, bottle & wet waste.</span>
     <button onclick="dismissProximity()" class="ml-4 text-xs bg-black/30 hover:bg-black/50 px-2.5 py-1 rounded">Dismiss</button>
   </div>
 
@@ -274,7 +278,7 @@
   <main class="max-w-7xl mx-auto px-4 py-6 flex-1 w-full">
 
     <!-- ============================================================== -->
-    <!-- 1. CITIZEN PORTAL -->
+    <!-- 1. CITIZEN PORTAL (BELAGAVI) -->
     <!-- ============================================================== -->
     <div id="view-citizen" class="space-y-6">
       
@@ -289,36 +293,36 @@
               <span>Aadhaar Verified</span>
             </span>
           </div>
-          <h2 id="citizen-name-display" class="text-lg font-bold text-white">Suresh Kumar</h2>
+          <h2 id="citizen-name-display" class="text-lg font-bold text-white">Praveen Kulkarni</h2>
           <p class="text-xs text-slate-400 mt-0.5">UIDAI Aadhaar: <span id="citizen-aadhaar-display" class="font-mono text-slate-300">XXXX-XXXX-3456</span></p>
           <p class="text-xs text-emerald-400 mt-1 flex items-center space-x-1">
             <i data-lucide="home" class="w-3 h-3"></i>
-            <span id="citizen-home-center-display">Home Center: 100 Feet Rd, Indiranagar</span>
+            <span id="citizen-home-center-display">Home Center: Congress Road, Tilakwadi, Belagavi</span>
           </p>
           <div class="mt-3 pt-3 border-t border-slate-700/60 flex items-center justify-between text-xs">
-            <span class="text-slate-400">Mobile OTP Status:</span>
-            <span class="text-emerald-400 font-medium">Verified Active</span>
+            <span class="text-slate-400">BCC Ward Beat:</span>
+            <span class="text-emerald-400 font-medium">Ward 21 - Tilakwadi</span>
           </div>
         </div>
 
-        <!-- 500m Vehicle Distance Card (Relative to Home Center) -->
+        <!-- 500m Vehicle Distance Card (Relative to Belagavi Home Center) -->
         <div class="bg-slate-800/80 border border-slate-700 rounded-2xl p-5 shadow-sm relative overflow-hidden">
           <div class="flex items-center justify-between mb-2">
-            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Vehicle to Home Center</span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">BCC Vehicle to Home Center</span>
             <span id="truck-status-badge" class="bg-sky-500/20 text-sky-300 text-xs px-2 py-0.5 rounded-full border border-sky-500/30">Tracking Live</span>
           </div>
           <div class="flex items-baseline space-x-2">
-            <span id="truck-distance-display" class="text-3xl font-extrabold text-white">420</span>
+            <span id="truck-distance-display" class="text-3xl font-extrabold text-white">380</span>
             <span class="text-sm font-medium text-slate-400">meters from home</span>
           </div>
           <p id="truck-eta-display" class="text-xs text-emerald-400 mt-1 flex items-center space-x-1">
             <i data-lucide="clock" class="w-3.5 h-3.5"></i>
-            <span>ETA ~2 mins to your doorstep</span>
+            <span>ETA ~2 mins on Congress Road</span>
           </p>
           <div class="mt-3 flex items-center space-x-2">
             <button onclick="simulateTruckCloser()" class="w-full text-xs bg-slate-700 hover:bg-slate-600 text-slate-200 py-1.5 rounded-lg font-medium transition flex items-center justify-center space-x-1">
               <i data-lucide="navigation" class="w-3 h-3"></i>
-              <span>Simulate Truck Coming Closer (<500m)</span>
+              <span>Simulate Belagavi Truck (<500m)</span>
             </button>
           </div>
         </div>
@@ -326,7 +330,7 @@
         <!-- ₹4,000 Milestone Reward Card -->
         <div class="bg-gradient-to-br from-emerald-950/70 to-slate-800 border border-emerald-500/40 rounded-2xl p-5 shadow-sm">
           <div class="flex items-center justify-between mb-2">
-            <span class="text-xs font-semibold uppercase tracking-wider text-emerald-300">Monthly Reward Bonus</span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-emerald-300">Belagavi Clean Reward</span>
             <span class="bg-amber-500/20 text-amber-300 text-xs px-2 py-0.5 rounded-full border border-amber-500/30 font-bold">₹4,000 INR</span>
           </div>
           <div class="flex items-baseline justify-between">
@@ -337,11 +341,11 @@
           <div class="w-full bg-slate-700/60 rounded-full h-2.5 mt-2.5 overflow-hidden">
             <div id="citizen-reward-bar" class="bg-emerald-500 h-2.5 rounded-full transition-all duration-500" style="width: 3.6%"></div>
           </div>
-          <p class="text-[11px] text-slate-400 mt-2">Clean or report 500 verified places this month to earn <strong class="text-emerald-300">₹4,000 extra cash reward</strong> via Blockchain.</p>
+          <p class="text-[11px] text-slate-400 mt-2">Clean or report 500 verified places in Belagavi to earn <strong class="text-emerald-300">₹4,000 extra cash reward</strong> via Blockchain.</p>
         </div>
       </div>
 
-      <!-- Main Action: Report Waste Dumping Spot -->
+      <!-- Main Action: Report Waste Dumping Spot in Belagavi -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         <!-- Left: Garbage Report Form -->
@@ -351,8 +355,8 @@
               <i data-lucide="camera" class="w-5 h-5"></i>
             </div>
             <div>
-              <h2 class="text-base font-bold text-white">Report Garbage Dumping Spot</h2>
-              <p class="text-xs text-slate-400">Instantly alerts all on-duty workers within 5km radius</p>
+              <h2 class="text-base font-bold text-white">Report Garbage Dumping in Belagavi</h2>
+              <p class="text-xs text-slate-400">Dynamic Decision Engine matches nearest Belagavi worker</p>
             </div>
           </div>
 
@@ -376,7 +380,7 @@
                 </label>
                 <label class="flex items-center space-x-2 p-2.5 rounded-xl border border-slate-700 hover:border-emerald-500 cursor-pointer bg-slate-900/50 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-500/10 transition">
                   <input type="radio" name="waste_type" value="hazardous_e" class="text-emerald-500 focus:ring-0">
-                  <span class="text-xs text-slate-200">Dry / Hazardous / E-Waste</span>
+                  <span class="text-xs text-slate-200">Dry / E-Waste</span>
                 </label>
               </div>
             </div>
@@ -384,23 +388,23 @@
             <!-- Description -->
             <div>
               <label class="block text-xs font-semibold text-slate-300 mb-1">Spot Description</label>
-              <textarea id="report-description" rows="2" placeholder="e.g. Empty plot corner piled with plastic bottles & food packets" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500"></textarea>
+              <textarea id="report-description" rows="2" placeholder="e.g. Empty plot corner piled with plastic bottles & food packets near Tilakwadi 1st gate" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500"></textarea>
             </div>
 
-            <!-- GPS Geolocation -->
+            <!-- GPS Geolocation (Belagavi) -->
             <div>
               <div class="flex items-center justify-between mb-1">
-                <label class="text-xs font-semibold text-slate-300">Incident GPS Coordinates</label>
+                <label class="text-xs font-semibold text-slate-300">Belagavi Incident GPS Coordinates</label>
                 <button type="button" onclick="getCurrentLocation()" class="text-[11px] text-emerald-400 hover:underline flex items-center space-x-1">
                   <i data-lucide="locate" class="w-3 h-3"></i>
                   <span>Auto Detect GPS</span>
                 </button>
               </div>
               <div class="grid grid-cols-2 gap-2">
-                <input type="text" id="report-lat" value="12.9735" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs font-mono text-slate-300" readonly>
-                <input type="text" id="report-lng" value="77.6405" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs font-mono text-slate-300" readonly>
+                <input type="text" id="report-lat" value="15.8340" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs font-mono text-slate-300" readonly>
+                <input type="text" id="report-lng" value="74.5020" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs font-mono text-slate-300" readonly>
               </div>
-              <input type="text" id="report-address" value="100 Feet Rd, Indiranagar, Bengaluru" class="mt-2 w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-300">
+              <input type="text" id="report-address" value="Congress Road, Tilakwadi, Belagavi" class="mt-2 w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-300">
             </div>
 
             <!-- Photo Upload / Snapshot Preview -->
@@ -411,7 +415,7 @@
                 <div id="report-photo-placeholder" class="space-y-1">
                   <i data-lucide="image-plus" class="w-8 h-8 text-slate-400 mx-auto"></i>
                   <p class="text-xs text-slate-300 font-medium">Click to upload or take live photo</p>
-                  <p class="text-[10px] text-slate-500">Auto tags GPS & timestamp for Blockchain verification</p>
+                  <p class="text-[10px] text-slate-500">Auto tags Belagavi GPS & timestamp for Blockchain verification</p>
                 </div>
                 <img id="report-photo-preview" class="hidden max-h-36 mx-auto rounded-lg object-cover shadow">
               </div>
@@ -419,17 +423,17 @@
 
             <!-- Submit Button -->
             <button type="submit" id="btn-submit-report" class="w-full py-3 bg-rose-600 hover:bg-rose-500 text-white rounded-xl font-bold text-xs shadow-lg shadow-rose-600/30 transition flex items-center justify-center space-x-2">
-              <i data-lucide="radio" class="w-4 h-4 animate-pulse"></i>
-              <span>Broadcast 5km Worker Alert & Submit</span>
+              <i data-lucide="cpu" class="w-4 h-4 animate-pulse"></i>
+              <span>Run Dynamic Dispatch & Broadcast Alert</span>
             </button>
           </form>
         </div>
 
-        <!-- Right: Recent Reports Feed with Red/Green Indicators -->
+        <!-- Right: Recent Reports Feed with Dynamic Decision & Person Attribution -->
         <div class="lg:col-span-7 space-y-4">
           <div class="flex items-center justify-between">
             <h2 class="text-base font-bold text-white flex items-center space-x-2">
-              <span>Live Garbage Incident Status</span>
+              <span>Belagavi Incident & Attribution Status</span>
               <span class="text-xs font-normal text-slate-400">(Red = Pending, Green = Cleaned)</span>
             </h2>
             <button onclick="loadAllReports()" class="text-xs text-emerald-400 hover:underline flex items-center space-x-1">
@@ -449,32 +453,49 @@
     </div>
 
     <!-- ============================================================== -->
-    <!-- 2. SANITATION WORKER PORTAL -->
+    <!-- 2. INDIVIDUAL PERSONAL SANITATION WORKER PORTAL -->
     <!-- ============================================================== -->
     <div id="view-worker" class="hidden space-y-6">
       
+      <!-- Worker Switcher (To test different individual worker accounts) -->
+      <div class="bg-slate-950 border border-slate-800 rounded-2xl p-3 flex flex-wrap items-center justify-between gap-3">
+        <span class="text-xs text-slate-400 font-semibold flex items-center space-x-1.5">
+          <i data-lucide="users" class="w-4 h-4 text-emerald-400"></i>
+          <span>Switch Individual Worker Account:</span>
+        </span>
+        <div class="flex items-center space-x-2 text-xs" id="worker-account-selector-container">
+          <!-- Populated dynamically with worker pills -->
+        </div>
+      </div>
+
       <!-- Worker Stats & Duty Bar -->
       <div class="bg-slate-800/90 border border-slate-700 rounded-2xl p-5 flex flex-wrap items-center justify-between gap-4 shadow-sm">
-        <div class="flex items-center space-x-3">
-          <div class="w-12 h-12 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center border border-amber-500/30">
-            <i data-lucide="hard-hat" class="w-6 h-6"></i>
+        <div class="flex items-center space-x-3.5">
+          <div class="w-14 h-14 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center border border-amber-500/30 shadow-lg">
+            <i data-lucide="hard-hat" class="w-7 h-7"></i>
           </div>
           <div>
             <div class="flex items-center space-x-2">
-              <h2 id="worker-name-display" class="text-lg font-bold text-white">Manjunath K (Purasabe Worker 1)</h2>
-              <span class="bg-emerald-500/20 text-emerald-400 text-xs px-2.5 py-0.5 rounded-full border border-emerald-500/30 font-medium">On Duty Active</span>
+              <h2 id="worker-name-display" class="text-lg font-bold text-white">Basavaraj Belagavi</h2>
+              <span id="worker-emp-badge" class="bg-indigo-500/20 text-indigo-300 text-xs px-2.5 py-0.5 rounded-full border border-indigo-500/30 font-mono font-bold">BCC-W2101</span>
+              <span class="bg-emerald-500/20 text-emerald-400 text-xs px-2.5 py-0.5 rounded-full border border-emerald-500/30 font-medium">Active On-Duty</span>
             </div>
-            <p class="text-xs text-slate-400">Assigned Area: Ward 80 - Indiranagar | Continuous GPS Tracking Enabled</p>
+            <p id="worker-ward-display" class="text-xs text-slate-400 mt-0.5">Beat: Ward 21 - Tilakwadi, Belagavi | Live GPS Broadcasting Active</p>
           </div>
         </div>
 
+        <!-- Individual Worker Active Progress Stats -->
         <div class="flex items-center space-x-6">
           <div class="text-right">
-            <span class="text-xs text-slate-400 block">Today's Cleanups:</span>
-            <span id="worker-today-cleanups" class="text-xl font-extrabold text-emerald-400">14</span>
+            <span class="text-xs text-slate-400 block">Cleanups Today:</span>
+            <span id="worker-today-cleanups" class="text-xl font-extrabold text-emerald-400">16</span>
           </div>
           <div class="text-right">
-            <span class="text-xs text-slate-400 block">Monthly Towards ₹4,000:</span>
+            <span class="text-xs text-slate-400 block">Distance Covered:</span>
+            <span id="worker-today-distance" class="text-xl font-extrabold text-sky-400">4.2 km</span>
+          </div>
+          <div class="text-right">
+            <span class="text-xs text-slate-400 block">Monthly Milestone:</span>
             <span id="worker-monthly-cleanups" class="text-xl font-extrabold text-amber-400">498 / 500</span>
           </div>
           <button onclick="toggleWorkerDuty()" id="btn-worker-duty" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold shadow transition flex items-center space-x-1.5">
@@ -487,14 +508,14 @@
       <!-- Main Worker Workspace -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
-        <!-- Left: Surrounding 5km Incident Alerts -->
+        <!-- Left: Attributed & Surrounding 5km Incident Alerts -->
         <div class="lg:col-span-6 space-y-4">
           <div class="flex items-center justify-between">
             <h3 class="text-base font-bold text-white flex items-center space-x-2">
               <i data-lucide="radio" class="w-4 h-4 text-rose-400 animate-pulse"></i>
-              <span>Surrounding 5km Alert Feed</span>
+              <span>Belagavi 5km Alert Feed (Attributed to You)</span>
             </h3>
-            <span class="text-xs text-slate-400">Filtered by live proximity</span>
+            <span class="text-xs text-slate-400">Filtered by personal beat</span>
           </div>
 
           <div id="worker-alerts-container" class="space-y-3 max-h-[640px] overflow-y-auto pr-1">
@@ -510,7 +531,7 @@
             <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-700/80">
               <div>
                 <h3 class="text-base font-bold text-white">Active Task Cleanup Proof</h3>
-                <p id="worker-active-task-desc" class="text-xs text-slate-400">No task currently accepted. Accept an alert on the left.</p>
+                <p id="worker-active-task-desc" class="text-xs text-slate-400">Accept a Belagavi alert on the left to activate 10-Min SLA.</p>
               </div>
               <div id="sla-countdown-box" class="text-right bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-xl">
                 <span class="text-[10px] text-slate-400 block font-semibold">10-MIN SLA TIMER</span>
@@ -526,12 +547,12 @@
                 <div id="camera-mock-preview" class="text-center p-6 space-y-2">
                   <i data-lucide="camera" class="w-12 h-12 text-slate-600 mx-auto"></i>
                   <p class="text-xs text-slate-400">Hardware Live Camera Watermarked Stream</p>
-                  <p class="text-[11px] text-slate-500">Live GPS lat/lng and time will be embedded</p>
+                  <p class="text-[11px] text-slate-500">Live Belagavi GPS coordinates and timestamp will be embedded</p>
                 </div>
                 <!-- Live GPS Watermark Overlay -->
                 <div class="absolute bottom-2 left-2 bg-black/80 backdrop-blur-sm border border-slate-700/60 rounded px-2.5 py-1 text-[10px] font-mono text-emerald-400 space-y-0.5">
-                  <div>LAT: <span id="camera-watermark-lat">12.9719</span> | LNG: <span id="camera-watermark-lng">77.6412</span></div>
-                  <div>TIME: <span id="camera-watermark-time">--:--:--</span> | PROXIMITY: <span class="text-emerald-300 font-bold">MATCHED (&plusmn;25m)</span></div>
+                  <div>LAT: <span id="camera-watermark-lat">15.8340</span> | LNG: <span id="camera-watermark-lng">74.5020</span> (Belagavi)</div>
+                  <div>TIME: <span id="camera-watermark-time">--:--:--</span> | ATTRIBUTED WORKER: <span id="camera-watermark-worker" class="text-emerald-300 font-bold">BCC-W2101</span></div>
                 </div>
               </div>
 
@@ -562,14 +583,14 @@
     </div>
 
     <!-- ============================================================== -->
-    <!-- 3. BBMP OFFICER COMMAND CENTER -->
+    <!-- 3. BELAGAVI CITY CORPORATION (BCC) OFFICER COMMAND CENTER -->
     <!-- ============================================================== -->
     <div id="view-officer" class="hidden space-y-6">
       
       <!-- Top Metrics Bar -->
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-slate-800/80 border border-slate-700 rounded-2xl p-4">
-          <span class="text-xs text-slate-400 font-semibold block">Total Incidents</span>
+          <span class="text-xs text-slate-400 font-semibold block">Total Incidents (Belagavi)</span>
           <span id="officer-stat-total" class="text-2xl font-black text-white">0</span>
         </div>
         <div class="bg-slate-800/80 border border-rose-500/40 rounded-2xl p-4">
@@ -589,20 +610,20 @@
         </div>
       </div>
 
-      <!-- Live GPS GIS Map Section -->
+      <!-- Live GPS GIS Map Section: Belagavi -->
       <div class="bg-slate-800/90 border border-slate-700 rounded-2xl p-5 shadow-lg">
         <div class="flex flex-wrap items-center justify-between pb-3 mb-3 border-b border-slate-700/80 gap-3">
           <div>
             <h2 class="text-base font-bold text-white flex items-center space-x-2">
               <i data-lucide="map" class="w-5 h-5 text-emerald-400"></i>
-              <span>Bengaluru Municipal GIS Radar (5km Geofence & Vehicles)</span>
+              <span>Belagavi Municipal GIS Radar (BCC 5km Geofence & Vehicles)</span>
             </h2>
-            <p class="text-xs text-slate-400">Live tracking of garbage trucks, on-duty workers, and reported waste spots</p>
+            <p class="text-xs text-slate-400">Live tracking in Tilakwadi, Shahapur, Rani Channamma Circle, and Camp</p>
           </div>
           <div class="flex items-center space-x-3 text-xs">
-            <span class="flex items-center space-x-1.5"><span class="w-3 h-3 rounded-full bg-sky-500 inline-block"></span><span class="text-slate-300">BBMP Trucks</span></span>
-            <span class="flex items-center space-x-1.5"><span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span><span class="text-slate-300">Workers</span></span>
-            <span class="flex items-center space-x-1.5"><span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span><span class="text-slate-300">Red Alert Spots</span></span>
+            <span class="flex items-center space-x-1.5"><span class="w-3 h-3 rounded-full bg-sky-500 inline-block"></span><span class="text-slate-300">BCC Trucks (KA-22)</span></span>
+            <span class="flex items-center space-x-1.5"><span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span><span class="text-slate-300">Individual Workers</span></span>
+            <span class="flex items-center space-x-1.5"><span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span><span class="text-slate-300">Red Alert Waste</span></span>
             <span class="flex items-center space-x-1.5"><span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span><span class="text-slate-300">Cleaned Spots</span></span>
           </div>
         </div>
@@ -622,7 +643,7 @@
             </div>
             <div>
               <h3 class="text-base font-bold text-white">Officer-Authorized Onboarding</h3>
-              <p class="text-xs text-slate-400">Only the Main Officer can create Worker & Officer accounts</p>
+              <p class="text-xs text-slate-400">Provisions personal accounts for sanitation staff in Belagavi</p>
             </div>
           </div>
 
@@ -630,13 +651,13 @@
             <div>
               <label class="block text-xs font-semibold text-slate-300 mb-1">Account Role</label>
               <select id="staff-role" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100">
-                <option value="worker">Sanitation Worker (Purasabe)</option>
-                <option value="officer">BBMP Sub-Officer / Supervisor</option>
+                <option value="worker">Sanitation Worker (Purasabe / BCC)</option>
+                <option value="officer">BCC Sub-Officer / Supervisor</option>
               </select>
             </div>
             <div>
               <label class="block text-xs font-semibold text-slate-300 mb-1">Full Name</label>
-              <input type="text" id="staff-name" required placeholder="e.g. Basavaraj Patil" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100">
+              <input type="text" id="staff-name" required placeholder="e.g. Mahadev Ghorpade" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100">
             </div>
             <div class="grid grid-cols-2 gap-2">
               <div>
@@ -649,17 +670,23 @@
               </div>
             </div>
             <div>
-              <label class="block text-xs font-semibold text-slate-300 mb-1">Assigned BBMP Ward</label>
-              <input type="text" id="staff-ward" value="Ward 150 - Bellandur / Koramangala" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100">
+              <label class="block text-xs font-semibold text-slate-300 mb-1">Assigned Belagavi Ward</label>
+              <select id="staff-ward" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100">
+                <option value="Ward 21 - Tilakwadi, Belagavi">Ward 21 - Tilakwadi, Belagavi</option>
+                <option value="Ward 12 - Rani Channamma Circle, Belagavi">Ward 12 - Rani Channamma Circle, Belagavi</option>
+                <option value="Ward 34 - Shahapur, Belagavi">Ward 34 - Shahapur, Belagavi</option>
+                <option value="Ward 18 - Hindwadi, Belagavi">Ward 18 - Hindwadi, Belagavi</option>
+                <option value="Ward 45 - Vadgaon, Belagavi">Ward 45 - Vadgaon, Belagavi</option>
+              </select>
             </div>
             <button type="submit" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold text-xs shadow transition flex items-center justify-center space-x-1.5">
               <i data-lucide="shield-check" class="w-4 h-4"></i>
-              <span>Authorize & Provision Staff Account</span>
+              <span>Authorize & Issue BCC Employee ID</span>
             </button>
           </form>
         </div>
 
-        <!-- Right: Blockchain Audit Explorer -->
+        <!-- Right: Blockchain Audit Explorer with Person Attribution -->
         <div class="lg:col-span-7 bg-slate-800/90 border border-slate-700 rounded-2xl p-6 shadow-md">
           <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-700/80">
             <div class="flex items-center space-x-2">
@@ -668,7 +695,7 @@
               </div>
               <div>
                 <h3 class="text-base font-bold text-white">Proof-of-Cleanliness Blockchain Explorer</h3>
-                <p class="text-xs text-slate-400">Cryptographically immutable ledger of verified cleanups & rewards</p>
+                <p class="text-xs text-slate-400">Cryptographically attributed to specific workers and citizens</p>
               </div>
             </div>
             <button onclick="loadBlockchainLedger()" class="text-xs text-emerald-400 hover:underline flex items-center space-x-1">
@@ -684,40 +711,34 @@
 
       </div>
 
-      <!-- AI Before/After Comparison Inspector Modal or Section -->
+      <!-- AI Before/After Comparison Inspector -->
       <div class="bg-slate-800/90 border border-slate-700 rounded-2xl p-6 shadow-md">
         <h3 class="text-base font-bold text-white mb-2 flex items-center space-x-2">
           <i data-lucide="sparkles" class="w-5 h-5 text-amber-400"></i>
-          <span>Gemini AI Dual-Image Comparison Engine</span>
+          <span>Gemini AI Dual-Image Comparison Engine (Belagavi Beats)</span>
         </h3>
-        <p class="text-xs text-slate-400 mb-4">Automatically validates physical background consistency and confirms garbage clearance.</p>
+        <p class="text-xs text-slate-400 mb-4">Automatically validates physical background consistency in Belagavi wards and confirms garbage clearance.</p>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
-          <!-- Before Photo -->
           <div class="bg-slate-900 border border-slate-700 rounded-xl p-3 text-center">
             <span class="text-[11px] font-bold text-rose-400 uppercase tracking-wider block mb-2">1. Citizen's Report (Before)</span>
             <div class="aspect-video bg-slate-800 rounded-lg overflow-hidden flex items-center justify-center">
               <img id="ai-inspect-before" src="https://images.unsplash.com/photo-1605600659873-d808a13e4d2a?w=500&auto=format&fit=crop&q=60" class="w-full h-full object-cover">
             </div>
-            <p class="text-[10px] text-slate-400 mt-2 font-mono">Waste Detected: Plastic & Bottles</p>
+            <p class="text-[10px] text-slate-400 mt-2 font-mono">Location: Tilakwadi 1st Gate</p>
           </div>
 
-          <!-- AI Verdict Center -->
           <div class="bg-slate-900/80 border border-emerald-500/40 rounded-xl p-4 text-center space-y-3">
             <span class="bg-emerald-500/20 text-emerald-300 text-xs px-2.5 py-1 rounded-full border border-emerald-500/30 font-bold inline-block">
-              AI Match: 94.5% Verified
+              AI Match: 95.8% Verified
             </span>
             <div class="space-y-1">
-              <p class="text-xs text-white font-medium">Background Match: <strong class="text-emerald-400">Consistent</strong></p>
+              <p class="text-xs text-white font-medium">Attributed Worker: <strong class="text-emerald-400">Basavaraj Belagavi (#BCC-W2101)</strong></p>
               <p class="text-xs text-white font-medium">Waste Clearance: <strong class="text-emerald-400">100% Cleared</strong></p>
-              <p class="text-[11px] text-slate-400">Pavement, curb wall, and lighting matched within $\pm 25$m GPS coordinates.</p>
-            </div>
-            <div class="text-[10px] text-emerald-400 font-mono">
-              Reward Eligible: ₹4,000 Milestone Tracked
+              <p class="text-[11px] text-slate-400">Curb wall and pavement matched within 30m GPS coordinates in Belagavi.</p>
             </div>
           </div>
 
-          <!-- After Photo -->
           <div class="bg-slate-900 border border-slate-700 rounded-xl p-3 text-center">
             <span class="text-[11px] font-bold text-emerald-400 uppercase tracking-wider block mb-2">2. Worker's Live Proof (After)</span>
             <div class="aspect-video bg-slate-800 rounded-lg overflow-hidden flex items-center justify-center">
@@ -733,24 +754,24 @@
   </main>
 
   <!-- ============================================================== -->
-  <!-- CHANGE HOME CENTER MODAL (FOR CITIZEN) -->
+  <!-- CHANGE BELAGAVI HOME CENTER MODAL -->
   <!-- ============================================================== -->
   <div id="modal-edit-home" class="hidden fixed inset-0 z-[90] bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-md w-full p-6 space-y-4">
       <div class="flex items-center justify-between pb-3 border-b border-slate-800">
         <h3 class="text-base font-bold text-white flex items-center space-x-1.5">
           <i data-lucide="map-pin" class="w-4 h-4 text-emerald-400"></i>
-          <span>Change Home Center Location</span>
+          <span>Change Belagavi Home Center</span>
         </h3>
         <button onclick="closeChangeHomeCenterModal()" class="text-slate-400 hover:text-white">✕</button>
       </div>
 
       <div class="space-y-3 text-xs">
         <div class="flex flex-wrap gap-1.5">
-          <button type="button" onclick="setQuickEditHome(12.9735, 77.6405, '100 Feet Rd, Indiranagar')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300">Indiranagar</button>
-          <button type="button" onclick="setQuickEditHome(12.9352, 77.6245, '80 Feet Rd, Koramangala')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300">Koramangala</button>
-          <button type="button" onclick="setQuickEditHome(12.9299, 77.5824, '4th Block, Jayanagar')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300">Jayanagar</button>
-          <button type="button" onclick="setQuickEditHome(12.9116, 77.6389, 'Sector 2, HSR Layout')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300">HSR Layout</button>
+          <button type="button" onclick="setQuickEditHome(15.8345, 74.5015, 'Congress Road, Tilakwadi, Belagavi')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300">Tilakwadi</button>
+          <button type="button" onclick="setQuickEditHome(15.8380, 74.5180, 'Shahapur Bazaar, Belagavi')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300">Shahapur</button>
+          <button type="button" onclick="setQuickEditHome(15.8530, 74.5100, 'Rani Channamma Circle, Belagavi')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300">Channamma Circle</button>
+          <button type="button" onclick="setQuickEditHome(15.8540, 74.5080, 'Camp / Bogarves, Belagavi')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300">Camp</button>
         </div>
 
         <div class="grid grid-cols-2 gap-2">
@@ -768,7 +789,7 @@
 
   <!-- FOOTER -->
   <footer class="bg-slate-950 border-t border-slate-800 py-4 text-center text-xs text-slate-500">
-    BBMP Clean Bengaluru Smart Waste Management &bull; Municipal 5km Geofence Radar &bull; SHA-256 Blockchain Ledger
+    BCC Swachha Belagavi (ಸ್ವಚ್ಛ ಬೆಳಗಾವಿ) &bull; Belagavi City Corporation &bull; 5km Geofence Radar &bull; SHA-256 Blockchain Ledger
   </footer>
 
   <!-- ============================================================== -->
@@ -779,6 +800,8 @@
     let currentUser = null;
     let currentRole = 'citizen';
     let allReports = [];
+    let workersList = [];
+    let activeWorkerId = 1; // Default: Basavaraj Belagavi
     let mapInstance = null;
     let markersLayer = null;
     let activeAcceptedTaskId = null;
@@ -786,19 +809,21 @@
     let cameraStream = null;
     let capturedPhotoData = null;
 
-    // Home Center State (Default Indiranagar 100ft Rd)
+    // Belagavi Center & Default Home Center Coordinates
+    const BELAGAVI_CENTER_LAT = 15.8497;
+    const BELAGAVI_CENTER_LNG = 74.4977;
+
     let homeCenter = {
-      lat: 12.9735,
-      lng: 77.6405,
-      address: '100 Feet Rd, Indiranagar, Bengaluru'
+      lat: 15.8345,
+      lng: 74.5015,
+      address: 'Congress Road, Tilakwadi, Belagavi'
     };
 
     // Initialize on load
     document.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
 
-      // Check stored user session
-      const stored = localStorage.getItem('bbmp_user');
+      const stored = localStorage.getItem('bcc_user');
       if (stored) {
         try {
           currentUser = JSON.parse(stored);
@@ -812,6 +837,7 @@
       }
 
       initMap();
+      loadWorkersList();
       loadAllReports();
       checkProximityAlert();
       loadBlockchainLedger();
@@ -821,7 +847,7 @@
     });
 
     // ============================================================
-    // ONBOARDING & LOGIN FLOW (FIRST TIME OPEN)
+    // ONBOARDING & LOGIN FLOW (BELAGAVI)
     // ============================================================
     function openOnboardingModal() {
       document.getElementById('modal-auth-onboarding').classList.remove('hidden');
@@ -902,14 +928,12 @@
 
         if (data.success) {
           if (data.is_new_user) {
-            // Step 3: Complete profile and set Home Center
             document.getElementById('onboard-phone').value = idVal.includes('@') ? '' : idVal;
             switchAuthStep(3);
           } else {
-            // Existing user logged in
             applyUserSession(data.user);
             closeOnboardingModal();
-            alert(`Welcome back, ${data.user.first_name || data.user.name}!`);
+            alert(`Welcome back to Swachha Belagavi, ${data.user.first_name || data.user.name}!`);
           }
         } else {
           alert(data.message || "Invalid OTP entered.");
@@ -934,9 +958,9 @@
         navigator.geolocation.getCurrentPosition(pos => {
           document.getElementById('onboard-home-lat').value = pos.coords.latitude.toFixed(4);
           document.getElementById('onboard-home-lng').value = pos.coords.longitude.toFixed(4);
-          document.getElementById('onboard-home-address').value = "My Live Geolocation Center, Bengaluru";
+          document.getElementById('onboard-home-address').value = "My Live GPS Center, Belagavi";
         }, () => {
-          setHomePreset(12.9735, 77.6405, '100 Feet Rd, Indiranagar, Bengaluru');
+          setHomePreset(15.8345, 74.5015, 'Congress Road, Tilakwadi, Belagavi');
         });
       }
     }
@@ -966,12 +990,13 @@
         aadhaar: aadhaar || '567890123456',
         home_lat: lat,
         home_lng: lng,
-        home_address: address
+        home_address: address,
+        ward: 'Ward 21 - Tilakwadi, Belagavi'
       };
 
       const btn = document.getElementById('btn-open-app');
       btn.disabled = true;
-      btn.innerText = "Configuring Home Center & Opening...";
+      btn.innerText = "Configuring Belagavi Home Center...";
 
       try {
         const res = await fetch('/api/auth/save-profile-home', {
@@ -983,7 +1008,7 @@
         if (data.success) {
           applyUserSession(data.user);
           closeOnboardingModal();
-          alert(`Welcome to Swachha Bengaluru, ${firstName}! Your Home Center is set to ${address}.`);
+          alert(`Welcome to Swachha Belagavi, ${firstName}! Your Home Center is set to ${address}.`);
         } else {
           alert(data.message || "Failed to save profile.");
         }
@@ -991,25 +1016,24 @@
         alert("Server error configuring profile.");
       } finally {
         btn.disabled = false;
-        btn.innerHTML = `<span>Open App & Enter Swachha Bengaluru</span><i data-lucide="sparkles" class="w-4 h-4"></i>`;
+        btn.innerHTML = `<span>Open App & Enter Swachha Belagavi</span><i data-lucide="sparkles" class="w-4 h-4"></i>`;
         lucide.createIcons();
       }
     }
 
     function applyUserSession(user) {
       currentUser = user;
-      localStorage.setItem('bbmp_user', JSON.stringify(user));
+      localStorage.setItem('bcc_user', JSON.stringify(user));
 
-      // Update header
       const initials = ((user.first_name ? user.first_name[0] : '') + (user.last_name ? user.last_name[0] : (user.name ? user.name[0] : 'U'))).toUpperCase();
-      document.getElementById('header-user-avatar').innerText = initials || 'SK';
+      document.getElementById('header-user-avatar').innerText = initials || 'PK';
       document.getElementById('header-user-name').innerText = user.name || `${user.first_name || ''} ${user.last_name || ''}`;
       document.getElementById('header-user-role').innerText = user.role.toUpperCase();
 
       if (user.home_lat && user.home_lng) {
         homeCenter.lat = user.home_lat;
         homeCenter.lng = user.home_lng;
-        homeCenter.address = user.home_address || 'Bengaluru';
+        homeCenter.address = user.home_address || 'Belagavi';
       }
 
       document.getElementById('header-user-home').innerText = homeCenter.address;
@@ -1019,20 +1043,681 @@
         document.getElementById('citizen-aadhaar-display').innerText = `XXXX-XXXX-${user.aadhaar.slice(-4)}`;
       }
 
-      // Default incident location to citizen's home center
       document.getElementById('report-lat').value = homeCenter.lat;
       document.getElementById('report-lng').value = homeCenter.lng;
       document.getElementById('report-address').value = homeCenter.address;
 
-      // Switch view according to role if worker or officer
-      if (user.role === 'worker') switchRole('worker');
-      else if (user.role === 'officer') switchRole('officer');
-      else switchRole('citizen');
+      if (user.role === 'worker') {
+        activeWorkerId = user.id;
+        switchRole('worker');
+        loadWorkerProfile(user.id);
+      } else if (user.role === 'officer') {
+        switchRole('officer');
+      } else {
+        switchRole('citizen');
+      }
 
       checkProximityAlert();
     }
 
-    // Change Home Center Modal
+    // Load All Workers for Switcher
+    async function loadWorkersList() {
+      try {
+        const res = await fetch('/api/workers/list');
+        const data = await res.json();
+        if (data.success) {
+          workersList = data.workers;
+          renderWorkerSwitcher();
+        }
+      } catch (e) { console.error(e); }
+    }
+
+    function renderWorkerSwitcher() {
+      const container = document.getElementById('worker-account-selector-container');
+      if (!container) return;
+      container.innerHTML = '';
+
+      workersList.forEach(w => {
+        const isSelected = w.worker_id === activeWorkerId;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `px-3 py-1 rounded-xl font-medium transition flex items-center space-x-1 ${isSelected ? 'bg-amber-500 text-slate-950 font-bold shadow' : 'bg-slate-800 text-slate-300 hover:text-white'}`;
+        btn.innerHTML = `<span>👷 ${w.worker_name.split(' ')[0]} (${w.worker_emp_id})</span>`;
+        btn.onclick = () => selectWorkerAccount(w.worker_id);
+        container.appendChild(btn);
+      });
+    }
+
+    function selectWorkerAccount(workerId) {
+      activeWorkerId = workerId;
+      renderWorkerSwitcher();
+      loadWorkerProfile(workerId);
+    }
+
+    async function loadWorkerProfile(workerId) {
+      try {
+        const res = await fetch(`/api/worker/profile/${workerId}`);
+        const data = await res.json();
+        if (data.success) {
+          const w = data.worker;
+          document.getElementById('worker-name-display').innerText = w.name;
+          document.getElementById('worker-emp-badge').innerText = w.emp_id;
+          document.getElementById('worker-ward-display').innerText = `Beat: ${w.ward} | Live GPS: ${w.current_lat}, ${w.current_lng}`;
+          document.getElementById('worker-today-cleanups').innerText = w.cleanups_today;
+          document.getElementById('worker-today-distance').innerText = `${w.distance_walked_km} km`;
+          document.getElementById('worker-monthly-cleanups').innerText = `${w.total_monthly_cleanups} / ${w.target_milestone}`;
+          document.getElementById('camera-watermark-worker').innerText = `${w.emp_id} (${w.name.split(' ')[0]})`;
+          document.getElementById('camera-watermark-lat').innerText = w.current_lat;
+          document.getElementById('camera-watermark-lng').innerText = w.current_lng;
+          renderWorkerAlerts();
+        }
+      } catch (e) { console.error(e); }
+    }
+
+    // Role Switching
+    function switchRole(role) {
+      currentRole = role;
+      ['citizen', 'worker', 'officer'].forEach(r => {
+        const view = document.getElementById(`view-${r}`);
+        const btn = document.getElementById(`btn-role-${r}`);
+        if (r === role) {
+          view.classList.remove('hidden');
+          btn.className = 'px-4 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center space-x-1.5 bg-emerald-600 text-white shadow';
+        } else {
+          view.classList.add('hidden');
+          btn.className = 'px-4 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center space-x-1.5 text-slate-300 hover:text-white';
+        }
+      });
+      lucide.createIcons();
+
+      if (role === 'officer') {
+        setTimeout(() => {
+          if (mapInstance) mapInstance.invalidateSize();
+          loadOfficerDashboard();
+        }, 200);
+      } else if (role === 'worker') {
+        loadWorkerProfile(activeWorkerId);
+      }
+    }
+
+    // Audio & Siren Chime: Belagavi Kannada Voice
+    function testVehicleSiren() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(587.33, ctx.currentTime);
+        osc.frequency.setValueAtTime(880, ctx.currentTime + 0.2);
+        osc.frequency.setValueAtTime(1174.66, ctx.currentTime + 0.4);
+        gain.gain.setValueAtTime(0.3, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.8);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.8);
+      } catch (e) { console.log(e); }
+
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const msg = new SpeechSynthesisUtterance("ಬೆಳಗಾವಿ ಮಹಾನಗರ ಪಾಲಿಕೆ ಕಸದ ವಾಹನ ಬಂದಿದೆ! Belagavi City Corporation Waste Collection Truck is near your house. Please bring out plastic, bottles and vegetable waste.");
+        msg.rate = 0.95;
+        window.speechSynthesis.speak(msg);
+      }
+
+      const banner = document.getElementById('proximity-banner');
+      banner.classList.remove('hidden');
+    }
+
+    function dismissProximity() {
+      document.getElementById('proximity-banner').classList.add('hidden');
+    }
+
+    // Check Belagavi Vehicle Proximity
+    async function checkProximityAlert() {
+      try {
+        const res = await fetch(`/api/vehicles/live?lat=${homeCenter.lat}&lng=${homeCenter.lng}`);
+        const data = await res.json();
+        if (data.success && data.nearest_vehicle) {
+          const nv = data.nearest_vehicle;
+          document.getElementById('truck-distance-display').innerText = nv.distance_meters;
+          
+          if (nv.distance_meters <= 500) {
+            document.getElementById('proximity-banner').classList.remove('hidden');
+            document.getElementById('truck-status-badge').className = "bg-rose-500/20 text-rose-300 text-xs px-2 py-0.5 rounded-full border border-rose-500/30 animate-pulse font-bold";
+            document.getElementById('truck-status-badge').innerText = "Approaching (< 500m)";
+          } else {
+            document.getElementById('truck-status-badge').className = "bg-sky-500/20 text-sky-300 text-xs px-2 py-0.5 rounded-full border border-sky-500/30";
+            document.getElementById('truck-status-badge').innerText = "On Routine Beat";
+          }
+        }
+      } catch (e) { console.error(e); }
+    }
+
+    async function simulateTruckCloser() {
+      await fetch('/api/vehicles/simulate-movement', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ vehicle_id: 1, latitude: homeCenter.lat + 0.0015, longitude: homeCenter.lng + 0.0015 })
+      });
+      testVehicleSiren();
+      checkProximityAlert();
+      if (mapInstance) updateMapMarkers();
+    }
+
+    function getCurrentLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(pos => {
+          document.getElementById('report-lat').value = pos.coords.latitude.toFixed(4);
+          document.getElementById('report-lng').value = pos.coords.longitude.toFixed(4);
+        }, () => {
+          document.getElementById('report-lat').value = homeCenter.lat;
+          document.getElementById('report-lng').value = homeCenter.lng;
+        });
+      }
+    }
+
+    function previewCitizenImage(input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          document.getElementById('report-photo-preview').src = e.target.result;
+          document.getElementById('report-photo-preview').classList.remove('hidden');
+          document.getElementById('report-photo-placeholder').classList.add('hidden');
+          capturedPhotoData = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    // Citizen Submit Report with Dynamic Decision Dispatch
+    async function handleCitizenSubmitReport(e) {
+      e.preventDefault();
+      const wasteType = document.querySelector('input[name="waste_type"]:checked').value;
+      const desc = document.getElementById('report-description').value;
+      const lat = parseFloat(document.getElementById('report-lat').value);
+      const lng = parseFloat(document.getElementById('report-lng').value);
+      const address = document.getElementById('report-address').value;
+
+      const citizenId = currentUser ? currentUser.id : 4;
+      const citizenName = currentUser ? (currentUser.name || `${currentUser.first_name || ''} ${currentUser.last_name || ''}`) : 'Praveen Kulkarni';
+
+      const payload = {
+        citizen_id: citizenId,
+        citizen_name: citizenName,
+        waste_type: wasteType,
+        description: desc || 'Roadside plastic and vegetable waste dumping in Belagavi',
+        latitude: lat,
+        longitude: lng,
+        address: address,
+        before_image: capturedPhotoData || 'https://images.unsplash.com/photo-1605600659873-d808a13e4d2a?w=500&auto=format&fit=crop&q=60'
+      };
+
+      const btn = document.getElementById('btn-submit-report');
+      btn.disabled = true;
+      btn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i><span>Running Dynamic Decision Engine...</span>`;
+      lucide.createIcons();
+
+      try {
+        const res = await fetch('/api/reports/create', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        alert(`🚨 SWACHHA BELAGAVI ALERT!\n\n${data.dynamic_decision_note}\n\nBroadcast alert sent to ${data.alerted_workers.length} worker(s) within 5km.`);
+        document.getElementById('report-description').value = '';
+        loadAllReports();
+      } catch (err) {
+        alert('Error submitting report.');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<i data-lucide="cpu" class="w-4 h-4 animate-pulse"></i><span>Run Dynamic Dispatch & Broadcast Alert</span>`;
+        lucide.createIcons();
+      }
+    }
+
+    async function loadAllReports() {
+      try {
+        const res = await fetch('/api/reports');
+        const data = await res.json();
+        if (data.success) {
+          allReports = data.reports;
+          renderCitizenReports();
+          renderWorkerAlerts();
+          if (mapInstance) updateMapMarkers();
+        }
+      } catch (e) { console.error(e); }
+    }
+
+    function renderCitizenReports() {
+      const container = document.getElementById('citizen-reports-container');
+      container.innerHTML = '';
+
+      if (allReports.length === 0) {
+        container.innerHTML = `<div class="text-center py-8 text-slate-500 text-xs">No incidents reported in Belagavi yet.</div>`;
+        return;
+      }
+
+      allReports.forEach(r => {
+        const isPending = r.status === 'pending';
+        const isOverdue = r.status === 'overdue' || r.sla_delayed === 1;
+        const isVerified = r.status === 'verified';
+        const isInProgress = r.status === 'in_progress';
+
+        let borderClass = 'border-slate-700';
+        let statusBadge = '';
+
+        if (isOverdue) {
+          borderClass = 'red-alert-border';
+          statusBadge = `<span class="bg-rose-500/20 text-rose-300 text-xs px-2.5 py-0.5 rounded-full border border-rose-500 font-bold animate-pulse flex items-center space-x-1">
+            <i data-lucide="alert-circle" class="w-3 h-3"></i><span>RED ALERT (10-MIN SLA OVERDUE)</span>
+          </span>`;
+        } else if (isPending) {
+          borderClass = 'red-alert-border';
+          statusBadge = `<span class="bg-rose-500/20 text-rose-300 text-xs px-2.5 py-0.5 rounded-full border border-rose-500 font-bold flex items-center space-x-1">
+            <i data-lucide="bell" class="w-3 h-3"></i><span>RED ALERT (PENDING CLEANUP)</span>
+          </span>`;
+        } else if (isInProgress) {
+          borderClass = 'border-amber-500/60';
+          statusBadge = `<span class="bg-amber-500/20 text-amber-300 text-xs px-2.5 py-0.5 rounded-full border border-amber-500/40 font-medium">In Progress: ${r.assigned_worker_name || 'Worker'}</span>`;
+        } else if (isVerified) {
+          borderClass = 'border-emerald-500/60';
+          statusBadge = `<span class="green-verified-badge text-white text-xs px-3 py-1 rounded-full font-bold flex items-center space-x-1 shadow">
+            <i data-lucide="check-check" class="w-3.5 h-3.5"></i><span>CLEANED & VERIFIED (GREEN MARK)</span>
+          </span>`;
+        }
+
+        const card = document.createElement('div');
+        card.className = `bg-slate-800/90 rounded-2xl p-4 border ${borderClass} transition-all shadow-md space-y-2.5`;
+        card.innerHTML = `
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <span class="text-xs uppercase font-mono text-slate-400 font-bold">#REPORT-${r.id} &bull; ${r.waste_type.replace('_', ' ').toUpperCase()}</span>
+              <h4 class="text-sm font-bold text-white mt-0.5">${r.description}</h4>
+            </div>
+            <div>${statusBadge}</div>
+          </div>
+          <div class="text-xs text-slate-400 flex items-center space-x-1">
+            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-500"></i>
+            <span>${r.address || 'Belagavi'} (${r.latitude}, ${r.longitude})</span>
+          </div>
+          ${r.dynamic_decision_note ? `
+            <div class="p-2 bg-indigo-500/10 border border-indigo-500/30 rounded-xl text-[11px] text-indigo-300 flex items-center space-x-2">
+              <i data-lucide="cpu" class="w-4 h-4 text-indigo-400 shrink-0"></i>
+              <span><strong>Dynamic Attribution:</strong> ${r.dynamic_decision_note}</span>
+            </div>
+          ` : ''}
+          <div class="flex items-center justify-between text-[11px] text-slate-400 pt-2 border-t border-slate-700/60">
+            <span>Reported by: <strong class="text-slate-200">${r.citizen_name}</strong></span>
+            ${isVerified ? `<span class="text-emerald-400 font-mono font-bold">Cleaned by: ${r.completed_worker_name || r.assigned_worker_name} (${r.ai_similarity_score}%)</span>` : ''}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
+    // Render alerts specifically attributed to the currently active worker
+    function renderWorkerAlerts() {
+      const container = document.getElementById('worker-alerts-container');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const relevant = allReports.filter(r => r.status === 'pending' || r.assigned_worker_id === activeWorkerId);
+
+      if (relevant.length === 0) {
+        container.innerHTML = `<div class="text-center py-8 text-slate-500 text-xs">No active alerts for this worker's beat in Belagavi. All clean!</div>`;
+        return;
+      }
+
+      relevant.forEach(r => {
+        const isCurrentActive = activeAcceptedTaskId === r.id;
+        const isAttributedToMe = r.assigned_worker_id === activeWorkerId;
+
+        const card = document.createElement('div');
+        card.className = `bg-slate-800/90 border ${r.sla_delayed ? 'red-alert-border' : (isAttributedToMe ? 'border-amber-500/70' : 'border-slate-700')} rounded-2xl p-4 space-y-3`;
+        card.innerHTML = `
+          <div class="flex items-start justify-between">
+            <div>
+              <span class="bg-rose-500/20 text-rose-300 text-[10px] px-2 py-0.5 rounded font-mono font-bold uppercase">Belagavi 5km Alert</span>
+              ${isAttributedToMe ? `<span class="ml-1 bg-indigo-500/20 text-indigo-300 text-[10px] px-2 py-0.5 rounded font-mono font-bold uppercase">Attributed to You</span>` : ''}
+              <h4 class="text-sm font-bold text-white mt-1">${r.description}</h4>
+              <p class="text-xs text-slate-400">${r.address}</p>
+            </div>
+            <div class="text-right">
+              <span class="text-xs font-bold text-amber-400">~280m away</span>
+              <span class="block text-[10px] text-slate-500 font-mono">Belagavi Beat</span>
+            </div>
+          </div>
+          ${r.dynamic_decision_note ? `<p class="text-[11px] text-indigo-300 font-mono">${r.dynamic_decision_note}</p>` : ''}
+          <div class="flex items-center justify-between pt-2 border-t border-slate-700/60">
+            <span class="text-xs text-slate-400">Status: <strong class="${r.sla_delayed ? 'text-rose-400' : 'text-amber-400'}">${r.status.toUpperCase()}</strong></span>
+            ${r.status === 'pending' ? `
+              <button onclick="acceptTask(${r.id})" class="px-4 py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl text-xs shadow transition flex items-center space-x-1">
+                <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                <span>Accept Task (Start 10-Min SLA)</span>
+              </button>
+            ` : `
+              <span class="text-xs text-emerald-400 font-medium font-mono">${isCurrentActive ? '🟢 Currently Active' : 'Assigned in Progress'}</span>
+            `}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
+    async function acceptTask(reportId) {
+      activeAcceptedTaskId = reportId;
+      const curr = workersList.find(w => w.worker_id === activeWorkerId);
+      const workerName = curr ? curr.worker_name : 'Basavaraj Belagavi';
+      const empId = curr ? curr.worker_emp_id : 'BCC-W2101';
+
+      try {
+        const res = await fetch('/api/reports/accept', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            report_id: reportId,
+            worker_id: activeWorkerId,
+            worker_name: workerName,
+            worker_emp_id: empId
+          })
+        });
+        const data = await res.json();
+        alert(data.message);
+        document.getElementById('worker-active-task-desc').innerText = `Active Task #${reportId}: Cleanup in progress by ${workerName}. Proceed to spot.`;
+        startSlaTimer(10 * 60);
+        loadAllReports();
+      } catch (e) { alert('Error accepting task'); }
+    }
+
+    function startSlaTimer(seconds) {
+      if (slaTimerInterval) clearInterval(slaTimerInterval);
+      let remaining = seconds;
+      const display = document.getElementById('sla-timer-display');
+      const box = document.getElementById('sla-countdown-box');
+
+      slaTimerInterval = setInterval(() => {
+        remaining--;
+        const mins = Math.floor(remaining / 60);
+        const secs = remaining % 60;
+        display.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+
+        if (remaining <= 180) {
+          display.className = "font-mono text-sm font-bold text-amber-400";
+        }
+        if (remaining <= 0) {
+          clearInterval(slaTimerInterval);
+          display.innerText = "OVERDUE (RED ALERT)";
+          display.className = "font-mono text-xs font-bold text-rose-400 animate-pulse";
+          box.className = "text-right bg-slate-900 border red-alert-border px-3 py-1.5 rounded-xl";
+          alert("🚨 10-MINUTE SLA OVERDUE! Escalation alert sent to BCC Chief Officer Anand Patil.");
+          loadAllReports();
+        }
+      }, 1000);
+    }
+
+    // Camera Hardware Stream & Snapshot
+    async function startCamera() {
+      const video = document.getElementById('live-camera-feed');
+      const mock = document.getElementById('camera-mock-preview');
+      try {
+        cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+        video.srcObject = cameraStream;
+        video.classList.remove('hidden');
+        mock.classList.add('hidden');
+      } catch (err) {
+        alert("Camera active. (Hardware live stream watermarked with Belagavi coordinates).");
+      }
+    }
+
+    function captureLiveSnapshot() {
+      const video = document.getElementById('live-camera-feed');
+      const canvas = document.getElementById('camera-snapshot-canvas');
+      const mock = document.getElementById('camera-mock-preview');
+
+      canvas.width = 640;
+      canvas.height = 360;
+      const ctx = canvas.getContext('2d');
+
+      if (!video.classList.contains('hidden')) {
+        ctx.drawImage(video, 0, 0, 640, 360);
+      } else {
+        ctx.fillStyle = '#1e293b';
+        ctx.fillRect(0, 0, 640, 360);
+        ctx.fillStyle = '#10b981';
+        ctx.font = 'bold 20px monospace';
+        ctx.fillText("BCC BELAGAVI LIVE CLEANED SPOT PROOF", 30, 160);
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '14px monospace';
+        ctx.fillText("Belagavi City Corporation - Tilakwadi Beat", 30, 190);
+      }
+
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.75)';
+      ctx.fillRect(10, 290, 620, 60);
+      ctx.fillStyle = '#10b981';
+      ctx.font = 'bold 12px monospace';
+      ctx.fillText(`GPS: 15.8340 N, 74.5020 E (Belagavi) | TIME: ${new Date().toISOString()}`, 20, 312);
+      ctx.fillText(`PROOF-OF-CLEANLINESS | WORKER: #BCC-W2101 | VERIFIED`, 20, 332);
+
+      canvas.classList.remove('hidden');
+      video.classList.add('hidden');
+      mock.classList.add('hidden');
+    }
+
+    async function submitWorkerCleanup() {
+      if (!activeAcceptedTaskId) {
+        const pending = allReports.find(r => r.status === 'in_progress' || r.status === 'pending' || r.status === 'overdue');
+        if (pending) activeAcceptedTaskId = pending.id;
+        else {
+          alert("Please select/accept an active task first.");
+          return;
+        }
+      }
+
+      const canvas = document.getElementById('camera-snapshot-canvas');
+      const afterImg = canvas.toDataURL('image/jpeg', 0.8) || 'sample_after_belagavi';
+
+      try {
+        const res = await fetch('/api/reports/submit-cleanup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            report_id: activeAcceptedTaskId,
+            worker_id: activeWorkerId,
+            after_image: afterImg,
+            latitude: 15.8340,
+            longitude: 74.5020
+          })
+        });
+        const data = await res.json();
+        alert(`✅ SUCCESS!\n${data.message}\nAI Match: ${data.ai_similarity_score}%\nBlockchain Block Hash: ${data.blockchain_hash.substring(0, 24)}...`);
+        if (slaTimerInterval) clearInterval(slaTimerInterval);
+        document.getElementById('sla-timer-display').innerText = "CLEANED";
+        activeAcceptedTaskId = null;
+        loadAllReports();
+        loadWorkerProfile(activeWorkerId);
+        loadBlockchainLedger();
+      } catch (e) { alert("Error submitting cleanup proof."); }
+    }
+
+    function updateWatermarkTime() {
+      const now = new Date();
+      const el = document.getElementById('camera-watermark-time');
+      if (el) el.innerText = now.toTimeString().split(' ')[0];
+    }
+
+    // Map initialization: Centered on Belagavi
+    function initMap() {
+      mapInstance = L.map('map').setView([BELAGAVI_CENTER_LAT, BELAGAVI_CENTER_LNG], 13);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(mapInstance);
+      markersLayer = L.layerGroup().addTo(mapInstance);
+      updateMapMarkers();
+    }
+
+    function updateMapMarkers() {
+      if (!markersLayer) return;
+      markersLayer.clearLayers();
+
+      // 1. Incidents in Belagavi
+      allReports.forEach(r => {
+        const isVerified = r.status === 'verified';
+        const color = isVerified ? '#10b981' : '#ef4444';
+        const marker = L.circleMarker([r.latitude, r.longitude], {
+          radius: 10,
+          color: color,
+          fillColor: color,
+          fillOpacity: 0.8
+        }).bindPopup(`<b>#Report-${r.id} (Belagavi)</b><br>${r.description}<br>Status: <b>${r.status.toUpperCase()}</b><br>Attributed: <b>${r.assigned_worker_name || 'Pending'}</b>`);
+        markersLayer.addLayer(marker);
+      });
+
+      // 2. Citizen Home Center with 500m collection circle
+      const homeMarker = L.circleMarker([homeCenter.lat, homeCenter.lng], {
+        radius: 12,
+        color: '#10b981',
+        fillColor: '#059669',
+        fillOpacity: 0.95
+      }).bindPopup(`<b>Belagavi Home Center</b><br>${homeCenter.address}`);
+      markersLayer.addLayer(homeMarker);
+
+      const circle500m = L.circle([homeCenter.lat, homeCenter.lng], {
+        radius: 500,
+        color: '#0284c7',
+        fillColor: '#38bdf8',
+        fillOpacity: 0.15,
+        dashArray: '4, 8'
+      }).bindPopup("500m Household Collection Alert Zone in Belagavi");
+      markersLayer.addLayer(circle500m);
+
+      // 3. Belagavi Municipal Vehicles (KA-22)
+      const v1Marker = L.marker([15.8350, 74.5030]).bindPopup(`<b>BCC Truck KA-22-G-1801</b><br>Tilakwadi - Congress Road Beat`);
+      markersLayer.addLayer(v1Marker);
+
+      const v2Marker = L.marker([15.8520, 74.5090]).bindPopup(`<b>BCC Truck KA-22-G-1802</b><br>Camp - Rani Channamma Circle Beat`);
+      markersLayer.addLayer(v2Marker);
+
+      // 4. Individual Sanitation Workers with 5km coverage radius
+      const workersGeo = [
+        { name: 'Basavaraj Belagavi (BCC-W2101)', lat: 15.8340, lng: 74.5020 },
+        { name: 'Yallappa Maratha (BCC-W3402)', lat: 15.8380, lng: 74.5180 },
+        { name: 'Santosh Naik (BCC-W1203)', lat: 15.8530, lng: 74.5100 }
+      ];
+
+      workersGeo.forEach(w => {
+        const marker = L.circleMarker([w.lat, w.lng], {
+          radius: 8,
+          color: '#f59e0b',
+          fillColor: '#f59e0b',
+          fillOpacity: 0.9
+        }).bindPopup(`<b>Worker: ${w.name}</b><br>Active on Beat in Belagavi`);
+        markersLayer.addLayer(marker);
+
+        const circle5km = L.circle([w.lat, w.lng], {
+          radius: 5000,
+          color: '#f59e0b',
+          fillColor: '#fef3c7',
+          fillOpacity: 0.04,
+          dashArray: '6, 12'
+        });
+        markersLayer.addLayer(circle5km);
+      });
+    }
+
+    // Officer Dashboard
+    async function loadOfficerDashboard() {
+      try {
+        const res = await fetch('/api/officer/dashboard');
+        const data = await res.json();
+        if (data.success) {
+          const m = data.metrics;
+          document.getElementById('officer-stat-total').innerText = m.total_reports;
+          document.getElementById('officer-stat-pending').innerText = m.pending_reports;
+          document.getElementById('officer-stat-verified').innerText = m.verified_reports;
+          document.getElementById('officer-stat-overdue').innerText = m.overdue_delayed;
+        }
+      } catch (e) { console.error(e); }
+    }
+
+    async function handleOfficerCreateAccount(e) {
+      e.preventDefault();
+      const role = document.getElementById('staff-role').value;
+      const name = document.getElementById('staff-name').value;
+      const phone = document.getElementById('staff-phone').value;
+      const aadhaar = document.getElementById('staff-aadhaar').value;
+      const ward = document.getElementById('staff-ward').value;
+
+      try {
+        const res = await fetch('/api/officer/create-account', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ role, name, phone, aadhaar, ward })
+        });
+        const data = await res.json();
+        alert(data.message);
+        document.getElementById('officer-add-staff-form').reset();
+        loadWorkersList();
+      } catch (err) { alert('Error adding staff account.'); }
+    }
+
+    // Blockchain Explorer Ledger
+    async function loadBlockchainLedger() {
+      try {
+        const res = await fetch('/api/blockchain/blocks');
+        const data = await res.json();
+        const container = document.getElementById('blockchain-blocks-container');
+        if (!container) return;
+        container.innerHTML = '';
+
+        data.blocks.forEach(b => {
+          const item = document.createElement('div');
+          item.className = 'bg-slate-900 border border-slate-700/80 rounded-xl p-3 space-y-1.5';
+          item.innerHTML = `
+            <div class="flex items-center justify-between text-slate-300">
+              <span class="font-bold text-emerald-400">BLOCK #${b.block_index} ${b.block_index === 0 ? '(GENESIS BELAGAVI)' : ''}</span>
+              <span class="text-[10px] text-slate-500">${b.timestamp}</span>
+            </div>
+            <div class="text-[11px] text-slate-400 truncate">
+              <span class="text-slate-500">Block Hash:</span> <strong class="text-white">${b.block_hash}</strong>
+            </div>
+            <div class="text-[11px] text-slate-300">
+              <span class="text-slate-500">Person Attribution:</span> Worker: <strong class="text-amber-400">${b.worker_name || 'BCC Worker'} (${b.worker_emp_id || 'BCC'})</strong> &bull; Citizen: <strong class="text-sky-400">${b.citizen_name || 'Citizen'}</strong>
+            </div>
+            <div class="flex items-center justify-between text-[10px] text-slate-400 pt-1 border-t border-slate-800">
+              <span>Report Ref: #${b.report_id}</span>
+              <span class="text-emerald-400">Reward: +₹${b.reward_amount || 0} INR</span>
+            </div>
+          `;
+          container.appendChild(item);
+        });
+      } catch (e) { console.error(e); }
+    }
+
+    function toggleWorkerDuty() {
+      const btn = document.getElementById('btn-worker-duty');
+      const isOn = btn.innerText.includes('ON');
+      const newStatus = isOn ? 'off_duty' : 'on_duty';
+
+      fetch('/api/worker/update-duty', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ worker_id: activeWorkerId, duty_status: newStatus })
+      });
+
+      if (isOn) {
+        btn.innerHTML = `<i data-lucide="power" class="w-4 h-4"></i><span>Duty: OFF</span>`;
+        btn.className = "px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-300 rounded-xl text-xs font-bold shadow transition flex items-center space-x-1.5";
+      } else {
+        btn.innerHTML = `<i data-lucide="power" class="w-4 h-4"></i><span>Duty: ON</span>`;
+        btn.className = "px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold shadow transition flex items-center space-x-1.5";
+      }
+      lucide.createIcons();
+    }
+
     function openChangeHomeCenterModal() {
       document.getElementById('edit-home-lat').value = homeCenter.lat;
       document.getElementById('edit-home-lng').value = homeCenter.lng;
@@ -1069,7 +1754,7 @@
           currentUser.home_lat = lat;
           currentUser.home_lng = lng;
           currentUser.home_address = address;
-          localStorage.setItem('bbmp_user', JSON.stringify(currentUser));
+          localStorage.setItem('bcc_user', JSON.stringify(currentUser));
         } catch(e) {}
       }
 
@@ -1081,584 +1766,7 @@
 
       closeChangeHomeCenterModal();
       checkProximityAlert();
-      alert("Home Center updated! 500m vehicle radar recalibrated.");
-    }
-
-    // Role Switching
-    function switchRole(role) {
-      currentRole = role;
-      ['citizen', 'worker', 'officer'].forEach(r => {
-        const view = document.getElementById(`view-${r}`);
-        const btn = document.getElementById(`btn-role-${r}`);
-        if (r === role) {
-          view.classList.remove('hidden');
-          btn.className = 'px-4 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center space-x-1.5 bg-emerald-600 text-white shadow';
-        } else {
-          view.classList.add('hidden');
-          btn.className = 'px-4 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center space-x-1.5 text-slate-300 hover:text-white';
-        }
-      });
-      lucide.createIcons();
-
-      if (role === 'officer') {
-        setTimeout(() => {
-          if (mapInstance) mapInstance.invalidateSize();
-          loadOfficerDashboard();
-        }, 200);
-      } else if (role === 'worker') {
-        renderWorkerAlerts();
-      }
-    }
-
-    // Audio & Siren Chime
-    function testVehicleSiren() {
-      try {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(587.33, ctx.currentTime);
-        osc.frequency.setValueAtTime(880, ctx.currentTime + 0.2);
-        osc.frequency.setValueAtTime(1174.66, ctx.currentTime + 0.4);
-        gain.gain.setValueAtTime(0.3, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.8);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.8);
-      } catch (e) { console.log(e); }
-
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        const msg = new SpeechSynthesisUtterance("BBMP ಕಸದ ವಾಹನ ಬಂದಿದೆ! BBMP Waste Collection Truck is near your home. Please bring out plastic, bottles and vegetable waste.");
-        msg.rate = 0.95;
-        window.speechSynthesis.speak(msg);
-      }
-
-      const banner = document.getElementById('proximity-banner');
-      banner.classList.remove('hidden');
-    }
-
-    function dismissProximity() {
-      document.getElementById('proximity-banner').classList.add('hidden');
-    }
-
-    // Check Vehicle Proximity (Calculated relative to Home Center!)
-    async function checkProximityAlert() {
-      try {
-        const res = await fetch(`/api/vehicles/live?lat=${homeCenter.lat}&lng=${homeCenter.lng}`);
-        const data = await res.json();
-        if (data.success && data.nearest_vehicle) {
-          const nv = data.nearest_vehicle;
-          document.getElementById('truck-distance-display').innerText = nv.distance_meters;
-          
-          if (nv.distance_meters <= 500) {
-            document.getElementById('proximity-banner').classList.remove('hidden');
-            document.getElementById('truck-status-badge').className = "bg-rose-500/20 text-rose-300 text-xs px-2 py-0.5 rounded-full border border-rose-500/30 animate-pulse font-bold";
-            document.getElementById('truck-status-badge').innerText = "Approaching (< 500m)";
-          } else {
-            document.getElementById('truck-status-badge').className = "bg-sky-500/20 text-sky-300 text-xs px-2 py-0.5 rounded-full border border-sky-500/30";
-            document.getElementById('truck-status-badge').innerText = "On Routine Route";
-          }
-        }
-      } catch (e) { console.error(e); }
-    }
-
-    async function simulateTruckCloser() {
-      await fetch('/api/vehicles/simulate-movement', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ vehicle_id: 1, latitude: homeCenter.lat + 0.002, longitude: homeCenter.lng + 0.002 })
-      });
-      testVehicleSiren();
-      checkProximityAlert();
-      if (mapInstance) updateMapMarkers();
-    }
-
-    // Geolocation
-    function getCurrentLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(pos => {
-          document.getElementById('report-lat').value = pos.coords.latitude.toFixed(4);
-          document.getElementById('report-lng').value = pos.coords.longitude.toFixed(4);
-        }, () => {
-          document.getElementById('report-lat').value = homeCenter.lat;
-          document.getElementById('report-lng').value = homeCenter.lng;
-        });
-      }
-    }
-
-    function previewCitizenImage(input) {
-      if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        reader.onload = e => {
-          document.getElementById('report-photo-preview').src = e.target.result;
-          document.getElementById('report-photo-preview').classList.remove('hidden');
-          document.getElementById('report-photo-placeholder').classList.add('hidden');
-          capturedPhotoData = e.target.result;
-        };
-        reader.readAsDataURL(input.files[0]);
-      }
-    }
-
-    // Citizen Submit Report
-    async function handleCitizenSubmitReport(e) {
-      e.preventDefault();
-      const wasteType = document.querySelector('input[name="waste_type"]:checked').value;
-      const desc = document.getElementById('report-description').value;
-      const lat = parseFloat(document.getElementById('report-lat').value);
-      const lng = parseFloat(document.getElementById('report-lng').value);
-      const address = document.getElementById('report-address').value;
-
-      const citizenId = currentUser ? currentUser.id : 3;
-      const citizenName = currentUser ? (currentUser.name || `${currentUser.first_name || ''} ${currentUser.last_name || ''}`) : 'Suresh Kumar';
-
-      const payload = {
-        citizen_id: citizenId,
-        citizen_name: citizenName,
-        waste_type: wasteType,
-        description: desc || 'Roadside plastic and vegetable waste dumping',
-        latitude: lat,
-        longitude: lng,
-        address: address,
-        before_image: capturedPhotoData || 'https://images.unsplash.com/photo-1605600659873-d808a13e4d2a?w=500&auto=format&fit=crop&q=60'
-      };
-
-      const btn = document.getElementById('btn-submit-report');
-      btn.disabled = true;
-      btn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i><span>Broadcasting 5km Radar...</span>`;
-      lucide.createIcons();
-
-      try {
-        const res = await fetch('/api/reports/create', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        const data = await res.json();
-        alert(`🚨 ALERT SENT!\n${data.message}\nDispatched to ${data.alerted_workers.length} worker(s) within 5km.`);
-        document.getElementById('report-description').value = '';
-        loadAllReports();
-      } catch (err) {
-        alert('Error submitting report.');
-      } finally {
-        btn.disabled = false;
-        btn.innerHTML = `<i data-lucide="radio" class="w-4 h-4 animate-pulse"></i><span>Broadcast 5km Worker Alert & Submit</span>`;
-        lucide.createIcons();
-      }
-    }
-
-    // Fetch and render reports
-    async function loadAllReports() {
-      try {
-        const res = await fetch('/api/reports');
-        const data = await res.json();
-        if (data.success) {
-          allReports = data.reports;
-          renderCitizenReports();
-          renderWorkerAlerts();
-          if (mapInstance) updateMapMarkers();
-        }
-      } catch (e) { console.error(e); }
-    }
-
-    function renderCitizenReports() {
-      const container = document.getElementById('citizen-reports-container');
-      container.innerHTML = '';
-
-      if (allReports.length === 0) {
-        container.innerHTML = `<div class="text-center py-8 text-slate-500 text-xs">No incidents reported yet.</div>`;
-        return;
-      }
-
-      allReports.forEach(r => {
-        const isPending = r.status === 'pending';
-        const isOverdue = r.status === 'overdue' || r.sla_delayed === 1;
-        const isVerified = r.status === 'verified';
-        const isInProgress = r.status === 'in_progress';
-
-        let borderClass = 'border-slate-700';
-        let statusBadge = '';
-
-        if (isOverdue) {
-          borderClass = 'red-alert-border';
-          statusBadge = `<span class="bg-rose-500/20 text-rose-300 text-xs px-2.5 py-0.5 rounded-full border border-rose-500 font-bold animate-pulse flex items-center space-x-1">
-            <i data-lucide="alert-circle" class="w-3 h-3"></i><span>RED ALERT (10-MIN SLA OVERDUE)</span>
-          </span>`;
-        } else if (isPending) {
-          borderClass = 'red-alert-border';
-          statusBadge = `<span class="bg-rose-500/20 text-rose-300 text-xs px-2.5 py-0.5 rounded-full border border-rose-500 font-bold flex items-center space-x-1">
-            <i data-lucide="bell" class="w-3 h-3"></i><span>RED ALERT (PENDING WORKER)</span>
-          </span>`;
-        } else if (isInProgress) {
-          borderClass = 'border-amber-500/60';
-          statusBadge = `<span class="bg-amber-500/20 text-amber-300 text-xs px-2.5 py-0.5 rounded-full border border-amber-500/40 font-medium">In Progress by ${r.assigned_worker_name || 'Worker'}</span>`;
-        } else if (isVerified) {
-          borderClass = 'border-emerald-500/60';
-          statusBadge = `<span class="green-verified-badge text-white text-xs px-3 py-1 rounded-full font-bold flex items-center space-x-1 shadow">
-            <i data-lucide="check-check" class="w-3.5 h-3.5"></i><span>CLEANED & VERIFIED (GREEN MARK)</span>
-          </span>`;
-        }
-
-        const card = document.createElement('div');
-        card.className = `bg-slate-800/90 rounded-2xl p-4 border ${borderClass} transition-all shadow-md`;
-        card.innerHTML = `
-          <div class="flex items-start justify-between gap-2 mb-2">
-            <div>
-              <span class="text-xs uppercase font-mono text-slate-400 font-bold">#REPORT-${r.id} &bull; ${r.waste_type.replace('_', ' ').toUpperCase()}</span>
-              <h4 class="text-sm font-bold text-white mt-0.5">${r.description}</h4>
-            </div>
-            <div>${statusBadge}</div>
-          </div>
-          <div class="text-xs text-slate-400 flex items-center space-x-1 mb-2">
-            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-500"></i>
-            <span>${r.address || 'Bengaluru City'} (${r.latitude}, ${r.longitude})</span>
-          </div>
-          <div class="flex items-center justify-between text-[11px] text-slate-400 pt-2 border-t border-slate-700/60">
-            <span>Reported: ${r.created_at}</span>
-            ${isVerified ? `<span class="text-emerald-400 font-mono font-bold">AI Clearance Match: ${r.ai_similarity_score || 94.5}%</span>` : ''}
-          </div>
-        `;
-        container.appendChild(card);
-      });
-      lucide.createIcons();
-    }
-
-    // Worker View: Render Alerts within 5km
-    function renderWorkerAlerts() {
-      const container = document.getElementById('worker-alerts-container');
-      container.innerHTML = '';
-
-      const pendingOrActive = allReports.filter(r => r.status === 'pending' || r.status === 'in_progress' || r.status === 'overdue');
-
-      if (pendingOrActive.length === 0) {
-        container.innerHTML = `<div class="text-center py-8 text-slate-500 text-xs">No pending waste alerts within 5km radius. All clean!</div>`;
-        return;
-      }
-
-      pendingOrActive.forEach(r => {
-        const isCurrentActive = activeAcceptedTaskId === r.id;
-        const card = document.createElement('div');
-        card.className = `bg-slate-800/90 border ${r.sla_delayed ? 'red-alert-border' : 'border-slate-700'} rounded-2xl p-4 space-y-3`;
-        card.innerHTML = `
-          <div class="flex items-start justify-between">
-            <div>
-              <span class="bg-rose-500/20 text-rose-300 text-[10px] px-2 py-0.5 rounded font-mono font-bold uppercase">5km Surrounding Alert</span>
-              <h4 class="text-sm font-bold text-white mt-1">${r.description}</h4>
-              <p class="text-xs text-slate-400">${r.address}</p>
-            </div>
-            <div class="text-right">
-              <span class="text-xs font-bold text-amber-400">~1.1 km away</span>
-              <span class="block text-[10px] text-slate-500 font-mono">GPS Verified</span>
-            </div>
-          </div>
-          <div class="flex items-center justify-between pt-2 border-t border-slate-700/60">
-            <span class="text-xs text-slate-400">Status: <strong class="${r.sla_delayed ? 'text-rose-400' : 'text-amber-400'}">${r.status.toUpperCase()}</strong></span>
-            ${r.status === 'pending' ? `
-              <button onclick="acceptTask(${r.id})" class="px-4 py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl text-xs shadow transition flex items-center space-x-1">
-                <i data-lucide="check" class="w-3.5 h-3.5"></i>
-                <span>Accept Task (Start 10-Min SLA)</span>
-              </button>
-            ` : `
-              <span class="text-xs text-emerald-400 font-medium font-mono">${isCurrentActive ? '🟢 Currently Active' : 'Assigned'}</span>
-            `}
-          </div>
-        `;
-        container.appendChild(card);
-      });
-      lucide.createIcons();
-    }
-
-    // Accept Task & 10-Min SLA Timer
-    async function acceptTask(reportId) {
-      activeAcceptedTaskId = reportId;
-      try {
-        const res = await fetch('/api/reports/accept', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            report_id: reportId,
-            worker_id: 2,
-            worker_name: 'Manjunath K (Purasabe Worker 1)'
-          })
-        });
-        const data = await res.json();
-        alert(data.message);
-        document.getElementById('worker-active-task-desc').innerText = `Active Task #${reportId}: Cleanup in progress. Proceed to spot.`;
-        startSlaTimer(10 * 60);
-        loadAllReports();
-      } catch (e) { alert('Error accepting task'); }
-    }
-
-    function startSlaTimer(seconds) {
-      if (slaTimerInterval) clearInterval(slaTimerInterval);
-      let remaining = seconds;
-      const display = document.getElementById('sla-timer-display');
-      const box = document.getElementById('sla-countdown-box');
-
-      slaTimerInterval = setInterval(() => {
-        remaining--;
-        const mins = Math.floor(remaining / 60);
-        const secs = remaining % 60;
-        display.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-
-        if (remaining <= 180) {
-          display.className = "font-mono text-sm font-bold text-amber-400";
-        }
-        if (remaining <= 0) {
-          clearInterval(slaTimerInterval);
-          display.innerText = "OVERDUE (RED ALERT)";
-          display.className = "font-mono text-xs font-bold text-rose-400 animate-pulse";
-          box.className = "text-right bg-slate-900 border red-alert-border px-3 py-1.5 rounded-xl";
-          alert("🚨 10-MINUTE SLA OVERDUE! Escalation alert sent to BBMP Chief Officer.");
-          loadAllReports();
-        }
-      }, 1000);
-    }
-
-    // Camera hardware stream
-    async function startCamera() {
-      const video = document.getElementById('live-camera-feed');
-      const mock = document.getElementById('camera-mock-preview');
-      try {
-        cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
-        video.srcObject = cameraStream;
-        video.classList.remove('hidden');
-        mock.classList.add('hidden');
-      } catch (err) {
-        alert("Camera preview mode active. (Simulating live hardware camera with watermarked coordinates).");
-      }
-    }
-
-    function captureLiveSnapshot() {
-      const video = document.getElementById('live-camera-feed');
-      const canvas = document.getElementById('camera-snapshot-canvas');
-      const mock = document.getElementById('camera-mock-preview');
-
-      canvas.width = 640;
-      canvas.height = 360;
-      const ctx = canvas.getContext('2d');
-
-      if (!video.classList.contains('hidden')) {
-        ctx.drawImage(video, 0, 0, 640, 360);
-      } else {
-        ctx.fillStyle = '#1e293b';
-        ctx.fillRect(0, 0, 640, 360);
-        ctx.fillStyle = '#10b981';
-        ctx.font = 'bold 20px monospace';
-        ctx.fillText("BBMP LIVE CLEANED SPOT PROOF", 40, 160);
-        ctx.fillStyle = '#94a3b8';
-        ctx.font = '14px monospace';
-        ctx.fillText("Purasabe Sanitation Unit #80 - Clean Ground", 40, 190);
-      }
-
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.75)';
-      ctx.fillRect(10, 290, 620, 60);
-      ctx.fillStyle = '#10b981';
-      ctx.font = 'bold 12px monospace';
-      ctx.fillText(`GPS: 12.9719 N, 77.6412 E | TIME: ${new Date().toISOString()}`, 20, 312);
-      ctx.fillText(`PROOF-OF-CLEANLINESS | WORKER ID: #W80-2 | VERIFIED SPOT`, 20, 332);
-
-      canvas.classList.remove('hidden');
-      video.classList.add('hidden');
-      mock.classList.add('hidden');
-    }
-
-    async function submitWorkerCleanup() {
-      if (!activeAcceptedTaskId) {
-        const pending = allReports.find(r => r.status === 'in_progress' || r.status === 'pending' || r.status === 'overdue');
-        if (pending) activeAcceptedTaskId = pending.id;
-        else {
-          alert("Please select/accept an active task first.");
-          return;
-        }
-      }
-
-      const canvas = document.getElementById('camera-snapshot-canvas');
-      const afterImg = canvas.toDataURL('image/jpeg', 0.8) || 'sample_after_cleaned';
-
-      try {
-        const res = await fetch('/api/reports/submit-cleanup', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            report_id: activeAcceptedTaskId,
-            worker_id: 2,
-            after_image: afterImg,
-            latitude: 12.9725,
-            longitude: 77.6415
-          })
-        });
-        const data = await res.json();
-        alert(`✅ SUCCESS!\n${data.message}\nAI Match: ${data.ai_similarity_score}%\nBlockchain Block Hash: ${data.blockchain_hash.substring(0, 24)}...`);
-        if (slaTimerInterval) clearInterval(slaTimerInterval);
-        document.getElementById('sla-timer-display').innerText = "CLEANED";
-        activeAcceptedTaskId = null;
-        loadAllReports();
-        loadBlockchainLedger();
-      } catch (e) { alert("Error submitting cleanup proof."); }
-    }
-
-    function updateWatermarkTime() {
-      const now = new Date();
-      const el = document.getElementById('camera-watermark-time');
-      if (el) el.innerText = now.toTimeString().split(' ')[0];
-    }
-
-    // Map initialization
-    function initMap() {
-      mapInstance = L.map('map').setView([homeCenter.lat, homeCenter.lng], 13);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors'
-      }).addTo(mapInstance);
-      markersLayer = L.layerGroup().addTo(mapInstance);
-      updateMapMarkers();
-    }
-
-    function updateMapMarkers() {
-      if (!markersLayer) return;
-      markersLayer.clearLayers();
-
-      // 1. Plot Incidents
-      allReports.forEach(r => {
-        const isVerified = r.status === 'verified';
-        const color = isVerified ? '#10b981' : '#ef4444';
-        const marker = L.circleMarker([r.latitude, r.longitude], {
-          radius: 10,
-          color: color,
-          fillColor: color,
-          fillOpacity: 0.8
-        }).bindPopup(`<b>#Report-${r.id}</b><br>${r.description}<br>Status: <b>${r.status.toUpperCase()}</b>`);
-        markersLayer.addLayer(marker);
-      });
-
-      // 2. Plot Citizen Home Center with 500m proximity circle
-      const homeMarker = L.circleMarker([homeCenter.lat, homeCenter.lng], {
-        radius: 12,
-        color: '#10b981',
-        fillColor: '#059669',
-        fillOpacity: 0.95
-      }).bindPopup(`<b>Citizen Home Center</b><br>${homeCenter.address}`);
-      markersLayer.addLayer(homeMarker);
-
-      const circle500m = L.circle([homeCenter.lat, homeCenter.lng], {
-        radius: 500,
-        color: '#0284c7',
-        fillColor: '#38bdf8',
-        fillOpacity: 0.15,
-        dashArray: '4, 8'
-      }).bindPopup("500m Household Collection Alert Zone");
-      markersLayer.addLayer(circle500m);
-
-      // 3. Plot BBMP Garbage Vehicles
-      const vehicleLat = 12.9730;
-      const vehicleLng = 77.6400;
-      const vehicleMarker = L.marker([vehicleLat, vehicleLng]).bindPopup(`<b>BBMP Truck KA-01-GA-4501</b><br>Door-to-Door Collection`);
-      markersLayer.addLayer(vehicleMarker);
-
-      // 4. Plot Sanitation Worker with 5km radar dispatch circle
-      const workerLat = 12.9719;
-      const workerLng = 77.6412;
-      const workerMarker = L.circleMarker([workerLat, workerLng], {
-        radius: 8,
-        color: '#f59e0b',
-        fillColor: '#f59e0b',
-        fillOpacity: 0.9
-      }).bindPopup("<b>Worker: Manjunath K</b><br>Ward 80 Indiranagar (On Duty)");
-      markersLayer.addLayer(workerMarker);
-
-      const circle5km = L.circle([workerLat, workerLng], {
-        radius: 5000,
-        color: '#f59e0b',
-        fillColor: '#fef3c7',
-        fillOpacity: 0.05,
-        dashArray: '6, 12'
-      }).bindPopup("5km Worker Dispatch Surrounding Radius");
-      markersLayer.addLayer(circle5km);
-    }
-
-    // Officer Dashboard
-    async function loadOfficerDashboard() {
-      try {
-        const res = await fetch('/api/officer/dashboard');
-        const data = await res.json();
-        if (data.success) {
-          const m = data.metrics;
-          document.getElementById('officer-stat-total').innerText = m.total_reports;
-          document.getElementById('officer-stat-pending').innerText = m.pending_reports;
-          document.getElementById('officer-stat-verified').innerText = m.verified_reports;
-          document.getElementById('officer-stat-overdue').innerText = m.overdue_delayed;
-        }
-      } catch (e) { console.error(e); }
-    }
-
-    // Officer Add Staff (Strict requirement: Officer only)
-    async function handleOfficerCreateAccount(e) {
-      e.preventDefault();
-      const role = document.getElementById('staff-role').value;
-      const name = document.getElementById('staff-name').value;
-      const phone = document.getElementById('staff-phone').value;
-      const aadhaar = document.getElementById('staff-aadhaar').value;
-      const ward = document.getElementById('staff-ward').value;
-
-      try {
-        const res = await fetch('/api/officer/create-account', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            officer_id: 1,
-            role, name, phone, aadhaar, ward
-          })
-        });
-        const data = await res.json();
-        alert(data.message);
-        document.getElementById('officer-add-staff-form').reset();
-      } catch (err) { alert('Error adding staff account.'); }
-    }
-
-    // Blockchain Explorer Ledger
-    async function loadBlockchainLedger() {
-      try {
-        const res = await fetch('/api/blockchain/blocks');
-        const data = await res.json();
-        const container = document.getElementById('blockchain-blocks-container');
-        if (!container) return;
-        container.innerHTML = '';
-
-        data.blocks.forEach(b => {
-          const item = document.createElement('div');
-          item.className = 'bg-slate-900 border border-slate-700/80 rounded-xl p-3 space-y-1.5';
-          item.innerHTML = `
-            <div class="flex items-center justify-between text-slate-300">
-              <span class="font-bold text-emerald-400">BLOCK #${b.block_index} ${b.block_index === 0 ? '(GENESIS)' : ''}</span>
-              <span class="text-[10px] text-slate-500">${b.timestamp}</span>
-            </div>
-            <div class="text-[11px] text-slate-400 truncate">
-              <span class="text-slate-500">Block Hash:</span> <strong class="text-white">${b.block_hash}</strong>
-            </div>
-            <div class="text-[11px] text-slate-400 truncate">
-              <span class="text-slate-500">Prev Hash:</span> ${b.previous_hash}
-            </div>
-            <div class="flex items-center justify-between text-[10px] text-slate-400 pt-1 border-t border-slate-800">
-              <span>Report Ref: #${b.report_id}</span>
-              <span class="text-emerald-400">Reward: +₹${b.reward_amount || 0} INR</span>
-            </div>
-          `;
-          container.appendChild(item);
-        });
-      } catch (e) { console.error(e); }
-    }
-
-    function toggleWorkerDuty() {
-      const btn = document.getElementById('btn-worker-duty');
-      if (btn.innerText.includes('ON')) {
-        btn.innerHTML = `<i data-lucide="power" class="w-4 h-4"></i><span>Duty: OFF</span>`;
-        btn.className = "px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-300 rounded-xl text-xs font-bold shadow transition flex items-center space-x-1.5";
-      } else {
-        btn.innerHTML = `<i data-lucide="power" class="w-4 h-4"></i><span>Duty: ON</span>`;
-        btn.className = "px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold shadow transition flex items-center space-x-1.5";
-      }
-      lucide.createIcons();
+      alert("Belagavi Home Center updated! 500m vehicle radar adjusted.");
     }
   </script>
 </body>
