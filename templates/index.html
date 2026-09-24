@@ -35,6 +35,21 @@
     .animate-slide-down {
       animation: slide-down 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
+    @keyframes scan-laser {
+      0% { top: 8%; opacity: 0.8; }
+      50% { top: 85%; opacity: 1; }
+      100% { top: 8%; opacity: 0.8; }
+    }
+    .laser-scan-line {
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      height: 3px;
+      background: #10b981;
+      box-shadow: 0 0 14px 4px #10b981;
+      animation: scan-laser 2.2s infinite ease-in-out;
+      border-radius: 9999px;
+    }
   </style>
 </head>
 <body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans pb-20 sm:pb-4 select-none">
@@ -358,6 +373,14 @@
         <button type="button" onclick="exitStaffMode()" id="btn-exit-staff-mode" class="hidden px-3 py-1.5 bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 border border-rose-500/30 rounded-xl text-xs font-semibold flex items-center space-x-1.5 transition">
           <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
           <span>Exit Staff Mode</span>
+        </button>
+      </div>
+
+      <!-- Mobile QR Code Link Button -->
+      <div class="flex items-center space-x-2">
+        <button onclick="openMobileQrModal()" class="px-3 py-1.5 bg-sky-500/20 text-sky-300 border border-sky-500/40 hover:bg-sky-500/30 rounded-xl text-xs font-bold flex items-center space-x-1.5 transition shadow">
+          <i data-lucide="qr-code" class="w-4 h-4 text-sky-400"></i>
+          <span>📱 Mobile QR (ಸ್ಕ್ಯಾನರ್)</span>
         </button>
       </div>
 
@@ -1369,6 +1392,128 @@
 
       <button type="button" onclick="saveUpdatedHomeCenter()" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs transition">
         Save Home Center & Recalculate 500m Radar
+      </button>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- 1. MOBILE QR SCANNER MODAL (FOR OPENING WEBSITE LINK ON PHONE) -->
+  <!-- ============================================================== -->
+  <div id="modal-mobile-qr" class="hidden fixed inset-0 z-[120] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-sky-500/40 rounded-3xl max-w-md w-full p-6 space-y-5 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div class="flex items-center space-x-2.5">
+          <div class="p-2 bg-sky-500/20 text-sky-400 rounded-xl">
+            <i data-lucide="smartphone" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-extrabold text-white">📱 ಮೊಬೈಲ್ ಕ್ಯೂಆರ್ ಸ್ಕ್ಯಾನರ್ (Mobile Scanner)</h3>
+            <p class="text-xs text-slate-400">Scan with your phone camera to open Swachha Belagavi</p>
+          </div>
+        </div>
+        <button onclick="closeMobileQrModal()" class="text-slate-400 hover:text-white text-sm p-1">✕</button>
+      </div>
+
+      <!-- High Resolution Scannable QR Code Display -->
+      <div class="bg-white p-4 rounded-2xl flex flex-col items-center justify-center shadow-lg border-2 border-sky-400 mx-auto w-64 h-64 relative group">
+        <img src="/static/mobile_qr.png" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=http://10.209.107.185:5000'" alt="Mobile QR Code" class="w-full h-full object-contain">
+      </div>
+
+      <!-- IP Address & One-Tap Copy -->
+      <div class="bg-slate-950 border border-slate-800 rounded-2xl p-3.5 space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="text-[11px] text-slate-400 font-semibold uppercase">Direct Mobile Link:</span>
+          <span class="text-[10px] text-emerald-400 font-mono">Wi-Fi LAN Active</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <input type="text" id="mobile-qr-url-input" value="http://10.209.107.185:5000" readonly class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs font-mono text-sky-300">
+          <button type="button" onclick="copyMobileUrl()" class="px-3 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-xl text-xs font-bold transition flex items-center space-x-1 shadow">
+            <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+            <span>Copy</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3-Step Simple Instructions -->
+      <div class="bg-sky-500/10 border border-sky-500/20 rounded-2xl p-3.5 space-y-1.5 text-xs text-slate-300">
+        <p class="font-bold text-sky-300 flex items-center space-x-1">
+          <i data-lucide="scan" class="w-4 h-4"></i>
+          <span>ಹೇಗೆ ಸ್ಕ್ಯಾನ್ ಮಾಡುವುದು? / How to Scan:</span>
+        </p>
+        <ol class="list-decimal list-inside space-y-1 text-[11px] text-slate-300">
+          <li>ನಿಮ್ಮ ಮೊಬೈಲ್‌ನ ಕ್ಯಾಮೆರಾ (Camera) ಅಥವಾ Google Lens ಓಪನ್ ಮಾಡಿ.</li>
+          <li>ಸ್ಕ್ರೀನ್ ಮೇಲಿನ ಕ್ಯೂಆರ್ ಕೋಡ್ (QR Code) ಮೇಲೆ ಕ್ಯಾಮೆರಾ ಹಿಡಿಯಿರಿ.</li>
+          <li>ಬರುವ ಲಿಂಕ್ ಮೇಲೆ ಟ್ಯಾಪ್ ಮಾಡಿ ಮೊಬೈಲ್‌ನಲ್ಲಿ ಆ್ಯಪ್ ಬಳಸಿ!</li>
+        </ol>
+      </div>
+
+      <!-- Quick Scan In-App Items Button -->
+      <button type="button" onclick="closeMobileQrModal(); openInAppScanner();" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5">
+        <i data-lucide="scan-line" class="w-4 h-4 text-emerald-400"></i>
+        <span>📷 Open In-App Waste/Bin Scanner (ತ್ಯಾಜ್ಯ ಕ್ಯೂಆರ್ ಸ್ಕ್ಯಾನರ್)</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- 2. IN-APP MOBILE WASTE & BIN SCANNER MODAL -->
+  <!-- ============================================================== -->
+  <div id="modal-inapp-scanner" class="hidden fixed inset-0 z-[130] bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-emerald-500/40 rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div class="flex items-center space-x-2.5">
+          <div class="p-2 bg-emerald-500/20 text-emerald-400 rounded-xl">
+            <i data-lucide="scan-line" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-extrabold text-white">📷 ಬೆಳಗಾವಿ ಸ್ಮಾರ್ಟ್ ಕ್ಯೂಆರ್ ಸ್ಕ್ಯಾನರ್ (BCC Smart Scanner)</h3>
+            <p class="text-xs text-slate-400">Scan household waste tags, public bins & worker badges</p>
+          </div>
+        </div>
+        <button onclick="closeInAppScanner()" class="text-slate-400 hover:text-white text-sm p-1">✕</button>
+      </div>
+
+      <!-- Live Viewfinder with Animated Laser Scanning Line -->
+      <div class="relative aspect-video w-full rounded-2xl bg-black border-2 border-emerald-500/60 overflow-hidden flex items-center justify-center shadow-inner">
+        <!-- Viewfinder corner brackets -->
+        <div class="absolute top-3 left-3 w-6 h-6 border-t-2 border-l-2 border-emerald-400 z-10 pointer-events-none"></div>
+        <div class="absolute top-3 right-3 w-6 h-6 border-t-2 border-r-2 border-emerald-400 z-10 pointer-events-none"></div>
+        <div class="absolute bottom-3 left-3 w-6 h-6 border-b-2 border-l-2 border-emerald-400 z-10 pointer-events-none"></div>
+        <div class="absolute bottom-3 right-3 w-6 h-6 border-b-2 border-r-2 border-emerald-400 z-10 pointer-events-none"></div>
+
+        <!-- Laser Beam Animation -->
+        <div class="laser-scan-line z-20 pointer-events-none"></div>
+
+        <div class="text-center p-4 space-y-1 z-0">
+          <i data-lucide="scan" class="w-12 h-12 text-emerald-400/60 mx-auto animate-pulse"></i>
+          <p class="text-xs text-white font-bold">Scanning Viewfinder Active</p>
+          <p class="text-[10px] text-slate-400">Align QR code within the frame</p>
+        </div>
+      </div>
+
+      <!-- Quick Scan Simulated Presets -->
+      <div class="space-y-2">
+        <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
+          One-Tap Smart Scan Simulation (ತ್ವರಿತ ಸ್ಕ್ಯಾನ್):
+        </span>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+          <button type="button" onclick="simulateQrScan('house')" class="p-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-xl text-xs font-semibold text-center transition flex flex-col items-center justify-center space-y-1">
+            <i data-lucide="home" class="w-4 h-4 text-emerald-400"></i>
+            <span>🏠 House #42 (Tilakwadi)</span>
+          </button>
+          <button type="button" onclick="simulateQrScan('bin')" class="p-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-xl text-xs font-semibold text-center transition flex flex-col items-center justify-center space-y-1">
+            <i data-lucide="trash-2" class="w-4 h-4 text-sky-400"></i>
+            <span>🗑️ Smart Bin #108</span>
+          </button>
+          <button type="button" onclick="simulateQrScan('worker')" class="p-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-xl text-xs font-semibold text-center transition flex flex-col items-center justify-center space-y-1">
+            <i data-lucide="shield-check" class="w-4 h-4 text-amber-400"></i>
+            <span>👷 Worker (W2101)</span>
+          </button>
+        </div>
+      </div>
+
+      <button type="button" onclick="closeInAppScanner()" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs transition">
+        Close Scanner
       </button>
     </div>
   </div>
@@ -3302,8 +3447,100 @@
     // MOBILE THIN APP NAVIGATION
     // (Requirement 6: Mobile also seen thin app)
     // ============================================================
+    // ============================================================
+    // MOBILE QR CODE & IN-APP SCANNER ENGINE
+    // (Requirement: mobile scanner / mobile sconer)
+    // ============================================================
+    function openMobileQrModal() {
+      const modal = document.getElementById('modal-mobile-qr');
+      if (modal) modal.classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeMobileQrModal() {
+      const modal = document.getElementById('modal-mobile-qr');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function copyMobileUrl() {
+      const input = document.getElementById('mobile-qr-url-input');
+      if (input) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(input.value).then(() => {
+            showToast("✅ ಮೊಬೈಲ್ ಲಿಂಕ್ ನಕಲಿಸಲಾಗಿದೆ! (Link Copied)", "success");
+          }).catch(() => {
+            input.select();
+            document.execCommand('copy');
+            showToast("✅ ಮೊಬೈಲ್ ಲಿಂಕ್ ನಕಲಿಸಲಾಗಿದೆ! (Link Copied)", "success");
+          });
+        } else {
+          input.select();
+          document.execCommand('copy');
+          showToast("✅ ಮೊಬೈಲ್ ಲಿಂಕ್ ನಕಲಿಸಲಾಗಿದೆ! (Link Copied)", "success");
+        }
+      }
+    }
+
+    function openInAppScanner() {
+      const modal = document.getElementById('modal-inapp-scanner');
+      if (modal) modal.classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeInAppScanner() {
+      const modal = document.getElementById('modal-inapp-scanner');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function simulateQrScan(type) {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(1760, audioCtx.currentTime + 0.12);
+        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.12);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.12);
+      } catch(e) {}
+
+      let resultMsg = "";
+      if (type === 'house') {
+        resultMsg = "ಸ್ಕ್ಯಾನ್ ಯಶಸ್ವಿ: ತಿಳಕವಾಡಿ ಮನೆ #42 (Congress Road, Tilakwadi) ಜಿಪಿಎಸ್ ಗುರುತಿಸಲಾಗಿದೆ!";
+        const addr = document.getElementById('report-address');
+        const lat = document.getElementById('report-lat');
+        const lng = document.getElementById('report-lng');
+        const desc = document.getElementById('report-description');
+        if (addr) addr.value = "House #42, Congress Road, Tilakwadi, Belagavi";
+        if (lat) lat.value = "15.8345";
+        if (lng) lng.value = "74.5015";
+        if (desc) desc.value = "Household segregation audit: Plastic & wet waste checked.";
+      } else if (type === 'bin') {
+        resultMsg = "ಸ್ಕ್ಯಾನ್ ಯಶಸ್ವಿ: BCC ಸಾರ್ವಜನಿಕ ಕಸದ ತೊಟ್ಟಿ #BCC-BIN-108 (ಚನ್ನಮ್ಮ ವೃತ್ತ)!";
+        const addr = document.getElementById('report-address');
+        const lat = document.getElementById('report-lat');
+        const lng = document.getElementById('report-lng');
+        const desc = document.getElementById('report-description');
+        if (addr) addr.value = "BCC Smart Bin #108, Rani Channamma Circle, Belagavi";
+        if (lat) lat.value = "15.8530";
+        if (lng) lng.value = "74.5100";
+        if (desc) desc.value = "Smart Bin #108 overflow report: 90% full.";
+      } else if (type === 'worker') {
+        resultMsg = "ಸ್ಕ್ಯಾನ್ ಯಶಸ್ವಿ: ನೈರ್ಮಲ್ಯ ಸಿಬ್ಬಂದಿ ಬಸವರಾಜ್ (BCC-W2101) ಹಾಜರಾತಿ ಧೃಡಪಟ್ಟಿದೆ!";
+      }
+
+      showToast(`🎯 ${resultMsg}`, 'success', 4500);
+      closeInAppScanner();
+
+      const form = document.getElementById('report-waste-form');
+      if (form) form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
     function mobileNavClick(tab) {
-      const tabs = ['citizen', 'camera', 'map', 'staff'];
+      const tabs = ['citizen', 'camera', 'scanner', 'map', 'staff'];
       tabs.forEach(t => {
         const btn = document.getElementById(`mobile-nav-${t}`);
         if (!btn) return;
@@ -3324,6 +3561,8 @@
           camStream.parentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
           startCitizenCamera();
         }
+      } else if (tab === 'scanner') {
+        openInAppScanner();
       } else if (tab === 'map') {
         if (currentRole !== 'officer') {
           const proceed = confirm("Belagavi Municipal GIS Radar is in the Officer Command Center. Open Staff Login?");
@@ -3361,6 +3600,10 @@
         <i data-lucide="camera" class="w-4 h-4"></i>
       </div>
       <span class="text-[10px] font-semibold mt-0.5">Live Cam</span>
+    </button>
+    <button type="button" onclick="mobileNavClick('scanner')" id="mobile-nav-scanner" class="flex flex-col items-center justify-center flex-1 py-1 text-slate-400 hover:text-white transition">
+      <i data-lucide="scan-line" class="w-5 h-5 text-sky-400"></i>
+      <span class="text-[10px] font-semibold mt-0.5">Scanner</span>
     </button>
     <button type="button" onclick="mobileNavClick('map')" id="mobile-nav-map" class="flex flex-col items-center justify-center flex-1 py-1 text-slate-400 hover:text-white transition">
       <i data-lucide="map" class="w-5 h-5"></i>
