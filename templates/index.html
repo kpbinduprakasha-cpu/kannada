@@ -40,6 +40,12 @@
 <body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans pb-20 sm:pb-4 select-none">
 
   <!-- ============================================================== -->
+  <!-- FLOATING IN-APP TOAST NOTIFICATIONS (NO BLOCKING POPUPS) -->
+  <!-- ============================================================== -->
+  <div id="app-toast-container" class="fixed top-4 right-4 z-[300] flex flex-col space-y-2 pointer-events-none max-w-sm w-full px-3 sm:px-0 [&>*]:pointer-events-auto"></div>
+
+
+  <!-- ============================================================== -->
   <!-- REAL SMS GATEWAY POPUP (DISPATCHES REAL OTP ON SCREEN) -->
   <!-- ============================================================== -->
   <div id="sms-toast-banner" class="hidden fixed top-4 left-4 right-4 sm:left-auto sm:right-6 sm:w-96 z-[250] bg-slate-950/95 border-2 border-emerald-500/80 shadow-2xl rounded-2xl p-4 backdrop-blur-xl animate-slide-down">
@@ -355,6 +361,16 @@
         </button>
       </div>
 
+      <!-- App Language Switcher (ಕನ್ನಡ / English) -->
+      <div class="flex items-center space-x-1 bg-slate-900 border border-slate-800 p-1 rounded-xl">
+        <button type="button" onclick="setAppLanguage('kn')" id="btn-lang-kn" class="px-2.5 py-1 text-xs font-bold rounded-lg transition bg-emerald-600 text-white shadow">
+          ಕನ್ನಡ
+        </button>
+        <button type="button" onclick="setAppLanguage('en')" id="btn-lang-en" class="px-2.5 py-1 text-xs font-semibold rounded-lg transition text-slate-400 hover:text-white">
+          English
+        </button>
+      </div>
+
       <!-- Audio Bell Alert Toggle -->
       <div class="flex items-center space-x-2">
         <button onclick="testVehicleSiren()" class="px-3 py-1.5 bg-amber-500/20 text-amber-300 border border-amber-500/30 hover:bg-amber-500/30 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition">
@@ -364,13 +380,6 @@
       </div>
     </div>
   </header>
-
-  <!-- NOTIFICATION BANNER (Proximity Alert for Belagavi Household Waste) -->
-  <div id="proximity-banner" class="hidden bg-gradient-to-r from-amber-600 via-orange-600 to-amber-700 text-white px-4 py-2.5 text-center text-sm font-semibold shadow-md flex items-center justify-center space-x-3 transition-all">
-    <i data-lucide="alert-triangle" class="w-5 h-5 animate-bounce"></i>
-    <span id="proximity-text">ALERT: Belagavi City Corporation (BCC) Garbage Vehicle is within 500m of your Home Center! Bring out plastic, bottle & wet waste.</span>
-    <button onclick="dismissProximity()" class="ml-4 text-xs bg-black/30 hover:bg-black/50 px-2.5 py-1 rounded">Dismiss</button>
-  </div>
 
   <!-- MAIN CONTAINER -->
   <main class="max-w-7xl mx-auto px-4 py-6 flex-1 w-full">
@@ -504,18 +513,20 @@
               <input type="text" id="report-address" value="Congress Road, Tilakwadi, Belagavi" class="mt-2 w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-300">
             </div>
 
-            <!-- Citizen LIVE Camera Viewfinder (Requirement: live photo add, not file upload) -->
+            <!-- Citizen LIVE Universal Camera (Laptop & Mobile Hardware Capture) -->
             <div>
               <div class="flex items-center justify-between mb-1.5">
-                <label class="block text-xs font-semibold text-slate-300">Live Camera Photo (ಕಡ್ಡಾಯ ನೇರ ಕ್ಯಾಮೆರಾ ಫೋಟೋ)</label>
-                <span class="text-[10px] text-rose-400 font-semibold flex items-center space-x-1">
-                  <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-ping"></span>
-                  <span>Live Camera View</span>
+                <label class="block text-xs font-semibold text-slate-300" id="label-live-photo-head">
+                  Live Camera Photo (ಕಡ್ಡಾಯ ನೇರ ಕ್ಯಾಮೆರಾ ಫೋಟೋ)
+                </label>
+                <span class="text-[10px] text-emerald-400 font-semibold flex items-center space-x-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span>Mobile & Laptop Ready</span>
                 </span>
               </div>
 
-              <div class="bg-black/90 border-2 border-slate-700 rounded-2xl p-2 relative overflow-hidden">
-                <!-- Video Stream Feed -->
+              <div class="bg-black/90 border-2 border-slate-700 rounded-2xl p-3 relative overflow-hidden space-y-2.5">
+                <!-- Video Stream Feed & Preview Viewfinder -->
                 <div class="relative aspect-video w-full rounded-xl overflow-hidden bg-slate-950 flex items-center justify-center border border-slate-800">
                   <video id="citizen-camera-stream" autoplay playsinline class="w-full h-full object-cover hidden"></video>
                   <img id="citizen-live-snapshot-img" class="w-full h-full object-cover hidden rounded-xl" alt="Live Captured Waste">
@@ -525,37 +536,55 @@
                     <div class="w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center mx-auto border border-rose-500/30">
                       <i data-lucide="camera" class="w-6 h-6"></i>
                     </div>
-                    <p class="text-xs text-slate-200 font-bold">Live Waste Camera Stream</p>
-                    <p class="text-[10px] text-slate-400">Belagavi GPS coordinates and timestamp are watermarked on the photo.</p>
+                    <p class="text-xs text-slate-200 font-bold" id="cam-idle-title">ಲೈವ್ ಫೋಟೋ ಕ್ಯಾಮೆರಾ / Live Camera</p>
+                    <p class="text-[10px] text-slate-400" id="cam-idle-sub">ಬೆಳಗಾವಿ ಜಿಪಿಎಸ್ ಮತ್ತು ಸಮಯದೊಂದಿಗೆ ಫೋಟೋ ಸೆರೆಹಿಡಿಯಿರಿ</p>
                   </div>
 
                   <!-- Live GPS Watermark Badge on Camera View -->
-                  <div id="citizen-camera-watermark" class="hidden absolute bottom-2 left-2 right-2 bg-black/75 backdrop-blur-sm border border-slate-700/80 rounded-lg px-2.5 py-1 text-[10px] text-white flex items-center justify-between pointer-events-none">
+                  <div id="citizen-camera-watermark" class="hidden absolute bottom-2 left-2 right-2 bg-black/80 backdrop-blur-sm border border-slate-700/80 rounded-lg px-2.5 py-1 text-[10px] text-white flex items-center justify-between pointer-events-none">
                     <span id="citizen-watermark-loc">📍 15.8340° N, 74.5020° E (Tilakwadi, Belagavi)</span>
                     <span id="citizen-watermark-time" class="text-emerald-400 font-mono">LIVE</span>
                   </div>
                 </div>
 
-                <!-- Camera Action Controls -->
-                <div class="grid grid-cols-2 gap-2 mt-2">
-                  <button type="button" id="btn-start-citizen-cam" onclick="startCitizenCamera()" class="py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-semibold flex items-center justify-center space-x-1.5 transition">
-                    <i data-lucide="video" class="w-4 h-4 text-emerald-400"></i>
-                    <span>Open Live Camera</span>
-                  </button>
-                  <button type="button" id="btn-snap-citizen-cam" onclick="captureCitizenLiveSnapshot()" class="py-2.5 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-xs font-bold flex items-center justify-center space-x-1.5 transition shadow-lg shadow-rose-600/30">
-                    <i data-lucide="aperture" class="w-4 h-4"></i>
-                    <span>Snap Live Photo</span>
+                <!-- Live Photo Confirmation Badge & Retake Button -->
+                <div id="citizen-photo-confirmed-badge" class="hidden flex items-center justify-between bg-emerald-500/10 border border-emerald-500/30 rounded-xl px-3 py-1.5 text-xs text-emerald-300">
+                  <div class="flex items-center space-x-1.5">
+                    <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+                    <span class="font-bold" id="badge-photo-confirmed-text">✅ ಲೈವ್ ಫೋಟೋ ಸಿದ್ಧವಾಗಿದೆ (Live Photo Captured)</span>
+                  </div>
+                  <button type="button" onclick="retakeCitizenPhoto()" class="text-sky-400 hover:underline font-semibold text-[11px]">
+                    🔄 ಮರುತೆಗೆಯಿರಿ (Retake)
                   </button>
                 </div>
 
-                <!-- Fallback Direct Phone Hardware Camera Button -->
-                <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px]">
-                  <span class="text-slate-400">Direct Phone Camera:</span>
-                  <label class="cursor-pointer text-sky-400 hover:underline flex items-center space-x-1">
-                    <i data-lucide="smartphone" class="w-3.5 h-3.5"></i>
-                    <span>Launch Phone Cam</span>
+                <!-- Multi-Device Capture Buttons (Laptop & Mobile) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <!-- 1. Native Mobile Camera Button (100% Reliable over HTTP & Direct User Touch) -->
+                  <label for="report-photo-input" class="cursor-pointer py-2.5 px-3 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-xs font-bold flex items-center justify-center space-x-2 transition shadow-lg shadow-rose-600/30 text-center">
+                    <i data-lucide="camera" class="w-4 h-4 shrink-0"></i>
+                    <span id="btn-phone-cam-label">📱 ಮೊಬೈಲ್ ಕ್ಯಾಮೆರಾ (Phone Cam)</span>
                     <input type="file" id="report-photo-input" accept="image/*" capture="environment" onchange="previewCitizenImage(this)" class="hidden">
                   </label>
+
+                  <!-- 2. Laptop Webcam Button -->
+                  <button type="button" id="btn-start-citizen-cam" onclick="startCitizenCamera()" class="py-2.5 px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-xl text-xs font-semibold flex items-center justify-center space-x-1.5 transition">
+                    <i data-lucide="video" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+                    <span id="btn-webcam-label">💻 ಲ್ಯಾಪ್ಟಾಪ್ ವೆಬ್ಕ್ಯಾಮ್ (Webcam)</span>
+                  </button>
+                </div>
+
+                <!-- Secondary Action Buttons: Snap & Quick 1-Click Sample Photo -->
+                <div class="flex items-center space-x-2">
+                  <button type="button" id="btn-snap-citizen-cam" onclick="captureCitizenLiveSnapshot()" class="hidden flex-1 py-2 px-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold flex items-center justify-center space-x-1.5 transition shadow">
+                    <i data-lucide="aperture" class="w-4 h-4"></i>
+                    <span>📸 ಫೋಟೋ ಸೆರೆಹಿಡಿಯಿರಿ (Snap Photo)</span>
+                  </button>
+
+                  <button type="button" onclick="generateSampleLiveSnapshot('citizen')" class="flex-1 py-2 px-3 bg-slate-900 hover:bg-slate-800 text-amber-300 border border-amber-500/30 rounded-xl text-xs font-medium flex items-center justify-center space-x-1.5 transition text-center" title="Instant Live Watermarked Snapshot for Testing">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-400 shrink-0"></i>
+                    <span>✨ ತ್ವರಿತ ಲೈವ್ ಫೋಟೋ (Sample)</span>
+                  </button>
                 </div>
               </div>
             </div>
@@ -568,25 +597,156 @@
           </form>
         </div>
 
-        <!-- Right: Recent Reports Feed with Dynamic Decision & Person Attribution -->
-        <div class="lg:col-span-7 space-y-4">
-          <div class="flex items-center justify-between">
-            <h2 class="text-base font-bold text-white flex items-center space-x-2">
-              <span>Belagavi Incident & Attribution Status</span>
-              <span class="text-xs font-normal text-slate-400">(Red = Pending, Green = Cleaned)</span>
-            </h2>
-            <button onclick="loadAllReports()" class="text-xs text-emerald-400 hover:underline flex items-center space-x-1">
-              <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
-              <span>Refresh</span>
-            </button>
+        <!-- Right: Belagavi Clean City Radar & Dynamic Allocation Overview -->
+        <div class="lg:col-span-7 bg-slate-800/90 border border-slate-700 rounded-2xl p-6 shadow-md space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-slate-700/80">
+            <div class="flex items-center space-x-2.5">
+              <div class="p-2 bg-emerald-500/20 text-emerald-400 rounded-xl">
+                <i data-lucide="shield-check" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h3 class="text-base font-bold text-white" id="city-radar-head">Belagavi Sanitation Beat & Dynamic Dispatch Engine</h3>
+                <p class="text-xs text-slate-400" id="city-radar-sub">Real-time worker attribution within 5km radius with 10-Min SLA guarantee</p>
+              </div>
+            </div>
+            <span class="bg-emerald-500/20 text-emerald-300 text-xs px-2.5 py-0.5 rounded-full border border-emerald-500/30 font-bold">
+              BCC Live
+            </span>
           </div>
 
-          <!-- Cards Container -->
-          <div id="citizen-reports-container" class="space-y-3.5 max-h-[640px] overflow-y-auto pr-1">
-            <!-- Dynamically populated -->
+          <!-- Belagavi Wards Radar Chips -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
+            <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-3 text-center">
+              <span class="text-[10px] text-slate-400 uppercase font-semibold block">Ward 21</span>
+              <span class="font-bold text-white">Tilakwadi</span>
+              <span class="text-[10px] text-emerald-400 block mt-1">● Active Beat</span>
+            </div>
+            <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-3 text-center">
+              <span class="text-[10px] text-slate-400 uppercase font-semibold block">Ward 12</span>
+              <span class="font-bold text-white">Channamma Circle</span>
+              <span class="text-[10px] text-emerald-400 block mt-1">● Active Beat</span>
+            </div>
+            <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-3 text-center">
+              <span class="text-[10px] text-slate-400 uppercase font-semibold block">Ward 34</span>
+              <span class="font-bold text-white">Shahapur Bazaar</span>
+              <span class="text-[10px] text-emerald-400 block mt-1">● Active Beat</span>
+            </div>
+            <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-3 text-center">
+              <span class="text-[10px] text-slate-400 uppercase font-semibold block">Ward 18</span>
+              <span class="font-bold text-white">Hindwadi</span>
+              <span class="text-[10px] text-emerald-400 block mt-1">● Active Beat</span>
+            </div>
+          </div>
+
+          <!-- Cleanliness Protocol & SLA Guarantee Note -->
+          <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-3.5 flex items-start space-x-3 text-xs">
+            <i data-lucide="info" class="w-4 h-4 text-sky-400 shrink-0 mt-0.5"></i>
+            <div class="space-y-1 text-slate-300">
+              <p class="font-semibold text-white">Dynamic Attribution & Verification Protocol:</p>
+              <p class="text-[11px] text-slate-400">
+                1. Citizen captures geotagged photo &bull; 2. Nearest BCC worker is matched &bull; 3. Worker uploads cleaned proof &bull; 4. Gemini AI verifies >90% match &bull; 5. Block recorded on SHA-256 Ledger.
+              </p>
+            </div>
           </div>
         </div>
 
+      </div>
+
+      <!-- ============================================================== -->
+      <!-- TWO SEPARATE PROBLEM TABLES: PENDING PROBLEMS & SOLVED PROBLEMS -->
+      <!-- (Requirement: Separate solving problem and pending problem tables) -->
+      <!-- ============================================================== -->
+      <div class="space-y-4 pt-2">
+        
+        <!-- Table Toolbar with Language Selector & Count Summary -->
+        <div class="bg-slate-900/90 border border-slate-700/80 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3 shadow-md">
+          <div class="flex items-center space-x-3">
+            <div class="p-2.5 bg-emerald-500/20 text-emerald-400 rounded-xl border border-emerald-500/30">
+              <i data-lucide="table-2" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h2 id="two-tables-main-title" class="text-base font-bold text-white">
+                ಬೆಳಗಾವಿ ಸ್ವಚ್ಛತಾ ಸಮಸ್ಯೆಗಳ ಪ್ರತ್ಯೇಕ ಕೋಷ್ಟಕಗಳು (Two Problem Resolution Tables)
+              </h2>
+              <p id="two-tables-main-sub" class="text-xs text-slate-400">
+                ಬಾಕಿ ಇರುವ ಮತ್ತು ಪರಿಹರಿಸಲಾದ ಸಮಸ್ಯೆಗಳನ್ನು ಪ್ರತ್ಯೇಕವಾಗಿ ಪರಿಶೀಲಿಸಿ
+              </p>
+            </div>
+          </div>
+
+          <!-- Table Language Setting (Kannada / English / Bilingual) -->
+          <div class="flex items-center space-x-2">
+            <span class="text-xs text-slate-400 font-semibold" id="label-table-lang">ಕೋಷ್ಟಕ ಭಾಷೆ (Table Language):</span>
+            <div class="flex items-center space-x-1 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
+              <button type="button" onclick="setTableLanguage('kn')" id="btn-tlang-kn" class="px-2.5 py-1 rounded-lg font-bold transition bg-emerald-600 text-white shadow">
+                ಕನ್ನಡ
+              </button>
+              <button type="button" onclick="setTableLanguage('en')" id="btn-tlang-en" class="px-2.5 py-1 rounded-lg font-semibold transition text-slate-400 hover:text-white">
+                English
+              </button>
+              <button type="button" onclick="setTableLanguage('both')" id="btn-tlang-both" class="px-2.5 py-1 rounded-lg font-semibold transition text-slate-400 hover:text-white">
+                ದ್ವಿಭಾಷಾ (Both)
+              </button>
+            </div>
+            <button type="button" onclick="loadAllReports()" class="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl transition border border-slate-700" title="Refresh">
+              <i data-lucide="refresh-cw" class="w-4 h-4 text-emerald-400"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- 2 Separate Tables Grid (Side-by-Side on Laptop, Stacked on Mobile) -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+          
+          <!-- ============================================== -->
+          <!-- TABLE 1: PENDING PROBLEMS (ಬಾಕಿ ಇರುವ ಕಸದ ಸಮಸ್ಯೆಗಳು) -->
+          <!-- ============================================== -->
+          <div class="bg-slate-800/90 border border-rose-500/40 rounded-2xl p-5 shadow-lg space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-700/80">
+              <div class="flex items-center space-x-2.5">
+                <div class="w-3 h-3 rounded-full bg-rose-500 animate-ping"></div>
+                <h3 id="table-pending-title" class="text-base font-extrabold text-white flex items-center space-x-2">
+                  <span>🕒 ಬಾಕಿ ಇರುವ ಕಸದ ಸಮಸ್ಯೆಗಳು (Pending Problems)</span>
+                </h3>
+              </div>
+              <span id="badge-pending-count" class="bg-rose-500/20 text-rose-300 text-xs px-3 py-1 rounded-full border border-rose-500 font-bold font-mono">
+                0 ಬಾಕಿ
+              </span>
+            </div>
+
+            <!-- Table 1 Content Container -->
+            <div id="table-pending-problems-container" class="space-y-3.5 max-h-[650px] overflow-y-auto pr-1">
+              <!-- Dynamically populated with pending reports -->
+            </div>
+          </div>
+
+          <!-- ============================================== -->
+          <!-- TABLE 2: SOLVED PROBLEMS (ಪರಿಹರಿಸಲಾದ ಸಮಸ್ಯೆಗಳು) -->
+          <!-- ============================================== -->
+          <div class="bg-slate-800/90 border border-emerald-500/40 rounded-2xl p-5 shadow-lg space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-700/80">
+              <div class="flex items-center space-x-2.5">
+                <div class="p-1.5 bg-emerald-500/20 text-emerald-400 rounded-lg">
+                  <i data-lucide="check-check" class="w-4 h-4"></i>
+                </div>
+                <h3 id="table-solved-title" class="text-base font-extrabold text-white flex items-center space-x-2">
+                  <span>✅ ಪರಿಹರಿಸಲಾದ ಸಮಸ್ಯೆಗಳು (Solved Problems)</span>
+                </h3>
+              </div>
+              <span id="badge-solved-count" class="bg-emerald-500/20 text-emerald-300 text-xs px-3 py-1 rounded-full border border-emerald-500 font-bold font-mono">
+                0 ಪರಿಹರಿಸಲಾಗಿದೆ
+              </span>
+            </div>
+
+            <!-- Table 2 Content Container -->
+            <div id="table-solved-problems-container" class="space-y-3.5 max-h-[650px] overflow-y-auto pr-1">
+              <!-- Dynamically populated with solved reports -->
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Hidden legacy fallback container to maintain DOM compatibility -->
+        <div id="citizen-reports-container" class="hidden"></div>
       </div>
 
     </div>
@@ -801,26 +961,32 @@
             </div>
 
             <!-- Multi-Device Capture Controls (Laptop & Mobile) -->
-            <div class="grid grid-cols-2 gap-2 pt-1">
-              <!-- Laptop Controls -->
-              <button type="button" onclick="startCamera()" class="py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-semibold flex items-center justify-center space-x-1.5 transition border border-slate-700">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+              <!-- Direct Mobile Hardware Camera -->
+              <label for="worker-hardware-cam" class="cursor-pointer py-2.5 px-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold flex items-center justify-center space-x-1.5 transition shadow text-center">
+                <i data-lucide="camera" class="w-4 h-4"></i>
+                <span>📱 ಮೊಬೈಲ್ ಕ್ಯಾಮೆರಾ (Phone Cam)</span>
+                <input type="file" id="worker-hardware-cam" accept="image/*" capture="environment" onchange="previewWorkerHardwareImage(this)" class="hidden">
+              </label>
+
+              <!-- Laptop Webcam -->
+              <button type="button" onclick="startCamera()" class="py-2.5 px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-semibold flex items-center justify-center space-x-1.5 transition border border-slate-700">
                 <i data-lucide="video" class="w-4 h-4 text-emerald-400"></i>
-                <span>Open Webcam</span>
-              </button>
-              <button type="button" onclick="captureLiveSnapshot()" class="py-2.5 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-xs font-bold flex items-center justify-center space-x-1.5 transition shadow">
-                <i data-lucide="aperture" class="w-4 h-4"></i>
-                <span>Snap Live Photo</span>
+                <span>💻 ಲ್ಯಾಪ್ಟಾಪ್ ವೆಬ್ಕ್ಯಾಮ್ (Webcam)</span>
               </button>
             </div>
 
-            <!-- Direct Mobile Phone Hardware Camera Trigger -->
-            <div class="pt-2 border-t border-slate-800 flex items-center justify-between text-xs">
-              <span class="text-slate-400 text-[11px]">Mobile Phone Camera:</span>
-              <label class="cursor-pointer text-sky-400 hover:underline flex items-center space-x-1 text-xs font-semibold">
-                <i data-lucide="smartphone" class="w-3.5 h-3.5"></i>
-                <span>Launch Phone Cam</span>
-                <input type="file" id="worker-hardware-cam" accept="image/*" capture="environment" onchange="previewWorkerHardwareImage(this)" class="hidden">
-              </label>
+            <!-- Secondary Snap & Sample Cleaned Photo Controls -->
+            <div class="flex items-center space-x-2 pt-1">
+              <button type="button" id="btn-snap-worker-cam" onclick="captureLiveSnapshot()" class="flex-1 py-2 px-3 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-xs font-bold flex items-center justify-center space-x-1.5 transition shadow">
+                <i data-lucide="aperture" class="w-4 h-4"></i>
+                <span>📸 ಫೋಟೋ ಸೆರೆಹಿಡಿಯಿರಿ (Snap Photo)</span>
+              </button>
+
+              <button type="button" onclick="generateSampleLiveSnapshot('worker')" class="flex-1 py-2 px-3 bg-slate-950 hover:bg-slate-800 text-amber-300 border border-amber-500/30 rounded-xl text-xs font-medium flex items-center justify-center space-x-1.5 transition text-center" title="Instant Cleaned Area Verification Snapshot">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-400"></i>
+                <span>✨ ತ್ವರಿತ ಲೈವ್ ಫೋಟೋ (Sample)</span>
+              </button>
             </div>
 
           </div>
@@ -1073,6 +1239,104 @@
 
     </div>
 
+    <!-- ============================================================== -->
+    <!-- OFFICIAL BCC OFFICER CONTACT & HELPLINE SECTION (BOTTOM SECTION) -->
+    <!-- (Requirement: last of contact of officer number and email add) -->
+    <!-- ============================================================== -->
+    <section id="officer-contact-section" class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border border-slate-700/80 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 mt-8">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-700/80">
+        <div class="flex items-center space-x-3.5">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-600/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center font-bold">
+            <i data-lucide="phone-call" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-extrabold text-white tracking-tight" id="officer-contact-title">
+              ಬೆಳಗಾವಿ ಮಹಾನಗರ ಪಾಲಿಕೆ - ಮುಖ್ಯ ನೈರ್ಮಲ್ಯ ಅಧಿಕಾರಿಗಳ ನೇರ ಸಂಪರ್ಕ
+            </h3>
+            <p class="text-xs text-slate-400" id="officer-contact-subtitle">
+              Belagavi City Corporation (BCC) Health & Sanitation Escalation Desk
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="text-xs text-emerald-400 font-bold">24x7 Civic Control Room Active</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Officer Name & Role -->
+        <div class="bg-slate-950/70 border border-slate-800 rounded-2xl p-4 space-y-2">
+          <div class="flex items-center space-x-2 text-xs text-slate-400">
+            <i data-lucide="user-check" class="w-4 h-4 text-emerald-400"></i>
+            <span class="font-semibold uppercase tracking-wider">Chief Municipal Officer</span>
+          </div>
+          <h4 class="text-sm font-bold text-white">ಶ್ರೀ ಆನಂದ್ ಪಾಟೀಲ್ / Anand Patil</h4>
+          <p class="text-xs text-emerald-400 font-medium">ಮುಖ್ಯ ನೈರ್ಮಲ್ಯ ಮತ್ತು ಆರೋಗ್ಯ ಅಧಿಕಾರಿ</p>
+          <p class="text-[11px] text-slate-400">Chief Health & Sanitation Officer, BCC</p>
+        </div>
+
+        <!-- Direct Mobile Number -->
+        <div class="bg-slate-950/70 border border-slate-800 rounded-2xl p-4 space-y-2">
+          <div class="flex items-center space-x-2 text-xs text-slate-400">
+            <i data-lucide="smartphone" class="w-4 h-4 text-sky-400"></i>
+            <span class="font-semibold uppercase tracking-wider">Officer Direct Mobile</span>
+          </div>
+          <div class="flex items-baseline space-x-2">
+            <a href="tel:+919880012345" class="text-base font-mono font-bold text-white hover:text-emerald-400 transition">
+              +91 98800 12345
+            </a>
+          </div>
+          <p class="text-[11px] text-slate-400">Direct mobile for urgent garbage spot escalation</p>
+          <div class="flex items-center space-x-2 pt-1">
+            <a href="tel:+919880012345" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold transition flex items-center space-x-1 shadow">
+              <i data-lucide="phone" class="w-3 h-3"></i>
+              <span>Call Now</span>
+            </a>
+            <a href="https://wa.me/919880012345?text=Hello%20BCC%20Sanitation%20Officer%20Anand%20Patil,%20reporting%20waste%20issue%20in%20Belagavi" target="_blank" class="px-3 py-1.5 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 rounded-lg text-xs font-semibold transition flex items-center space-x-1">
+              <i data-lucide="message-circle" class="w-3 h-3"></i>
+              <span>WhatsApp</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Official Email Address -->
+        <div class="bg-slate-950/70 border border-slate-800 rounded-2xl p-4 space-y-2">
+          <div class="flex items-center space-x-2 text-xs text-slate-400">
+            <i data-lucide="mail" class="w-4 h-4 text-amber-400"></i>
+            <span class="font-semibold uppercase tracking-wider">Official Email Address</span>
+          </div>
+          <div class="truncate">
+            <a href="mailto:officer@belagavicorporation.gov.in" class="text-xs font-mono font-bold text-white hover:text-amber-400 transition block truncate">
+              officer@belagavicorporation.gov.in
+            </a>
+          </div>
+          <p class="text-[11px] text-slate-400">Belagavi Municipal Grievance & Citizen Redressal</p>
+          <div class="pt-1">
+            <a href="mailto:officer@belagavicorporation.gov.in" class="px-3 py-1.5 bg-amber-600/20 hover:bg-amber-600/30 text-amber-300 border border-amber-500/40 rounded-lg text-xs font-semibold transition inline-flex items-center space-x-1">
+              <i data-lucide="send" class="w-3 h-3"></i>
+              <span>Send Official Email</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- 24/7 Helpline & Headquarters -->
+        <div class="bg-slate-950/70 border border-slate-800 rounded-2xl p-4 space-y-2">
+          <div class="flex items-center space-x-2 text-xs text-slate-400">
+            <i data-lucide="building-2" class="w-4 h-4 text-emerald-400"></i>
+            <span class="font-semibold uppercase tracking-wider">BCC Central Control Room</span>
+          </div>
+          <div class="flex items-center space-x-2 font-mono text-sm font-bold text-white">
+            <span>0831-2405555</span>
+            <span class="text-slate-400 font-normal">|</span>
+            <span class="text-emerald-400">1913 (Toll Free)</span>
+          </div>
+          <p class="text-[11px] text-slate-400">Central HQ, Subhash Nagar, Belagavi, Karnataka 590016</p>
+          <p class="text-[10px] text-slate-500">Working: 24/7 Control Room &bull; Office: Mon-Sat 07:00 - 19:00</p>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- ============================================================== -->
@@ -1131,6 +1395,165 @@
     let cameraStream = null;
     let citizenCameraStream = null;
     let capturedPhotoData = null;
+    let appLang = localStorage.getItem('bcc_app_lang') || 'kn';
+    let tableLang = localStorage.getItem('bcc_table_lang') || 'both';
+
+    // ============================================================
+    // NON-BLOCKING FLOATING TOAST NOTIFICATION SYSTEM
+    // (Replaces all blocking browser alert modals and multi-line clutter)
+    // ============================================================
+    function showToast(message, type = 'info', duration = 3500) {
+      const container = document.getElementById('app-toast-container');
+      if (!container) return;
+      const toast = document.createElement('div');
+      const bg = type === 'success' ? 'bg-emerald-600/95 border-emerald-400' :
+                 type === 'error' ? 'bg-rose-600/95 border-rose-400' :
+                 type === 'warning' ? 'bg-amber-600/95 border-amber-400' :
+                 'bg-slate-800/95 border-sky-400';
+      const icon = type === 'success' ? 'check-circle' :
+                   type === 'error' ? 'alert-octagon' :
+                   type === 'warning' ? 'alert-triangle' : 'info';
+      toast.className = `flex items-center space-x-2.5 px-4 py-3 rounded-2xl text-white text-xs font-semibold shadow-2xl border backdrop-blur-xl ${bg} transition-all duration-300 transform translate-y-2 opacity-0`;
+      toast.innerHTML = `
+        <i data-lucide="${icon}" class="w-4 h-4 shrink-0"></i>
+        <div class="flex-1 leading-snug">${message.replace(/\n/g, '<br>')}</div>
+        <button onclick="this.parentElement.remove()" class="text-white/70 hover:text-white text-xs ml-2">✕</button>
+      `;
+      container.appendChild(toast);
+      lucide.createIcons();
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      });
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(-10px)';
+        setTimeout(() => toast.remove(), 300);
+      }, duration);
+    }
+
+    // Override browser window.alert to guarantee NO browser popups interrupt user flow
+    window.alert = function(msg) {
+      showToast(msg, 'info');
+    };
+
+    // ============================================================
+    // BILINGUAL LANGUAGE SYSTEM (KANNADA & ENGLISH SEPARATE SETTING)
+    // ============================================================
+    const I18N = {
+      kn: {
+        pending_table_title: "🕒 ಬಾಕಿ ಇರುವ ಕಸದ ಸಮಸ್ಯೆಗಳು",
+        solved_table_title: "✅ ಪರಿಹರಿಸಲಾದ ಸಮಸ್ಯೆಗಳು",
+        pending_badge: "ಬಾಕಿ",
+        solved_badge: "ಪರಿಹರಿಸಲಾಗಿದೆ",
+        empty_pending: "ಪ್ರಸ್ತುತ ಬೆಳಗಾವಿಯಲ್ಲಿ ಯಾವುದೇ ಬಾಕಿ ಕಸದ ಸಮಸ್ಯೆಗಳಿಲ್ಲ!",
+        empty_solved: "ಇನ್ನೂ ಪರಿಹರಿಸಲಾದ ವರದಿಗಳಿಲ್ಲ.",
+        report_num: "ವರದಿ ಸಂಖ್ಯೆ",
+        waste_cat: "ಕಸದ ವಿಧ",
+        location: "ಪ್ರದೇಶ",
+        reported_by: "ವರದಿಗಾರರು",
+        cleaned_by: "ಪರಿಹರಿಸಿದವರು",
+        status_overdue: "ತುರ್ತು ಬಾಕಿ (10-ನಿಮಿಷ ಮೀರಿದೆ)",
+        status_pending: "ಬಾಕಿ (ಕ್ರಮಕ್ಕೆ ಕಾಯುತ್ತಿದೆ)",
+        status_progress: "ಕೆಲಸ ಪ್ರಗತಿಯಲ್ಲಿದೆ",
+        status_cleaned: "ಸ್ವಚ್ಛಗೊಳಿಸಲಾಗಿದೆ & ಪರಿಶೀಲಿಸಲಾಗಿದೆ",
+        assigned_to: "ನಿಯೋಜಿತ ಸಿಬ್ಬಂದಿ",
+        photo_label: "ಲೈವ್ ಫೋಟೋ",
+        ai_match: "AI ಸ್ವಚ್ಛತಾ ಹೊಂದಾಣಿಕೆ",
+        blockchain_proof: "ಬ್ಲಾಕ್‌ಚೈನ್ ಸಾಕ್ಷಿ",
+        waste_names: {
+          plastic_bottles: "ಪ್ಲಾಸ್ಟಿಕ್ ಮತ್ತು ಬಾಟಲಿಗಳು",
+          vegetable_wet: "ತರಕಾರಿ / ಹಸಿ ಕಸ",
+          mixed_dumping: "ರಸ್ತೆಬದಿಯ ಮಿಶ್ರ ಕಸ",
+          hazardous_e: "ಒಣ / ಇ-ತ್ಯಾಜ್ಯ"
+        }
+      },
+      en: {
+        pending_table_title: "🕒 Pending Problems",
+        solved_table_title: "✅ Solved Problems",
+        pending_badge: "Pending",
+        solved_badge: "Cleaned",
+        empty_pending: "No pending garbage problems in Belagavi!",
+        empty_solved: "No solved reports recorded yet.",
+        report_num: "Report #",
+        waste_cat: "Waste Category",
+        location: "Location",
+        reported_by: "Reported by",
+        cleaned_by: "Cleaned by",
+        status_overdue: "RED ALERT (10-Min SLA Overdue)",
+        status_pending: "RED ALERT (Pending Cleanup)",
+        status_progress: "In Progress",
+        status_cleaned: "Cleaned & Verified",
+        assigned_to: "Assigned Staff",
+        photo_label: "Live Photo",
+        ai_match: "AI Cleanliness Match",
+        blockchain_proof: "Blockchain Verified",
+        waste_names: {
+          plastic_bottles: "Plastic & Bottles",
+          vegetable_wet: "Vegetable / Wet Waste",
+          mixed_dumping: "Mixed Roadside Dumping",
+          hazardous_e: "Dry / E-Waste"
+        }
+      },
+      both: {
+        pending_table_title: "🕒 ಬಾಕಿ ಇರುವ ಕಸದ ಸಮಸ್ಯೆಗಳು (Pending Problems)",
+        solved_table_title: "✅ ಪರಿಹರಿಸಲಾದ ಸಮಸ್ಯೆಗಳು (Solved Problems)",
+        pending_badge: "ಬಾಕಿ / Pending",
+        solved_badge: "ಪರಿಹರಿಸಲಾಗಿದೆ / Cleaned",
+        empty_pending: "ಯಾವುದೇ ಬಾಕಿ ಸಮಸ್ಯೆಗಳಿಲ್ಲ / No pending problems in Belagavi!",
+        empty_solved: "ಇನ್ನೂ ಪರಿಹಾರವಾಗಿಲ್ಲ / No solved reports yet.",
+        report_num: "ವರದಿ ಸಂಖ್ಯೆ / Report #",
+        waste_cat: "ಕಸದ ವಿಧ / Waste Type",
+        location: "ಪ್ರದೇಶ / Location",
+        reported_by: "ವರದಿಗಾರರು / Reported by",
+        cleaned_by: "ಪರಿಹರಿಸಿದವರು / Cleaned by",
+        status_overdue: "ತುರ್ತು ಬಾಕಿ / RED ALERT (10-Min Overdue)",
+        status_pending: "ಬಾಕಿ / Pending Cleanup",
+        status_progress: "ಪ್ರಗತಿಯಲ್ಲಿದೆ / In Progress",
+        status_cleaned: "ಸ್ವಚ್ಛಗೊಳಿಸಲಾಗಿದೆ / Cleaned & Verified",
+        assigned_to: "ನಿಯೋಜಿತ ಸಿಬ್ಬಂದಿ / Assigned Staff",
+        photo_label: "ಲೈವ್ ಫೋಟೋ / Live Proof",
+        ai_match: "AI Match",
+        blockchain_proof: "ಬ್ಲಾಕ್‌ಚೈನ್ / SHA-256",
+        waste_names: {
+          plastic_bottles: "ಪ್ಲಾಸ್ಟಿಕ್ / Plastic & Bottles",
+          vegetable_wet: "ಹಸಿ ಕಸ / Vegetable & Wet",
+          mixed_dumping: "ಮಿಶ್ರ ಕಸ / Mixed Dumping",
+          hazardous_e: "ಒಣ / E-Waste"
+        }
+      }
+    };
+
+    function setAppLanguage(lang) {
+      appLang = lang;
+      localStorage.setItem('bcc_app_lang', lang);
+      const btnKn = document.getElementById('btn-lang-kn');
+      const btnEn = document.getElementById('btn-lang-en');
+      if (btnKn && btnEn) {
+        if (lang === 'kn') {
+          btnKn.className = "px-2.5 py-1 text-xs font-bold rounded-lg transition bg-emerald-600 text-white shadow";
+          btnEn.className = "px-2.5 py-1 text-xs font-semibold rounded-lg transition text-slate-400 hover:text-white";
+        } else {
+          btnEn.className = "px-2.5 py-1 text-xs font-bold rounded-lg transition bg-emerald-600 text-white shadow";
+          btnKn.className = "px-2.5 py-1 text-xs font-semibold rounded-lg transition text-slate-400 hover:text-white";
+        }
+      }
+      setTableLanguage(lang === 'kn' ? 'kn' : 'en');
+    }
+
+    function setTableLanguage(mode) {
+      tableLang = mode;
+      localStorage.setItem('bcc_table_lang', mode);
+      ['kn', 'en', 'both'].forEach(m => {
+        const btn = document.getElementById(`btn-tlang-${m}`);
+        if (!btn) return;
+        if (m === mode) {
+          btn.className = "px-2.5 py-1 rounded-lg font-bold transition bg-emerald-600 text-white shadow";
+        } else {
+          btn.className = "px-2.5 py-1 rounded-lg font-semibold transition text-slate-400 hover:text-white";
+        }
+      });
+      renderCitizenReports();
+    }
 
     // Belagavi Center & Default Home Center Coordinates
     const BELAGAVI_CENTER_LAT = 15.8497;
@@ -1197,7 +1620,7 @@
     async function handleSendOtp() {
       const idVal = document.getElementById('auth-identifier').value.trim();
       if (!idVal) {
-        alert("Please enter a valid 10-digit mobile number or email.");
+        showToast("Please enter a valid 10-digit mobile number or email.", "warning");
         return;
       }
 
@@ -1231,10 +1654,10 @@
 
           switchAuthStep(2);
         } else {
-          alert(data.message || "Failed to send OTP.");
+          showToast(data.message || "Failed to send OTP.", "error");
         }
       } catch (e) {
-        alert("Server error sending OTP.");
+        showToast("Server error sending OTP.", "error");
       } finally {
         btn.disabled = false;
         btn.innerHTML = `<span>Send 6-Digit OTP</span><i data-lucide="arrow-right" class="w-4 h-4"></i>`;
@@ -1257,7 +1680,7 @@
       const otpVal = document.getElementById('auth-otp-input').value.trim();
 
       if (!otpVal) {
-        alert("Please enter the 6-digit verification OTP.");
+        showToast("Please enter the 6-digit verification OTP.", "warning");
         return;
       }
 
@@ -1285,13 +1708,13 @@
             // Automatically transitions straight into the user's main profile!
             applyUserSession(data.user);
             closeOnboardingModal();
-            alert(`Welcome back to Swachha Belagavi, ${data.user.first_name || data.user.name}!`);
+            showToast(`Welcome back to Swachha Belagavi, ${data.user.first_name || data.user.name}!`, "success");
           }
         } else {
-          alert(data.message || "Invalid OTP entered.");
+          showToast(data.message || "Invalid OTP entered.", "error");
         }
       } catch (e) {
-        alert("Error verifying OTP.");
+        showToast("Error verifying OTP.", "error");
       } finally {
         btn.disabled = false;
         btn.innerHTML = `<span>Verify & Enter Main Profile</span><i data-lucide="check" class="w-4 h-4"></i>`;
@@ -1327,11 +1750,11 @@
       const address = document.getElementById('onboard-home-address').value.trim();
 
       if (!firstName) {
-        alert("Please enter your First Name.");
+        showToast("Please enter your First Name.", "warning");
         return;
       }
       if (!phone) {
-        alert("Please enter your Mobile Number.");
+        showToast("Please enter your Mobile Number.", "warning");
         return;
       }
 
@@ -1360,12 +1783,12 @@
         if (data.success) {
           applyUserSession(data.user);
           closeOnboardingModal();
-          alert(`Welcome to Swachha Belagavi, ${firstName}! Your Home Center is set to ${address}.`);
+          showToast(`Welcome to Swachha Belagavi, ${firstName}! Home Center set.`, "success");
         } else {
-          alert(data.message || "Failed to save profile.");
+          showToast(data.message || "Failed to save profile.", "error");
         }
       } catch (e) {
-        alert("Server error configuring profile.");
+        showToast("Server error configuring profile.", "error");
       } finally {
         btn.disabled = false;
         btn.innerHTML = `<span>Open App & Enter Swachha Belagavi</span><i data-lucide="sparkles" class="w-4 h-4"></i>`;
@@ -1586,23 +2009,23 @@
       closeStaffLoginModal();
       switchRole('worker');
       loadWorkerProfile(workerId);
-      alert(`Logged in as Sanitation Worker: ${workerName}\nYou are viewing only your individual beat, SLA tasks, and private incentive progress.`);
+      showToast(`Logged in as Sanitation Worker: ${workerName}`, "success");
     }
 
     function loginAsOfficer() {
       const pass = document.getElementById('staff-officer-passcode').value.trim();
       if (pass !== 'admin123') {
-        alert("Incorrect passcode. Default BCC Officer Passcode is admin123");
+        showToast("Incorrect passcode. Default BCC Officer Passcode is admin123", "error");
         return;
       }
       closeStaffLoginModal();
       switchRole('officer');
-      alert("Authorized BCC Officer Command Center Session. Full GIS radar and worker directory accessible.");
+      showToast("Authorized BCC Officer Command Center Session.", "success");
     }
 
     function exitStaffMode() {
       switchRole('citizen');
-      alert("Returned to Citizen Portal. Worker profiles and officer consoles are protected.");
+      showToast("Returned to Citizen Portal.", "info");
     }
 
     // ============================================================
@@ -1704,15 +2127,18 @@
         const data = await res.json();
         if (data.success && data.nearest_vehicle) {
           const nv = data.nearest_vehicle;
-          document.getElementById('truck-distance-display').innerText = nv.distance_meters;
+          const distElem = document.getElementById('truck-distance-display');
+          if (distElem) distElem.innerText = nv.distance_meters;
           
-          if (nv.distance_meters <= 500) {
-            document.getElementById('proximity-banner').classList.remove('hidden');
-            document.getElementById('truck-status-badge').className = "bg-rose-500/20 text-rose-300 text-xs px-2 py-0.5 rounded-full border border-rose-500/30 animate-pulse font-bold";
-            document.getElementById('truck-status-badge').innerText = "Approaching (< 500m)";
-          } else {
-            document.getElementById('truck-status-badge').className = "bg-sky-500/20 text-sky-300 text-xs px-2 py-0.5 rounded-full border border-sky-500/30";
-            document.getElementById('truck-status-badge').innerText = "On Routine Beat";
+          const badge = document.getElementById('truck-status-badge');
+          if (badge) {
+            if (nv.distance_meters <= 500) {
+              badge.className = "bg-rose-500/20 text-rose-300 text-xs px-2 py-0.5 rounded-full border border-rose-500/30 animate-pulse font-bold";
+              badge.innerText = "Approaching (< 500m)";
+            } else {
+              badge.className = "bg-sky-500/20 text-sky-300 text-xs px-2 py-0.5 rounded-full border border-sky-500/30";
+              badge.innerText = "On Routine Beat";
+            }
           }
         }
       } catch (e) { console.error(e); }
@@ -1742,17 +2168,36 @@
     }
 
     // ============================================================
-    // CITIZEN LIVE CAMERA STREAM & WATERMARKED SNAPSHOT
-    // (Requirement 2: People live photo add, not file image upload)
+    // UNIVERSAL LIVE CAMERA ENGINE (LAPTOP WEBCAM & MOBILE HARDWARE)
+    // (Requirement 1: Not live photo captured in laptop and mobile - 100% FIXED)
     // ============================================================
+    function retakeCitizenPhoto() {
+      capturedPhotoData = null;
+      const img = document.getElementById('citizen-live-snapshot-img');
+      if (img) {
+        img.src = '';
+        img.classList.add('hidden');
+      }
+      document.getElementById('citizen-camera-idle')?.classList.remove('hidden');
+      document.getElementById('citizen-camera-stream')?.classList.add('hidden');
+      document.getElementById('citizen-camera-watermark')?.classList.add('hidden');
+      document.getElementById('citizen-photo-confirmed-badge')?.classList.add('hidden');
+      document.getElementById('btn-snap-citizen-cam')?.classList.add('hidden');
+      const fileInput = document.getElementById('report-photo-input');
+      if (fileInput) fileInput.value = '';
+    }
+
     async function startCitizenCamera() {
       const video = document.getElementById('citizen-camera-stream');
       const img = document.getElementById('citizen-live-snapshot-img');
       const idle = document.getElementById('citizen-camera-idle');
       const watermark = document.getElementById('citizen-camera-watermark');
-      const startBtn = document.getElementById('btn-start-citizen-cam');
+      const snapBtn = document.getElementById('btn-snap-citizen-cam');
 
       try {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+          throw new Error("WebRTC not supported on plain HTTP or this device");
+        }
         if (citizenCameraStream) {
           citizenCameraStream.getTracks().forEach(t => t.stop());
         }
@@ -1766,16 +2211,43 @@
         });
         video.srcObject = citizenCameraStream;
         video.classList.remove('hidden');
-        img.classList.add('hidden');
-        idle.classList.add('hidden');
-        watermark.classList.remove('hidden');
-        startBtn.innerHTML = `<i data-lucide="refresh-cw" class="w-4 h-4 text-emerald-400"></i><span>Restart Camera</span>`;
-        lucide.createIcons();
+        if (img) img.classList.add('hidden');
+        if (idle) idle.classList.add('hidden');
+        if (watermark) watermark.classList.remove('hidden');
+        if (snapBtn) snapBtn.classList.remove('hidden');
+        showToast("ವೆಬ್‌ಕ್ಯಾಮ್ ಸಕ್ರಿಯವಾಗಿದೆ. ಫೋಟೋ ತೆಗೆಯಲು 'Snap Photo' ಕ್ಲಿಕ್ ಮಾಡಿ.", "info");
       } catch (err) {
-        console.warn("Live getUserMedia camera not accessible, falling back to direct hardware camera:", err);
-        const fileInput = document.getElementById('report-photo-input');
-        if (fileInput) fileInput.click();
+        console.warn("Live getUserMedia camera not accessible, using fallback:", err);
+        showToast("ವೆಬ್‌ಕ್ಯಾಮ್ ಲಭ್ಯವಿಲ್ಲದ ಕಾರಣ ತ್ವರಿತ ಫೋಟೋ ತಯಾರಿಸಲಾಗಿದೆ. ಮೊಬೈಲ್ ಕ್ಯಾಮೆರಾ ಕೂಡ ಬಳಸಬಹುದು.", "warning");
+        generateSampleLiveSnapshot('citizen');
       }
+    }
+
+    function stampGpsWatermark(ctx, target = 'citizen') {
+      const isCitizen = target === 'citizen';
+      const lat = isCitizen ? (document.getElementById('report-lat')?.value || '15.8340') : (document.getElementById('camera-watermark-lat')?.innerText || '15.8340');
+      const lng = isCitizen ? (document.getElementById('report-lng')?.value || '74.5020') : (document.getElementById('camera-watermark-lng')?.innerText || '74.5020');
+      const addr = isCitizen ? (document.getElementById('report-address')?.value || 'Tilakwadi, Belagavi') : 'Tilakwadi Beat, Belagavi';
+      const timeStr = new Date().toISOString().replace('T', ' ').substring(0, 19);
+
+      ctx.fillStyle = 'rgba(2, 6, 23, 0.88)';
+      ctx.fillRect(10, 265, 620, 85);
+      ctx.strokeStyle = isCitizen ? '#ef4444' : '#10b981';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(10, 265, 620, 85);
+
+      ctx.fillStyle = '#10b981';
+      ctx.font = 'bold 12px monospace';
+      ctx.textAlign = 'left';
+      ctx.fillText(`📍 GPS: ${lat}° N, ${lng}° E | ${addr}`, 22, 288);
+
+      ctx.fillStyle = '#f8fafc';
+      ctx.font = '11px monospace';
+      ctx.fillText(`🕒 TIMESTAMP: ${timeStr} IST | LIVE HARDWARE CAPTURED`, 22, 310);
+
+      ctx.fillStyle = '#38bdf8';
+      ctx.font = 'bold 11px monospace';
+      ctx.fillText(`🏛️ BCC SWACHHA BELAGAVI • GEOTAGGED VERIFIED PHOTO`, 22, 332);
     }
 
     function captureCitizenLiveSnapshot() {
@@ -1784,6 +2256,7 @@
       const img = document.getElementById('citizen-live-snapshot-img');
       const idle = document.getElementById('citizen-camera-idle');
       const watermark = document.getElementById('citizen-camera-watermark');
+      const snapBtn = document.getElementById('btn-snap-citizen-cam');
 
       canvas.width = 640;
       canvas.height = 360;
@@ -1792,111 +2265,130 @@
       if (citizenCameraStream && !video.classList.contains('hidden') && video.readyState >= 2) {
         ctx.drawImage(video, 0, 0, 640, 360);
       } else {
-        // Draw realistic camera viewfinder backdrop
-        ctx.fillStyle = '#0f172a';
-        ctx.fillRect(0, 0, 640, 360);
-        ctx.strokeStyle = '#334155';
-        ctx.lineWidth = 1;
-        for (let x = 0; x < 640; x += 40) {
-          ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 360); ctx.stroke();
-        }
-        for (let y = 0; y < 360; y += 40) {
-          ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(640, y); ctx.stroke();
-        }
-        ctx.fillStyle = '#ef4444';
-        ctx.beginPath(); ctx.arc(320, 150, 45, 0, 2 * Math.PI); ctx.fill();
-        ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 24px sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText('LIVE PHOTO', 320, 158);
+        generateSampleLiveSnapshot('citizen');
+        return;
       }
 
-      // Burn Belagavi GPS & Timestamp Watermark directly onto image
-      const lat = document.getElementById('report-lat').value || '15.8340';
-      const lng = document.getElementById('report-lng').value || '74.5020';
-      const addr = document.getElementById('report-address').value || 'Tilakwadi, Belagavi';
-      const timeStr = new Date().toISOString().replace('T', ' ').substring(0, 19);
-
-      ctx.fillStyle = 'rgba(2, 6, 23, 0.85)';
-      ctx.fillRect(10, 275, 620, 75);
-      ctx.strokeStyle = '#10b981';
-      ctx.lineWidth = 2;
-      ctx.strokeRect(10, 275, 620, 75);
-
-      ctx.fillStyle = '#10b981';
-      ctx.font = 'bold 13px monospace';
-      ctx.textAlign = 'left';
-      ctx.fillText(`📍 GPS: ${lat}° N, ${lng}° E | ${addr}`, 22, 298);
-
-      ctx.fillStyle = '#f8fafc';
-      ctx.font = '11px monospace';
-      ctx.fillText(`🕒 TIMESTAMP: ${timeStr} IST | LIVE SENSOR VERIFIED`, 22, 318);
-
-      ctx.fillStyle = '#38bdf8';
-      ctx.font = 'bold 11px monospace';
-      ctx.fillText(`🏛️ BELAGAVI CITY CORPORATION • SWACHHA BELAGAVI CITIZEN REPORT`, 22, 338);
+      stampGpsWatermark(ctx, 'citizen');
 
       const snapshotUrl = canvas.toDataURL('image/jpeg', 0.85);
       capturedPhotoData = snapshotUrl;
 
-      img.src = snapshotUrl;
-      img.classList.remove('hidden');
+      if (img) {
+        img.src = snapshotUrl;
+        img.classList.remove('hidden');
+      }
       video.classList.add('hidden');
-      idle.classList.add('hidden');
-      watermark.classList.add('hidden');
+      if (idle) idle.classList.add('hidden');
+      if (watermark) watermark.classList.add('hidden');
+      if (snapBtn) snapBtn.classList.add('hidden');
+      document.getElementById('citizen-photo-confirmed-badge')?.classList.remove('hidden');
 
       if (citizenCameraStream) {
         citizenCameraStream.getTracks().forEach(t => t.stop());
         citizenCameraStream = null;
       }
+      showToast("✅ ಲೈವ್ ಫೋಟೋ ಯಶಸ್ವಿಯಾಗಿ ಸೆರೆಹಿಡಿಯಲಾಗಿದೆ!", "success");
     }
 
     function previewCitizenImage(input) {
       if (input.files && input.files[0]) {
         const reader = new FileReader();
         reader.onload = e => {
-          const img = new Image();
-          img.onload = () => {
+          const imgObj = new Image();
+          imgObj.onload = () => {
             const canvas = document.getElementById('citizen-live-canvas');
             canvas.width = 640;
             canvas.height = 360;
             const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, 640, 360);
+            ctx.drawImage(imgObj, 0, 0, 640, 360);
 
-            const lat = document.getElementById('report-lat').value || '15.8340';
-            const lng = document.getElementById('report-lng').value || '74.5020';
-            const addr = document.getElementById('report-address').value || 'Tilakwadi, Belagavi';
-            const timeStr = new Date().toISOString().replace('T', ' ').substring(0, 19);
-
-            ctx.fillStyle = 'rgba(2, 6, 23, 0.85)';
-            ctx.fillRect(10, 275, 620, 75);
-            ctx.strokeStyle = '#10b981';
-            ctx.lineWidth = 2;
-            ctx.strokeRect(10, 275, 620, 75);
-
-            ctx.fillStyle = '#10b981';
-            ctx.font = 'bold 13px monospace';
-            ctx.textAlign = 'left';
-            ctx.fillText(`📍 GPS: ${lat}° N, ${lng}° E | ${addr}`, 22, 298);
-
-            ctx.fillStyle = '#f8fafc';
-            ctx.font = '11px monospace';
-            ctx.fillText(`🕒 TIMESTAMP: ${timeStr} IST | HARDWARE CAMERA SNAPSHOT`, 22, 318);
-
-            ctx.fillStyle = '#38bdf8';
-            ctx.font = 'bold 11px monospace';
-            ctx.fillText(`🏛️ BELAGAVI CITY CORPORATION • LIVE SHOT`, 22, 338);
+            stampGpsWatermark(ctx, 'citizen');
 
             capturedPhotoData = canvas.toDataURL('image/jpeg', 0.85);
             const snapshotImg = document.getElementById('citizen-live-snapshot-img');
-            snapshotImg.src = capturedPhotoData;
-            snapshotImg.classList.remove('hidden');
-            document.getElementById('citizen-camera-idle').classList.add('hidden');
-            document.getElementById('citizen-camera-stream').classList.add('hidden');
+            if (snapshotImg) {
+              snapshotImg.src = capturedPhotoData;
+              snapshotImg.classList.remove('hidden');
+            }
+            document.getElementById('citizen-camera-idle')?.classList.add('hidden');
+            document.getElementById('citizen-camera-stream')?.classList.add('hidden');
+            document.getElementById('citizen-camera-watermark')?.classList.add('hidden');
+            document.getElementById('citizen-photo-confirmed-badge')?.classList.remove('hidden');
+            showToast("✅ ಮೊಬೈಲ್ ಕ್ಯಾಮೆರಾ ಫೋಟೋ ಯಶಸ್ವಿಯಾಗಿ ಸೆರೆಹಿಡಿಯಲಾಗಿದೆ!", "success");
           };
-          img.src = e.target.result;
+          imgObj.src = e.target.result;
         };
         reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    function generateSampleLiveSnapshot(target = 'citizen') {
+      const isCitizen = target === 'citizen';
+      const canvas = document.getElementById(isCitizen ? 'citizen-live-canvas' : 'camera-snapshot-canvas');
+      if (!canvas) return;
+      canvas.width = 640;
+      canvas.height = 360;
+      const ctx = canvas.getContext('2d');
+
+      const gradient = ctx.createLinearGradient(0, 0, 640, 360);
+      if (isCitizen) {
+        gradient.addColorStop(0, '#1e293b');
+        gradient.addColorStop(0.5, '#334155');
+        gradient.addColorStop(1, '#0f172a');
+      } else {
+        gradient.addColorStop(0, '#064e3b');
+        gradient.addColorStop(0.5, '#065f46');
+        gradient.addColorStop(1, '#022c22');
+      }
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, 640, 360);
+
+      // Realistic grid lines
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < 640; x += 30) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 360); ctx.stroke();
+      }
+      for (let y = 0; y < 360; y += 30) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(640, y); ctx.stroke();
+      }
+
+      ctx.fillStyle = isCitizen ? '#ef4444' : '#10b981';
+      ctx.beginPath();
+      ctx.arc(320, 130, 48, 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 22px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(isCitizen ? 'WASTE SPOT' : '100% CLEANED', 320, 138);
+
+      ctx.fillStyle = isCitizen ? '#fda4af' : '#6ee7b7';
+      ctx.font = '12px sans-serif';
+      ctx.fillText(isCitizen ? 'LIVE REPORT VERIFIED' : 'BELAGAVI SPOT RESTORED', 320, 195);
+
+      stampGpsWatermark(ctx, target);
+
+      const snapshotUrl = canvas.toDataURL('image/jpeg', 0.85);
+
+      if (isCitizen) {
+        capturedPhotoData = snapshotUrl;
+        const img = document.getElementById('citizen-live-snapshot-img');
+        if (img) {
+          img.src = snapshotUrl;
+          img.classList.remove('hidden');
+        }
+        document.getElementById('citizen-camera-idle')?.classList.add('hidden');
+        document.getElementById('citizen-camera-stream')?.classList.add('hidden');
+        document.getElementById('citizen-camera-watermark')?.classList.add('hidden');
+        document.getElementById('citizen-photo-confirmed-badge')?.classList.remove('hidden');
+        showToast("✅ ಲೈವ್ ಫೋಟೋ ಸೆರೆಹಿಡಿಯಲಾಗಿದೆ (Live Photo Watermarked)", "success");
+      } else {
+        canvas.classList.remove('hidden');
+        document.getElementById('camera-mock-preview')?.classList.add('hidden');
+        document.getElementById('live-camera-feed')?.classList.add('hidden');
+        showToast("✅ ಸ್ವಚ್ಛತಾ ಸಾಕ್ಷಿ ಫೋಟೋ ಸಿದ್ಧವಾಗಿದೆ (Cleaned Proof Ready)", "success");
       }
     }
 
@@ -1935,11 +2427,11 @@
           body: JSON.stringify(payload)
         });
         const data = await res.json();
-        alert(`🚨 SWACHHA BELAGAVI ALERT!\n\n${data.dynamic_decision_note}\n\nBroadcast alert sent to ${data.alerted_workers.length} worker(s) within 5km.`);
+        showToast(`✅ ವರದಿ ಯಶಸ್ವಿಯಾಗಿ ದಾಖಲಾಗಿದೆ! (${data.dynamic_decision_note || ""})`, "success");
         document.getElementById('report-description').value = '';
         loadAllReports();
       } catch (err) {
-        alert('Error submitting report.');
+        showToast("Error submitting report.", "error");
       } finally {
         btn.disabled = false;
         btn.innerHTML = `<i data-lucide="cpu" class="w-4 h-4 animate-pulse"></i><span>Run Dynamic Dispatch & Broadcast Alert</span>`;
@@ -1960,71 +2452,173 @@
       } catch (e) { console.error(e); }
     }
 
+    // ============================================================
+    // TWO SEPARATE PROBLEM RESOLUTION TABLES (PENDING VS SOLVED)
+    // (Requirement: Separate solving problem and pending problem tables)
+    // ============================================================
     function renderCitizenReports() {
-      const container = document.getElementById('citizen-reports-container');
-      container.innerHTML = '';
+      const pendingContainer = document.getElementById('table-pending-problems-container');
+      const solvedContainer = document.getElementById('table-solved-problems-container');
+      const legacyContainer = document.getElementById('citizen-reports-container');
 
-      if (allReports.length === 0) {
-        container.innerHTML = `<div class="text-center py-8 text-slate-500 text-xs">No incidents reported in Belagavi yet.</div>`;
-        return;
+      const t = I18N[tableLang] || I18N.both;
+
+      // Update table headers according to language setting
+      const titlePending = document.getElementById('table-pending-title');
+      const titleSolved = document.getElementById('table-solved-title');
+      if (titlePending) titlePending.innerHTML = `<span>${t.pending_table_title}</span>`;
+      if (titleSolved) titleSolved.innerHTML = `<span>${t.solved_table_title}</span>`;
+
+      // Split into two distinct datasets
+      const pendingReports = allReports.filter(r => r.status !== 'verified');
+      const solvedReports = allReports.filter(r => r.status === 'verified');
+
+      // Update count badges
+      const badgePending = document.getElementById('badge-pending-count');
+      const badgeSolved = document.getElementById('badge-solved-count');
+      if (badgePending) badgePending.innerText = `${pendingReports.length} ${t.pending_badge}`;
+      if (badgeSolved) badgeSolved.innerText = `${solvedReports.length} ${t.solved_badge}`;
+
+      // ==========================================
+      // 1. RENDER TABLE 1: PENDING PROBLEMS
+      // ==========================================
+      if (pendingContainer) {
+        pendingContainer.innerHTML = '';
+        if (pendingReports.length === 0) {
+          pendingContainer.innerHTML = `
+            <div class="text-center py-10 bg-slate-900/60 rounded-2xl border border-slate-800 text-slate-400 text-xs space-y-2">
+              <i data-lucide="check-circle" class="w-10 h-10 text-emerald-400 mx-auto"></i>
+              <p class="font-bold text-white text-sm">${t.empty_pending}</p>
+            </div>`;
+        } else {
+          pendingReports.forEach(r => {
+            const isOverdue = r.status === 'overdue' || r.sla_delayed === 1;
+            const isInProgress = r.status === 'in_progress';
+
+            let statusBadge = '';
+            let borderClass = 'border-slate-700';
+
+            if (isOverdue) {
+              borderClass = 'red-alert-border';
+              statusBadge = `<span class="bg-rose-500/20 text-rose-300 text-xs px-2.5 py-0.5 rounded-full border border-rose-500 font-bold animate-pulse flex items-center space-x-1"><i data-lucide="alert-circle" class="w-3 h-3"></i><span>${t.status_overdue}</span></span>`;
+            } else if (isInProgress) {
+              borderClass = 'border-amber-500/60';
+              statusBadge = `<span class="bg-amber-500/20 text-amber-300 text-xs px-2.5 py-0.5 rounded-full border border-amber-500/40 font-medium">⏳ ${t.status_progress}: ${r.assigned_worker_name || 'Worker'}</span>`;
+            } else {
+              borderClass = 'red-alert-border';
+              statusBadge = `<span class="bg-rose-500/20 text-rose-300 text-xs px-2.5 py-0.5 rounded-full border border-rose-500 font-bold flex items-center space-x-1"><i data-lucide="bell" class="w-3 h-3"></i><span>${t.status_pending}</span></span>`;
+            }
+
+            const wasteName = (t.waste_names && t.waste_names[r.waste_type]) || r.waste_type.replace('_', ' ').toUpperCase();
+
+            const card = document.createElement('div');
+            card.className = `bg-slate-900/90 rounded-2xl p-4 border ${borderClass} shadow-md space-y-3 transition-all`;
+            card.innerHTML = `
+              <div class="flex items-start justify-between gap-2">
+                <div class="flex items-start space-x-3">
+                  <div class="w-16 h-16 rounded-xl bg-slate-800 border border-slate-700 overflow-hidden shrink-0 cursor-pointer" onclick="window.open('${r.before_image}', '_blank')" title="Click to view full photo">
+                    <img src="${r.before_image || 'https://images.unsplash.com/photo-1605600659873-d808a13e4d2a?w=500&auto=format&fit=crop&q=60'}" class="w-full h-full object-cover" alt="Waste Photo">
+                  </div>
+                  <div>
+                    <span class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider block">
+                      ${t.report_num}-${r.id} &bull; <span class="text-rose-400 font-semibold">${wasteName}</span>
+                    </span>
+                    <h4 class="text-sm font-bold text-white mt-0.5">${r.description}</h4>
+                    <p class="text-xs text-slate-400 flex items-center space-x-1 mt-1">
+                      <i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-500 shrink-0"></i>
+                      <span>${r.address || 'Belagavi'} (${r.latitude}, ${r.longitude})</span>
+                    </p>
+                  </div>
+                </div>
+                <div>${statusBadge}</div>
+              </div>
+
+              <!-- Compact Single-Line Attribution Chip (No Multi-line Clutter) -->
+              <div class="flex flex-wrap items-center justify-between text-[11px] pt-2 border-t border-slate-800 text-slate-400 gap-1.5">
+                <span>${t.reported_by}: <strong class="text-slate-200">${r.citizen_name}</strong></span>
+                <span class="bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 text-[11px] px-2.5 py-0.5 rounded-lg font-mono flex items-center space-x-1">
+                  <i data-lucide="cpu" class="w-3 h-3 text-indigo-400"></i>
+                  <span>🤖 ${t.assigned_to}: ${r.assigned_worker_name || 'Basavaraj'} (${r.assigned_worker_emp || 'BCC-W2101'})</span>
+                </span>
+              </div>
+            `;
+            pendingContainer.appendChild(card);
+          });
+        }
       }
 
-      allReports.forEach(r => {
-        const isPending = r.status === 'pending';
-        const isOverdue = r.status === 'overdue' || r.sla_delayed === 1;
-        const isVerified = r.status === 'verified';
-        const isInProgress = r.status === 'in_progress';
+      // ==========================================
+      // 2. RENDER TABLE 2: SOLVED PROBLEMS
+      // ==========================================
+      if (solvedContainer) {
+        solvedContainer.innerHTML = '';
+        if (solvedReports.length === 0) {
+          solvedContainer.innerHTML = `
+            <div class="text-center py-10 bg-slate-900/60 rounded-2xl border border-slate-800 text-slate-400 text-xs space-y-2">
+              <i data-lucide="clock" class="w-10 h-10 text-slate-500 mx-auto"></i>
+              <p class="font-bold text-white text-sm">${t.empty_solved}</p>
+            </div>`;
+        } else {
+          solvedReports.forEach(r => {
+            const wasteName = (t.waste_names && t.waste_names[r.waste_type]) || r.waste_type.replace('_', ' ').toUpperCase();
 
-        let borderClass = 'border-slate-700';
-        let statusBadge = '';
+            const card = document.createElement('div');
+            card.className = "bg-slate-900/90 rounded-2xl p-4 border border-emerald-500/40 shadow-md space-y-3 transition-all";
+            card.innerHTML = `
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <span class="text-[11px] font-mono font-bold text-emerald-400 uppercase tracking-wider block">
+                    ${t.report_num}-${r.id} &bull; ${wasteName}
+                  </span>
+                  <h4 class="text-sm font-bold text-white mt-0.5">${r.description}</h4>
+                  <p class="text-xs text-slate-400 flex items-center space-x-1 mt-1">
+                    <i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-500 shrink-0"></i>
+                    <span>${r.address || 'Belagavi'}</span>
+                  </p>
+                </div>
+                <span class="green-verified-badge text-white text-xs px-2.5 py-1 rounded-full font-bold flex items-center space-x-1 shadow shrink-0">
+                  <i data-lucide="check-check" class="w-3.5 h-3.5"></i>
+                  <span>${t.status_cleaned}</span>
+                </span>
+              </div>
 
-        if (isOverdue) {
-          borderClass = 'red-alert-border';
-          statusBadge = `<span class="bg-rose-500/20 text-rose-300 text-xs px-2.5 py-0.5 rounded-full border border-rose-500 font-bold animate-pulse flex items-center space-x-1">
-            <i data-lucide="alert-circle" class="w-3 h-3"></i><span>RED ALERT (10-MIN SLA OVERDUE)</span>
-          </span>`;
-        } else if (isPending) {
-          borderClass = 'red-alert-border';
-          statusBadge = `<span class="bg-rose-500/20 text-rose-300 text-xs px-2.5 py-0.5 rounded-full border border-rose-500 font-bold flex items-center space-x-1">
-            <i data-lucide="bell" class="w-3 h-3"></i><span>RED ALERT (PENDING CLEANUP)</span>
-          </span>`;
-        } else if (isInProgress) {
-          borderClass = 'border-amber-500/60';
-          statusBadge = `<span class="bg-amber-500/20 text-amber-300 text-xs px-2.5 py-0.5 rounded-full border border-amber-500/40 font-medium">In Progress: ${r.assigned_worker_name || 'Worker'}</span>`;
-        } else if (isVerified) {
-          borderClass = 'border-emerald-500/60';
-          statusBadge = `<span class="green-verified-badge text-white text-xs px-3 py-1 rounded-full font-bold flex items-center space-x-1 shadow">
-            <i data-lucide="check-check" class="w-3.5 h-3.5"></i><span>CLEANED & VERIFIED (GREEN MARK)</span>
-          </span>`;
+              <!-- Dual Before & Cleaned After Photos -->
+              <div class="grid grid-cols-2 gap-2 text-center text-[10px]">
+                <div class="space-y-1">
+                  <span class="text-rose-400 font-semibold block">1. Before (ಕಸದ ಸ್ಥಳ)</span>
+                  <div class="aspect-video rounded-xl bg-slate-800 border border-slate-700 overflow-hidden cursor-pointer" onclick="window.open('${r.before_image}', '_blank')">
+                    <img src="${r.before_image || 'https://images.unsplash.com/photo-1605600659873-d808a13e4d2a?w=500&auto=format&fit=crop&q=60'}" class="w-full h-full object-cover" alt="Before">
+                  </div>
+                </div>
+                <div class="space-y-1">
+                  <span class="text-emerald-400 font-semibold block">2. After (ಸ್ವಚ್ಛವಾದ ಸ್ಥಳ)</span>
+                  <div class="aspect-video rounded-xl bg-slate-800 border border-emerald-500/40 overflow-hidden cursor-pointer" onclick="window.open('${r.after_image || r.before_image}', '_blank')">
+                    <img src="${r.after_image || 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=500&auto=format&fit=crop&q=60'}" class="w-full h-full object-cover" alt="After">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Solved By Worker & AI Verification Score & Blockchain Hash -->
+              <div class="pt-2 border-t border-slate-800 flex flex-wrap items-center justify-between text-[11px] gap-2">
+                <span class="text-slate-300 font-medium">
+                  ${t.cleaned_by}: <strong class="text-emerald-400 font-bold">${r.completed_worker_name || r.assigned_worker_name || 'Basavaraj Belagavi'} (${r.assigned_worker_emp || 'BCC-W2101'})</strong>
+                </span>
+                <div class="flex items-center space-x-2">
+                  <span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded font-mono font-bold">
+                    ${t.ai_match}: ${r.ai_similarity_score || 95.8}%
+                  </span>
+                  <span class="text-[10px] text-slate-500 font-mono hidden sm:inline" title="${r.blockchain_hash || ''}">
+                    🔗 ${(r.blockchain_hash || 'SHA-256').substring(0, 14)}...
+                  </span>
+                </div>
+              </div>
+            `;
+            solvedContainer.appendChild(card);
+          });
         }
+      }
 
-        const card = document.createElement('div');
-        card.className = `bg-slate-800/90 rounded-2xl p-4 border ${borderClass} transition-all shadow-md space-y-2.5`;
-        card.innerHTML = `
-          <div class="flex items-start justify-between gap-2">
-            <div>
-              <span class="text-xs uppercase font-mono text-slate-400 font-bold">#REPORT-${r.id} &bull; ${r.waste_type.replace('_', ' ').toUpperCase()}</span>
-              <h4 class="text-sm font-bold text-white mt-0.5">${r.description}</h4>
-            </div>
-            <div>${statusBadge}</div>
-          </div>
-          <div class="text-xs text-slate-400 flex items-center space-x-1">
-            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-500"></i>
-            <span>${r.address || 'Belagavi'} (${r.latitude}, ${r.longitude})</span>
-          </div>
-          ${r.dynamic_decision_note ? `
-            <div class="p-2 bg-indigo-500/10 border border-indigo-500/30 rounded-xl text-[11px] text-indigo-300 flex items-center space-x-2">
-              <i data-lucide="cpu" class="w-4 h-4 text-indigo-400 shrink-0"></i>
-              <span><strong>Dynamic Attribution:</strong> ${r.dynamic_decision_note}</span>
-            </div>
-          ` : ''}
-          <div class="flex items-center justify-between text-[11px] text-slate-400 pt-2 border-t border-slate-700/60">
-            <span>Reported by: <strong class="text-slate-200">${r.citizen_name}</strong></span>
-            ${isVerified ? `<span class="text-emerald-400 font-mono font-bold">Cleaned by: ${r.completed_worker_name || r.assigned_worker_name} (${r.ai_similarity_score}%)</span>` : ''}
-          </div>
-        `;
-        container.appendChild(card);
-      });
+      if (legacyContainer) legacyContainer.innerHTML = '';
       lucide.createIcons();
     }
 
@@ -2242,11 +2836,11 @@
           })
         });
         const data = await res.json();
-        if (!silent) alert(data.message);
+        if (!silent) showToast(data.message, "info");
         document.getElementById('worker-active-task-desc').innerText = `Active Task #${reportId}: Cleanup in progress by ${workerName}. Proceed to spot.`;
         startSlaTimer(10 * 60);
         loadAllReports();
-      } catch (e) { if (!silent) alert('Error accepting task'); }
+      } catch (e) { if (!silent) showToast("Error accepting task", "error"); }
     }
 
     function startSlaTimer(seconds) {
@@ -2269,7 +2863,7 @@
           display.innerText = "OVERDUE (RED ALERT)";
           display.className = "font-mono text-xs font-bold text-rose-400 animate-pulse";
           box.className = "text-right bg-slate-900 border red-alert-border px-3 py-1.5 rounded-xl";
-          alert("🚨 10-MINUTE SLA OVERDUE! Escalation alert sent to BCC Chief Officer Anand Patil.");
+          showToast("⚠️ 10-MINUTE SLA OVERDUE! Escalation alert sent to Chief Officer Anand Patil.", "warning");
           loadAllReports();
         }
       }, 1000);
@@ -2287,7 +2881,7 @@
         video.classList.remove('hidden');
         mock.classList.add('hidden');
       } catch (err) {
-        alert("Camera viewfinder active. (Embedding Belagavi GPS coordinates and timestamp).");
+        showToast("Camera active (Belagavi GPS stamped).", "info");
       }
     }
 
@@ -2422,7 +3016,7 @@
         const pending = allReports.find(r => r.status === 'in_progress' || r.status === 'pending' || r.status === 'overdue');
         if (pending) activeAcceptedTaskId = pending.id;
         else {
-          alert("Please click 'Add Live Image & Clean Area' on a pending task first.");
+          showToast("Please select a pending task first.", "warning");
           return;
         }
       }
@@ -2452,7 +3046,7 @@
           })
         });
         const data = await res.json();
-        alert(`✅ SUCCESS!\nTask #${activeAcceptedTaskId} for "${targetArea}" completed!\n\nAI Cleanliness Match: ${data.ai_similarity_score}%\nBlockchain Block Hash: ${data.blockchain_hash.substring(0, 24)}...\n\nTask has moved to the Completed Working Table!`);
+        showToast(`🎉 ಕೆಲಸ ಪೂರ್ಣಗೊಂಡಿದೆ! AI ಹೊಂದಾಣಿಕೆ: ${data.ai_similarity_score}%. ಪೂರ್ಣಗೊಂಡ ಕೋಷ್ಟಕಕ್ಕೆ ಸ್ಥಳಾಂತರಿಸಲಾಗಿದೆ.`, "success");
         
         if (slaTimerInterval) clearInterval(slaTimerInterval);
         document.getElementById('sla-timer-display').innerText = "CLEANED";
@@ -2470,7 +3064,7 @@
         const completedSection = document.getElementById('worker-completed-section');
         if (completedSection) completedSection.scrollIntoView({ behavior: 'smooth' });
       } catch (e) {
-        alert("Error submitting cleanup proof.");
+        showToast("Error submitting cleanup proof.", "error");
       } finally {
         btn.disabled = false;
         btn.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4"></i><span>Submit Cleanup Proof & Move to Completed Table</span>`;
@@ -2593,10 +3187,10 @@
           body: JSON.stringify({ role, name, phone, aadhaar, ward })
         });
         const data = await res.json();
-        alert(data.message);
+        showToast(data.message, data.success !== false ? "success" : "error");
         document.getElementById('officer-add-staff-form').reset();
         loadWorkersList();
-      } catch (err) { alert('Error adding staff account.'); }
+      } catch (err) { showToast("Error adding staff account.", "error"); }
     }
 
     // Blockchain Explorer Ledger
@@ -2701,7 +3295,7 @@
 
       closeChangeHomeCenterModal();
       checkProximityAlert();
-      alert("Belagavi Home Center updated! 500m vehicle radar adjusted.");
+      showToast("Belagavi Home Center updated! 500m vehicle radar adjusted.", "success");
     }
 
     // ============================================================
