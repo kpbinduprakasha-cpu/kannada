@@ -976,11 +976,19 @@ def get_rewards(user_id):
         conn.close()
         return jsonify({'success': False, 'message': 'User not found.'}), 404
 
-    if user['role'] == 'worker':
-        progress = c.execute("SELECT total_monthly_cleanups FROM worker_progress WHERE worker_id = ?", (user_id,)).fetchone()
-        cleanups = progress['total_monthly_cleanups'] if progress else 0
-    else:
-        cleanups = c.execute("SELECT COUNT(*) as count FROM waste_reports WHERE citizen_id = ? AND status = 'verified'", (user_id,)).fetchone()['count']
+    if user['role'] != 'worker':
+        conn.close()
+        return jsonify({
+            'success': True,
+            'user_name': user['name'],
+            'role': user['role'],
+            'is_eligible': False,
+            'reward_amount_inr': 0,
+            'message': 'Monthly ₹4,000 milestone bonus rewards are strictly for Belagavi City Corporation (BCC) sanitation workers only, not citizens.'
+        })
+
+    progress = c.execute("SELECT total_monthly_cleanups FROM worker_progress WHERE worker_id = ?", (user_id,)).fetchone()
+    cleanups = progress['total_monthly_cleanups'] if progress else 0
 
     target = 500
     is_eligible = cleanups >= target
@@ -990,12 +998,13 @@ def get_rewards(user_id):
     return jsonify({
         'success': True,
         'user_name': user['name'],
-        'role': user['role'],
+        'role': 'worker',
         'total_cleanups': cleanups,
         'target_milestone': target,
         'reward_amount_inr': reward_amount,
         'is_eligible': is_eligible,
-        'progress_percentage': min(100.0, round((cleanups / target) * 100.0, 1))
+        'progress_percentage': min(100.0, round((cleanups / target) * 100.0, 1)),
+        'message': 'Sanitation worker exclusive incentive: ₹4,000 extra cash for 500 cleanings in Belagavi.'
     })
 
 # -------------------------------------------------------------

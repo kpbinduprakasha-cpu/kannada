@@ -26,9 +26,11 @@ CLEANUP_GPS_TOLERANCE_METERS = 50.0 # Worker must be within 50m of dumped spot
 # SLA Timers
 WORKER_SLA_MINUTES = 10.0           # 10-minute SLA countdown before escalation
 
-# Reward & Gamification Milestones
-MONTHLY_CLEANUP_TARGET = 500        # 500 verified cleanups in calendar month
-MILESTONE_REWARD_INR = 4000.0       # ₹4,000 extra cash reward
+# Sanitation Worker Exclusive Monthly Reward Milestones (Workers Only - Not Citizens)
+WORKER_MONTHLY_CLEANUP_TARGET = 500   # 500 verified cleanups in calendar month by worker
+WORKER_MILESTONE_REWARD_INR = 4000.0  # ₹4,000 extra cash bonus exclusively for workers
+MONTHLY_CLEANUP_TARGET = 500          # Legacy alias
+MILESTONE_REWARD_INR = 4000.0         # Legacy alias
 
 # Blockchain Genesis Seed
 GENESIS_HASH = "0000000000000000000000000000000000000000000000000000000000000000"

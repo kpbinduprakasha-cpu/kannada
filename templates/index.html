@@ -327,21 +327,20 @@
           </div>
         </div>
 
-        <!-- ₹4,000 Milestone Reward Card -->
-        <div class="bg-gradient-to-br from-emerald-950/70 to-slate-800 border border-emerald-500/40 rounded-2xl p-5 shadow-sm">
+        <!-- Citizen Cleanliness Activity Card (No Financial Reward for Citizens - Worker Only) -->
+        <div class="bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700/80 rounded-2xl p-5 shadow-sm">
           <div class="flex items-center justify-between mb-2">
-            <span class="text-xs font-semibold uppercase tracking-wider text-emerald-300">Belagavi Clean Reward</span>
-            <span class="bg-amber-500/20 text-amber-300 text-xs px-2 py-0.5 rounded-full border border-amber-500/30 font-bold">₹4,000 INR</span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-sky-400">Citizen Cleanliness Activity</span>
+            <span class="bg-sky-500/20 text-sky-300 text-xs px-2 py-0.5 rounded-full border border-sky-500/30 font-medium">Community Civic Action</span>
           </div>
           <div class="flex items-baseline justify-between">
-            <span class="text-sm font-medium text-slate-300">Cleanups Verified:</span>
-            <span id="citizen-reward-counter" class="text-xl font-bold text-emerald-400 font-mono">18 / 500</span>
+            <span class="text-sm font-medium text-slate-300">Neighborhood Spot Reports:</span>
+            <span id="citizen-reports-counter" class="text-xl font-bold text-sky-400 font-mono">Active</span>
           </div>
-          <!-- Progress Bar -->
-          <div class="w-full bg-slate-700/60 rounded-full h-2.5 mt-2.5 overflow-hidden">
-            <div id="citizen-reward-bar" class="bg-emerald-500 h-2.5 rounded-full transition-all duration-500" style="width: 3.6%"></div>
+          <div class="w-full bg-slate-700/60 rounded-full h-2 mt-2.5 overflow-hidden">
+            <div class="bg-sky-500 h-2 rounded-full" style="width: 100%"></div>
           </div>
-          <p class="text-[11px] text-slate-400 mt-2">Clean or report 500 verified places in Belagavi to earn <strong class="text-emerald-300">₹4,000 extra cash reward</strong> via Blockchain.</p>
+          <p class="text-[11px] text-slate-400 mt-2">Help keep Belagavi clean by reporting garbage dumping spots. Belagavi City Corporation (BCC) sanitation workers are dispatched within 5km to clean verified spots.</p>
         </div>
       </div>
 
@@ -502,6 +501,38 @@
             <i data-lucide="power" class="w-4 h-4"></i>
             <span>Duty: ON</span>
           </button>
+        </div>
+      </div>
+
+      <!-- WORKER-EXCLUSIVE ₹4,000 REWARD MILESTONE BANNER (WORKERS ONLY - NOT CITIZENS) -->
+      <div class="bg-gradient-to-r from-amber-950/70 via-slate-800 to-emerald-950/60 border border-amber-500/40 rounded-2xl p-4 sm:p-5 shadow-lg relative overflow-hidden">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="flex items-start sm:items-center space-x-3.5">
+            <div class="p-3 bg-amber-500/20 text-amber-400 rounded-xl border border-amber-500/30 flex-shrink-0">
+              <i data-lucide="award" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-amber-300">Sanitation Worker Exclusive Incentive</span>
+                <span class="bg-amber-500/20 text-amber-300 text-xs px-2.5 py-0.5 rounded-full border border-amber-500/30 font-bold">Earn ₹4,000 Extra Cash</span>
+                <span class="bg-indigo-500/20 text-indigo-300 text-[11px] px-2 py-0.5 rounded-full border border-indigo-500/30">Workers Only</span>
+              </div>
+              <p class="text-xs text-slate-300 mt-1">Complete 500 cleanups in Belagavi beats this month to earn your <strong class="text-amber-300 font-bold">₹4,000 monthly bonus cash reward</strong> recorded permanently on the Municipal Blockchain.</p>
+            </div>
+          </div>
+          <div class="md:text-right min-w-[220px]">
+            <div class="flex items-baseline justify-between mb-1.5">
+              <span class="text-xs text-slate-400">Monthly Progress:</span>
+              <span id="worker-reward-progress-label" class="text-sm font-bold text-amber-300 font-mono">498 / 500</span>
+            </div>
+            <div class="w-full bg-slate-900 rounded-full h-3 overflow-hidden border border-slate-700">
+              <div id="worker-reward-progress-bar" class="bg-gradient-to-r from-amber-500 to-emerald-400 h-full rounded-full transition-all duration-500" style="width: 99.6%"></div>
+            </div>
+            <p id="worker-reward-status-msg" class="text-[11px] text-emerald-400 font-medium mt-1.5 flex items-center md:justify-end space-x-1">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+              <span>Only 2 cleanings left to earn ₹4,000!</span>
+            </p>
+          </div>
         </div>
       </div>
 
@@ -1106,6 +1137,22 @@
           document.getElementById('worker-today-cleanups').innerText = w.cleanups_today;
           document.getElementById('worker-today-distance').innerText = `${w.distance_walked_km} km`;
           document.getElementById('worker-monthly-cleanups').innerText = `${w.total_monthly_cleanups} / ${w.target_milestone}`;
+          
+          // Update Worker-Exclusive ₹4,000 Milestone Banner
+          const rewardLabel = document.getElementById('worker-reward-progress-label');
+          const rewardBar = document.getElementById('worker-reward-progress-bar');
+          const rewardMsg = document.getElementById('worker-reward-status-msg');
+          if (rewardLabel) rewardLabel.innerText = `${w.total_monthly_cleanups} / ${w.target_milestone}`;
+          if (rewardBar) rewardBar.style.width = `${w.progress_percentage}%`;
+          if (rewardMsg) {
+            if (w.total_monthly_cleanups >= w.target_milestone) {
+              rewardMsg.innerHTML = '<span class="text-emerald-400 font-bold">🎉 500 Milestone Reached! ₹4,000 Cash Bonus Unlocked & Credited!</span>';
+            } else {
+              const remaining = Math.max(0, w.target_milestone - w.total_monthly_cleanups);
+              rewardMsg.innerHTML = `<span>Only <strong>${remaining}</strong> cleanings left to earn <strong>₹4,000 extra cash</strong>!</span>`;
+            }
+          }
+
           document.getElementById('camera-watermark-worker').innerText = `${w.emp_id} (${w.name.split(' ')[0]})`;
           document.getElementById('camera-watermark-lat').innerText = w.current_lat;
           document.getElementById('camera-watermark-lng').innerText = w.current_lng;
@@ -1689,7 +1736,7 @@
             </div>
             <div class="flex items-center justify-between text-[10px] text-slate-400 pt-1 border-t border-slate-800">
               <span>Report Ref: #${b.report_id}</span>
-              <span class="text-emerald-400">Reward: +₹${b.reward_amount || 0} INR</span>
+              <span class="text-emerald-400 font-medium">Worker Incentive: +₹${b.reward_amount || 0} INR (Worker Only)</span>
             </div>
           `;
           container.appendChild(item);

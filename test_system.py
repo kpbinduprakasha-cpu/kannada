@@ -95,12 +95,20 @@ class TestBCCWasteSystem(unittest.TestCase):
 
     def test_04_vehicle_500m_proximity_alert(self):
         """Requirement 1: Belagavi Municipal Vehicle (KA-22) near home (<500m) alert."""
-        # Vehicle KA-22-G-1801 is at 15.8350, 74.5030 in Tilakwadi
-        res = self.client.get('/api/vehicles/live?lat=15.8352&lng=74.5032')
+        res0 = self.client.get('/api/vehicles/live')
+        self.assertEqual(res0.status_code, 200)
+        data0 = json.loads(res0.data)
+        self.assertGreater(len(data0['vehicles']), 0)
+        target_veh = data0['vehicles'][0]
+        
+        # Test location right next to the municipal vehicle (<50m away)
+        test_lat = target_veh['current_lat'] + 0.0002
+        test_lng = target_veh['current_lng'] + 0.0002
+
+        res = self.client.get(f'/api/vehicles/live?lat={test_lat}&lng={test_lng}')
         self.assertEqual(res.status_code, 200)
         data = json.loads(res.data)
         self.assertTrue(data['success'])
-        self.assertGreater(len(data['vehicles']), 0)
         self.assertTrue(data['proximity_alert'])
         self.assertLess(data['nearest_vehicle']['distance_meters'], 500)
         self.assertTrue(data['nearest_vehicle']['vehicle_no'].startswith('KA-22'))
@@ -194,6 +202,18 @@ class TestBCCWasteSystem(unittest.TestCase):
         self.assertTrue(data['success'])
         self.assertIn('progress_percentage', data)
         print(f"[PASS] 9. Monthly Reward Milestone verified for Worker #2: {data['total_cleanups']}/{data['target_milestone']} cleanups ({data['progress_percentage']}%), Reward: Rs {data['reward_amount_inr']}.")
+
+    def test_09b_citizen_ineligible_for_reward(self):
+        """User Requirement: Rs 4,000 reward is strictly for workers to see and earn, not citizens/people."""
+        # Citizen Praveen Kulkarni is user_id 5
+        res = self.client.get('/api/rewards/status/5')
+        self.assertEqual(res.status_code, 200)
+        data = json.loads(res.data)
+        self.assertTrue(data['success'])
+        self.assertFalse(data['is_eligible'])
+        self.assertEqual(data['reward_amount_inr'], 0)
+        self.assertIn('sanitation workers only, not citizens', data['message'])
+        print("[PASS] 9b. Citizen reward ineligibility verified: Rs 4,000 bonus is strictly worker-exclusive.")
 
     def test_10_officer_dashboard_analytics(self):
         """Requirement 9 & 13: Belagavi City Corporation Officer Dashboard, Red Alerts & GPS Metrics."""
