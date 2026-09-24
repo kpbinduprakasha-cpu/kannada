@@ -10,12 +10,21 @@ Features:
 """
 
 import os
+import sys
 import math
 import time
 import hashlib
 import json
 import sqlite3
 from datetime import datetime
+
+if sys.platform == 'win32':
+    try:
+        sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+        sys.stderr.reconfigure(encoding='utf-8', errors='replace')
+    except Exception:
+        pass
+
 from flask import Flask, request, jsonify, render_template
 from werkzeug.security import generate_password_hash, check_password_hash
 
