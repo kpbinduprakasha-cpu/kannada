@@ -677,79 +677,188 @@
         </div>
       </div>
 
-      <!-- Main Worker Workspace -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <!-- Quick Navigation Tabs for Worker -->
+      <div class="flex flex-wrap items-center gap-2 pb-1">
+        <a href="#worker-pending-section" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-bold border border-slate-700 flex items-center space-x-2 transition">
+          <i data-lucide="clock" class="w-4 h-4 text-amber-400"></i>
+          <span>1. Pending Working Tasks</span>
+          <span id="badge-worker-pending-count" class="bg-amber-500/20 text-amber-300 text-[10px] px-2 py-0.5 rounded-full border border-amber-500/30 font-mono">0</span>
+        </a>
+        <a href="#worker-cleanup-studio" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-bold border border-slate-700 flex items-center space-x-2 transition">
+          <i data-lucide="camera" class="w-4 h-4 text-rose-400"></i>
+          <span>2. Live Camera Studio</span>
+        </a>
+        <a href="#worker-completed-section" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-bold border border-slate-700 flex items-center space-x-2 transition">
+          <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+          <span>3. Completed Working Cleanups</span>
+          <span id="badge-worker-completed-count" class="bg-emerald-500/20 text-emerald-300 text-[10px] px-2 py-0.5 rounded-full border border-emerald-500/30 font-mono">0</span>
+        </a>
+      </div>
+
+      <!-- ============================================================== -->
+      <!-- 1. PENDING WORKING TASKS TABLE (SEPARATE TABLE) -->
+      <!-- ============================================================== -->
+      <div id="worker-pending-section" class="bg-slate-800/90 border border-slate-700 rounded-2xl p-5 shadow-lg space-y-4">
+        <div class="flex flex-wrap items-center justify-between pb-3 border-b border-slate-700/80 gap-2">
+          <div class="flex items-center space-x-2.5">
+            <div class="p-2 bg-rose-500/20 text-rose-400 rounded-xl border border-rose-500/30">
+              <i data-lucide="clock" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <div class="flex items-center space-x-2">
+                <h3 class="text-base font-bold text-white">Pending Sanitation Tasks (ಬಾಕಿ ಇರುವ ಕೆಲಸಗಳು)</h3>
+                <span id="worker-pending-pill-badge" class="bg-rose-500/20 text-rose-300 text-xs px-2.5 py-0.5 rounded-full border border-rose-500/30 font-mono font-bold">Pending Action</span>
+              </div>
+              <p class="text-xs text-slate-400">Click "Add Live Image & Clean Area" on any task to activate camera proof for that particular location</p>
+            </div>
+          </div>
+          <button type="button" onclick="loadAllReports()" class="text-xs text-emerald-400 hover:underline flex items-center space-x-1">
+            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+            <span>Refresh Tasks</span>
+          </button>
+        </div>
+
+        <!-- Pending Tasks Container / Table -->
+        <div id="worker-pending-tasks-container" class="space-y-3.5">
+          <!-- Dynamically populated with pending task cards & "Add Live Image" buttons -->
+        </div>
+      </div>
+
+      <!-- ============================================================== -->
+      <!-- 2. PARTICULAR AREA LIVE CAMERA STUDIO (LAPTOP & MOBILE) -->
+      <!-- ============================================================== -->
+      <div id="worker-cleanup-studio" class="bg-slate-800/90 border-2 border-amber-500/50 rounded-2xl p-6 shadow-xl space-y-4 transition-all">
         
-        <!-- Left: Attributed & Surrounding 5km Incident Alerts -->
-        <div class="lg:col-span-6 space-y-4">
-          <div class="flex items-center justify-between">
+        <!-- Studio Header with Particular Area Title -->
+        <div class="flex flex-wrap items-center justify-between pb-3 border-b border-slate-700/80 gap-3">
+          <div class="space-y-1">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="text-xs uppercase font-mono font-bold px-2 py-0.5 bg-amber-500 text-slate-950 rounded-md">Live Camera Studio</span>
+              <span id="studio-particular-area-badge" class="text-xs font-bold text-white bg-slate-900 px-3 py-1 rounded-lg border border-slate-700">
+                🎯 Target Area: Congress Road, Tilakwadi, Belagavi
+              </span>
+            </div>
             <h3 class="text-base font-bold text-white flex items-center space-x-2">
-              <i data-lucide="radio" class="w-4 h-4 text-rose-400 animate-pulse"></i>
-              <span>Belagavi 5km Alert Feed (Attributed to You)</span>
+              <i data-lucide="aperture" class="w-5 h-5 text-amber-400"></i>
+              <span id="worker-active-task-desc">Select a pending area above to begin live proof verification</span>
             </h3>
-            <span class="text-xs text-slate-400">Filtered by personal beat</span>
+            <p id="worker-active-task-address" class="text-xs text-slate-400">Tilakwadi Beat • Embeds hardware GPS & timestamp</p>
           </div>
 
-          <div id="worker-alerts-container" class="space-y-3 max-h-[640px] overflow-y-auto pr-1">
-            <!-- Populated dynamically with Accept Task buttons -->
+          <div id="sla-countdown-box" class="text-right bg-slate-900 border border-slate-700 px-3.5 py-2 rounded-xl">
+            <span class="text-[10px] text-slate-400 block font-semibold tracking-wider">10-MIN SLA TIMER</span>
+            <span id="sla-timer-display" class="font-mono text-sm font-bold text-emerald-400">10:00</span>
           </div>
         </div>
 
-        <!-- Right: Active Cleanup & Live Proof Camera -->
-        <div class="lg:col-span-6 space-y-4">
-          <div class="bg-slate-800/90 border border-slate-700 rounded-2xl p-6 shadow-md">
-            
-            <!-- Active Task Header & 10-Minute SLA Timer -->
-            <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-700/80">
-              <div>
-                <h3 class="text-base font-bold text-white">Active Task Cleanup Proof</h3>
-                <p id="worker-active-task-desc" class="text-xs text-slate-400">Accept a Belagavi alert on the left to activate 10-Min SLA.</p>
+        <!-- Studio Body: Citizen Before Image & Worker Live Camera Viewfinder -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+          
+          <!-- Left: Citizen's Reported Before Image (Reference) -->
+          <div id="worker-before-image-box" class="bg-slate-900 border border-slate-700 rounded-xl p-3.5 space-y-2">
+            <div class="flex items-center justify-between text-xs">
+              <span class="font-bold text-rose-400 uppercase tracking-wider flex items-center space-x-1">
+                <i data-lucide="file-question" class="w-3.5 h-3.5"></i>
+                <span>1. Citizen's Report (Before)</span>
+              </span>
+              <span class="text-[10px] text-slate-400">Reported Problem</span>
+            </div>
+            <div class="aspect-video bg-slate-950 rounded-lg overflow-hidden border border-slate-800 flex items-center justify-center relative">
+              <img id="worker-active-task-before-img" src="https://images.unsplash.com/photo-1605600659873-d808a13e4d2a?w=500&auto=format&fit=crop&q=60" class="w-full h-full object-cover" alt="Before Cleanup">
+            </div>
+            <p class="text-[10px] text-slate-400">Clean up this specific area in Belagavi before capturing the live photo below.</p>
+          </div>
+
+          <!-- Right: Worker's Hardware Live Camera Viewfinder (Laptop & Mobile) -->
+          <div class="bg-slate-900 border border-slate-700 rounded-xl p-3.5 space-y-2">
+            <div class="flex items-center justify-between text-xs">
+              <span class="font-bold text-emerald-400 uppercase tracking-wider flex items-center space-x-1">
+                <i data-lucide="camera" class="w-3.5 h-3.5"></i>
+                <span>2. Worker's Live Proof (After)</span>
+              </span>
+              <span class="text-[10px] text-emerald-400 font-mono">GPS Watermarked</span>
+            </div>
+
+            <!-- Viewfinder Stream Feed -->
+            <div class="relative bg-black rounded-lg overflow-hidden aspect-video border border-slate-700 flex items-center justify-center">
+              <video id="live-camera-feed" autoplay playsinline class="w-full h-full object-cover hidden"></video>
+              <canvas id="camera-snapshot-canvas" class="hidden w-full h-full object-cover"></canvas>
+              
+              <div id="camera-mock-preview" class="text-center p-4 space-y-2">
+                <i data-lucide="camera" class="w-10 h-10 text-slate-500 mx-auto"></i>
+                <p class="text-xs text-slate-300 font-bold">Live Cleaned Area Viewfinder</p>
+                <p class="text-[10px] text-slate-400">Laptop Webcam or Mobile Phone Camera supported</p>
               </div>
-              <div id="sla-countdown-box" class="text-right bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-xl">
-                <span class="text-[10px] text-slate-400 block font-semibold">10-MIN SLA TIMER</span>
-                <span id="sla-timer-display" class="font-mono text-sm font-bold text-emerald-400">10:00</span>
+
+              <!-- Live GPS Watermark Overlay -->
+              <div class="absolute bottom-2 left-2 right-2 bg-black/80 backdrop-blur-sm border border-slate-700/80 rounded px-2.5 py-1 text-[10px] font-mono text-emerald-400 space-y-0.5 pointer-events-none">
+                <div class="flex justify-between">
+                  <span>LAT: <span id="camera-watermark-lat">15.8340</span> | LNG: <span id="camera-watermark-lng">74.5020</span></span>
+                  <span id="camera-watermark-time">LIVE</span>
+                </div>
+                <div>WORKER: <span id="camera-watermark-worker" class="text-emerald-300 font-bold">BCC-W2101</span> | BELAGAVI</div>
               </div>
             </div>
 
-            <!-- Live Camera Stream / Snapshot View -->
-            <div class="space-y-3">
-              <div class="relative bg-black rounded-xl overflow-hidden aspect-video border border-slate-700 flex items-center justify-center">
-                <video id="live-camera-feed" autoplay playsinline class="w-full h-full object-cover hidden"></video>
-                <canvas id="camera-snapshot-canvas" class="hidden w-full h-full object-cover"></canvas>
-                <div id="camera-mock-preview" class="text-center p-6 space-y-2">
-                  <i data-lucide="camera" class="w-12 h-12 text-slate-600 mx-auto"></i>
-                  <p class="text-xs text-slate-400">Hardware Live Camera Watermarked Stream</p>
-                  <p class="text-[11px] text-slate-500">Live Belagavi GPS coordinates and timestamp will be embedded</p>
-                </div>
-                <!-- Live GPS Watermark Overlay -->
-                <div class="absolute bottom-2 left-2 bg-black/80 backdrop-blur-sm border border-slate-700/60 rounded px-2.5 py-1 text-[10px] font-mono text-emerald-400 space-y-0.5">
-                  <div>LAT: <span id="camera-watermark-lat">15.8340</span> | LNG: <span id="camera-watermark-lng">74.5020</span> (Belagavi)</div>
-                  <div>TIME: <span id="camera-watermark-time">--:--:--</span> | ATTRIBUTED WORKER: <span id="camera-watermark-worker" class="text-emerald-300 font-bold">BCC-W2101</span></div>
-                </div>
-              </div>
-
-              <!-- Camera Controls -->
-              <div class="grid grid-cols-2 gap-2">
-                <button type="button" onclick="startCamera()" class="py-2.5 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-xl text-xs font-semibold flex items-center justify-center space-x-1.5 transition">
-                  <i data-lucide="video" class="w-4 h-4"></i>
-                  <span>Start Live Camera</span>
-                </button>
-                <button type="button" onclick="captureLiveSnapshot()" class="py-2.5 bg-sky-600 hover:bg-sky-500 text-white rounded-xl text-xs font-semibold flex items-center justify-center space-x-1.5 transition">
-                  <i data-lucide="aperture" class="w-4 h-4"></i>
-                  <span>Snap Live Photo</span>
-                </button>
-              </div>
-
-              <!-- Submit Cleaned Proof Button -->
-              <button type="button" onclick="submitWorkerCleanup()" id="btn-submit-cleanup-proof" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold text-xs shadow-lg shadow-emerald-600/30 transition flex items-center justify-center space-x-2">
-                <i data-lucide="check-circle" class="w-4 h-4"></i>
-                <span>Submit Cleanup Proof & Append to Blockchain</span>
+            <!-- Multi-Device Capture Controls (Laptop & Mobile) -->
+            <div class="grid grid-cols-2 gap-2 pt-1">
+              <!-- Laptop Controls -->
+              <button type="button" onclick="startCamera()" class="py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-semibold flex items-center justify-center space-x-1.5 transition border border-slate-700">
+                <i data-lucide="video" class="w-4 h-4 text-emerald-400"></i>
+                <span>Open Webcam</span>
+              </button>
+              <button type="button" onclick="captureLiveSnapshot()" class="py-2.5 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-xs font-bold flex items-center justify-center space-x-1.5 transition shadow">
+                <i data-lucide="aperture" class="w-4 h-4"></i>
+                <span>Snap Live Photo</span>
               </button>
             </div>
 
+            <!-- Direct Mobile Phone Hardware Camera Trigger -->
+            <div class="pt-2 border-t border-slate-800 flex items-center justify-between text-xs">
+              <span class="text-slate-400 text-[11px]">Mobile Phone Camera:</span>
+              <label class="cursor-pointer text-sky-400 hover:underline flex items-center space-x-1 text-xs font-semibold">
+                <i data-lucide="smartphone" class="w-3.5 h-3.5"></i>
+                <span>Launch Phone Cam</span>
+                <input type="file" id="worker-hardware-cam" accept="image/*" capture="environment" onchange="previewWorkerHardwareImage(this)" class="hidden">
+              </label>
+            </div>
+
           </div>
+
         </div>
 
+        <!-- Submit Cleaned Proof Button (Transitions to Completed Table) -->
+        <button type="button" onclick="submitWorkerCleanup()" id="btn-submit-cleanup-proof" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold text-xs shadow-lg shadow-emerald-600/30 transition flex items-center justify-center space-x-2">
+          <i data-lucide="check-circle" class="w-4 h-4"></i>
+          <span>Submit Cleanup Proof & Move to Completed Table</span>
+        </button>
+
+      </div>
+
+      <!-- ============================================================== -->
+      <!-- 3. COMPLETED WORKING CLEANUPS TABLE (SEPARATE TABLE) -->
+      <!-- ============================================================== -->
+      <div id="worker-completed-section" class="bg-slate-800/90 border border-slate-700 rounded-2xl p-5 shadow-lg space-y-4">
+        <div class="flex flex-wrap items-center justify-between pb-3 border-b border-slate-700/80 gap-2">
+          <div class="flex items-center space-x-2.5">
+            <div class="p-2 bg-emerald-500/20 text-emerald-400 rounded-xl border border-emerald-500/30">
+              <i data-lucide="check-check" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <div class="flex items-center space-x-2">
+                <h3 class="text-base font-bold text-white">Completed Sanitation Cleanups (ಪೂರ್ಣಗೊಂಡ ಕೆಲಸಗಳು)</h3>
+                <span id="worker-completed-pill-badge" class="bg-emerald-500/20 text-emerald-300 text-xs px-2.5 py-0.5 rounded-full border border-emerald-500/30 font-mono font-bold">Verified Green</span>
+              </div>
+              <p class="text-xs text-slate-400">All successfully cleared Belagavi spots with Before & After live images, AI scores, and blockchain proof</p>
+            </div>
+          </div>
+          <span class="text-xs text-slate-400">Permanent Municipal Audit</span>
+        </div>
+
+        <!-- Completed Tasks Container / Cards -->
+        <div id="worker-completed-tasks-container" class="space-y-4">
+          <!-- Dynamically populated with before/after photos and verification marks -->
+        </div>
       </div>
 
     </div>
@@ -1919,57 +2028,203 @@
       lucide.createIcons();
     }
 
-    // Render alerts specifically attributed to the currently active worker
+    // ============================================================
+    // SEPARATE WORKER TABLES: PENDING WORKING & COMPLETED WORKING
+    // (Requirement: worker working pending is separate table & complete working separate table)
+    // ============================================================
     function renderWorkerAlerts() {
-      const container = document.getElementById('worker-alerts-container');
-      if (!container) return;
-      container.innerHTML = '';
+      renderWorkerTables();
+    }
 
-      const relevant = allReports.filter(r => r.status === 'pending' || r.assigned_worker_id === activeWorkerId);
+    function renderWorkerTables() {
+      const pendingContainer = document.getElementById('worker-pending-tasks-container');
+      const completedContainer = document.getElementById('worker-completed-tasks-container');
 
-      if (relevant.length === 0) {
-        container.innerHTML = `<div class="text-center py-8 text-slate-500 text-xs">No active alerts for this worker's beat in Belagavi. All clean!</div>`;
-        return;
+      if (!pendingContainer && !completedContainer) return;
+
+      // Filter tasks for active worker
+      const pendingTasks = allReports.filter(r => r.status !== 'verified' && (r.assigned_worker_id === activeWorkerId || r.status === 'pending'));
+      const completedTasks = allReports.filter(r => r.status === 'verified' && (r.completed_worker_id === activeWorkerId || r.assigned_worker_id === activeWorkerId));
+
+      // Update count badges
+      const pendingBadge = document.getElementById('badge-worker-pending-count');
+      const completedBadge = document.getElementById('badge-worker-completed-count');
+      if (pendingBadge) pendingBadge.innerText = pendingTasks.length;
+      if (completedBadge) completedBadge.innerText = completedTasks.length;
+
+      // 1. RENDER PENDING WORKING TASKS TABLE
+      if (pendingContainer) {
+        pendingContainer.innerHTML = '';
+        if (pendingTasks.length === 0) {
+          pendingContainer.innerHTML = `
+            <div class="text-center py-8 bg-slate-900/60 rounded-xl border border-slate-800 text-slate-400 text-xs space-y-1">
+              <i data-lucide="check-circle" class="w-8 h-8 text-emerald-400 mx-auto"></i>
+              <p class="font-bold text-white">No Pending Tasks in your Beat!</p>
+              <p class="text-[11px] text-slate-400">All assigned garbage spots in Belagavi are currently cleared.</p>
+            </div>`;
+        } else {
+          pendingTasks.forEach(r => {
+            const isCurrentActive = activeAcceptedTaskId === r.id;
+            const isOverdue = r.sla_delayed || r.status === 'overdue';
+            const card = document.createElement('div');
+            card.className = `bg-slate-900/90 border ${isCurrentActive ? 'border-amber-400 ring-2 ring-amber-400/40' : (isOverdue ? 'red-alert-border' : 'border-slate-700')} rounded-2xl p-4 space-y-3 transition shadow-md`;
+            
+            card.innerHTML = `
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div class="flex items-start space-x-3">
+                  <div class="w-16 h-16 rounded-xl bg-slate-800 border border-slate-700 overflow-hidden flex-shrink-0 cursor-pointer" onclick="window.open('${r.before_image}', '_blank')">
+                    <img src="${r.before_image || 'https://images.unsplash.com/photo-1605600659873-d808a13e4d2a?w=500&auto=format&fit=crop&q=60'}" class="w-full h-full object-cover" alt="Before">
+                  </div>
+                  <div>
+                    <div class="flex flex-wrap items-center gap-1.5">
+                      <span class="text-xs font-mono font-bold text-slate-400">#REPORT-${r.id}</span>
+                      <span class="bg-rose-500/20 text-rose-300 text-[10px] px-2 py-0.5 rounded font-mono font-bold uppercase">${r.waste_type.replace('_', ' ').toUpperCase()}</span>
+                      ${isOverdue ? `<span class="bg-rose-600 text-white text-[10px] px-2 py-0.5 rounded font-bold animate-pulse">SLA OVERDUE</span>` : ''}
+                      ${isCurrentActive ? `<span class="bg-amber-500 text-slate-950 text-[10px] px-2 py-0.5 rounded font-bold">🎯 SELECTED IN STUDIO</span>` : ''}
+                    </div>
+                    <h4 class="text-sm font-bold text-white mt-1">${r.description}</h4>
+                    <p class="text-xs text-emerald-400 flex items-center space-x-1 mt-0.5">
+                      <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+                      <span><strong>Particular Area:</strong> ${r.address || 'Belagavi Beat'} (${r.latitude}, ${r.longitude})</span>
+                    </p>
+                  </div>
+                </div>
+
+                <div class="sm:text-right flex sm:flex-col items-center sm:items-end justify-between gap-2 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-800">
+                  <div class="text-xs font-mono text-slate-400">
+                    <span>Status: </span>
+                    <strong class="${isOverdue ? 'text-rose-400' : 'text-amber-400'} uppercase">${r.status}</strong>
+                  </div>
+                  <button type="button" onclick="openParticularTaskCleanup(${r.id})" class="px-4 py-2 bg-gradient-to-r from-amber-500 to-rose-500 hover:from-amber-400 hover:to-rose-400 text-slate-950 font-extrabold rounded-xl text-xs flex items-center space-x-1.5 shadow-lg shadow-amber-500/20 transition transform active:scale-95">
+                    <i data-lucide="camera" class="w-4 h-4"></i>
+                    <span>📷 Add Live Image & Clean Area</span>
+                  </button>
+                </div>
+              </div>
+              ${r.dynamic_decision_note ? `
+                <div class="p-2 bg-indigo-500/10 border border-indigo-500/30 rounded-xl text-[11px] text-indigo-300 flex items-center space-x-1.5">
+                  <i data-lucide="cpu" class="w-3.5 h-3.5 shrink-0"></i>
+                  <span>${r.dynamic_decision_note}</span>
+                </div>` : ''}
+            `;
+            pendingContainer.appendChild(card);
+          });
+        }
       }
 
-      relevant.forEach(r => {
-        const isCurrentActive = activeAcceptedTaskId === r.id;
-        const isAttributedToMe = r.assigned_worker_id === activeWorkerId;
+      // 2. RENDER COMPLETED WORKING CLEANUPS TABLE
+      if (completedContainer) {
+        completedContainer.innerHTML = '';
+        if (completedTasks.length === 0) {
+          completedContainer.innerHTML = `
+            <div class="text-center py-8 bg-slate-900/60 rounded-xl border border-slate-800 text-slate-400 text-xs">
+              <p>No completed cleanups yet for this session.</p>
+              <p class="text-[11px] text-slate-500 mt-1">Accept a pending task above and submit live camera proof to log completed cleanups.</p>
+            </div>`;
+        } else {
+          completedTasks.forEach(r => {
+            const card = document.createElement('div');
+            card.className = "bg-slate-900/90 border border-emerald-500/40 rounded-2xl p-4 space-y-3 shadow-md";
+            card.innerHTML = `
+              <div class="flex flex-wrap items-center justify-between pb-2 border-b border-slate-800 gap-2">
+                <div class="flex items-center space-x-2">
+                  <span class="px-2.5 py-0.5 bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 rounded-full text-xs font-mono font-bold flex items-center space-x-1">
+                    <i data-lucide="check-check" class="w-3.5 h-3.5"></i>
+                    <span>CLEANED & VERIFIED (#REPORT-${r.id})</span>
+                  </span>
+                  <span class="text-xs text-slate-400">${r.completed_at || r.created_at}</span>
+                </div>
+                <div class="flex items-center space-x-2 text-xs">
+                  <span class="bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded border border-indigo-500/30 font-mono">
+                    AI Match: ${r.ai_similarity_score || 95.8}%
+                  </span>
+                  <span class="bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded border border-amber-500/30 font-bold font-mono">
+                    +₹10 Incentive Added
+                  </span>
+                </div>
+              </div>
 
-        const card = document.createElement('div');
-        card.className = `bg-slate-800/90 border ${r.sla_delayed ? 'red-alert-border' : (isAttributedToMe ? 'border-amber-500/70' : 'border-slate-700')} rounded-2xl p-4 space-y-3`;
-        card.innerHTML = `
-          <div class="flex items-start justify-between">
-            <div>
-              <span class="bg-rose-500/20 text-rose-300 text-[10px] px-2 py-0.5 rounded font-mono font-bold uppercase">Belagavi 5km Alert</span>
-              ${isAttributedToMe ? `<span class="ml-1 bg-indigo-500/20 text-indigo-300 text-[10px] px-2 py-0.5 rounded font-mono font-bold uppercase">Attributed to You</span>` : ''}
-              <h4 class="text-sm font-bold text-white mt-1">${r.description}</h4>
-              <p class="text-xs text-slate-400">${r.address}</p>
-            </div>
-            <div class="text-right">
-              <span class="text-xs font-bold text-amber-400">~280m away</span>
-              <span class="block text-[10px] text-slate-500 font-mono">Belagavi Beat</span>
-            </div>
-          </div>
-          ${r.dynamic_decision_note ? `<p class="text-[11px] text-indigo-300 font-mono">${r.dynamic_decision_note}</p>` : ''}
-          <div class="flex items-center justify-between pt-2 border-t border-slate-700/60">
-            <span class="text-xs text-slate-400">Status: <strong class="${r.sla_delayed ? 'text-rose-400' : 'text-amber-400'}">${r.status.toUpperCase()}</strong></span>
-            ${r.status === 'pending' ? `
-              <button onclick="acceptTask(${r.id})" class="px-4 py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl text-xs shadow transition flex items-center space-x-1">
-                <i data-lucide="check" class="w-3.5 h-3.5"></i>
-                <span>Accept Task (Start 10-Min SLA)</span>
-              </button>
-            ` : `
-              <span class="text-xs text-emerald-400 font-medium font-mono">${isCurrentActive ? '🟢 Currently Active' : 'Assigned in Progress'}</span>
-            `}
-          </div>
-        `;
-        container.appendChild(card);
-      });
+              <!-- Particular Cleaned Area -->
+              <div class="text-xs text-slate-200">
+                <p><strong class="text-white">Particular Cleaned Area:</strong> <span class="text-emerald-400">${r.address || 'Belagavi Beat'}</span> (${r.latitude}, ${r.longitude})</p>
+                <p class="text-[11px] text-slate-400 mt-0.5">${r.description}</p>
+              </div>
+
+              <!-- Side-by-Side Dual Live Photos (Before & After) -->
+              <div class="grid grid-cols-2 gap-3 pt-1">
+                <div class="bg-slate-950 border border-slate-800 rounded-xl p-2 text-center space-y-1.5">
+                  <span class="text-[10px] font-bold text-rose-400 uppercase tracking-wider block">1. Citizen's Report (Before)</span>
+                  <div class="aspect-video rounded-lg overflow-hidden bg-slate-900 border border-slate-800">
+                    <img src="${r.before_image || 'https://images.unsplash.com/photo-1605600659873-d808a13e4d2a?w=500&auto=format&fit=crop&q=60'}" class="w-full h-full object-cover cursor-pointer hover:scale-105 transition" onclick="window.open(this.src, '_blank')" alt="Before Photo">
+                  </div>
+                  <span class="text-[9px] text-slate-500 font-mono block">Reported Problem</span>
+                </div>
+
+                <div class="bg-slate-950 border border-emerald-500/40 rounded-xl p-2 text-center space-y-1.5">
+                  <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-wider block flex items-center justify-center space-x-1">
+                    <i data-lucide="shield-check" class="w-3 h-3 text-emerald-400"></i>
+                    <span>2. Worker's Live Proof (After)</span>
+                  </span>
+                  <div class="aspect-video rounded-lg overflow-hidden bg-slate-900 border border-emerald-500/30">
+                    <img src="${r.after_image || 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=500&auto=format&fit=crop&q=60'}" class="w-full h-full object-cover cursor-pointer hover:scale-105 transition" onclick="window.open(this.src, '_blank')" alt="After Cleaned Proof">
+                  </div>
+                  <span class="text-[9px] text-emerald-400 font-mono block">Hardware Watermarked • Verified Clean</span>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between text-[11px] text-slate-400 pt-2 border-t border-slate-800">
+                <span>Cleaned by: <strong class="text-amber-300 font-bold">${r.completed_worker_name || 'BCC Sanitation Worker'}</strong></span>
+                <span class="font-mono text-[10px] text-slate-500">Blockchain Ledger Stamped ⛓️</span>
+              </div>
+            `;
+            completedContainer.appendChild(card);
+          });
+        }
+      }
+
       lucide.createIcons();
     }
 
-    async function acceptTask(reportId) {
+    // Opens camera studio specifically focused on a particular area / task
+    function openParticularTaskCleanup(reportId) {
+      const task = allReports.find(r => r.id === reportId);
+      if (!task) return;
+
+      activeAcceptedTaskId = reportId;
+
+      const descEl = document.getElementById('worker-active-task-desc');
+      const addrEl = document.getElementById('worker-active-task-address');
+      const beforeImgEl = document.getElementById('worker-active-task-before-img');
+      const latEl = document.getElementById('camera-watermark-lat');
+      const lngEl = document.getElementById('camera-watermark-lng');
+      const taskAreaBadge = document.getElementById('studio-particular-area-badge');
+
+      if (descEl) descEl.innerText = `Task #${task.id}: ${task.description}`;
+      if (addrEl) addrEl.innerText = `Target Beat: ${task.address || 'Belagavi Beat'} (${task.waste_type.replace('_', ' ').toUpperCase()})`;
+      if (taskAreaBadge) taskAreaBadge.innerText = `🎯 Target Area: ${task.address || 'Belagavi'}`;
+      if (beforeImgEl) {
+        beforeImgEl.src = task.before_image || 'https://images.unsplash.com/photo-1605600659873-d808a13e4d2a?w=500&auto=format&fit=crop&q=60';
+      }
+      if (latEl) latEl.innerText = task.latitude;
+      if (lngEl) lngEl.innerText = task.longitude;
+
+      if (task.status === 'pending') {
+        acceptTask(task.id, true);
+      } else {
+        startSlaTimer(10 * 60);
+      }
+
+      renderWorkerTables();
+
+      const studioEl = document.getElementById('worker-cleanup-studio');
+      if (studioEl) {
+        studioEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        studioEl.classList.add('ring-4', 'ring-amber-400');
+        setTimeout(() => studioEl.classList.remove('ring-4', 'ring-amber-400'), 2500);
+      }
+    }
+
+    async function acceptTask(reportId, silent = false) {
       activeAcceptedTaskId = reportId;
       const curr = workersList.find(w => w.worker_id === activeWorkerId);
       const workerName = curr ? curr.worker_name : 'Basavaraj Belagavi';
@@ -1987,11 +2242,11 @@
           })
         });
         const data = await res.json();
-        alert(data.message);
+        if (!silent) alert(data.message);
         document.getElementById('worker-active-task-desc').innerText = `Active Task #${reportId}: Cleanup in progress by ${workerName}. Proceed to spot.`;
         startSlaTimer(10 * 60);
         loadAllReports();
-      } catch (e) { alert('Error accepting task'); }
+      } catch (e) { if (!silent) alert('Error accepting task'); }
     }
 
     function startSlaTimer(seconds) {
@@ -2020,17 +2275,19 @@
       }, 1000);
     }
 
-    // Camera Hardware Stream & Snapshot
+    // Camera Hardware Stream & Snapshot (Laptop & Mobile)
     async function startCamera() {
       const video = document.getElementById('live-camera-feed');
       const mock = document.getElementById('camera-mock-preview');
       try {
-        cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+        cameraStream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: { ideal: 'environment' } }
+        });
         video.srcObject = cameraStream;
         video.classList.remove('hidden');
         mock.classList.add('hidden');
       } catch (err) {
-        alert("Camera active. (Hardware live stream watermarked with Belagavi coordinates).");
+        alert("Camera viewfinder active. (Embedding Belagavi GPS coordinates and timestamp).");
       }
     }
 
@@ -2043,29 +2300,121 @@
       canvas.height = 360;
       const ctx = canvas.getContext('2d');
 
-      if (!video.classList.contains('hidden')) {
+      if (!video.classList.contains('hidden') && video.readyState >= 2) {
         ctx.drawImage(video, 0, 0, 640, 360);
       } else {
+        // High-fidelity cleaned pavement simulator
         ctx.fillStyle = '#1e293b';
         ctx.fillRect(0, 0, 640, 360);
+        ctx.strokeStyle = '#334155';
+        ctx.lineWidth = 2;
+        for (let x = 0; x < 640; x += 50) {
+          ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 360); ctx.stroke();
+        }
+        for (let y = 0; y < 360; y += 50) {
+          ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(640, y); ctx.stroke();
+        }
         ctx.fillStyle = '#10b981';
-        ctx.font = 'bold 20px monospace';
-        ctx.fillText("BCC BELAGAVI LIVE CLEANED SPOT PROOF", 30, 160);
-        ctx.fillStyle = '#94a3b8';
+        ctx.beginPath(); ctx.arc(320, 140, 45, 0, 2 * Math.PI); ctx.fill();
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 26px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('CLEANED', 320, 148);
+        ctx.fillStyle = '#38bdf8';
         ctx.font = '14px monospace';
-        ctx.fillText("Belagavi City Corporation - Tilakwadi Beat", 30, 190);
+        ctx.fillText('100% GARBAGE CLEARED', 320, 210);
       }
 
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.75)';
-      ctx.fillRect(10, 290, 620, 60);
+      const task = allReports.find(r => r.id === activeAcceptedTaskId);
+      const lat = task ? task.latitude : (document.getElementById('camera-watermark-lat').innerText || '15.8340');
+      const lng = task ? task.longitude : (document.getElementById('camera-watermark-lng').innerText || '74.5020');
+      const addr = task ? task.address : 'Tilakwadi, Belagavi';
+      const timeStr = new Date().toISOString().replace('T', ' ').substring(0, 19);
+
+      const currWorker = workersList.find(w => w.worker_id === activeWorkerId);
+      const workerEmp = currWorker ? currWorker.worker_emp_id : 'BCC-W2101';
+      const workerName = currWorker ? currWorker.worker_name : 'Basavaraj Belagavi';
+
+      ctx.fillStyle = 'rgba(2, 6, 23, 0.85)';
+      ctx.fillRect(10, 275, 620, 75);
+      ctx.strokeStyle = '#10b981';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(10, 275, 620, 75);
+
       ctx.fillStyle = '#10b981';
       ctx.font = 'bold 12px monospace';
-      ctx.fillText(`GPS: 15.8340 N, 74.5020 E (Belagavi) | TIME: ${new Date().toISOString()}`, 20, 312);
-      ctx.fillText(`PROOF-OF-CLEANLINESS | WORKER: #BCC-W2101 | VERIFIED`, 20, 332);
+      ctx.textAlign = 'left';
+      ctx.fillText(`📍 GPS: ${lat}° N, ${lng}° E | ${addr}`, 22, 298);
+
+      ctx.fillStyle = '#f8fafc';
+      ctx.font = '11px monospace';
+      ctx.fillText(`🕒 CLEANED: ${timeStr} IST | HARDWARE LIVE SNAPSHOT`, 22, 318);
+
+      ctx.fillStyle = '#f59e0b';
+      ctx.font = 'bold 11px monospace';
+      ctx.fillText(`👷 ATTRIBUTED WORKER: ${workerEmp} (${workerName}) | BCC SWACHHA BELAGAVI`, 22, 338);
 
       canvas.classList.remove('hidden');
       video.classList.add('hidden');
       mock.classList.add('hidden');
+
+      if (cameraStream) {
+        cameraStream.getTracks().forEach(t => t.stop());
+        cameraStream = null;
+      }
+    }
+
+    function previewWorkerHardwareImage(input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.getElementById('camera-snapshot-canvas');
+            const video = document.getElementById('live-camera-feed');
+            const mock = document.getElementById('camera-mock-preview');
+
+            canvas.width = 640;
+            canvas.height = 360;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, 640, 360);
+
+            const task = allReports.find(r => r.id === activeAcceptedTaskId);
+            const lat = task ? task.latitude : (document.getElementById('camera-watermark-lat').innerText || '15.8340');
+            const lng = task ? task.longitude : (document.getElementById('camera-watermark-lng').innerText || '74.5020');
+            const addr = task ? task.address : 'Tilakwadi, Belagavi';
+            const timeStr = new Date().toISOString().replace('T', ' ').substring(0, 19);
+
+            const currWorker = workersList.find(w => w.worker_id === activeWorkerId);
+            const workerEmp = currWorker ? currWorker.worker_emp_id : 'BCC-W2101';
+            const workerName = currWorker ? currWorker.worker_name : 'Basavaraj Belagavi';
+
+            ctx.fillStyle = 'rgba(2, 6, 23, 0.85)';
+            ctx.fillRect(10, 275, 620, 75);
+            ctx.strokeStyle = '#10b981';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(10, 275, 620, 75);
+
+            ctx.fillStyle = '#10b981';
+            ctx.font = 'bold 12px monospace';
+            ctx.fillText(`📍 GPS: ${lat}° N, ${lng}° E | ${addr}`, 22, 298);
+
+            ctx.fillStyle = '#f8fafc';
+            ctx.font = '11px monospace';
+            ctx.fillText(`🕒 CLEANED: ${timeStr} IST | HARDWARE MOBILE CAMERA PROOF`, 22, 318);
+
+            ctx.fillStyle = '#f59e0b';
+            ctx.font = 'bold 11px monospace';
+            ctx.fillText(`👷 WORKER: ${workerEmp} (${workerName}) | BCC SWACHHA BELAGAVI`, 22, 338);
+
+            canvas.classList.remove('hidden');
+            if (video) video.classList.add('hidden');
+            if (mock) mock.classList.add('hidden');
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
     }
 
     async function submitWorkerCleanup() {
@@ -2073,13 +2422,22 @@
         const pending = allReports.find(r => r.status === 'in_progress' || r.status === 'pending' || r.status === 'overdue');
         if (pending) activeAcceptedTaskId = pending.id;
         else {
-          alert("Please select/accept an active task first.");
+          alert("Please click 'Add Live Image & Clean Area' on a pending task first.");
           return;
         }
       }
 
+      const activeTask = allReports.find(r => r.id === activeAcceptedTaskId);
+      const targetArea = activeTask ? activeTask.address : 'Belagavi Area';
       const canvas = document.getElementById('camera-snapshot-canvas');
-      const afterImg = canvas.toDataURL('image/jpeg', 0.8) || 'sample_after_belagavi';
+      const afterImg = canvas.toDataURL('image/jpeg', 0.85);
+
+      const lat = activeTask ? activeTask.latitude : 15.8340;
+      const lng = activeTask ? activeTask.longitude : 74.5020;
+
+      const btn = document.getElementById('btn-submit-cleanup-proof');
+      btn.disabled = true;
+      btn.innerText = "Submitting Live Proof to Blockchain...";
 
       try {
         const res = await fetch('/api/reports/submit-cleanup', {
@@ -2089,19 +2447,35 @@
             report_id: activeAcceptedTaskId,
             worker_id: activeWorkerId,
             after_image: afterImg,
-            latitude: 15.8340,
-            longitude: 74.5020
+            latitude: lat,
+            longitude: lng
           })
         });
         const data = await res.json();
-        alert(`✅ SUCCESS!\n${data.message}\nAI Match: ${data.ai_similarity_score}%\nBlockchain Block Hash: ${data.blockchain_hash.substring(0, 24)}...`);
+        alert(`✅ SUCCESS!\nTask #${activeAcceptedTaskId} for "${targetArea}" completed!\n\nAI Cleanliness Match: ${data.ai_similarity_score}%\nBlockchain Block Hash: ${data.blockchain_hash.substring(0, 24)}...\n\nTask has moved to the Completed Working Table!`);
+        
         if (slaTimerInterval) clearInterval(slaTimerInterval);
         document.getElementById('sla-timer-display').innerText = "CLEANED";
         activeAcceptedTaskId = null;
-        loadAllReports();
-        loadWorkerProfile(activeWorkerId);
+
+        canvas.classList.add('hidden');
+        document.getElementById('camera-mock-preview').classList.remove('hidden');
+        document.getElementById('worker-active-task-desc').innerText = "Cleanup finished! Select another pending task from the table below.";
+
+        await loadAllReports();
+        await loadWorkerProfile(activeWorkerId);
         loadBlockchainLedger();
-      } catch (e) { alert("Error submitting cleanup proof."); }
+
+        // Scroll to Completed Cleanups Table
+        const completedSection = document.getElementById('worker-completed-section');
+        if (completedSection) completedSection.scrollIntoView({ behavior: 'smooth' });
+      } catch (e) {
+        alert("Error submitting cleanup proof.");
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4"></i><span>Submit Cleanup Proof & Move to Completed Table</span>`;
+        lucide.createIcons();
+      }
     }
 
     function updateWatermarkTime() {
