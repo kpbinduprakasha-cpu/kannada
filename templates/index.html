@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>SWACHHA BELAGAVI (ಸ್ವಚ್ಛ ಬೆಳಗಾವಿ) - Belagavi City Corporation</title>
+  <title>SWACHHA BELAGAVI - Belagavi City Corporation</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Leaflet CSS & JS for Live GPS GIS Map -->
@@ -49,6 +49,84 @@
       box-shadow: 0 0 14px 4px #10b981;
       animation: scan-laser 2.2s infinite ease-in-out;
       border-radius: 9999px;
+    }
+
+    /* THEME SWITCHER (WHITE COLOR & BLACK SCREEN) */
+    body.theme-light {
+      background-color: #f8fafc !important;
+      color: #0f172a !important;
+    }
+    body.theme-light header {
+      background-color: #ffffff !important;
+      border-color: #e2e8f0 !important;
+    }
+    body.theme-light .bg-slate-900,
+    body.theme-light .bg-slate-950,
+    body.theme-light .bg-black {
+      background-color: #ffffff !important;
+      color: #0f172a !important;
+      border-color: #e2e8f0 !important;
+    }
+    body.theme-light .bg-slate-900\/50,
+    body.theme-light .bg-slate-900\/60,
+    body.theme-light .bg-slate-900\/70,
+    body.theme-light .bg-slate-900\/80,
+    body.theme-light .bg-slate-900\/90,
+    body.theme-light .bg-slate-950\/60,
+    body.theme-light .bg-slate-950\/70,
+    body.theme-light .bg-slate-950\/80,
+    body.theme-light .bg-slate-950\/85,
+    body.theme-light .bg-slate-950\/90,
+    body.theme-light .bg-slate-950\/95 {
+      background-color: #f1f5f9 !important;
+      border-color: #cbd5e1 !important;
+    }
+    body.theme-light .bg-slate-800,
+    body.theme-light .bg-slate-800\/80,
+    body.theme-light .bg-slate-800\/90 {
+      background-color: #ffffff !important;
+      color: #0f172a !important;
+      border-color: #e2e8f0 !important;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05) !important;
+    }
+    body.theme-light .bg-slate-800:hover,
+    body.theme-light .hover\:bg-slate-700:hover,
+    body.theme-light .hover\:bg-slate-800:hover {
+      background-color: #f1f5f9 !important;
+      color: #0f172a !important;
+    }
+    body.theme-light .text-white {
+      color: #0f172a !important;
+    }
+    body.theme-light .text-slate-100,
+    body.theme-light .text-slate-200 {
+      color: #1e293b !important;
+    }
+    body.theme-light .text-slate-300 {
+      color: #334155 !important;
+    }
+    body.theme-light .text-slate-400 {
+      color: #64748b !important;
+    }
+    body.theme-light .border-slate-700,
+    body.theme-light .border-slate-700\/80,
+    body.theme-light .border-slate-800 {
+      border-color: #e2e8f0 !important;
+    }
+    body.theme-light input,
+    body.theme-light textarea,
+    body.theme-light select {
+      background-color: #ffffff !important;
+      color: #0f172a !important;
+      border-color: #cbd5e1 !important;
+    }
+    body.theme-light input::placeholder,
+    body.theme-light textarea::placeholder {
+      color: #94a3b8 !important;
+    }
+    body.theme-light #theme-switcher-container {
+      background-color: #e2e8f0 !important;
+      border-color: #cbd5e1 !important;
     }
   </style>
 </head>
@@ -104,7 +182,7 @@
         </div>
         <div>
           <h2 class="text-xl font-extrabold text-white tracking-tight">SWACHHA BELAGAVI</h2>
-          <p class="text-xs text-slate-400">ಬೆಳಗಾವಿ ಮಹಾನಗರ ಪಾಲಿಕೆ • Belagavi City Corporation (BCC)</p>
+          <p class="text-xs text-slate-400">Belagavi City Corporation (BCC)</p>
         </div>
       </div>
 
@@ -116,7 +194,7 @@
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1.5">Mobile Number (ನೈಜ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ)</label>
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5">Mobile Number</label>
           <div class="relative">
             <input type="tel" id="auth-identifier" maxlength="10" placeholder="Enter 10-digit mobile number (e.g. 9845012345)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 font-medium">
             <span class="absolute right-3 top-3 text-xs text-slate-500 flex items-center space-x-1">
@@ -218,7 +296,7 @@
           <div class="flex items-center justify-between">
             <span class="text-xs font-bold text-emerald-400 flex items-center space-x-1.5">
               <i data-lucide="map-pin" class="w-4 h-4"></i>
-              <span>Belagavi Home Center (ಮನೆ ಕೇಂದ್ರ)</span>
+              <span>Belagavi Home Center Location</span>
             </span>
             <button type="button" onclick="detectHomeCenterGps()" class="text-[11px] text-sky-400 hover:underline flex items-center space-x-1">
               <i data-lucide="crosshair" class="w-3 h-3"></i>
@@ -244,7 +322,7 @@
           <input type="text" id="onboard-home-address" value="Congress Road, Tilakwadi, Belagavi" placeholder="House No, Ward, Belagavi" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200">
 
           <p class="text-[10px] text-slate-400">
-            🔔 <strong>Belagavi City Alert:</strong> When the BCC collection truck enters within 500m of this spot, your phone will chime and announce in Kannada & English.
+            🔔 <strong>Belagavi City Alert:</strong> When the BCC collection truck enters within 500m of this spot, your phone will chime and announce garbage truck arrival.
           </p>
         </div>
 
@@ -333,7 +411,7 @@
             <h1 class="text-xl font-bold tracking-tight text-white">SWACHHA BELAGAVI</h1>
             <span class="bg-emerald-500/20 text-emerald-400 text-xs px-2 py-0.5 rounded-full border border-emerald-500/30 font-medium">BCC Clean City</span>
           </div>
-          <p class="text-xs text-slate-400">ಬೆಳಗಾವಿ ಮಹಾನಗರ ಪಾಲಿಕೆ • Belagavi City Corporation</p>
+          <p class="text-xs text-slate-400">Belagavi City Corporation</p>
         </div>
       </div>
 
@@ -380,17 +458,19 @@
       <div class="flex items-center space-x-2">
         <button onclick="openMobileQrModal()" class="px-3 py-1.5 bg-sky-500/20 text-sky-300 border border-sky-500/40 hover:bg-sky-500/30 rounded-xl text-xs font-bold flex items-center space-x-1.5 transition shadow">
           <i data-lucide="qr-code" class="w-4 h-4 text-sky-400"></i>
-          <span>📱 Mobile QR (ಸ್ಕ್ಯಾನರ್)</span>
+          <span>📱 Mobile QR Code</span>
         </button>
       </div>
 
-      <!-- App Language Switcher (ಕನ್ನಡ / English) -->
-      <div class="flex items-center space-x-1 bg-slate-900 border border-slate-800 p-1 rounded-xl">
-        <button type="button" onclick="setAppLanguage('kn')" id="btn-lang-kn" class="px-2.5 py-1 text-xs font-bold rounded-lg transition bg-emerald-600 text-white shadow">
-          ಕನ್ನಡ
+      <!-- Theme Switcher (Black Screen / White Color) -->
+      <div class="flex items-center space-x-1 bg-slate-900 border border-slate-800 p-1 rounded-xl" id="theme-switcher-container">
+        <button type="button" onclick="setThemeMode('dark')" id="btn-theme-dark" class="px-3 py-1.5 text-xs font-bold rounded-lg transition bg-slate-800 text-white shadow border border-slate-700 flex items-center space-x-1.5" title="Black Screen">
+          <span class="w-2.5 h-2.5 rounded-full bg-black border border-slate-600 inline-block"></span>
+          <span>Black Screen</span>
         </button>
-        <button type="button" onclick="setAppLanguage('en')" id="btn-lang-en" class="px-2.5 py-1 text-xs font-semibold rounded-lg transition text-slate-400 hover:text-white">
-          English
+        <button type="button" onclick="setThemeMode('light')" id="btn-theme-light" class="px-3 py-1.5 text-xs font-semibold rounded-lg transition text-slate-400 hover:text-white flex items-center space-x-1.5" title="White Color">
+          <span class="w-2.5 h-2.5 rounded-full bg-white border border-slate-300 inline-block"></span>
+          <span>White Color</span>
         </button>
       </div>
 
@@ -398,7 +478,7 @@
       <div class="flex items-center space-x-2">
         <button onclick="testVehicleSiren()" class="px-3 py-1.5 bg-amber-500/20 text-amber-300 border border-amber-500/30 hover:bg-amber-500/30 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition">
           <i data-lucide="bell-ring" class="w-3.5 h-3.5 text-amber-400"></i>
-          <span>Test Truck Chime (ಕಸದ ವಾಹನ)</span>
+          <span>Test Bell Chime</span>
         </button>
       </div>
     </div>
@@ -485,7 +565,7 @@
             </div>
             <div>
               <h2 class="text-base font-bold text-white">Report Garbage Dumping in Belagavi</h2>
-              <p class="text-xs text-slate-400">Dynamic Decision Engine matches nearest Belagavi worker</p>
+              <p class="text-xs text-slate-400">Belagavi City Corporation Sanitation Reporting</p>
             </div>
           </div>
 
@@ -514,10 +594,10 @@
               </div>
             </div>
 
-            <!-- Description -->
+            <!-- Description (Placeholder strictly Add Information) -->
             <div>
               <label class="block text-xs font-semibold text-slate-300 mb-1">Spot Description</label>
-              <textarea id="report-description" rows="2" placeholder="e.g. Empty plot corner piled with plastic bottles & food packets near Tilakwadi 1st gate" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500"></textarea>
+              <textarea id="report-description" rows="2" placeholder="Add Information" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500"></textarea>
             </div>
 
             <!-- GPS Geolocation (Belagavi) -->
@@ -536,15 +616,15 @@
               <input type="text" id="report-address" value="Congress Road, Tilakwadi, Belagavi" class="mt-2 w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-300">
             </div>
 
-            <!-- Citizen LIVE Universal Camera (Laptop & Mobile Hardware Capture) -->
+            <!-- Citizen Universal 1-Click Live Camera (Mobile & Laptop) -->
             <div>
               <div class="flex items-center justify-between mb-1.5">
                 <label class="block text-xs font-semibold text-slate-300" id="label-live-photo-head">
-                  Live Camera Photo (ಕಡ್ಡಾಯ ನೇರ ಕ್ಯಾಮೆರಾ ಫೋಟೋ)
+                  Live Camera Photo
                 </label>
                 <span class="text-[10px] text-emerald-400 font-semibold flex items-center space-x-1">
                   <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                  <span>Mobile & Laptop Ready</span>
+                  <span>Live Hardware Capture</span>
                 </span>
               </div>
 
@@ -555,12 +635,11 @@
                   <img id="citizen-live-snapshot-img" class="w-full h-full object-cover hidden rounded-xl" alt="Live Captured Waste">
                   <canvas id="citizen-live-canvas" class="hidden"></canvas>
                   
-                  <div id="citizen-camera-idle" class="text-center p-4 space-y-2">
-                    <div class="w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center mx-auto border border-rose-500/30">
-                      <i data-lucide="camera" class="w-6 h-6"></i>
+                  <!-- Viewfinder Idle: Camera Icon Only (No Extra Titles/Values) -->
+                  <div id="citizen-camera-idle" class="flex flex-col items-center justify-center p-6 space-y-1">
+                    <div class="w-16 h-16 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center border border-rose-500/30 shadow-lg">
+                      <i data-lucide="camera" class="w-8 h-8"></i>
                     </div>
-                    <p class="text-xs text-slate-200 font-bold" id="cam-idle-title">ಲೈವ್ ಫೋಟೋ ಕ್ಯಾಮೆರಾ / Live Camera</p>
-                    <p class="text-[10px] text-slate-400" id="cam-idle-sub">ಬೆಳಗಾವಿ ಜಿಪಿಎಸ್ ಮತ್ತು ಸಮಯದೊಂದಿಗೆ ಫೋಟೋ ಸೆರೆಹಿಡಿಯಿರಿ</p>
                   </div>
 
                   <!-- Live GPS Watermark Badge on Camera View -->
@@ -574,48 +653,28 @@
                 <div id="citizen-photo-confirmed-badge" class="hidden flex items-center justify-between bg-emerald-500/10 border border-emerald-500/30 rounded-xl px-3 py-1.5 text-xs text-emerald-300">
                   <div class="flex items-center space-x-1.5">
                     <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
-                    <span class="font-bold" id="badge-photo-confirmed-text">✅ ಲೈವ್ ಫೋಟೋ ಸಿದ್ಧವಾಗಿದೆ (Live Photo Captured)</span>
+                    <span class="font-bold" id="badge-photo-confirmed-text">Live Photo Captured</span>
                   </div>
                   <button type="button" onclick="retakeCitizenPhoto()" class="text-sky-400 hover:underline font-semibold text-[11px]">
-                    🔄 ಮರುತೆಗೆಯಿರಿ (Retake)
+                    Retake Photo
                   </button>
                 </div>
 
-                <!-- Multi-Device Capture Buttons (Laptop & Mobile) -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  <!-- 1. Native Mobile Camera Button (100% Reliable over HTTP & Direct User Touch) -->
-                  <label for="report-photo-input" class="cursor-pointer py-2.5 px-3 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-xs font-bold flex items-center justify-center space-x-2 transition shadow-lg shadow-rose-600/30 text-center">
+                <!-- Single Universal 1-Click Live Camera Button (Mobile & Laptop) -->
+                <div>
+                  <label for="report-photo-input" class="w-full cursor-pointer py-3 px-4 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-xs font-bold flex items-center justify-center space-x-2 transition shadow-lg shadow-rose-600/30 text-center">
                     <i data-lucide="camera" class="w-4 h-4 shrink-0"></i>
-                    <span id="btn-phone-cam-label">📱 ಮೊಬೈಲ್ ಕ್ಯಾಮೆರಾ (Phone Cam)</span>
+                    <span id="btn-phone-cam-label">Take Live Photo</span>
                     <input type="file" id="report-photo-input" accept="image/*" capture="environment" onchange="previewCitizenImage(this)" class="hidden">
                   </label>
-
-                  <!-- 2. Laptop Webcam Button -->
-                  <button type="button" id="btn-start-citizen-cam" onclick="startCitizenCamera()" class="py-2.5 px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-xl text-xs font-semibold flex items-center justify-center space-x-1.5 transition">
-                    <i data-lucide="video" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                    <span id="btn-webcam-label">💻 ಲ್ಯಾಪ್ಟಾಪ್ ವೆಬ್ಕ್ಯಾಮ್ (Webcam)</span>
-                  </button>
-                </div>
-
-                <!-- Secondary Action Buttons: Snap & Quick 1-Click Sample Photo -->
-                <div class="flex items-center space-x-2">
-                  <button type="button" id="btn-snap-citizen-cam" onclick="captureCitizenLiveSnapshot()" class="hidden flex-1 py-2 px-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold flex items-center justify-center space-x-1.5 transition shadow">
-                    <i data-lucide="aperture" class="w-4 h-4"></i>
-                    <span>📸 ಫೋಟೋ ಸೆರೆಹಿಡಿಯಿರಿ (Snap Photo)</span>
-                  </button>
-
-                  <button type="button" onclick="generateSampleLiveSnapshot('citizen')" class="flex-1 py-2 px-3 bg-slate-900 hover:bg-slate-800 text-amber-300 border border-amber-500/30 rounded-xl text-xs font-medium flex items-center justify-center space-x-1.5 transition text-center" title="Instant Live Watermarked Snapshot for Testing">
-                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-400 shrink-0"></i>
-                    <span>✨ ತ್ವರಿತ ಲೈವ್ ಫೋಟೋ (Sample)</span>
-                  </button>
                 </div>
               </div>
             </div>
 
-            <!-- Submit Button -->
+            <!-- Submit Button (Pure English, No Dynamic Dispatch) -->
             <button type="submit" id="btn-submit-report" class="w-full py-3 bg-rose-600 hover:bg-rose-500 text-white rounded-xl font-bold text-xs shadow-lg shadow-rose-600/30 transition flex items-center justify-center space-x-2">
-              <i data-lucide="cpu" class="w-4 h-4 animate-pulse"></i>
-              <span>Run Dynamic Dispatch & Broadcast Alert</span>
+              <i data-lucide="send" class="w-4 h-4"></i>
+              <span>Submit Report</span>
             </button>
           </form>
         </div>
@@ -628,7 +687,7 @@
                 <i data-lucide="shield-check" class="w-5 h-5"></i>
               </div>
               <div>
-                <h3 class="text-base font-bold text-white" id="city-radar-head">Belagavi Sanitation Beat & Dynamic Dispatch Engine</h3>
+                <h3 class="text-base font-bold text-white" id="city-radar-head">Belagavi Sanitation Beat & Activity Overview</h3>
                 <p class="text-xs text-slate-400" id="city-radar-sub">Real-time worker attribution within 5km radius with 10-Min SLA guarantee</p>
               </div>
             </div>
@@ -665,7 +724,7 @@
           <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-3.5 flex items-start space-x-3 text-xs">
             <i data-lucide="info" class="w-4 h-4 text-sky-400 shrink-0 mt-0.5"></i>
             <div class="space-y-1 text-slate-300">
-              <p class="font-semibold text-white">Dynamic Attribution & Verification Protocol:</p>
+              <p class="font-semibold text-white">Attribution & Verification Protocol:</p>
               <p class="text-[11px] text-slate-400">
                 1. Citizen captures geotagged photo &bull; 2. Nearest BCC worker is matched &bull; 3. Worker uploads cleaned proof &bull; 4. Gemini AI verifies >90% match &bull; 5. Block recorded on SHA-256 Ledger.
               </p>
@@ -681,7 +740,7 @@
       <!-- ============================================================== -->
       <div class="space-y-4 pt-2">
         
-        <!-- Table Toolbar with Language Selector & Count Summary -->
+        <!-- Table Toolbar with Count Summary -->
         <div class="bg-slate-900/90 border border-slate-700/80 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3 shadow-md">
           <div class="flex items-center space-x-3">
             <div class="p-2.5 bg-emerald-500/20 text-emerald-400 rounded-xl border border-emerald-500/30">
@@ -689,30 +748,18 @@
             </div>
             <div>
               <h2 id="two-tables-main-title" class="text-base font-bold text-white">
-                ಬೆಳಗಾವಿ ಸ್ವಚ್ಛತಾ ಸಮಸ್ಯೆಗಳ ಪ್ರತ್ಯೇಕ ಕೋಷ್ಟಕಗಳು (Two Problem Resolution Tables)
+                Belagavi Problem Resolution Tables
               </h2>
               <p id="two-tables-main-sub" class="text-xs text-slate-400">
-                ಬಾಕಿ ಇರುವ ಮತ್ತು ಪರಿಹರಿಸಲಾದ ಸಮಸ್ಯೆಗಳನ್ನು ಪ್ರತ್ಯೇಕವಾಗಿ ಪರಿಶೀಲಿಸಿ
+                Review pending problems and solved problems in separate tables
               </p>
             </div>
           </div>
 
-          <!-- Table Language Setting (Kannada / English / Bilingual) -->
           <div class="flex items-center space-x-2">
-            <span class="text-xs text-slate-400 font-semibold" id="label-table-lang">ಕೋಷ್ಟಕ ಭಾಷೆ (Table Language):</span>
-            <div class="flex items-center space-x-1 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
-              <button type="button" onclick="setTableLanguage('kn')" id="btn-tlang-kn" class="px-2.5 py-1 rounded-lg font-bold transition bg-emerald-600 text-white shadow">
-                ಕನ್ನಡ
-              </button>
-              <button type="button" onclick="setTableLanguage('en')" id="btn-tlang-en" class="px-2.5 py-1 rounded-lg font-semibold transition text-slate-400 hover:text-white">
-                English
-              </button>
-              <button type="button" onclick="setTableLanguage('both')" id="btn-tlang-both" class="px-2.5 py-1 rounded-lg font-semibold transition text-slate-400 hover:text-white">
-                ದ್ವಿಭಾಷಾ (Both)
-              </button>
-            </div>
-            <button type="button" onclick="loadAllReports()" class="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl transition border border-slate-700" title="Refresh">
-              <i data-lucide="refresh-cw" class="w-4 h-4 text-emerald-400"></i>
+            <button type="button" onclick="loadAllReports()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold flex items-center space-x-1.5 transition border border-slate-700" title="Refresh">
+              <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-emerald-400"></i>
+              <span>Refresh Tables</span>
             </button>
           </div>
         </div>
@@ -721,18 +768,18 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
           
           <!-- ============================================== -->
-          <!-- TABLE 1: PENDING PROBLEMS (ಬಾಕಿ ಇರುವ ಕಸದ ಸಮಸ್ಯೆಗಳು) -->
+          <!-- TABLE 1: PENDING PROBLEMS -->
           <!-- ============================================== -->
           <div class="bg-slate-800/90 border border-rose-500/40 rounded-2xl p-5 shadow-lg space-y-4">
             <div class="flex items-center justify-between pb-3 border-b border-slate-700/80">
               <div class="flex items-center space-x-2.5">
                 <div class="w-3 h-3 rounded-full bg-rose-500 animate-ping"></div>
                 <h3 id="table-pending-title" class="text-base font-extrabold text-white flex items-center space-x-2">
-                  <span>🕒 ಬಾಕಿ ಇರುವ ಕಸದ ಸಮಸ್ಯೆಗಳು (Pending Problems)</span>
+                  <span>🕒 Pending Problems</span>
                 </h3>
               </div>
               <span id="badge-pending-count" class="bg-rose-500/20 text-rose-300 text-xs px-3 py-1 rounded-full border border-rose-500 font-bold font-mono">
-                0 ಬಾಕಿ
+                0 Pending
               </span>
             </div>
 
@@ -743,7 +790,7 @@
           </div>
 
           <!-- ============================================== -->
-          <!-- TABLE 2: SOLVED PROBLEMS (ಪರಿಹರಿಸಲಾದ ಸಮಸ್ಯೆಗಳು) -->
+          <!-- TABLE 2: SOLVED PROBLEMS -->
           <!-- ============================================== -->
           <div class="bg-slate-800/90 border border-emerald-500/40 rounded-2xl p-5 shadow-lg space-y-4">
             <div class="flex items-center justify-between pb-3 border-b border-slate-700/80">
@@ -752,11 +799,11 @@
                   <i data-lucide="check-check" class="w-4 h-4"></i>
                 </div>
                 <h3 id="table-solved-title" class="text-base font-extrabold text-white flex items-center space-x-2">
-                  <span>✅ ಪರಿಹರಿಸಲಾದ ಸಮಸ್ಯೆಗಳು (Solved Problems)</span>
+                  <span>✅ Solved Problems</span>
                 </h3>
               </div>
               <span id="badge-solved-count" class="bg-emerald-500/20 text-emerald-300 text-xs px-3 py-1 rounded-full border border-emerald-500 font-bold font-mono">
-                0 ಪರಿಹರಿಸಲಾಗಿದೆ
+                0 Solved
               </span>
             </div>
 
@@ -889,7 +936,7 @@
             </div>
             <div>
               <div class="flex items-center space-x-2">
-                <h3 class="text-base font-bold text-white">Pending Sanitation Tasks (ಬಾಕಿ ಇರುವ ಕೆಲಸಗಳು)</h3>
+                <h3 class="text-base font-bold text-white">Pending Sanitation Tasks</h3>
                 <span id="worker-pending-pill-badge" class="bg-rose-500/20 text-rose-300 text-xs px-2.5 py-0.5 rounded-full border border-rose-500/30 font-mono font-bold">Pending Action</span>
               </div>
               <p class="text-xs text-slate-400">Click "Add Live Image & Clean Area" on any task to activate camera proof for that particular location</p>
@@ -967,10 +1014,10 @@
               <video id="live-camera-feed" autoplay playsinline class="w-full h-full object-cover hidden"></video>
               <canvas id="camera-snapshot-canvas" class="hidden w-full h-full object-cover"></canvas>
               
-              <div id="camera-mock-preview" class="text-center p-4 space-y-2">
-                <i data-lucide="camera" class="w-10 h-10 text-slate-500 mx-auto"></i>
-                <p class="text-xs text-slate-300 font-bold">Live Cleaned Area Viewfinder</p>
-                <p class="text-[10px] text-slate-400">Laptop Webcam or Mobile Phone Camera supported</p>
+              <div id="camera-mock-preview" class="flex items-center justify-center p-6">
+                <div class="w-14 h-14 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30 shadow-lg">
+                  <i data-lucide="camera" class="w-7 h-7"></i>
+                </div>
               </div>
 
               <!-- Live GPS Watermark Overlay -->
@@ -983,33 +1030,13 @@
               </div>
             </div>
 
-            <!-- Multi-Device Capture Controls (Laptop & Mobile) -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
-              <!-- Direct Mobile Hardware Camera -->
-              <label for="worker-hardware-cam" class="cursor-pointer py-2.5 px-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold flex items-center justify-center space-x-1.5 transition shadow text-center">
-                <i data-lucide="camera" class="w-4 h-4"></i>
-                <span>📱 ಮೊಬೈಲ್ ಕ್ಯಾಮೆರಾ (Phone Cam)</span>
+            <!-- Single Universal 1-Click Cleaned Photo Button -->
+            <div class="pt-1">
+              <label for="worker-hardware-cam" class="w-full cursor-pointer py-3 px-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold flex items-center justify-center space-x-2 transition shadow text-center">
+                <i data-lucide="camera" class="w-4 h-4 shrink-0"></i>
+                <span>Take Live Cleaned Photo</span>
                 <input type="file" id="worker-hardware-cam" accept="image/*" capture="environment" onchange="previewWorkerHardwareImage(this)" class="hidden">
               </label>
-
-              <!-- Laptop Webcam -->
-              <button type="button" onclick="startCamera()" class="py-2.5 px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-semibold flex items-center justify-center space-x-1.5 transition border border-slate-700">
-                <i data-lucide="video" class="w-4 h-4 text-emerald-400"></i>
-                <span>💻 ಲ್ಯಾಪ್ಟಾಪ್ ವೆಬ್ಕ್ಯಾಮ್ (Webcam)</span>
-              </button>
-            </div>
-
-            <!-- Secondary Snap & Sample Cleaned Photo Controls -->
-            <div class="flex items-center space-x-2 pt-1">
-              <button type="button" id="btn-snap-worker-cam" onclick="captureLiveSnapshot()" class="flex-1 py-2 px-3 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-xs font-bold flex items-center justify-center space-x-1.5 transition shadow">
-                <i data-lucide="aperture" class="w-4 h-4"></i>
-                <span>📸 ಫೋಟೋ ಸೆರೆಹಿಡಿಯಿರಿ (Snap Photo)</span>
-              </button>
-
-              <button type="button" onclick="generateSampleLiveSnapshot('worker')" class="flex-1 py-2 px-3 bg-slate-950 hover:bg-slate-800 text-amber-300 border border-amber-500/30 rounded-xl text-xs font-medium flex items-center justify-center space-x-1.5 transition text-center" title="Instant Cleaned Area Verification Snapshot">
-                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-400"></i>
-                <span>✨ ತ್ವರಿತ ಲೈವ್ ಫೋಟೋ (Sample)</span>
-              </button>
             </div>
 
           </div>
@@ -1035,7 +1062,7 @@
             </div>
             <div>
               <div class="flex items-center space-x-2">
-                <h3 class="text-base font-bold text-white">Completed Sanitation Cleanups (ಪೂರ್ಣಗೊಂಡ ಕೆಲಸಗಳು)</h3>
+                <h3 class="text-base font-bold text-white">Completed Sanitation Cleanups</h3>
                 <span id="worker-completed-pill-badge" class="bg-emerald-500/20 text-emerald-300 text-xs px-2.5 py-0.5 rounded-full border border-emerald-500/30 font-mono font-bold">Verified Green</span>
               </div>
               <p class="text-xs text-slate-400">All successfully cleared Belagavi spots with Before & After live images, AI scores, and blockchain proof</p>
@@ -1127,9 +1154,9 @@
           <table class="w-full text-left text-xs">
             <thead>
               <tr class="text-slate-400 border-b border-slate-700/60">
-                <th class="py-2.5 font-bold">Worker ID (ನೌಕರ ಐಡಿ)</th>
-                <th class="py-2.5 font-bold">Full Name (ಹೆಸರು)</th>
-                <th class="py-2.5 font-bold">Assigned Beat / Ward (ವಾರ್ಡ್)</th>
+                <th class="py-2.5 font-bold">Worker ID</th>
+                <th class="py-2.5 font-bold">Full Name</th>
+                <th class="py-2.5 font-bold">Assigned Beat / Ward</th>
                 <th class="py-2.5 font-bold">Phone Number</th>
                 <th class="py-2.5 font-bold">Live Duty Status</th>
                 <th class="py-2.5 font-bold text-right">Today / Monthly Cleanups</th>
@@ -1274,7 +1301,7 @@
           </div>
           <div>
             <h3 class="text-lg font-extrabold text-white tracking-tight" id="officer-contact-title">
-              ಬೆಳಗಾವಿ ಮಹಾನಗರ ಪಾಲಿಕೆ - ಮುಖ್ಯ ನೈರ್ಮಲ್ಯ ಅಧಿಕಾರಿಗಳ ನೇರ ಸಂಪರ್ಕ
+              Belagavi City Corporation - Chief Sanitation & Health Officer Directory
             </h3>
             <p class="text-xs text-slate-400" id="officer-contact-subtitle">
               Belagavi City Corporation (BCC) Health & Sanitation Escalation Desk
@@ -1294,8 +1321,8 @@
             <i data-lucide="user-check" class="w-4 h-4 text-emerald-400"></i>
             <span class="font-semibold uppercase tracking-wider">Chief Municipal Officer</span>
           </div>
-          <h4 class="text-sm font-bold text-white">ಶ್ರೀ ಆನಂದ್ ಪಾಟೀಲ್ / Anand Patil</h4>
-          <p class="text-xs text-emerald-400 font-medium">ಮುಖ್ಯ ನೈರ್ಮಲ್ಯ ಮತ್ತು ಆರೋಗ್ಯ ಅಧಿಕಾರಿ</p>
+          <h4 class="text-sm font-bold text-white">Anand Patil</h4>
+          <p class="text-xs text-emerald-400 font-medium">Chief Health & Sanitation Officer, BCC</p>
           <p class="text-[11px] text-slate-400">Chief Health & Sanitation Officer, BCC</p>
         </div>
 
@@ -1407,7 +1434,7 @@
             <i data-lucide="smartphone" class="w-5 h-5"></i>
           </div>
           <div>
-            <h3 class="text-base font-extrabold text-white">📱 ಮೊಬೈಲ್ ಕ್ಯೂಆರ್ ಸ್ಕ್ಯಾನರ್ (Mobile Scanner)</h3>
+            <h3 class="text-base font-extrabold text-white">📱 Mobile QR Scanner</h3>
             <p class="text-xs text-slate-400">Scan with your phone camera to open Swachha Belagavi</p>
           </div>
         </div>
@@ -1438,19 +1465,19 @@
       <div class="bg-sky-500/10 border border-sky-500/20 rounded-2xl p-3.5 space-y-1.5 text-xs text-slate-300">
         <p class="font-bold text-sky-300 flex items-center space-x-1">
           <i data-lucide="scan" class="w-4 h-4"></i>
-          <span>ಹೇಗೆ ಸ್ಕ್ಯಾನ್ ಮಾಡುವುದು? / How to Scan:</span>
+          <span>How to Scan:</span>
         </p>
         <ol class="list-decimal list-inside space-y-1 text-[11px] text-slate-300">
-          <li>ನಿಮ್ಮ ಮೊಬೈಲ್‌ನ ಕ್ಯಾಮೆರಾ (Camera) ಅಥವಾ Google Lens ಓಪನ್ ಮಾಡಿ.</li>
-          <li>ಸ್ಕ್ರೀನ್ ಮೇಲಿನ ಕ್ಯೂಆರ್ ಕೋಡ್ (QR Code) ಮೇಲೆ ಕ್ಯಾಮೆರಾ ಹಿಡಿಯಿರಿ.</li>
-          <li>ಬರುವ ಲಿಂಕ್ ಮೇಲೆ ಟ್ಯಾಪ್ ಮಾಡಿ ಮೊಬೈಲ್‌ನಲ್ಲಿ ಆ್ಯಪ್ ಬಳಸಿ!</li>
+          <li>Open your mobile phone Camera or Google Lens.</li>
+          <li>Point your camera at the QR code on the screen.</li>
+          <li>Tap the displayed link to open the app on your mobile device!</li>
         </ol>
       </div>
 
       <!-- Quick Scan In-App Items Button -->
       <button type="button" onclick="closeMobileQrModal(); openInAppScanner();" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5">
         <i data-lucide="scan-line" class="w-4 h-4 text-emerald-400"></i>
-        <span>📷 Open In-App Waste/Bin Scanner (ತ್ಯಾಜ್ಯ ಕ್ಯೂಆರ್ ಸ್ಕ್ಯಾನರ್)</span>
+        <span>📷 Open In-App Waste/Bin Scanner</span>
       </button>
     </div>
   </div>
@@ -1466,7 +1493,7 @@
             <i data-lucide="scan-line" class="w-5 h-5"></i>
           </div>
           <div>
-            <h3 class="text-base font-extrabold text-white">📷 ಬೆಳಗಾವಿ ಸ್ಮಾರ್ಟ್ ಕ್ಯೂಆರ್ ಸ್ಕ್ಯಾನರ್ (BCC Smart Scanner)</h3>
+            <h3 class="text-base font-extrabold text-white">📷 BCC Smart Scanner</h3>
             <p class="text-xs text-slate-400">Scan household waste tags, public bins & worker badges</p>
           </div>
         </div>
@@ -1494,7 +1521,7 @@
       <!-- Quick Scan Simulated Presets -->
       <div class="space-y-2">
         <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
-          One-Tap Smart Scan Simulation (ತ್ವರಿತ ಸ್ಕ್ಯಾನ್):
+          One-Tap Smart Scan Simulation:
         </span>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
           <button type="button" onclick="simulateQrScan('house')" class="p-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-xl text-xs font-semibold text-center transition flex flex-col items-center justify-center space-y-1">
@@ -1520,7 +1547,7 @@
 
   <!-- FOOTER -->
   <footer class="bg-slate-950 border-t border-slate-800 py-4 text-center text-xs text-slate-500">
-    BCC Swachha Belagavi (ಸ್ವಚ್ಛ ಬೆಳಗಾವಿ) &bull; Belagavi City Corporation &bull; 5km Geofence Radar &bull; SHA-256 Blockchain Ledger
+    BCC Swachha Belagavi &bull; Belagavi City Corporation &bull; 5km Geofence Radar &bull; SHA-256 Blockchain Ledger
   </footer>
 
   <!-- ============================================================== -->
@@ -1540,8 +1567,8 @@
     let cameraStream = null;
     let citizenCameraStream = null;
     let capturedPhotoData = null;
-    let appLang = localStorage.getItem('bcc_app_lang') || 'kn';
-    let tableLang = localStorage.getItem('bcc_table_lang') || 'both';
+    let appLang = 'en';
+    let tableLang = 'en';
 
     // ============================================================
     // NON-BLOCKING FLOATING TOAST NOTIFICATION SYSTEM
@@ -1584,119 +1611,76 @@
     // ============================================================
     // BILINGUAL LANGUAGE SYSTEM (KANNADA & ENGLISH SEPARATE SETTING)
     // ============================================================
-    const I18N = {
-      kn: {
-        pending_table_title: "🕒 ಬಾಕಿ ಇರುವ ಕಸದ ಸಮಸ್ಯೆಗಳು",
-        solved_table_title: "✅ ಪರಿಹರಿಸಲಾದ ಸಮಸ್ಯೆಗಳು",
-        pending_badge: "ಬಾಕಿ",
-        solved_badge: "ಪರಿಹರಿಸಲಾಗಿದೆ",
-        empty_pending: "ಪ್ರಸ್ತುತ ಬೆಳಗಾವಿಯಲ್ಲಿ ಯಾವುದೇ ಬಾಕಿ ಕಸದ ಸಮಸ್ಯೆಗಳಿಲ್ಲ!",
-        empty_solved: "ಇನ್ನೂ ಪರಿಹರಿಸಲಾದ ವರದಿಗಳಿಲ್ಲ.",
-        report_num: "ವರದಿ ಸಂಖ್ಯೆ",
-        waste_cat: "ಕಸದ ವಿಧ",
-        location: "ಪ್ರದೇಶ",
-        reported_by: "ವರದಿಗಾರರು",
-        cleaned_by: "ಪರಿಹರಿಸಿದವರು",
-        status_overdue: "ತುರ್ತು ಬಾಕಿ (10-ನಿಮಿಷ ಮೀರಿದೆ)",
-        status_pending: "ಬಾಕಿ (ಕ್ರಮಕ್ಕೆ ಕಾಯುತ್ತಿದೆ)",
-        status_progress: "ಕೆಲಸ ಪ್ರಗತಿಯಲ್ಲಿದೆ",
-        status_cleaned: "ಸ್ವಚ್ಛಗೊಳಿಸಲಾಗಿದೆ & ಪರಿಶೀಲಿಸಲಾಗಿದೆ",
-        assigned_to: "ನಿಯೋಜಿತ ಸಿಬ್ಬಂದಿ",
-        photo_label: "ಲೈವ್ ಫೋಟೋ",
-        ai_match: "AI ಸ್ವಚ್ಛತಾ ಹೊಂದಾಣಿಕೆ",
-        blockchain_proof: "ಬ್ಲಾಕ್‌ಚೈನ್ ಸಾಕ್ಷಿ",
-        waste_names: {
-          plastic_bottles: "ಪ್ಲಾಸ್ಟಿಕ್ ಮತ್ತು ಬಾಟಲಿಗಳು",
-          vegetable_wet: "ತರಕಾರಿ / ಹಸಿ ಕಸ",
-          mixed_dumping: "ರಸ್ತೆಬದಿಯ ಮಿಶ್ರ ಕಸ",
-          hazardous_e: "ಒಣ / ಇ-ತ್ಯಾಜ್ಯ"
-        }
-      },
-      en: {
-        pending_table_title: "🕒 Pending Problems",
-        solved_table_title: "✅ Solved Problems",
-        pending_badge: "Pending",
-        solved_badge: "Cleaned",
-        empty_pending: "No pending garbage problems in Belagavi!",
-        empty_solved: "No solved reports recorded yet.",
-        report_num: "Report #",
-        waste_cat: "Waste Category",
-        location: "Location",
-        reported_by: "Reported by",
-        cleaned_by: "Cleaned by",
-        status_overdue: "RED ALERT (10-Min SLA Overdue)",
-        status_pending: "RED ALERT (Pending Cleanup)",
-        status_progress: "In Progress",
-        status_cleaned: "Cleaned & Verified",
-        assigned_to: "Assigned Staff",
-        photo_label: "Live Photo",
-        ai_match: "AI Cleanliness Match",
-        blockchain_proof: "Blockchain Verified",
-        waste_names: {
-          plastic_bottles: "Plastic & Bottles",
-          vegetable_wet: "Vegetable / Wet Waste",
-          mixed_dumping: "Mixed Roadside Dumping",
-          hazardous_e: "Dry / E-Waste"
-        }
-      },
-      both: {
-        pending_table_title: "🕒 ಬಾಕಿ ಇರುವ ಕಸದ ಸಮಸ್ಯೆಗಳು (Pending Problems)",
-        solved_table_title: "✅ ಪರಿಹರಿಸಲಾದ ಸಮಸ್ಯೆಗಳು (Solved Problems)",
-        pending_badge: "ಬಾಕಿ / Pending",
-        solved_badge: "ಪರಿಹರಿಸಲಾಗಿದೆ / Cleaned",
-        empty_pending: "ಯಾವುದೇ ಬಾಕಿ ಸಮಸ್ಯೆಗಳಿಲ್ಲ / No pending problems in Belagavi!",
-        empty_solved: "ಇನ್ನೂ ಪರಿಹಾರವಾಗಿಲ್ಲ / No solved reports yet.",
-        report_num: "ವರದಿ ಸಂಖ್ಯೆ / Report #",
-        waste_cat: "ಕಸದ ವಿಧ / Waste Type",
-        location: "ಪ್ರದೇಶ / Location",
-        reported_by: "ವರದಿಗಾರರು / Reported by",
-        cleaned_by: "ಪರಿಹರಿಸಿದವರು / Cleaned by",
-        status_overdue: "ತುರ್ತು ಬಾಕಿ / RED ALERT (10-Min Overdue)",
-        status_pending: "ಬಾಕಿ / Pending Cleanup",
-        status_progress: "ಪ್ರಗತಿಯಲ್ಲಿದೆ / In Progress",
-        status_cleaned: "ಸ್ವಚ್ಛಗೊಳಿಸಲಾಗಿದೆ / Cleaned & Verified",
-        assigned_to: "ನಿಯೋಜಿತ ಸಿಬ್ಬಂದಿ / Assigned Staff",
-        photo_label: "ಲೈವ್ ಫೋಟೋ / Live Proof",
-        ai_match: "AI Match",
-        blockchain_proof: "ಬ್ಲಾಕ್‌ಚೈನ್ / SHA-256",
-        waste_names: {
-          plastic_bottles: "ಪ್ಲಾಸ್ಟಿಕ್ / Plastic & Bottles",
-          vegetable_wet: "ಹಸಿ ಕಸ / Vegetable & Wet",
-          mixed_dumping: "ಮಿಶ್ರ ಕಸ / Mixed Dumping",
-          hazardous_e: "ಒಣ / E-Waste"
-        }
+    const EN_I18N = {
+      pending_table_title: "🕒 Pending Problems",
+      solved_table_title: "✅ Solved Problems",
+      pending_badge: "Pending",
+      solved_badge: "Cleaned",
+      empty_pending: "No pending garbage problems in Belagavi!",
+      empty_solved: "No solved reports recorded yet.",
+      report_num: "Report #",
+      waste_cat: "Waste Category",
+      location: "Location",
+      reported_by: "Reported by",
+      cleaned_by: "Cleaned by",
+      status_overdue: "RED ALERT (10-Min SLA Overdue)",
+      status_pending: "RED ALERT (Pending Cleanup)",
+      status_progress: "In Progress",
+      status_cleaned: "Cleaned & Verified",
+      assigned_to: "Assigned Staff",
+      photo_label: "Live Photo",
+      ai_match: "AI Cleanliness Match",
+      blockchain_proof: "Blockchain Verified",
+      waste_names: {
+        plastic_bottles: "Plastic & Bottles",
+        vegetable_wet: "Vegetable / Wet Waste",
+        mixed_dumping: "Mixed Roadside Dumping",
+        hazardous_e: "Dry / E-Waste"
       }
     };
+    const I18N = {
+      kn: EN_I18N,
+      en: EN_I18N,
+      both: EN_I18N
+    };
 
-    function setAppLanguage(lang) {
-      appLang = lang;
-      localStorage.setItem('bcc_app_lang', lang);
-      const btnKn = document.getElementById('btn-lang-kn');
-      const btnEn = document.getElementById('btn-lang-en');
-      if (btnKn && btnEn) {
-        if (lang === 'kn') {
-          btnKn.className = "px-2.5 py-1 text-xs font-bold rounded-lg transition bg-emerald-600 text-white shadow";
-          btnEn.className = "px-2.5 py-1 text-xs font-semibold rounded-lg transition text-slate-400 hover:text-white";
-        } else {
-          btnEn.className = "px-2.5 py-1 text-xs font-bold rounded-lg transition bg-emerald-600 text-white shadow";
-          btnKn.className = "px-2.5 py-1 text-xs font-semibold rounded-lg transition text-slate-400 hover:text-white";
+    // ============================================================
+    // THEME SWITCHER (BLACK SCREEN / WHITE COLOR)
+    // ============================================================
+    function setThemeMode(mode) {
+      localStorage.setItem('bcc_theme_mode', mode);
+      const btnDark = document.getElementById('btn-theme-dark');
+      const btnLight = document.getElementById('btn-theme-light');
+      if (mode === 'light') {
+        document.body.classList.add('theme-light');
+        if (btnLight) {
+          btnLight.className = "px-3 py-1.5 text-xs font-bold rounded-lg transition bg-white text-slate-900 shadow border border-slate-300 flex items-center space-x-1.5";
+        }
+        if (btnDark) {
+          btnDark.className = "px-3 py-1.5 text-xs font-semibold rounded-lg transition text-slate-400 hover:text-white flex items-center space-x-1.5";
+        }
+      } else {
+        document.body.classList.remove('theme-light');
+        if (btnDark) {
+          btnDark.className = "px-3 py-1.5 text-xs font-bold rounded-lg transition bg-slate-800 text-white shadow border border-slate-700 flex items-center space-x-1.5";
+        }
+        if (btnLight) {
+          btnLight.className = "px-3 py-1.5 text-xs font-semibold rounded-lg transition text-slate-400 hover:text-white flex items-center space-x-1.5";
         }
       }
-      setTableLanguage(lang === 'kn' ? 'kn' : 'en');
+    }
+
+    // Apply saved theme immediately on script execution
+    const initialSavedTheme = localStorage.getItem('bcc_theme_mode') || 'dark';
+    setThemeMode(initialSavedTheme);
+
+    function setAppLanguage(lang) {
+      appLang = 'en';
+      renderCitizenReports();
     }
 
     function setTableLanguage(mode) {
-      tableLang = mode;
-      localStorage.setItem('bcc_table_lang', mode);
-      ['kn', 'en', 'both'].forEach(m => {
-        const btn = document.getElementById(`btn-tlang-${m}`);
-        if (!btn) return;
-        if (m === mode) {
-          btn.className = "px-2.5 py-1 rounded-lg font-bold transition bg-emerald-600 text-white shadow";
-        } else {
-          btn.className = "px-2.5 py-1 rounded-lg font-semibold transition text-slate-400 hover:text-white";
-        }
-      });
+      tableLang = 'en';
       renderCitizenReports();
     }
 
@@ -2252,7 +2236,7 @@
 
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
-        const msg = new SpeechSynthesisUtterance("ಬೆಳಗಾವಿ ಮಹಾನಗರ ಪಾಲಿಕೆ ಕಸದ ವಾಹನ ಬಂದಿದೆ! Belagavi City Corporation Waste Collection Truck is near your house. Please bring out plastic, bottles and vegetable waste.");
+        const msg = new SpeechSynthesisUtterance("Belagavi City Corporation Waste Collection Truck is near your house. Please bring out plastic, bottles and vegetable waste.");
         msg.rate = 0.95;
         window.speechSynthesis.speak(msg);
       }
@@ -2360,10 +2344,10 @@
         if (idle) idle.classList.add('hidden');
         if (watermark) watermark.classList.remove('hidden');
         if (snapBtn) snapBtn.classList.remove('hidden');
-        showToast("ವೆಬ್‌ಕ್ಯಾಮ್ ಸಕ್ರಿಯವಾಗಿದೆ. ಫೋಟೋ ತೆಗೆಯಲು 'Snap Photo' ಕ್ಲಿಕ್ ಮಾಡಿ.", "info");
+        showToast("Webcam active. Click to capture live photo.", "info");
       } catch (err) {
         console.warn("Live getUserMedia camera not accessible, using fallback:", err);
-        showToast("ವೆಬ್‌ಕ್ಯಾಮ್ ಲಭ್ಯವಿಲ್ಲದ ಕಾರಣ ತ್ವರಿತ ಫೋಟೋ ತಯಾರಿಸಲಾಗಿದೆ. ಮೊಬೈಲ್ ಕ್ಯಾಮೆರಾ ಕೂಡ ಬಳಸಬಹುದು.", "warning");
+        showToast("Webcam not accessible. Please use mobile camera or upload.", "warning");
         generateSampleLiveSnapshot('citizen');
       }
     }
@@ -2433,7 +2417,7 @@
         citizenCameraStream.getTracks().forEach(t => t.stop());
         citizenCameraStream = null;
       }
-      showToast("✅ ಲೈವ್ ಫೋಟೋ ಯಶಸ್ವಿಯಾಗಿ ಸೆರೆಹಿಡಿಯಲಾಗಿದೆ!", "success");
+      showToast("📸 Live photo captured successfully with GPS watermark!", "success");
     }
 
     function previewCitizenImage(input) {
@@ -2460,7 +2444,7 @@
             document.getElementById('citizen-camera-stream')?.classList.add('hidden');
             document.getElementById('citizen-camera-watermark')?.classList.add('hidden');
             document.getElementById('citizen-photo-confirmed-badge')?.classList.remove('hidden');
-            showToast("✅ ಮೊಬೈಲ್ ಕ್ಯಾಮೆರಾ ಫೋಟೋ ಯಶಸ್ವಿಯಾಗಿ ಸೆರೆಹಿಡಿಯಲಾಗಿದೆ!", "success");
+            showToast("📸 Live photo captured successfully with GPS watermark!", "success");
           };
           imgObj.src = e.target.result;
         };
@@ -2528,12 +2512,12 @@
         document.getElementById('citizen-camera-stream')?.classList.add('hidden');
         document.getElementById('citizen-camera-watermark')?.classList.add('hidden');
         document.getElementById('citizen-photo-confirmed-badge')?.classList.remove('hidden');
-        showToast("✅ ಲೈವ್ ಫೋಟೋ ಸೆರೆಹಿಡಿಯಲಾಗಿದೆ (Live Photo Watermarked)", "success");
+        showToast("✅ Live photo captured with GPS watermark!", "success");
       } else {
         canvas.classList.remove('hidden');
         document.getElementById('camera-mock-preview')?.classList.add('hidden');
         document.getElementById('live-camera-feed')?.classList.add('hidden');
-        showToast("✅ ಸ್ವಚ್ಛತಾ ಸಾಕ್ಷಿ ಫೋಟೋ ಸಿದ್ಧವಾಗಿದೆ (Cleaned Proof Ready)", "success");
+        showToast("✅ Cleaned area proof captured with GPS watermark!", "success");
       }
     }
 
@@ -2562,7 +2546,7 @@
 
       const btn = document.getElementById('btn-submit-report');
       btn.disabled = true;
-      btn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i><span>Running Dynamic Decision Engine...</span>`;
+      btn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i><span>Submitting Report...</span>`;
       lucide.createIcons();
 
       try {
@@ -2572,14 +2556,14 @@
           body: JSON.stringify(payload)
         });
         const data = await res.json();
-        showToast(`✅ ವರದಿ ಯಶಸ್ವಿಯಾಗಿ ದಾಖಲಾಗಿದೆ! (${data.dynamic_decision_note || ""})`, "success");
+        showToast("✅ Report submitted successfully!", "success");
         document.getElementById('report-description').value = '';
         loadAllReports();
       } catch (err) {
         showToast("Error submitting report.", "error");
       } finally {
         btn.disabled = false;
-        btn.innerHTML = `<i data-lucide="cpu" class="w-4 h-4 animate-pulse"></i><span>Run Dynamic Dispatch & Broadcast Alert</span>`;
+        btn.innerHTML = `<i data-lucide="send" class="w-4 h-4"></i><span>Submit Report</span>`;
         lucide.createIcons();
       }
     }
@@ -2730,13 +2714,13 @@
               <!-- Dual Before & Cleaned After Photos -->
               <div class="grid grid-cols-2 gap-2 text-center text-[10px]">
                 <div class="space-y-1">
-                  <span class="text-rose-400 font-semibold block">1. Before (ಕಸದ ಸ್ಥಳ)</span>
+                  <span class="text-rose-400 font-semibold block">1. Before (Reported)</span>
                   <div class="aspect-video rounded-xl bg-slate-800 border border-slate-700 overflow-hidden cursor-pointer" onclick="window.open('${r.before_image}', '_blank')">
                     <img src="${r.before_image || 'https://images.unsplash.com/photo-1605600659873-d808a13e4d2a?w=500&auto=format&fit=crop&q=60'}" class="w-full h-full object-cover" alt="Before">
                   </div>
                 </div>
                 <div class="space-y-1">
-                  <span class="text-emerald-400 font-semibold block">2. After (ಸ್ವಚ್ಛವಾದ ಸ್ಥಳ)</span>
+                  <span class="text-emerald-400 font-semibold block">2. After (Cleaned)</span>
                   <div class="aspect-video rounded-xl bg-slate-800 border border-emerald-500/40 overflow-hidden cursor-pointer" onclick="window.open('${r.after_image || r.before_image}', '_blank')">
                     <img src="${r.after_image || 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=500&auto=format&fit=crop&q=60'}" class="w-full h-full object-cover" alt="After">
                   </div>
@@ -2840,10 +2824,10 @@
                   </button>
                 </div>
               </div>
-              ${r.dynamic_decision_note ? `
+              ${r.assigned_worker_name ? `
                 <div class="p-2 bg-indigo-500/10 border border-indigo-500/30 rounded-xl text-[11px] text-indigo-300 flex items-center space-x-1.5">
-                  <i data-lucide="cpu" class="w-3.5 h-3.5 shrink-0"></i>
-                  <span>${r.dynamic_decision_note}</span>
+                  <i data-lucide="user-check" class="w-3.5 h-3.5 shrink-0"></i>
+                  <span>Assigned Worker: <strong>${r.assigned_worker_name}</strong></span>
                 </div>` : ''}
             `;
             pendingContainer.appendChild(card);
@@ -3149,6 +3133,7 @@
             canvas.classList.remove('hidden');
             if (video) video.classList.add('hidden');
             if (mock) mock.classList.add('hidden');
+            showToast("📸 Live cleaned photo captured successfully with GPS watermark!", "success");
           };
           img.src = e.target.result;
         };
@@ -3191,7 +3176,7 @@
           })
         });
         const data = await res.json();
-        showToast(`🎉 ಕೆಲಸ ಪೂರ್ಣಗೊಂಡಿದೆ! AI ಹೊಂದಾಣಿಕೆ: ${data.ai_similarity_score}%. ಪೂರ್ಣಗೊಂಡ ಕೋಷ್ಟಕಕ್ಕೆ ಸ್ಥಳಾಂತರಿಸಲಾಗಿದೆ.`, "success");
+        showToast(`🎉 Cleanup completed! AI Match: ${data.ai_similarity_score}%. Moved to Completed Table.`, "success");
         
         if (slaTimerInterval) clearInterval(slaTimerInterval);
         document.getElementById('sla-timer-display').innerText = "CLEANED";
@@ -3467,16 +3452,16 @@
       if (input) {
         if (navigator.clipboard && navigator.clipboard.writeText) {
           navigator.clipboard.writeText(input.value).then(() => {
-            showToast("✅ ಮೊಬೈಲ್ ಲಿಂಕ್ ನಕಲಿಸಲಾಗಿದೆ! (Link Copied)", "success");
+            showToast("✅ Mobile link copied to clipboard!", "success");
           }).catch(() => {
             input.select();
             document.execCommand('copy');
-            showToast("✅ ಮೊಬೈಲ್ ಲಿಂಕ್ ನಕಲಿಸಲಾಗಿದೆ! (Link Copied)", "success");
+            showToast("✅ Mobile link copied to clipboard!", "success");
           });
         } else {
           input.select();
           document.execCommand('copy');
-          showToast("✅ ಮೊಬೈಲ್ ಲಿಂಕ್ ನಕಲಿಸಲಾಗಿದೆ! (Link Copied)", "success");
+          showToast("✅ Mobile link copied to clipboard!", "success");
         }
       }
     }
@@ -3509,7 +3494,7 @@
 
       let resultMsg = "";
       if (type === 'house') {
-        resultMsg = "ಸ್ಕ್ಯಾನ್ ಯಶಸ್ವಿ: ತಿಳಕವಾಡಿ ಮನೆ #42 (Congress Road, Tilakwadi) ಜಿಪಿಎಸ್ ಗುರುತಿಸಲಾಗಿದೆ!";
+        resultMsg = "Scan successful: House #42 (Congress Road, Tilakwadi) GPS verified!";
         const addr = document.getElementById('report-address');
         const lat = document.getElementById('report-lat');
         const lng = document.getElementById('report-lng');
@@ -3519,7 +3504,7 @@
         if (lng) lng.value = "74.5015";
         if (desc) desc.value = "Household segregation audit: Plastic & wet waste checked.";
       } else if (type === 'bin') {
-        resultMsg = "ಸ್ಕ್ಯಾನ್ ಯಶಸ್ವಿ: BCC ಸಾರ್ವಜನಿಕ ಕಸದ ತೊಟ್ಟಿ #BCC-BIN-108 (ಚನ್ನಮ್ಮ ವೃತ್ತ)!";
+        resultMsg = "Scan successful: Public Smart Bin #BCC-BIN-108 (Rani Channamma Circle) identified!";
         const addr = document.getElementById('report-address');
         const lat = document.getElementById('report-lat');
         const lng = document.getElementById('report-lng');
@@ -3529,7 +3514,7 @@
         if (lng) lng.value = "74.5100";
         if (desc) desc.value = "Smart Bin #108 overflow report: 90% full.";
       } else if (type === 'worker') {
-        resultMsg = "ಸ್ಕ್ಯಾನ್ ಯಶಸ್ವಿ: ನೈರ್ಮಲ್ಯ ಸಿಬ್ಬಂದಿ ಬಸವರಾಜ್ (BCC-W2101) ಹಾಜರಾತಿ ಧೃಡಪಟ್ಟಿದೆ!";
+        resultMsg = "Scan successful: Sanitation Worker Basavaraj (BCC-W2101) attendance verified!";
       }
 
       showToast(`🎯 ${resultMsg}`, 'success', 4500);
