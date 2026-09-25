@@ -146,14 +146,15 @@ def init_db():
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )''')
 
-    # Ensure required columns exist
     for col_name, col_def in [
         ('first_name', 'TEXT'),
         ('last_name', 'TEXT'),
         ('worker_emp_id', 'TEXT'),
         ('home_lat', 'REAL DEFAULT 15.8345'),
         ('home_lng', 'REAL DEFAULT 74.5015'),
-        ('home_address', 'TEXT DEFAULT "Congress Road, Tilakwadi, Belagavi"')
+        ('home_address', 'TEXT DEFAULT "Congress Road, Tilakwadi, Belagavi"'),
+        ('gender', 'TEXT DEFAULT "Male"'),
+        ('avatar', 'TEXT')
     ]:
         try:
             c.execute(f"ALTER TABLE users ADD COLUMN {col_name} {col_def}")
@@ -524,6 +525,8 @@ def verify_login_otp():
             'email': u.get('email'),
             'worker_emp_id': u.get('worker_emp_id'),
             'aadhaar': u.get('aadhaar'),
+            'gender': u.get('gender', 'Male'),
+            'avatar': u.get('avatar', ''),
             'home_lat': u.get('home_lat', 15.8345),
             'home_lng': u.get('home_lng', 74.5015),
             'home_address': u.get('home_address', 'Congress Road, Tilakwadi, Belagavi'),
@@ -533,13 +536,15 @@ def verify_login_otp():
 
 @app.route('/api/auth/save-profile-home', methods=['POST'])
 def save_profile_home():
-    """Saves First Name, Last Name, Mobile Number, and Belagavi Home Center."""
+    """Saves First Name, Last Name, Mobile Number, Sex/Gender, and Belagavi Home Center."""
     data = request.json or {}
     first_name = data.get('first_name', '').strip()
     last_name = data.get('last_name', '').strip()
     phone = data.get('phone', '').strip()
     email = data.get('email', '').strip()
     aadhaar = data.get('aadhaar', '567890123456').strip()
+    gender = data.get('gender', 'Male').strip()
+    avatar = data.get('avatar', '').strip()
     home_lat = float(data.get('home_lat', 15.8345))
     home_lng = float(data.get('home_lng', 74.5015))
     home_address = data.get('home_address', 'Congress Road, Tilakwadi, Belagavi').strip()
@@ -564,17 +569,18 @@ def save_profile_home():
         c.execute('''
         UPDATE users
         SET first_name = ?, last_name = ?, name = ?, phone = COALESCE(?, phone), email = COALESCE(?, email),
-            aadhaar = COALESCE(?, aadhaar), home_lat = ?, home_lng = ?, home_address = ?, ward = ?
+            aadhaar = COALESCE(?, aadhaar), home_lat = ?, home_lng = ?, home_address = ?, ward = ?,
+            gender = COALESCE(?, gender), avatar = COALESCE(?, avatar)
         WHERE id = ?
-        ''', (first_name, last_name, full_name, phone or None, email or None, aadhaar or None, home_lat, home_lng, home_address, ward, existing['id']))
+        ''', (first_name, last_name, full_name, phone or None, email or None, aadhaar or None, home_lat, home_lng, home_address, ward, gender, avatar or None, existing['id']))
         user_id = existing['id']
         role = existing['role']
     else:
         fallback_phone = phone if phone else f"988{int(time.time()) % 10000000:07d}"
         c.execute('''
-        INSERT INTO users (name, first_name, last_name, role, phone, email, aadhaar, home_lat, home_lng, home_address, ward, status)
-        VALUES (?, ?, ?, 'citizen', ?, ?, ?, ?, ?, ?, ?, 'active')
-        ''', (full_name, first_name, last_name, fallback_phone, email, aadhaar, home_lat, home_lng, home_address, ward))
+        INSERT INTO users (name, first_name, last_name, role, phone, email, aadhaar, home_lat, home_lng, home_address, ward, gender, avatar, status)
+        VALUES (?, ?, ?, 'citizen', ?, ?, ?, ?, ?, ?, ?, ?, ?, 'active')
+        ''', (full_name, first_name, last_name, fallback_phone, email, aadhaar, home_lat, home_lng, home_address, ward, gender, avatar))
         user_id = c.lastrowid
         role = 'citizen'
 
@@ -593,10 +599,42 @@ def save_profile_home():
             'phone': phone or fallback_phone,
             'email': email,
             'aadhaar': aadhaar,
+            'gender': gender,
+            'avatar': avatar,
             'home_lat': home_lat,
             'home_lng': home_lng,
             'home_address': home_address,
             'ward': ward
+        }
+    })
+
+@app.route('/api/user/<int:user_id>', methods=['GET'])
+def get_user_profile_detail(user_id):
+    """Fetch complete citizen person details including gender, avatar, aadhaar, and location."""
+    conn = get_db_connection()
+    c = conn.cursor()
+    u = c.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
+    conn.close()
+    if not u:
+        return jsonify({'success': False, 'message': 'Citizen not found.'}), 404
+    u = dict(u)
+    return jsonify({
+        'success': True,
+        'user': {
+            'id': u['id'],
+            'name': u['name'],
+            'first_name': u.get('first_name'),
+            'last_name': u.get('last_name'),
+            'role': u['role'],
+            'phone': u['phone'],
+            'email': u.get('email'),
+            'aadhaar': u.get('aadhaar'),
+            'gender': u.get('gender', 'Male'),
+            'avatar': u.get('avatar', ''),
+            'home_lat': u.get('home_lat', 15.8345),
+            'home_lng': u.get('home_lng', 74.5015),
+            'home_address': u.get('home_address', 'Congress Road, Tilakwadi, Belagavi'),
+            'ward': u.get('ward', 'Ward 21 - Tilakwadi, Belagavi')
         }
     })
 

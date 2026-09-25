@@ -133,6 +133,59 @@
 <body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans pb-20 sm:pb-4 select-none">
 
   <!-- ============================================================== -->
+  <!-- 3-SECOND FULL PAGE CLEAN CITY SPLASH SCREEN (Requirement 7)    -->
+  <!-- ============================================================== -->
+  <div id="app-splash-screen" class="fixed inset-0 z-[99999] bg-slate-950 flex flex-col items-center justify-center p-6 text-white transition-opacity duration-700 select-none">
+    <div class="flex flex-col items-center text-center space-y-6 max-w-sm w-full animate-fade-in">
+      <!-- Clean City Logo Emblem -->
+      <div class="relative flex items-center justify-center">
+        <div class="absolute w-36 h-36 bg-emerald-500/20 rounded-full blur-2xl animate-pulse"></div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" class="w-32 h-32 relative z-10 drop-shadow-2xl">
+          <circle cx="80" cy="80" r="76" fill="#042f2e" stroke="#10b981" stroke-width="3" stroke-dasharray="6 4" />
+          <circle cx="80" cy="80" r="66" fill="#064e3b" />
+          <rect x="36" y="70" width="14" height="40" fill="#022c22" rx="2" />
+          <rect x="54" y="55" width="18" height="55" fill="#047857" rx="2" />
+          <polygon points="63,44 54,55 72,55" fill="#10b981" />
+          <rect x="76" y="62" width="20" height="48" fill="#022c22" rx="2" />
+          <rect x="100" y="75" width="14" height="35" fill="#047857" rx="2" />
+          <circle cx="63" cy="65" r="2.5" fill="#34d399" />
+          <circle cx="63" cy="77" r="2.5" fill="#34d399" />
+          <circle cx="86" cy="72" r="2.5" fill="#38bdf8" />
+          <circle cx="86" cy="84" r="2.5" fill="#38bdf8" />
+          <path d="M28 92 C48 122, 112 122, 132 92 C116 112, 64 112, 28 92 Z" fill="#10b981" />
+          <path d="M80 116 C70 96, 60 70, 80 50 C90 65, 95 85, 80 116 Z" fill="#34d399" opacity="0.9" />
+          <path d="M116 46 Q121 51 126 51 Q121 51 116 56 Q121 51 116 46" fill="#facc15" />
+          <path d="M44 48 Q49 52 54 52 Q49 52 44 56 Q49 52 44 48" fill="#38bdf8" />
+        </svg>
+      </div>
+
+      <!-- Typography -->
+      <div class="space-y-2">
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+          Clean City Mission
+        </span>
+        <h1 class="text-2xl sm:text-3xl font-black tracking-tight text-white">
+          SWACHHA BELAGAVI
+        </h1>
+        <p class="text-xs text-slate-400 font-medium">
+          Belagavi Mahanagara Palike • Smart Municipal Waste Management & Cleanliness
+        </p>
+      </div>
+
+      <!-- 3-Second Progress Bar & Countdown -->
+      <div class="w-full space-y-2 pt-2">
+        <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden border border-slate-700">
+          <div id="splash-progress-bar" class="h-full bg-gradient-to-r from-emerald-500 via-teal-400 to-sky-400 rounded-full transition-all duration-[3000ms] ease-out" style="width: 0%;"></div>
+        </div>
+        <div class="flex justify-between items-center text-[11px] font-mono text-slate-400">
+          <span id="splash-status-text" class="text-emerald-400">Loading Clean City Portal...</span>
+          <span id="splash-timer-text">3s</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
   <!-- FLOATING IN-APP TOAST NOTIFICATIONS (NO BLOCKING POPUPS) -->
   <!-- ============================================================== -->
   <div id="app-toast-container" class="fixed top-4 right-4 z-[300] flex flex-col space-y-2 pointer-events-none max-w-sm w-full px-3 sm:px-0 [&>*]:pointer-events-auto"></div>
@@ -267,6 +320,33 @@
           <p class="text-xs text-slate-400 mt-0.5">Your 500m vehicle proximity alert is anchored to your Belagavi Home Center.</p>
         </div>
 
+        <!-- Sex / Gender Selection (Requirement 4: Male & Female Avatars) -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5">Sex / Gender & Profile Avatar</label>
+          <div class="grid grid-cols-2 gap-3">
+            <button type="button" onclick="selectOnboardingGender('Male')" id="gender-opt-male" class="p-2.5 rounded-2xl border-2 border-emerald-500 bg-emerald-500/10 flex items-center space-x-3 transition hover:bg-emerald-500/20 text-left">
+              <div class="w-11 h-11 rounded-xl bg-sky-600/30 border border-sky-400/40 p-1 flex items-center justify-center shrink-0">
+                <svg viewBox="0 0 120 120" class="w-full h-full"><circle cx="60" cy="60" r="58" fill="#0284c7"/><circle cx="60" cy="46" r="22" fill="#fed7aa"/><path d="M38 42 C38 25, 48 18, 60 18 C72 18, 82 25, 82 42 C82 37, 78 30, 72 28 C66 26, 54 26, 48 28 C42 30, 38 37, 38 42 Z" fill="#1e293b"/><path d="M26 112 C26 88, 42 76, 60 76 C78 76, 94 88, 94 112 Z" fill="#0369a1"/><polygon points="50,76 60,92 70,76" fill="#fed7aa"/></svg>
+              </div>
+              <div>
+                <span class="text-xs font-bold text-white block">Male</span>
+                <span class="text-[10px] text-emerald-400 font-medium">Male Avatar</span>
+              </div>
+            </button>
+
+            <button type="button" onclick="selectOnboardingGender('Female')" id="gender-opt-female" class="p-2.5 rounded-2xl border border-slate-700 bg-slate-950 flex items-center space-x-3 transition hover:bg-slate-800 text-left">
+              <div class="w-11 h-11 rounded-xl bg-rose-600/30 border border-rose-400/40 p-1 flex items-center justify-center shrink-0">
+                <svg viewBox="0 0 120 120" class="w-full h-full"><circle cx="60" cy="60" r="58" fill="#e11d48"/><path d="M32 46 C32 20, 46 14, 60 14 C74 14, 88 20, 88 46 C88 70, 85 88, 80 96 C74 96, 72 88, 72 72 C48 72, 48 96, 40 96 C36 88, 32 70, 32 46 Z" fill="#312e81"/><circle cx="60" cy="46" r="20" fill="#fed7aa"/><path d="M40 38 C44 24, 60 20, 80 32 C74 26, 60 20, 46 26 C42 28, 40 32, 40 38 Z" fill="#1e1b4b"/><path d="M30 112 C30 90, 44 78, 60 78 C76 78, 90 90, 90 112 Z" fill="#be123c"/><polygon points="50,78 55,88 65,88 70,78" fill="#fed7aa"/></svg>
+              </div>
+              <div>
+                <span class="text-xs font-bold text-white block">Female</span>
+                <span class="text-[10px] text-slate-400 font-medium">Female Avatar</span>
+              </div>
+            </button>
+          </div>
+          <input type="hidden" id="onboard-gender" value="Male">
+        </div>
+
         <!-- Name Inputs -->
         <div class="grid grid-cols-2 gap-2.5">
           <div>
@@ -332,6 +412,108 @@
         </button>
       </div>
 
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- CITIZEN PERSONAL IDENTITY & DETAILS MODAL (Requirement 6)     -->
+  <!-- Shows all person details: Name, Mobile, Location, Aadhaar, Sex -->
+  <!-- ============================================================== -->
+  <div id="modal-citizen-profile-detail" class="hidden fixed inset-0 z-[150] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700/80 rounded-3xl max-w-md w-full shadow-2xl p-6 sm:p-7 space-y-5 relative">
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div class="flex items-center space-x-2.5">
+          <div class="p-2 bg-emerald-500/20 text-emerald-400 rounded-xl">
+            <i data-lucide="shield-check" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-white">Citizen Personal Identity</h3>
+            <p class="text-xs text-slate-400">Verified Swachha Belagavi Resident</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeCitizenProfileModal()" class="text-slate-400 hover:text-white text-sm p-1 rounded-lg hover:bg-slate-800">✕</button>
+      </div>
+
+      <!-- Avatar & Name Header -->
+      <div class="flex items-center space-x-4 p-3.5 bg-slate-950/80 border border-slate-800 rounded-2xl">
+        <div class="w-16 h-16 rounded-2xl bg-slate-900 border-2 border-emerald-500/50 p-1 flex items-center justify-center shrink-0 overflow-hidden shadow-lg">
+          <img id="detail-modal-avatar-img" class="w-full h-full object-cover rounded-xl" alt="Citizen Avatar">
+        </div>
+        <div>
+          <h4 id="detail-modal-full-name" class="text-base font-extrabold text-white">Praveen Kulkarni</h4>
+          <div class="flex items-center space-x-2 mt-1">
+            <span id="detail-modal-gender-badge" class="px-2.5 py-0.5 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-bold rounded-lg flex items-center space-x-1">
+              <span id="detail-modal-gender-icon">👨</span>
+              <span id="detail-modal-gender-text">Male</span>
+            </span>
+            <span class="text-xs text-slate-400 font-medium">BCC Resident</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detailed Fields List (Requirement 6: Mobile, Location, Name, Aadhaar Number, Sex) -->
+      <div class="space-y-3 bg-slate-950/60 border border-slate-800/80 rounded-2xl p-4">
+        <!-- 1. Full Name -->
+        <div class="flex items-center justify-between pb-2 border-b border-slate-800/80 text-xs">
+          <span class="text-slate-400 font-medium flex items-center space-x-1.5">
+            <i data-lucide="user" class="w-3.5 h-3.5 text-slate-400"></i>
+            <span>Full Name:</span>
+          </span>
+          <span id="detail-field-name" class="font-bold text-white">Praveen Kulkarni</span>
+        </div>
+
+        <!-- 2. Sex / Gender -->
+        <div class="flex items-center justify-between pb-2 border-b border-slate-800/80 text-xs">
+          <span class="text-slate-400 font-medium flex items-center space-x-1.5">
+            <i data-lucide="heart" class="w-3.5 h-3.5 text-rose-400"></i>
+            <span>Sex / Gender:</span>
+          </span>
+          <span id="detail-field-gender" class="font-bold text-slate-200">Male</span>
+        </div>
+
+        <!-- 3. Mobile Number -->
+        <div class="flex items-center justify-between pb-2 border-b border-slate-800/80 text-xs">
+          <span class="text-slate-400 font-medium flex items-center space-x-1.5">
+            <i data-lucide="phone" class="w-3.5 h-3.5 text-emerald-400"></i>
+            <span>Mobile Number:</span>
+          </span>
+          <span id="detail-field-phone" class="font-mono font-bold text-emerald-400">+91 98800 11111</span>
+        </div>
+
+        <!-- 4. Person Location -->
+        <div class="flex items-start justify-between pb-2 border-b border-slate-800/80 text-xs">
+          <span class="text-slate-400 font-medium flex items-center space-x-1.5 shrink-0">
+            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-sky-400"></i>
+            <span>Person Location:</span>
+          </span>
+          <span id="detail-field-location" class="font-bold text-white text-right max-w-[200px]">Congress Road, Tilakwadi, Belagavi</span>
+        </div>
+
+        <!-- 5. Aadhaar Number (with Show/Hide Toggle) -->
+        <div class="flex items-center justify-between text-xs">
+          <span class="text-slate-400 font-medium flex items-center space-x-1.5">
+            <i data-lucide="credit-card" class="w-3.5 h-3.5 text-amber-400"></i>
+            <span>Aadhaar Number:</span>
+          </span>
+          <div class="flex items-center space-x-2">
+            <span id="detail-field-aadhaar" class="font-mono font-bold text-amber-300">XXXX-XXXX-3456</span>
+            <button type="button" onclick="toggleAadhaarVisibility()" id="btn-toggle-aadhaar" class="text-[11px] text-sky-400 hover:underline">
+              Show
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="pt-1 flex items-center space-x-2">
+        <button type="button" onclick="openOnboardingModal(); closeCitizenProfileModal();" class="flex-1 py-2.5 px-3 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs rounded-xl border border-slate-700 transition text-center">
+          Edit Profile
+        </button>
+        <button type="button" onclick="closeCitizenProfileModal()" class="flex-1 py-2.5 px-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow transition text-center">
+          Done
+        </button>
+      </div>
     </div>
   </div>
 
@@ -415,25 +597,29 @@
         </div>
       </div>
 
-      <!-- User Chip & Belagavi Home Center Display -->
+      <!-- User Chip & Identity (Requirement 5 & 6: Personal Location Removed, Button to View All Details) -->
       <div id="header-user-card" class="flex items-center space-x-3 bg-slate-900 border border-slate-800 px-3.5 py-1.5 rounded-2xl">
-        <div class="w-8 h-8 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center font-bold text-xs" id="header-user-avatar">
-          PK
+        <div class="w-9 h-9 rounded-xl bg-slate-800 border border-emerald-500/40 p-0.5 overflow-hidden flex items-center justify-center shrink-0 shadow" id="header-avatar-box">
+          <img id="header-user-avatar-img" class="w-full h-full object-cover rounded-lg" alt="Avatar">
+          <span id="header-user-avatar" class="hidden text-emerald-400 font-bold text-xs">PK</span>
         </div>
         <div>
           <div class="flex items-center space-x-1.5">
             <span id="header-user-name" class="text-xs font-bold text-white">Praveen Kulkarni</span>
-            <span id="header-user-role" class="text-[10px] bg-slate-800 text-slate-400 px-1.5 py-0.2 rounded font-mono uppercase">Citizen</span>
+            <span id="header-user-role" class="text-[10px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.2 rounded font-semibold uppercase">Citizen</span>
           </div>
-          <div class="flex items-center space-x-1 text-[11px] text-emerald-400">
-            <i data-lucide="map-pin" class="w-3 h-3"></i>
-            <span id="header-user-home">Congress Road, Tilakwadi, Belagavi</span>
-            <button onclick="openChangeHomeCenterModal()" class="text-sky-400 hover:underline text-[10px] ml-1">[Edit Home]</button>
+          <div class="flex items-center space-x-2 text-[11px] text-slate-400 mt-0.5">
+            <button type="button" onclick="openCitizenProfileModal()" class="text-emerald-400 hover:text-emerald-300 font-semibold flex items-center space-x-1 transition">
+              <i data-lucide="id-card" class="w-3 h-3"></i>
+              <span>View Profile Details</span>
+            </button>
+            <span id="header-user-home" class="hidden">Congress Road, Tilakwadi, Belagavi</span>
+            <span class="text-slate-600">•</span>
+            <button onclick="openOnboardingModal()" class="text-slate-400 hover:text-white transition">
+              Switch
+            </button>
           </div>
         </div>
-        <button onclick="openOnboardingModal()" class="text-[11px] text-slate-400 hover:text-white px-2 py-1 bg-slate-800 rounded-lg hover:bg-slate-700 transition">
-          Switch User
-        </button>
       </div>
 
       <!-- Role-Scoped Navigation & Staff Portal Access (Restricts Worker & Officer View from General Citizens) -->
@@ -494,24 +680,39 @@
       
       <!-- Top Citizen Stats Banner -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <!-- User Profile Card -->
-        <div class="bg-slate-800/80 border border-slate-700 rounded-2xl p-5 shadow-sm">
-          <div class="flex items-center justify-between mb-3">
-            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Citizen Profile</span>
+        <!-- User Profile Card (Requirement 5 & 6: Privacy Protected, Button to View All Details) -->
+        <div class="bg-slate-800/80 border border-slate-700 rounded-2xl p-5 shadow-sm space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Citizen Identity</span>
             <span class="bg-emerald-500/20 text-emerald-400 text-xs px-2.5 py-0.5 rounded-full border border-emerald-500/30 flex items-center space-x-1">
-              <i data-lucide="check-circle" class="w-3 h-3"></i>
-              <span>Aadhaar Verified</span>
+              <i data-lucide="shield-check" class="w-3 h-3"></i>
+              <span>Verified Citizen</span>
             </span>
           </div>
-          <h2 id="citizen-name-display" class="text-lg font-bold text-white">Praveen Kulkarni</h2>
-          <p class="text-xs text-slate-400 mt-0.5">UIDAI Aadhaar: <span id="citizen-aadhaar-display" class="font-mono text-slate-300">XXXX-XXXX-3456</span></p>
-          <p class="text-xs text-emerald-400 mt-1 flex items-center space-x-1">
-            <i data-lucide="home" class="w-3 h-3"></i>
-            <span id="citizen-home-center-display">Home Center: Congress Road, Tilakwadi, Belagavi</span>
-          </p>
-          <div class="mt-3 pt-3 border-t border-slate-700/60 flex items-center justify-between text-xs">
-            <span class="text-slate-400">BCC Ward Beat:</span>
-            <span class="text-emerald-400 font-medium">Ward 21 - Tilakwadi</span>
+
+          <div class="flex items-center space-x-3.5">
+            <div class="w-12 h-12 rounded-2xl bg-slate-900 border border-emerald-500/40 p-1 flex items-center justify-center shrink-0 overflow-hidden shadow">
+              <img id="citizen-card-avatar-img" class="w-full h-full object-cover rounded-xl" alt="Avatar">
+            </div>
+            <div>
+              <h2 id="citizen-name-display" class="text-base font-extrabold text-white">Praveen Kulkarni</h2>
+              <div class="flex items-center space-x-2 mt-0.5">
+                <span id="citizen-gender-badge" class="px-2 py-0.5 bg-sky-500/20 text-sky-300 text-[10px] font-semibold rounded-md border border-sky-500/30">Male</span>
+                <span class="text-[11px] text-emerald-400 font-medium">Active Resident</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hidden storage elements for JS backward compatibility -->
+          <span id="citizen-aadhaar-display" class="hidden">XXXX-XXXX-3456</span>
+          <span id="citizen-home-center-display" class="hidden">Congress Road, Tilakwadi, Belagavi</span>
+
+          <!-- One Person Click Button: View All Person Details (Req 6) -->
+          <div class="pt-2 border-t border-slate-700/60">
+            <button type="button" onclick="openCitizenProfileModal()" class="w-full py-2.5 px-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs rounded-xl shadow-md transition flex items-center justify-center space-x-2">
+              <i data-lucide="user-check" class="w-4 h-4"></i>
+              <span>View Person Information</span>
+            </button>
           </div>
         </div>
 
@@ -600,20 +801,50 @@
               <textarea id="report-description" rows="2" placeholder="Add Information" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500"></textarea>
             </div>
 
-            <!-- GPS Geolocation (Belagavi) -->
-            <div>
-              <div class="flex items-center justify-between mb-1">
-                <label class="text-xs font-semibold text-slate-300">Belagavi Incident GPS Coordinates</label>
-                <button type="button" onclick="getCurrentLocation()" class="text-[11px] text-emerald-400 hover:underline flex items-center space-x-1">
-                  <i data-lucide="locate" class="w-3 h-3"></i>
-                  <span>Auto Detect GPS</span>
+            <!-- Live Incident Spot Location (Requirement 1, 2, 3: Live Photo GPS, Not Person Home Location) -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <label class="text-xs font-semibold text-slate-300 flex items-center space-x-1.5">
+                  <i data-lucide="map-pin" class="w-3.5 h-3.5 text-rose-500"></i>
+                  <span>Live Spot Location (Photo GPS)</span>
+                </label>
+                <button type="button" onclick="detectLiveSpotGps()" class="text-[11px] text-emerald-400 hover:text-emerald-300 font-semibold flex items-center space-x-1 transition">
+                  <i data-lucide="crosshair" class="w-3 h-3"></i>
+                  <span>Detect Live GPS</span>
                 </button>
               </div>
-              <div class="grid grid-cols-2 gap-2">
-                <input type="text" id="report-lat" value="15.8340" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs font-mono text-slate-300" readonly>
-                <input type="text" id="report-lng" value="74.5020" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs font-mono text-slate-300" readonly>
+
+              <!-- Quick Belagavi Spot Location Chips (Allows 1-Click Select: Machhe, Tilakwadi, etc.) -->
+              <div class="flex flex-wrap gap-1.5 text-[11px]">
+                <button type="button" onclick="setSpotLocPreset(15.8285, 74.4690, 'Machhe, Belagavi')" class="px-2.5 py-1 bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-300 border border-emerald-500/40 rounded-lg font-semibold transition flex items-center space-x-1">
+                  <span>📍 Machhe</span>
+                </button>
+                <button type="button" onclick="setSpotLocPreset(15.8345, 74.5015, 'Tilakwadi, Belagavi')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition">
+                  Tilakwadi
+                </button>
+                <button type="button" onclick="setSpotLocPreset(15.8380, 74.5180, 'Shahapur, Belagavi')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition">
+                  Shahapur
+                </button>
+                <button type="button" onclick="setSpotLocPreset(15.8530, 74.5100, 'Camp / Channamma Circle, Belagavi')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition">
+                  Camp / Channamma
+                </button>
+                <button type="button" onclick="setSpotLocPreset(15.8420, 74.4980, 'Hindwadi, Belagavi')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition">
+                  Hindwadi
+                </button>
+                <button type="button" onclick="setSpotLocPreset(15.8240, 74.5150, 'Vadgaon, Belagavi')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition">
+                  Vadgaon
+                </button>
+                <button type="button" onclick="setSpotLocPreset(15.8180, 74.4920, 'Udyambag, Belagavi')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition">
+                  Udyambag
+                </button>
               </div>
-              <input type="text" id="report-address" value="Congress Road, Tilakwadi, Belagavi" class="mt-2 w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-300">
+
+              <!-- Lat/Lng and Address inputs (Defaults to Machhe Spot Location) -->
+              <div class="grid grid-cols-2 gap-2">
+                <input type="text" id="report-lat" value="15.8285" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs font-mono text-slate-300" readonly>
+                <input type="text" id="report-lng" value="74.4690" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs font-mono text-slate-300" readonly>
+              </div>
+              <input type="text" id="report-address" value="Machhe, Belagavi" placeholder="Enter or confirm incident spot location" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 focus:border-emerald-500">
             </div>
 
             <!-- Citizen Universal 1-Click Live Camera (Mobile & Laptop) -->
@@ -1570,6 +1801,194 @@
     let appLang = 'en';
     let tableLang = 'en';
 
+    // Avatars for Male & Female Citizens (Requirement 4)
+    const AVATARS = {
+      Male: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><circle cx="60" cy="60" r="58" fill="%230284c7"/><circle cx="60" cy="46" r="22" fill="%23fed7aa"/><path d="M38 42 C38 25, 48 18, 60 18 C72 18, 82 25, 82 42 C82 37, 78 30, 72 28 C66 26, 54 26, 48 28 C42 30, 38 37, 38 42 Z" fill="%231e293b"/><path d="M26 112 C26 88, 42 76, 60 76 C78 76, 94 88, 94 112 Z" fill="%230369a1"/><polygon points="50,76 60,92 70,76" fill="%23fed7aa"/></svg>',
+      Female: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><circle cx="60" cy="60" r="58" fill="%23e11d48"/><path d="M32 46 C32 20, 46 14, 60 14 C74 14, 88 20, 88 46 C88 70, 85 88, 80 96 C74 96, 72 88, 72 72 C48 72, 48 96, 40 96 C36 88, 32 70, 32 46 Z" fill="%23312e81"/><circle cx="60" cy="46" r="20" fill="%23fed7aa"/><path d="M40 38 C44 24, 60 20, 80 32 C74 26, 60 20, 46 26 C42 28, 40 32, 40 38 Z" fill="%231e1b4b"/><path d="M30 112 C30 90, 44 78, 60 78 C76 78, 90 90, 90 112 Z" fill="%23be123c"/><polygon points="50,78 55,88 65,88 70,78" fill="%23fed7aa"/></svg>'
+    };
+    let currentSelectedGender = 'Male';
+    let isAadhaarVisible = false;
+
+    // 3-Second Full Page Clean City Splash Screen (Requirement 7)
+    function initSplashScreen() {
+      const splash = document.getElementById('app-splash-screen');
+      const bar = document.getElementById('splash-progress-bar');
+      const timerText = document.getElementById('splash-timer-text');
+      const statusText = document.getElementById('splash-status-text');
+      if (!splash) return;
+
+      setTimeout(() => { if (bar) bar.style.width = '100%'; }, 50);
+
+      let remaining = 3;
+      const interval = setInterval(() => {
+        remaining--;
+        if (remaining === 2) {
+          if (timerText) timerText.innerText = '2s';
+          if (statusText) statusText.innerText = 'Connecting Belagavi Sanitation Beat...';
+        } else if (remaining === 1) {
+          if (timerText) timerText.innerText = '1s';
+          if (statusText) statusText.innerText = 'Syncing Live GPS Geofence...';
+        } else if (remaining <= 0) {
+          clearInterval(interval);
+          if (timerText) timerText.innerText = '0s';
+          if (statusText) statusText.innerText = 'Welcome!';
+          splash.classList.add('opacity-0', 'pointer-events-none');
+          setTimeout(() => { splash.style.display = 'none'; }, 700);
+        }
+      }, 1000);
+    }
+
+    // Gender / Sex selection in Admission Modal
+    function selectOnboardingGender(gender) {
+      currentSelectedGender = gender;
+      const input = document.getElementById('onboard-gender');
+      if (input) input.value = gender;
+      const optM = document.getElementById('gender-opt-male');
+      const optF = document.getElementById('gender-opt-female');
+      if (gender === 'Male') {
+        optM?.classList.remove('border-slate-700', 'bg-slate-950');
+        optM?.classList.add('border-emerald-500', 'bg-emerald-500/10');
+        optF?.classList.remove('border-rose-500', 'bg-rose-500/10');
+        optF?.classList.add('border-slate-700', 'bg-slate-950');
+      } else {
+        optF?.classList.remove('border-slate-700', 'bg-slate-950');
+        optF?.classList.add('border-rose-500', 'bg-rose-500/10');
+        optM?.classList.remove('border-emerald-500', 'bg-emerald-500/10');
+        optM?.classList.add('border-slate-700', 'bg-slate-950');
+      }
+    }
+
+    function updateAvatarImages(gender) {
+      const g = (gender === 'Female') ? 'Female' : 'Male';
+      const avatarSrc = AVATARS[g];
+      const hImg = document.getElementById('header-user-avatar-img');
+      const cImg = document.getElementById('citizen-card-avatar-img');
+      const dImg = document.getElementById('detail-modal-avatar-img');
+      if (hImg) { hImg.src = avatarSrc; hImg.classList.remove('hidden'); }
+      if (cImg) { cImg.src = avatarSrc; cImg.classList.remove('hidden'); }
+      if (dImg) { dImg.src = avatarSrc; }
+      const gBadge = document.getElementById('citizen-gender-badge');
+      if (gBadge) {
+        gBadge.innerText = g;
+        gBadge.className = g === 'Female' ? "px-2 py-0.5 bg-rose-500/20 text-rose-300 text-[10px] font-semibold rounded-md border border-rose-500/30" : "px-2 py-0.5 bg-sky-500/20 text-sky-300 text-[10px] font-semibold rounded-md border border-sky-500/30";
+      }
+    }
+
+    // Citizen Personal Identity Modal (Requirement 6)
+    function openCitizenProfileModal() {
+      const user = currentUser || {
+        name: 'Praveen Kulkarni',
+        first_name: 'Praveen',
+        last_name: 'Kulkarni',
+        phone: '9880011111',
+        aadhaar: '567890123456',
+        gender: 'Male',
+        home_address: 'Congress Road, Tilakwadi, Belagavi'
+      };
+
+      const fullName = user.name || `${user.first_name || ''} ${user.last_name || ''}`.trim() || 'Praveen Kulkarni';
+      const gender = user.gender || 'Male';
+      const phone = user.phone || '9880011111';
+      const location = user.home_address || 'Congress Road, Tilakwadi, Belagavi';
+      const aadhaar = user.aadhaar || '567890123456';
+
+      const dFullName = document.getElementById('detail-modal-full-name');
+      const dFieldName = document.getElementById('detail-field-name');
+      const dGender = document.getElementById('detail-field-gender');
+      const dGenderText = document.getElementById('detail-modal-gender-text');
+      const dGenderIcon = document.getElementById('detail-modal-gender-icon');
+      const dPhone = document.getElementById('detail-field-phone');
+      const dLoc = document.getElementById('detail-field-location');
+
+      if (dFullName) dFullName.innerText = fullName;
+      if (dFieldName) dFieldName.innerText = fullName;
+      if (dGender) dGender.innerText = gender;
+      if (dGenderText) dGenderText.innerText = gender;
+      if (dGenderIcon) dGenderIcon.innerText = gender === 'Female' ? '👩' : '👨';
+      if (dPhone) dPhone.innerText = phone.startsWith('+91') ? phone : `+91 ${phone}`;
+      if (dLoc) dLoc.innerText = location;
+
+      const aadhaarDisplay = document.getElementById('detail-field-aadhaar');
+      const toggleBtn = document.getElementById('btn-toggle-aadhaar');
+      isAadhaarVisible = false;
+      if (aadhaarDisplay) aadhaarDisplay.innerText = `XXXX-XXXX-${aadhaar.slice(-4)}`;
+      if (toggleBtn) toggleBtn.innerText = "Show";
+
+      updateAvatarImages(gender);
+      document.getElementById('modal-citizen-profile-detail')?.classList.remove('hidden');
+    }
+
+    function toggleAadhaarVisibility() {
+      const user = currentUser || { aadhaar: '567890123456' };
+      const aadhaar = user.aadhaar || '567890123456';
+      const aadhaarDisplay = document.getElementById('detail-field-aadhaar');
+      const toggleBtn = document.getElementById('btn-toggle-aadhaar');
+      if (isAadhaarVisible) {
+        if (aadhaarDisplay) aadhaarDisplay.innerText = `XXXX-XXXX-${aadhaar.slice(-4)}`;
+        if (toggleBtn) toggleBtn.innerText = "Show";
+        isAadhaarVisible = false;
+      } else {
+        const formatted = aadhaar.replace(/(\d{4})(?=\d)/g, '$1-');
+        if (aadhaarDisplay) aadhaarDisplay.innerText = formatted;
+        if (toggleBtn) toggleBtn.innerText = "Hide";
+        isAadhaarVisible = true;
+      }
+    }
+
+    function closeCitizenProfileModal() {
+      document.getElementById('modal-citizen-profile-detail')?.classList.add('hidden');
+    }
+
+    // Spot Locality Resolver & Preset (Requirement 1, 2, 3: Machhe / Live GPS)
+    function resolveBelagaviLocality(lat, lng) {
+      const spots = [
+        { name: "Machhe, Belagavi", lat: 15.8285, lng: 74.4690 },
+        { name: "Tilakwadi, Belagavi", lat: 15.8345, lng: 74.5015 },
+        { name: "Shahapur, Belagavi", lat: 15.8380, lng: 74.5180 },
+        { name: "Camp / Rani Channamma Circle, Belagavi", lat: 15.8530, lng: 74.5100 },
+        { name: "Hindwadi, Belagavi", lat: 15.8420, lng: 74.4980 },
+        { name: "Vadgaon, Belagavi", lat: 15.8240, lng: 74.5150 },
+        { name: "Udyambag Industrial Area, Belagavi", lat: 15.8180, lng: 74.4920 }
+      ];
+      let closest = spots[0];
+      let minD = 999999;
+      for (const s of spots) {
+        const d = Math.hypot(lat - s.lat, lng - s.lng);
+        if (d < minD) {
+          minD = d;
+          closest = s;
+        }
+      }
+      return closest.name;
+    }
+
+    function setSpotLocPreset(lat, lng, name) {
+      document.getElementById('report-lat').value = lat.toFixed(4);
+      document.getElementById('report-lng').value = lng.toFixed(4);
+      document.getElementById('report-address').value = name;
+      showToast(`📍 Incident spot location set to ${name}`, "info");
+    }
+
+    function detectLiveSpotGps() {
+      if (navigator.geolocation) {
+        showToast("📡 Fetching high-accuracy live GPS...", "info");
+        navigator.geolocation.getCurrentPosition(pos => {
+          const lat = pos.coords.latitude;
+          const lng = pos.coords.longitude;
+          document.getElementById('report-lat').value = lat.toFixed(4);
+          document.getElementById('report-lng').value = lng.toFixed(4);
+          const resolved = resolveBelagaviLocality(lat, lng);
+          document.getElementById('report-address').value = resolved;
+          showToast(`📍 Live Spot Location detected: ${resolved} (${lat.toFixed(4)}, ${lng.toFixed(4)})`, "success");
+        }, (err) => {
+          console.warn("GPS error:", err);
+          showToast("Using default Belagavi spot location (Machhe).", "warning");
+        }, { enableHighAccuracy: true, timeout: 6000, maximumAge: 0 });
+      } else {
+        showToast("Geolocation not supported on this browser.", "error");
+      }
+    }
+
     // ============================================================
     // NON-BLOCKING FLOATING TOAST NOTIFICATION SYSTEM
     // (Replaces all blocking browser alert modals and multi-line clutter)
@@ -1697,6 +2116,7 @@
     // Initialize on load
     document.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
+      initSplashScreen();
 
       const stored = localStorage.getItem('bcc_user');
       if (stored) {
@@ -1710,6 +2130,9 @@
       } else {
         openOnboardingModal();
       }
+
+      updateAvatarImages(currentUser?.gender || 'Male');
+      detectLiveSpotGps();
 
       initMap();
       loadWorkersList();
@@ -1887,11 +2310,14 @@
         return;
       }
 
+      const gender = document.getElementById('onboard-gender')?.value || currentSelectedGender || 'Male';
       const payload = {
         first_name: firstName,
         last_name: lastName,
         phone: phone,
         aadhaar: aadhaar || '567890123456',
+        gender: gender,
+        avatar: AVATARS[gender],
         home_lat: lat,
         home_lng: lng,
         home_address: address,
@@ -1930,9 +2356,12 @@
       localStorage.setItem('bcc_user', JSON.stringify(user));
 
       const initials = ((user.first_name ? user.first_name[0] : '') + (user.last_name ? user.last_name[0] : (user.name ? user.name[0] : 'U'))).toUpperCase();
-      document.getElementById('header-user-avatar').innerText = initials || 'PK';
-      document.getElementById('header-user-name').innerText = user.name || `${user.first_name || ''} ${user.last_name || ''}`;
-      document.getElementById('header-user-role').innerText = user.role.toUpperCase();
+      const hAvatar = document.getElementById('header-user-avatar');
+      if (hAvatar) hAvatar.innerText = initials || 'PK';
+      const hName = document.getElementById('header-user-name');
+      if (hName) hName.innerText = user.name || `${user.first_name || ''} ${user.last_name || ''}`;
+      const hRole = document.getElementById('header-user-role');
+      if (hRole) hRole.innerText = user.role.toUpperCase();
 
       if (user.home_lat && user.home_lng) {
         homeCenter.lat = user.home_lat;
@@ -1940,16 +2369,21 @@
         homeCenter.address = user.home_address || 'Belagavi';
       }
 
-      document.getElementById('header-user-home').innerText = homeCenter.address;
-      document.getElementById('citizen-name-display').innerText = user.name || `${user.first_name || ''} ${user.last_name || ''}`;
-      document.getElementById('citizen-home-center-display').innerText = `Home Center: ${homeCenter.address}`;
+      const hHome = document.getElementById('header-user-home');
+      if (hHome) hHome.innerText = homeCenter.address;
+      const cName = document.getElementById('citizen-name-display');
+      if (cName) cName.innerText = user.name || `${user.first_name || ''} ${user.last_name || ''}`;
+      const cHome = document.getElementById('citizen-home-center-display');
+      if (cHome) cHome.innerText = `Home Center: ${homeCenter.address}`;
       if (user.aadhaar) {
-        document.getElementById('citizen-aadhaar-display').innerText = `XXXX-XXXX-${user.aadhaar.slice(-4)}`;
+        const cAadhaar = document.getElementById('citizen-aadhaar-display');
+        if (cAadhaar) cAadhaar.innerText = `XXXX-XXXX-${user.aadhaar.slice(-4)}`;
       }
 
-      document.getElementById('report-lat').value = homeCenter.lat;
-      document.getElementById('report-lng').value = homeCenter.lng;
-      document.getElementById('report-address').value = homeCenter.address;
+      // Update avatar images for user's sex / gender
+      updateAvatarImages(user.gender || 'Male');
+
+      // (Requirement 1, 2, 3: Report location is strictly for the live incident spot e.g. Machhe, NOT home center)
 
       if (user.role === 'worker') {
         activeWorkerId = user.id;
@@ -2354,9 +2788,9 @@
 
     function stampGpsWatermark(ctx, target = 'citizen') {
       const isCitizen = target === 'citizen';
-      const lat = isCitizen ? (document.getElementById('report-lat')?.value || '15.8340') : (document.getElementById('camera-watermark-lat')?.innerText || '15.8340');
-      const lng = isCitizen ? (document.getElementById('report-lng')?.value || '74.5020') : (document.getElementById('camera-watermark-lng')?.innerText || '74.5020');
-      const addr = isCitizen ? (document.getElementById('report-address')?.value || 'Tilakwadi, Belagavi') : 'Tilakwadi Beat, Belagavi';
+      const lat = isCitizen ? (document.getElementById('report-lat')?.value || '15.8285') : (document.getElementById('camera-watermark-lat')?.innerText || '15.8285');
+      const lng = isCitizen ? (document.getElementById('report-lng')?.value || '74.4690') : (document.getElementById('camera-watermark-lng')?.innerText || '74.4690');
+      const addr = isCitizen ? (document.getElementById('report-address')?.value || 'Machhe, Belagavi') : 'Cleaned Beat, Belagavi';
       const timeStr = new Date().toISOString().replace('T', ' ').substring(0, 19);
 
       ctx.fillStyle = 'rgba(2, 6, 23, 0.88)';
@@ -2368,7 +2802,7 @@
       ctx.fillStyle = '#10b981';
       ctx.font = 'bold 12px monospace';
       ctx.textAlign = 'left';
-      ctx.fillText(`📍 GPS: ${lat}° N, ${lng}° E | ${addr}`, 22, 288);
+      ctx.fillText(`📍 LIVE SPOT GPS: ${lat}° N, ${lng}° E | ${addr}`, 22, 288);
 
       ctx.fillStyle = '#f8fafc';
       ctx.font = '11px monospace';
@@ -2420,8 +2854,30 @@
       showToast("📸 Live photo captured successfully with GPS watermark!", "success");
     }
 
-    function previewCitizenImage(input) {
+    async function previewCitizenImage(input) {
       if (input.files && input.files[0]) {
+        // Step 1: Immediately fetch live GPS from device hardware to avoid defaulting to home location
+        try {
+          if (navigator.geolocation) {
+            await new Promise((resolve) => {
+              navigator.geolocation.getCurrentPosition((pos) => {
+                const liveLat = pos.coords.latitude;
+                const liveLng = pos.coords.longitude;
+                document.getElementById('report-lat').value = liveLat.toFixed(4);
+                document.getElementById('report-lng').value = liveLng.toFixed(4);
+                const resolvedArea = resolveBelagaviLocality(liveLat, liveLng);
+                const addrInput = document.getElementById('report-address');
+                if (addrInput && (!addrInput.value || addrInput.value === 'Congress Road, Tilakwadi, Belagavi')) {
+                  addrInput.value = resolvedArea;
+                }
+                resolve();
+              }, () => resolve(), { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 });
+            });
+          }
+        } catch (e) {
+          console.warn("GPS fetch error during photo capture:", e);
+        }
+
         const reader = new FileReader();
         reader.onload = e => {
           const imgObj = new Image();
@@ -2432,6 +2888,7 @@
             const ctx = canvas.getContext('2d');
             ctx.drawImage(imgObj, 0, 0, 640, 360);
 
+            // Watermark uses live spot location (e.g. Machhe or detected live GPS)
             stampGpsWatermark(ctx, 'citizen');
 
             capturedPhotoData = canvas.toDataURL('image/jpeg', 0.85);
@@ -2444,7 +2901,8 @@
             document.getElementById('citizen-camera-stream')?.classList.add('hidden');
             document.getElementById('citizen-camera-watermark')?.classList.add('hidden');
             document.getElementById('citizen-photo-confirmed-badge')?.classList.remove('hidden');
-            showToast("📸 Live photo captured successfully with GPS watermark!", "success");
+            const spotLoc = document.getElementById('report-address')?.value || 'Machhe, Belagavi';
+            showToast(`📸 Live photo captured & geotagged at ${spotLoc}!`, "success");
           };
           imgObj.src = e.target.result;
         };
@@ -3417,11 +3875,10 @@
         } catch(e) {}
       }
 
-      document.getElementById('header-user-home').innerText = address;
-      document.getElementById('citizen-home-center-display').innerText = `Home Center: ${address}`;
-      document.getElementById('report-lat').value = lat;
-      document.getElementById('report-lng').value = lng;
-      document.getElementById('report-address').value = address;
+      const hHome = document.getElementById('header-user-home');
+      if (hHome) hHome.innerText = address;
+      const cHome = document.getElementById('citizen-home-center-display');
+      if (cHome) cHome.innerText = `Home Center: ${address}`;
 
       closeChangeHomeCenterModal();
       checkProximityAlert();
