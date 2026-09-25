@@ -59,6 +59,16 @@ def calculate_distance_km(lat1, lon1, lat2, lon2):
 def compute_sha256(data_string):
     return hashlib.sha256(data_string.encode('utf-8')).hexdigest()
 
+def compute_employee_id_code(name, aadhaar):
+    """
+    Worker / Employee ID: Starting 3 letters of Name + Last 3 digits of Aadhaar (e.g. BAS098).
+    """
+    clean_name = ''.join(c for c in (name or '') if c.isalpha()).upper()
+    prefix = clean_name[:3] if len(clean_name) >= 3 else (clean_name + 'EMP')[:3]
+    clean_aadhaar = ''.join(c for c in str(aadhaar or '') if c.isdigit())
+    suffix = clean_aadhaar[-3:] if len(clean_aadhaar) >= 3 else '101'
+    return f"{prefix}{suffix}"
+
 def get_db_connection():
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
@@ -154,7 +164,8 @@ def init_db():
         ('home_lng', 'REAL DEFAULT 74.5015'),
         ('home_address', 'TEXT DEFAULT "Congress Road, Tilakwadi, Belagavi"'),
         ('gender', 'TEXT DEFAULT "Male"'),
-        ('avatar', 'TEXT')
+        ('avatar', 'TEXT'),
+        ('custom_emp_id', 'TEXT')
     ]:
         try:
             c.execute(f"ALTER TABLE users ADD COLUMN {col_name} {col_def}")
@@ -222,7 +233,8 @@ def init_db():
 
     for col_name, col_def in [
         ('distance_walked_km', 'REAL DEFAULT 3.4'),
-        ('performance_score', 'REAL DEFAULT 96.5')
+        ('performance_score', 'REAL DEFAULT 96.5'),
+        ('custom_emp_id', 'TEXT')
     ]:
         try:
             c.execute(f"ALTER TABLE worker_progress ADD COLUMN {col_name} {col_def}")
@@ -358,6 +370,97 @@ def init_db():
         INSERT OR REPLACE INTO worker_progress (worker_id, worker_name, worker_emp_id, duty_status, current_lat, current_lng, cleanups_today, distance_walked_km, total_monthly_cleanups, performance_score)
         VALUES (?, 'Santosh Naik', 'BCC-W1203', 'on_duty', 15.8530, 74.5100, 9, 2.9, 215, 94.2)
         ''', (w3_id,))
+
+    # Set custom_emp_id for initial workers (First 3 of Name + Last 3 of Aadhaar)
+    c.execute("UPDATE users SET custom_emp_id = 'BAS098' WHERE phone = '9845011001'")
+    c.execute("UPDATE users SET custom_emp_id = 'YAL987' WHERE phone = '9845011002'")
+    c.execute("UPDATE users SET custom_emp_id = 'SAN876' WHERE phone = '9845011003'")
+    c.execute("UPDATE worker_progress SET custom_emp_id = 'BAS098' WHERE worker_emp_id = 'BCC-W2101'")
+    c.execute("UPDATE worker_progress SET custom_emp_id = 'YAL987' WHERE worker_emp_id = 'BCC-W3402'")
+    c.execute("UPDATE worker_progress SET custom_emp_id = 'SAN876' WHERE worker_emp_id = 'BCC-W1203'")
+
+    # Seed Additional Belagavi Sanitation Employees across the 11 requested working places:
+    # 1. Machhe, 2. Tilakwadi (w1), 3. Indiranagar, 4. Majagaon, 5. VTU University,
+    # 6. Bhagya Nagar (w2), 7. Hanumantha Nagar, 8. Gandhi Nagar, 9. Mahantesh Nagar,
+    # 10. Sadashiv Nagar (w3), 11. Adarsh Nagar
+    additional_workers = [
+        {
+            'name': 'Manjunath Patil', 'first_name': 'Manjunath', 'last_name': 'Patil',
+            'phone': '9845011004', 'aadhaar': '123456789501', 'email': 'manjunath@bcc.gov.in',
+            'ward': 'Machhe Beat, Belagavi', 'emp_id': 'BCC-WMAN501', 'custom_emp_id': 'MAN501',
+            'lat': 15.8080, 'lng': 74.4750, 'address': 'Machhe Industrial Chowki, Belagavi',
+            'cleanups_today': 14, 'km': 4.8, 'monthly': 410, 'score': 97.5
+        },
+        {
+            'name': 'Anand Kamble', 'first_name': 'Anand', 'last_name': 'Kamble',
+            'phone': '9845011005', 'aadhaar': '123456789504', 'email': 'anand@bcc.gov.in',
+            'ward': 'Indiranagar Beat, Belagavi', 'emp_id': 'BCC-WANA504', 'custom_emp_id': 'ANA504',
+            'lat': 15.8650, 'lng': 74.5150, 'address': 'Indiranagar Sanitation Post, Belagavi',
+            'cleanups_today': 11, 'km': 3.5, 'monthly': 380, 'score': 96.0
+        },
+        {
+            'name': 'Ramesh Jadhav', 'first_name': 'Ramesh', 'last_name': 'Jadhav',
+            'phone': '9845011006', 'aadhaar': '123456789502', 'email': 'ramesh@bcc.gov.in',
+            'ward': 'Majagaon Beat, Belagavi', 'emp_id': 'BCC-WRAM502', 'custom_emp_id': 'RAM502',
+            'lat': 15.8200, 'lng': 74.4850, 'address': 'Majagaon Cross Chowki, Belagavi',
+            'cleanups_today': 15, 'km': 4.6, 'monthly': 425, 'score': 98.0
+        },
+        {
+            'name': 'Suresh Pujari', 'first_name': 'Suresh', 'last_name': 'Pujari',
+            'phone': '9845011007', 'aadhaar': '123456789503', 'email': 'suresh@bcc.gov.in',
+            'ward': 'VTU University Beat, Belagavi', 'emp_id': 'BCC-WSUR503', 'custom_emp_id': 'SUR503',
+            'lat': 15.8020, 'lng': 74.4620, 'address': 'Jnana Sangama, VTU Campus, Belagavi',
+            'cleanups_today': 10, 'km': 3.1, 'monthly': 350, 'score': 95.5
+        },
+        {
+            'name': 'Prakash Gaikwad', 'first_name': 'Prakash', 'last_name': 'Gaikwad',
+            'phone': '9845011008', 'aadhaar': '123456789505', 'email': 'prakash@bcc.gov.in',
+            'ward': 'Hanumantha Nagar Beat, Belagavi', 'emp_id': 'BCC-WPRA505', 'custom_emp_id': 'PRA505',
+            'lat': 15.8750, 'lng': 74.5200, 'address': 'Hanumantha Nagar Depot, Belagavi',
+            'cleanups_today': 13, 'km': 4.0, 'monthly': 390, 'score': 96.8
+        },
+        {
+            'name': 'Kiran Shinde', 'first_name': 'Kiran', 'last_name': 'Shinde',
+            'phone': '9845011009', 'aadhaar': '123456789506', 'email': 'kiran@bcc.gov.in',
+            'ward': 'Gandhi Nagar Beat, Belagavi', 'emp_id': 'BCC-WKIR506', 'custom_emp_id': 'KIR506',
+            'lat': 15.8710, 'lng': 74.5350, 'address': 'Gandhi Nagar Main Road, Belagavi',
+            'cleanups_today': 12, 'km': 3.7, 'monthly': 365, 'score': 95.8
+        },
+        {
+            'name': 'Vinayak Kadam', 'first_name': 'Vinayak', 'last_name': 'Kadam',
+            'phone': '9845011010', 'aadhaar': '123456789507', 'email': 'vinayak@bcc.gov.in',
+            'ward': 'Mahantesh Nagar Beat, Belagavi', 'emp_id': 'BCC-WVIN507', 'custom_emp_id': 'VIN507',
+            'lat': 15.8620, 'lng': 74.5380, 'address': 'Mahantesh Nagar Ring Road, Belagavi',
+            'cleanups_today': 16, 'km': 4.9, 'monthly': 440, 'score': 97.9
+        },
+        {
+            'name': 'Gopal Hegde', 'first_name': 'Gopal', 'last_name': 'Hegde',
+            'phone': '9845011011', 'aadhaar': '123456789508', 'email': 'gopal@bcc.gov.in',
+            'ward': 'Adarsh Nagar Beat, Belagavi', 'emp_id': 'BCC-WGOP508', 'custom_emp_id': 'GOP508',
+            'lat': 15.8450, 'lng': 74.5250, 'address': 'Adarsh Nagar Circle, Belagavi',
+            'cleanups_today': 14, 'km': 4.3, 'monthly': 405, 'score': 96.5
+        }
+    ]
+
+    for aw in additional_workers:
+        chk = c.execute("SELECT * FROM users WHERE phone = ?", (aw['phone'],)).fetchone()
+        if not chk:
+            c.execute('''
+            INSERT INTO users (name, first_name, last_name, role, phone, aadhaar, email, password_hash, ward, worker_emp_id, custom_emp_id, home_lat, home_lng, home_address, status)
+            VALUES (?, ?, ?, 'worker', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'active')
+            ''', (
+                aw['name'], aw['first_name'], aw['last_name'], aw['phone'], aw['aadhaar'], aw['email'],
+                generate_password_hash('worker123'), aw['ward'], aw['emp_id'], aw['custom_emp_id'],
+                aw['lat'], aw['lng'], aw['address']
+            ))
+            aw_id = c.lastrowid
+            c.execute('''
+            INSERT OR REPLACE INTO worker_progress (worker_id, worker_name, worker_emp_id, custom_emp_id, duty_status, current_lat, current_lng, cleanups_today, distance_walked_km, total_monthly_cleanups, performance_score)
+            VALUES (?, ?, ?, ?, 'on_duty', ?, ?, ?, ?, ?, ?)
+            ''', (aw_id, aw['name'], aw['emp_id'], aw['custom_emp_id'], aw['lat'], aw['lng'], aw['cleanups_today'], aw['km'], aw['monthly'], aw['score']))
+        else:
+            c.execute("UPDATE users SET custom_emp_id = ? WHERE phone = ?", (aw['custom_emp_id'], aw['phone']))
+            c.execute("UPDATE worker_progress SET custom_emp_id = ? WHERE worker_id = ?", (aw['custom_emp_id'], chk['id']))
 
     # Seed Sample Belagavi Citizen
     citizen = c.execute("SELECT * FROM users WHERE phone = '9880011111'").fetchone()
@@ -701,28 +804,31 @@ def officer_create_account():
     parts = name.split(' ', 1)
     first_name = parts[0]
     last_name = parts[1] if len(parts) > 1 else ''
-    emp_id = f"BCC-W{int(time.time()) % 10000}"
+    custom_emp_id = compute_employee_id_code(name, aadhaar)
+    emp_id = f"BCC-W{custom_emp_id}"
 
     c.execute('''
-    INSERT INTO users (name, first_name, last_name, role, phone, aadhaar, password_hash, ward, worker_emp_id, status)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'active')
-    ''', (name, first_name, last_name, role, phone, aadhaar, generate_password_hash('worker123'), ward, emp_id))
+    INSERT INTO users (name, first_name, last_name, role, phone, aadhaar, password_hash, ward, worker_emp_id, custom_emp_id, status)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'active')
+    ''', (name, first_name, last_name, role, phone, aadhaar, generate_password_hash('worker123'), ward, emp_id, custom_emp_id))
     new_user_id = c.lastrowid
 
     if role == 'worker':
         c.execute('''
-        INSERT OR REPLACE INTO worker_progress (worker_id, worker_name, worker_emp_id, duty_status, current_lat, current_lng, cleanups_today, total_monthly_cleanups)
-        VALUES (?, ?, ?, 'on_duty', 15.8340, 74.5020, 0, 0)
-        ''', (new_user_id, name, emp_id))
+        INSERT OR REPLACE INTO worker_progress (worker_id, worker_name, worker_emp_id, custom_emp_id, duty_status, current_lat, current_lng, cleanups_today, total_monthly_cleanups)
+        VALUES (?, ?, ?, ?, 'on_duty', 15.8340, 74.5020, 0, 0)
+        ''', (new_user_id, name, emp_id, custom_emp_id))
 
     conn.commit()
     conn.close()
 
     return jsonify({
         'success': True,
-        'message': f'New individual {role.upper()} ({emp_id}) authorized for Belagavi City Corporation.',
+        'message': f'New individual {role.upper()} ({custom_emp_id}) authorized for Belagavi City Corporation.',
         'user_id': new_user_id,
-        'worker_emp_id': emp_id
+        'worker_emp_id': emp_id,
+        'custom_emp_id': custom_emp_id,
+        'employee_id': custom_emp_id
     })
 
 # -------------------------------------------------------------
@@ -734,16 +840,23 @@ def list_workers():
     conn = get_db_connection()
     c = conn.cursor()
     workers = c.execute('''
-        SELECT wp.*, u.phone, u.ward, u.aadhaar
+        SELECT wp.*, u.phone, u.ward, u.aadhaar, u.custom_emp_id as u_custom_id
         FROM worker_progress wp
         JOIN users u ON wp.worker_id = u.id
         ORDER BY wp.worker_id ASC
     ''').fetchall()
     conn.close()
 
+    workers_list = []
+    for w in workers:
+        item = dict(w)
+        item['custom_emp_id'] = item.get('u_custom_id') or item.get('custom_emp_id') or compute_employee_id_code(item.get('worker_name'), item.get('aadhaar'))
+        item['employee_id_code'] = item['custom_emp_id']
+        workers_list.append(item)
+
     return jsonify({
         'success': True,
-        'workers': [dict(w) for w in workers]
+        'workers': workers_list
     })
 
 @app.route('/api/worker/profile/<int:worker_id>', methods=['GET'])
@@ -765,6 +878,7 @@ def get_worker_profile(worker_id):
 
     target = 500
     monthly = progress['total_monthly_cleanups'] if progress else 0
+    c_emp_id = user['custom_emp_id'] or compute_employee_id_code(user['name'], user['aadhaar'])
 
     return jsonify({
         'success': True,
@@ -772,9 +886,88 @@ def get_worker_profile(worker_id):
             'id': user['id'],
             'name': user['name'],
             'emp_id': progress['worker_emp_id'] if progress else 'BCC-W000',
+            'custom_emp_id': c_emp_id,
+            'employee_id_code': c_emp_id,
             'phone': user['phone'],
             'ward': user['ward'],
             'aadhaar': user['aadhaar'],
+            'gender': user['gender'] if 'gender' in user.keys() and user['gender'] else 'Male',
+            'avatar': user['avatar'] if 'avatar' in user.keys() else None,
+            'duty_status': progress['duty_status'] if progress else 'on_duty',
+            'current_lat': progress['current_lat'] if progress else 15.8340,
+            'current_lng': progress['current_lng'] if progress else 74.5020,
+            'cleanups_today': progress['cleanups_today'] if progress else 0,
+            'distance_walked_km': progress['distance_walked_km'] if progress else 0.0,
+            'hours_worked': progress['hours_worked'] if progress else 0.0,
+            'total_monthly_cleanups': monthly,
+            'target_milestone': target,
+            'reward_amount_inr': 4000 if monthly >= target else 0,
+            'progress_percentage': min(100.0, round((monthly / target) * 100.0, 1)),
+            'performance_score': progress['performance_score'] if progress else 95.0
+        },
+        'assigned_tasks': [dict(t) for t in assigned_tasks]
+    })
+
+@app.route('/api/worker/find-by-code', methods=['GET'])
+def find_worker_by_code():
+    """Look up an employee by their Employee ID (e.g. BAS098, MAN501, BCC-W2101, or numeric ID)."""
+    raw_code = (request.args.get('code') or '').strip()
+    if not raw_code:
+        return jsonify({'success': False, 'message': 'Employee ID is required.'}), 400
+
+    code = raw_code.upper()
+    conn = get_db_connection()
+    c = conn.cursor()
+    # Search by custom_emp_id, worker_emp_id, phone, or numeric id
+    user = c.execute('''
+        SELECT * FROM users
+        WHERE role = 'worker' AND (
+            UPPER(custom_emp_id) = ? OR
+            UPPER(worker_emp_id) = ? OR
+            phone = ? OR
+            id = ?
+        )
+    ''', (code, code, code, int(code) if code.isdigit() else -1)).fetchone()
+
+    if not user:
+        # Fallback: compute on the fly for all workers
+        all_workers = c.execute("SELECT * FROM users WHERE role = 'worker'").fetchall()
+        for w in all_workers:
+            c_code = compute_employee_id_code(w['name'], w['aadhaar'])
+            if c_code.upper() == code or f"BCC-W{c_code}".upper() == code:
+                user = w
+                break
+
+    if not user:
+        conn.close()
+        return jsonify({'success': False, 'message': f'Employee with ID "{raw_code}" not found.'}), 404
+
+    worker_id = user['id']
+    progress = c.execute("SELECT * FROM worker_progress WHERE worker_id = ?", (worker_id,)).fetchone()
+    assigned_tasks = c.execute('''
+        SELECT * FROM waste_reports
+        WHERE assigned_worker_id = ?
+        ORDER BY id DESC
+    ''', (worker_id,)).fetchall()
+    conn.close()
+
+    target = 500
+    monthly = progress['total_monthly_cleanups'] if progress else 0
+    c_emp_id = user['custom_emp_id'] or compute_employee_id_code(user['name'], user['aadhaar'])
+
+    return jsonify({
+        'success': True,
+        'worker': {
+            'id': user['id'],
+            'name': user['name'],
+            'emp_id': progress['worker_emp_id'] if progress else 'BCC-W000',
+            'custom_emp_id': c_emp_id,
+            'employee_id_code': c_emp_id,
+            'phone': user['phone'],
+            'ward': user['ward'],
+            'aadhaar': user['aadhaar'],
+            'gender': user['gender'] if 'gender' in user.keys() and user['gender'] else 'Male',
+            'avatar': user['avatar'] if 'avatar' in user.keys() else None,
             'duty_status': progress['duty_status'] if progress else 'on_duty',
             'current_lat': progress['current_lat'] if progress else 15.8340,
             'current_lng': progress['current_lng'] if progress else 74.5020,
@@ -1154,7 +1347,14 @@ def get_officer_dashboard():
 
     active_workers = c.execute("SELECT * FROM worker_progress WHERE duty_status = 'on_duty'").fetchall()
     vehicles = c.execute("SELECT * FROM vehicles").fetchall()
-    staff = c.execute("SELECT id, name, role, phone, aadhaar, ward, worker_emp_id FROM users WHERE role IN ('worker', 'officer')").fetchall()
+    staff = c.execute("SELECT id, name, role, phone, aadhaar, ward, worker_emp_id, custom_emp_id FROM users WHERE role IN ('worker', 'officer')").fetchall()
+
+    staff_list = []
+    for s in staff:
+        s_item = dict(s)
+        s_item['custom_emp_id'] = s_item.get('custom_emp_id') or compute_employee_id_code(s_item.get('name'), s_item.get('aadhaar'))
+        s_item['employee_id_code'] = s_item['custom_emp_id']
+        staff_list.append(s_item)
 
     conn.close()
     return jsonify({
@@ -1170,7 +1370,7 @@ def get_officer_dashboard():
         },
         'active_workers': [dict(w) for w in active_workers],
         'vehicles': [dict(v) for v in vehicles],
-        'staff_list': [dict(s) for s in staff]
+        'staff_list': staff_list
     })
 
 @app.route('/api/user/update-home-center', methods=['POST'])

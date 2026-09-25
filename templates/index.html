@@ -518,7 +518,138 @@
   </div>
 
   <!-- ============================================================== -->
-  <!-- STAFF LOGIN MODAL (RESTRICTS WORKER & OFFICER VIEWS FROM GENERAL CITIZENS) -->
+  <!-- EMPLOYEE IDENTITY & FULL INFORMATION MODAL (Requirement 4)     -->
+  <!-- ============================================================== -->
+  <div id="modal-employee-profile-detail" class="hidden fixed inset-0 z-[140] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700/80 rounded-3xl max-w-lg w-full shadow-2xl p-6 sm:p-7 space-y-5 relative overflow-hidden animate-slide-down">
+      
+      <!-- Top Accent Glow -->
+      <div class="absolute -top-12 -right-12 w-44 h-44 bg-amber-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div class="flex items-center space-x-2.5">
+          <div class="p-2 bg-amber-500/20 text-amber-400 rounded-xl">
+            <i data-lucide="id-card" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-extrabold text-white">Employee Identification Card</h3>
+            <p class="text-xs text-slate-400">Belagavi City Corporation (BCC) Field Staff</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeEmployeeProfileModal()" class="text-slate-400 hover:text-white text-sm">✕</button>
+      </div>
+
+      <!-- Avatar & Name Header Card -->
+      <div class="flex items-center space-x-4 bg-slate-950/70 border border-slate-800 rounded-2xl p-4">
+        <div class="w-16 h-16 rounded-2xl bg-slate-900 border-2 border-amber-500/50 p-1 flex items-center justify-center shrink-0 overflow-hidden shadow-lg">
+          <img id="emp-detail-avatar-img" class="w-full h-full object-cover rounded-xl" alt="Employee Avatar">
+        </div>
+        <div>
+          <h4 id="emp-detail-full-name" class="text-base font-extrabold text-white">Basavaraj Belagavi</h4>
+          <div class="flex flex-wrap items-center gap-1.5 mt-1">
+            <span id="emp-detail-id-code" class="px-2.5 py-0.5 bg-amber-500 text-slate-950 font-mono text-xs font-black rounded-lg shadow">
+              ID: BAS098
+            </span>
+            <span id="emp-detail-emp-code" class="px-2 py-0.5 bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-mono text-[11px] rounded-lg">
+              BCC-W2101
+            </span>
+            <span id="emp-detail-duty-badge" class="px-2 py-0.5 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[11px] font-bold rounded-lg">
+              Active On-Duty
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- All Detailed Fields List (Requirement 4) -->
+      <div class="space-y-2.5 bg-slate-950/60 border border-slate-800/80 rounded-2xl p-4 text-xs">
+        <!-- 1. Employee ID Formula Explanation -->
+        <div class="flex items-center justify-between pb-2 border-b border-slate-800/80">
+          <span class="text-slate-400 font-medium flex items-center space-x-1.5">
+            <i data-lucide="hash" class="w-3.5 h-3.5 text-amber-400"></i>
+            <span>Employee ID Number:</span>
+          </span>
+          <div class="text-right">
+            <span id="emp-detail-id-number" class="font-mono font-black text-amber-300 text-sm">BAS098</span>
+            <span class="block text-[10px] text-slate-500">(First 3 Letters of Name + Last 3 Digits of Aadhaar)</span>
+          </div>
+        </div>
+
+        <!-- 2. Assigned Working Place / Beat -->
+        <div class="flex items-center justify-between pb-2 border-b border-slate-800/80">
+          <span class="text-slate-400 font-medium flex items-center space-x-1.5">
+            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-emerald-400"></i>
+            <span>Assigned Working Place / Beat:</span>
+          </span>
+          <span id="emp-detail-ward" class="font-bold text-white text-right">Ward 21 - Tilakwadi, Belagavi</span>
+        </div>
+
+        <!-- 3. Mobile Number -->
+        <div class="flex items-center justify-between pb-2 border-b border-slate-800/80">
+          <span class="text-slate-400 font-medium flex items-center space-x-1.5">
+            <i data-lucide="phone" class="w-3.5 h-3.5 text-sky-400"></i>
+            <span>Mobile Number:</span>
+          </span>
+          <span id="emp-detail-phone" class="font-mono font-bold text-sky-300">+91 98450 11001</span>
+        </div>
+
+        <!-- 4. Aadhaar Number (with Show/Hide) -->
+        <div class="flex items-center justify-between pb-2 border-b border-slate-800/80">
+          <span class="text-slate-400 font-medium flex items-center space-x-1.5">
+            <i data-lucide="credit-card" class="w-3.5 h-3.5 text-amber-400"></i>
+            <span>Aadhaar Number:</span>
+          </span>
+          <div class="flex items-center space-x-2">
+            <span id="emp-detail-aadhaar" class="font-mono font-bold text-amber-300">XXXX-XXXX-1098</span>
+            <button type="button" onclick="toggleEmpAadhaarVisibility()" id="btn-toggle-emp-aadhaar" class="text-[11px] text-sky-400 hover:underline">
+              Show
+            </button>
+          </div>
+        </div>
+
+        <!-- 5. Today's Cleanups & Distance -->
+        <div class="flex items-center justify-between pb-2 border-b border-slate-800/80">
+          <span class="text-slate-400 font-medium flex items-center space-x-1.5">
+            <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-400"></i>
+            <span>Today's Performance:</span>
+          </span>
+          <span id="emp-detail-today-stats" class="font-bold text-emerald-400">16 Spots Cleared • 4.2 km Walked</span>
+        </div>
+
+        <!-- 6. Monthly Progress & Reward -->
+        <div class="flex items-center justify-between pb-2 border-b border-slate-800/80">
+          <span class="text-slate-400 font-medium flex items-center space-x-1.5">
+            <i data-lucide="award" class="w-3.5 h-3.5 text-amber-400"></i>
+            <span>Monthly ₹4,000 Milestone:</span>
+          </span>
+          <span id="emp-detail-monthly" class="font-bold text-amber-300">498 / 500 Cleanups (99.6%)</span>
+        </div>
+
+        <!-- 7. Current GPS Position -->
+        <div class="flex items-center justify-between">
+          <span class="text-slate-400 font-medium flex items-center space-x-1.5">
+            <i data-lucide="navigation" class="w-3.5 h-3.5 text-rose-400"></i>
+            <span>Live GPS Location:</span>
+          </span>
+          <span id="emp-detail-coords" class="font-mono text-slate-300">15.8340, 74.5020</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="pt-1 flex items-center space-x-2">
+        <button type="button" onclick="locateEmployeeOnMap()" class="flex-1 py-2.5 px-3 bg-slate-800 hover:bg-slate-700 text-sky-300 font-bold text-xs rounded-xl border border-slate-700 transition flex items-center justify-center space-x-1.5">
+          <i data-lucide="map" class="w-4 h-4"></i>
+          <span>Locate on Map</span>
+        </button>
+        <button type="button" onclick="closeEmployeeProfileModal()" class="flex-1 py-2.5 px-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow transition text-center">
+          Done
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- STAFF LOGIN MODAL (RESTRICTS EMPLOYEE & OFFICER VIEWS FROM GENERAL CITIZENS) -->
   <!-- ============================================================== -->
   <div id="modal-staff-login" class="hidden fixed inset-0 z-[120] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
     <div class="bg-slate-900 border border-slate-700/80 rounded-3xl max-w-md w-full shadow-2xl p-6 space-y-5 relative">
@@ -529,42 +660,59 @@
           </div>
           <div>
             <h3 class="text-base font-bold text-white">BCC Staff Portal Login</h3>
-            <p class="text-xs text-slate-400">For Authorized Workers & Municipal Officers</p>
+            <p class="text-xs text-slate-400">For Authorized Employees & Municipal Officers</p>
           </div>
         </div>
         <button type="button" onclick="closeStaffLoginModal()" class="text-slate-400 hover:text-white text-sm">✕</button>
       </div>
 
-      <!-- Staff Tab Toggle -->
+      <!-- Staff Tab Toggle (Requirement 2: Worker -> Employee) -->
       <div class="grid grid-cols-2 gap-2 bg-slate-950 p-1 rounded-xl border border-slate-800">
         <button type="button" onclick="switchStaffTab('worker')" id="btn-staff-tab-worker" class="py-2 text-xs font-bold rounded-lg bg-amber-500 text-slate-950 shadow">
-          👷 Worker App
+          👷 Employee App
         </button>
         <button type="button" onclick="switchStaffTab('officer')" id="btn-staff-tab-officer" class="py-2 text-xs font-bold rounded-lg text-slate-300 hover:text-white">
           🏛️ Officer Command
         </button>
       </div>
 
-      <!-- Worker Login Section (Shows individual worker selection) -->
+      <!-- Employee Login Section (Shows individual employee ID entry + profile selection) -->
       <div id="staff-form-worker" class="space-y-3.5">
-        <p class="text-xs text-slate-300">Select your individual sanitation worker account to view only your personal beat and tasks:</p>
+        <p class="text-xs text-slate-300">Enter your Employee ID or select your profile to view your personal beat and assigned tasks:</p>
+        
+        <!-- Requirement 1: Worker ID number is starting name 3 value + last 3 aadhaar number -->
         <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1">Select Worker Profile</label>
-          <select id="staff-worker-select" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white">
-            <option value="2">Basavaraj Belagavi (Emp #BCC-W2101) - Tilakwadi Beat</option>
-            <option value="3">Yallappa Maratha (Emp #BCC-W3402) - Shahapur Beat</option>
-            <option value="4">Santosh Naik (Emp #BCC-W1203) - Rani Channamma Circle</option>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Enter Employee ID (First 3 of Name + Last 3 of Aadhaar)</label>
+          <div class="flex gap-2">
+            <input type="text" id="staff-emp-id-input" placeholder="e.g. BAS098, MAN501, YAL987" class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white uppercase font-mono font-bold tracking-wider placeholder-slate-500 focus:outline-none focus:border-amber-400">
+            <button type="button" onclick="loginByEmployeeIdInput()" class="px-3.5 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-xl shadow transition shrink-0 flex items-center space-x-1">
+              <i data-lucide="key" class="w-3.5 h-3.5"></i>
+              <span>Verify ID</span>
+            </button>
+          </div>
+          <p class="text-[10px] text-slate-400 mt-1">ID Format: First 3 letters of name + last 3 digits of Aadhaar (e.g. <strong>BAS098</strong> for Basavaraj Belagavi, <strong>MAN501</strong> for Manjunath Patil)</p>
+        </div>
+
+        <div class="relative flex items-center justify-center my-1">
+          <div class="border-t border-slate-800 w-full"></div>
+          <span class="bg-slate-900 px-2 text-[10px] font-bold text-slate-500 uppercase">OR QUICK SELECT PROFILE</span>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Select Employee Profile (Belagavi Beats)</label>
+          <select id="staff-worker-select" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white font-mono">
+            <!-- Dynamically populated with all 11 beats and formatted IDs -->
           </select>
         </div>
         <button type="button" onclick="loginAsSpecificWorker()" class="w-full py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-xl shadow transition flex items-center justify-center space-x-1.5">
           <i data-lucide="log-in" class="w-4 h-4"></i>
-          <span>Open My Worker Dashboard</span>
+          <span>Open My Employee Dashboard</span>
         </button>
       </div>
 
       <!-- Officer Login Section -->
       <div id="staff-form-officer" class="hidden space-y-3.5">
-        <p class="text-xs text-slate-300">Chief Municipal Officer administrative console with live GIS radar & worker directory:</p>
+        <p class="text-xs text-slate-300">Chief Municipal Officer administrative console with live GIS radar & employee directory:</p>
         <div>
           <label class="block text-xs font-semibold text-slate-300 mb-1">Officer Passcode</label>
           <input type="password" id="staff-officer-passcode" placeholder="Enter admin passcode (admin123)" value="admin123" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white">
@@ -1061,23 +1209,29 @@
     </div>
 
     <!-- ============================================================== -->
-    <!-- 2. INDIVIDUAL PERSONAL SANITATION WORKER PORTAL -->
+    <!-- 2. INDIVIDUAL PERSONAL SANITATION EMPLOYEE PORTAL -->
     <!-- ============================================================== -->
     <div id="view-worker" class="hidden space-y-6">
       
-      <!-- Worker Session Header (Private Worker Profile - Does not display other workers) -->
+      <!-- Employee Session Header (Private Employee Profile - Does not display other employees) -->
       <div class="bg-slate-950/80 border border-amber-500/30 rounded-2xl p-3.5 flex flex-wrap items-center justify-between gap-3">
         <div class="flex items-center space-x-2">
           <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-          <span class="text-xs text-slate-300 font-semibold">Authorized Staff Session: <strong class="text-amber-300">Sanitation Worker Personal Account</strong></span>
+          <span class="text-xs text-slate-300 font-semibold">Authorized Staff Session: <strong class="text-amber-300">Sanitation Employee Personal Account</strong></span>
         </div>
-        <button type="button" onclick="exitStaffMode()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg text-xs font-semibold flex items-center space-x-1 transition">
-          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-          <span>Return to Citizen App</span>
-        </button>
+        <div class="flex items-center space-x-2">
+          <button type="button" onclick="openEmployeeDetailsModal(activeWorkerId)" class="px-3 py-1.5 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 rounded-lg text-xs font-bold flex items-center space-x-1.5 transition shadow">
+            <i data-lucide="id-card" class="w-3.5 h-3.5"></i>
+            <span>👤 View My Complete Employee Info</span>
+          </button>
+          <button type="button" onclick="exitStaffMode()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg text-xs font-semibold flex items-center space-x-1 transition">
+            <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+            <span>Return to Citizen App</span>
+          </button>
+        </div>
       </div>
 
-      <!-- Worker Stats & Duty Bar -->
+      <!-- Employee Stats & Duty Bar -->
       <div class="bg-slate-800/90 border border-slate-700 rounded-2xl p-5 flex flex-wrap items-center justify-between gap-4 shadow-sm">
         <div class="flex items-center space-x-3.5">
           <div class="w-14 h-14 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center border border-amber-500/30 shadow-lg">
@@ -1086,14 +1240,14 @@
           <div>
             <div class="flex items-center space-x-2">
               <h2 id="worker-name-display" class="text-lg font-bold text-white">Basavaraj Belagavi</h2>
-              <span id="worker-emp-badge" class="bg-indigo-500/20 text-indigo-300 text-xs px-2.5 py-0.5 rounded-full border border-indigo-500/30 font-mono font-bold">BCC-W2101</span>
+              <span id="worker-emp-badge" class="bg-indigo-500/20 text-indigo-300 text-xs px-2.5 py-0.5 rounded-full border border-indigo-500/30 font-mono font-bold">BAS098</span>
               <span class="bg-emerald-500/20 text-emerald-400 text-xs px-2.5 py-0.5 rounded-full border border-emerald-500/30 font-medium">Active On-Duty</span>
             </div>
             <p id="worker-ward-display" class="text-xs text-slate-400 mt-0.5">Beat: Ward 21 - Tilakwadi, Belagavi | Live GPS Broadcasting Active</p>
           </div>
         </div>
 
-        <!-- Individual Worker Active Progress Stats -->
+        <!-- Individual Employee Active Progress Stats -->
         <div class="flex items-center space-x-6">
           <div class="text-right">
             <span class="text-xs text-slate-400 block">Cleanups Today:</span>
@@ -1234,6 +1388,15 @@
             </div>
             <div class="aspect-video bg-slate-950 rounded-lg overflow-hidden border border-slate-800 flex items-center justify-center relative">
               <img id="worker-active-task-before-img" src="https://images.unsplash.com/photo-1605600659873-d808a13e4d2a?w=500&auto=format&fit=crop&q=60" class="w-full h-full object-cover" alt="Before Cleanup">
+            </div>
+
+            <!-- Requirement 6: Shortest Distance & Route Button Under Working Image -->
+            <button type="button" onclick="showShortestRouteToActiveWorkingPlace()" class="w-full py-2.5 px-3 bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 text-white font-bold rounded-xl text-xs flex items-center justify-center space-x-2 shadow-lg transition active:scale-95">
+              <i data-lucide="navigation" class="w-4 h-4 text-sky-200"></i>
+              <span>📍 View Shortest Route & Distance to Work Spot</span>
+            </button>
+            <div id="worker-route-info-box" class="hidden p-3 bg-slate-950/90 border border-sky-500/40 rounded-xl text-xs space-y-2 animate-fade-in">
+              <!-- Dynamically populated shortest path info -->
             </div>
             <p class="text-[10px] text-slate-400">Clean up this specific area in Belagavi before capturing the live photo below.</p>
           </div>
@@ -1393,13 +1556,13 @@
           <table class="w-full text-left text-xs">
             <thead>
               <tr class="text-slate-400 border-b border-slate-700/60">
-                <th class="py-2.5 font-bold">Worker ID</th>
-                <th class="py-2.5 font-bold">Full Name</th>
-                <th class="py-2.5 font-bold">Assigned Beat / Ward</th>
+                <th class="py-2.5 font-bold">Employee ID</th>
+                <th class="py-2.5 font-bold">Employee Name</th>
+                <th class="py-2.5 font-bold">Assigned Beat / Working Place</th>
                 <th class="py-2.5 font-bold">Phone Number</th>
                 <th class="py-2.5 font-bold">Live Duty Status</th>
                 <th class="py-2.5 font-bold text-right">Today / Monthly Cleanups</th>
-                <th class="py-2.5 font-bold text-right">Performance</th>
+                <th class="py-2.5 font-bold text-right">Performance & Actions</th>
               </tr>
             </thead>
             <tbody id="officer-workers-table-body" class="divide-y divide-slate-800 font-medium">
@@ -1409,7 +1572,7 @@
         </div>
       </div>
 
-      <!-- Bottom Grid: Add Worker/Officer & Blockchain Explorer -->
+      <!-- Bottom Grid: Add Employee/Officer & Blockchain Explorer -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         <!-- Left: Strict Account Provisioning (Officer Only) -->
@@ -1420,7 +1583,7 @@
             </div>
             <div>
               <h3 class="text-base font-bold text-white">Officer-Authorized Onboarding</h3>
-              <p class="text-xs text-slate-400">Provisions personal accounts for sanitation staff in Belagavi</p>
+              <p class="text-xs text-slate-400">Provisions personal accounts for sanitation employees in Belagavi</p>
             </div>
           </div>
 
@@ -1428,13 +1591,13 @@
             <div>
               <label class="block text-xs font-semibold text-slate-300 mb-1">Account Role</label>
               <select id="staff-role" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100">
-                <option value="worker">Sanitation Worker (Purasabe / BCC)</option>
+                <option value="worker">Sanitation Employee (BCC Belagavi)</option>
                 <option value="officer">BCC Sub-Officer / Supervisor</option>
               </select>
             </div>
             <div>
               <label class="block text-xs font-semibold text-slate-300 mb-1">Full Name</label>
-              <input type="text" id="staff-name" required placeholder="e.g. Mahadev Ghorpade" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100">
+              <input type="text" id="staff-name" required placeholder="e.g. Mahadev Ghorpade" oninput="updateStaffIdPreview()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100">
             </div>
             <div class="grid grid-cols-2 gap-2">
               <div>
@@ -1443,22 +1606,36 @@
               </div>
               <div>
                 <label class="block text-xs font-semibold text-slate-300 mb-1">Aadhaar (12 Digits)</label>
-                <input type="text" id="staff-aadhaar" required placeholder="12-digit UID" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100">
+                <input type="text" id="staff-aadhaar" required placeholder="12-digit UID" oninput="updateStaffIdPreview()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100">
               </div>
             </div>
             <div>
-              <label class="block text-xs font-semibold text-slate-300 mb-1">Assigned Belagavi Ward</label>
-              <select id="staff-ward" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100">
-                <option value="Ward 21 - Tilakwadi, Belagavi">Ward 21 - Tilakwadi, Belagavi</option>
-                <option value="Ward 12 - Rani Channamma Circle, Belagavi">Ward 12 - Rani Channamma Circle, Belagavi</option>
-                <option value="Ward 34 - Shahapur, Belagavi">Ward 34 - Shahapur, Belagavi</option>
-                <option value="Ward 18 - Hindwadi, Belagavi">Ward 18 - Hindwadi, Belagavi</option>
-                <option value="Ward 45 - Vadgaon, Belagavi">Ward 45 - Vadgaon, Belagavi</option>
+              <!-- Requirement 3: 11 specific Belagavi working places for officer to add employee -->
+              <label class="block text-xs font-semibold text-slate-300 mb-1">Assigned Belagavi Working Place / Beat</label>
+              <select id="staff-ward" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 font-medium">
+                <option value="Machhe Beat, Belagavi">1. Machhe Beat (Industrial & College Area)</option>
+                <option value="Tilakwadi Beat, Belagavi">2. Tilakwadi Beat (Congress Rd / 1st-3rd Gate)</option>
+                <option value="Indiranagar Beat, Belagavi">3. Indiranagar Beat (East Belagavi)</option>
+                <option value="Majagaon Beat, Belagavi">4. Majagaon Beat (Cross & Residential)</option>
+                <option value="VTU University Beat, Belagavi">5. VTU University Beat (Jnana Sangama Campus)</option>
+                <option value="Bhagya Nagar Beat, Belagavi">6. Bhagya Nagar Beat (Angol Road)</option>
+                <option value="Hanumantha Nagar Beat, Belagavi">7. Hanumantha Nagar Beat (Depot Area)</option>
+                <option value="Gandhi Nagar Beat, Belagavi">8. Gandhi Nagar Beat (Commercial Main Rd)</option>
+                <option value="Mahantesh Nagar Beat, Belagavi">9. Mahantesh Nagar Beat (Ring Road)</option>
+                <option value="Sadashiv Nagar Beat, Belagavi">10. Sadashiv Nagar Beat (Club Road Substation)</option>
+                <option value="Adarsh Nagar Beat, Belagavi">11. Adarsh Nagar Beat (Circle & Colony)</option>
               </select>
             </div>
+            
+            <!-- Requirement 1: Live ID preview (3 of name + last 3 of Aadhaar) -->
+            <div id="staff-id-preview-box" class="p-2.5 bg-slate-950/80 border border-amber-500/40 rounded-xl text-xs flex items-center justify-between">
+              <span class="text-slate-400">Assigned Employee ID:</span>
+              <span id="staff-id-preview-code" class="font-mono font-black text-amber-300 text-sm">EMP101</span>
+            </div>
+
             <button type="submit" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold text-xs shadow transition flex items-center justify-center space-x-1.5">
               <i data-lucide="shield-check" class="w-4 h-4"></i>
-              <span>Authorize & Issue BCC Employee ID</span>
+              <span>Authorize & Register Belagavi Employee</span>
             </button>
           </form>
         </div>
@@ -2466,8 +2643,10 @@
         const data = await res.json();
         if (data.success) {
           const w = data.worker;
+          activeWorkerProfile = w;
+          const empCode = w.custom_emp_id || w.employee_id_code || w.emp_id;
           document.getElementById('worker-name-display').innerText = w.name;
-          document.getElementById('worker-emp-badge').innerText = w.emp_id;
+          document.getElementById('worker-emp-badge').innerText = empCode;
           document.getElementById('worker-ward-display').innerText = `Beat: ${w.ward} | Live GPS: ${w.current_lat}, ${w.current_lng}`;
           document.getElementById('worker-today-cleanups').innerText = w.cleanups_today;
           document.getElementById('worker-today-distance').innerText = `${w.distance_walked_km} km`;
@@ -2581,25 +2760,54 @@
       if (!sel || workersList.length === 0) return;
       sel.innerHTML = '';
       workersList.forEach(w => {
+        const empCode = w.custom_emp_id || w.employee_id_code || w.worker_emp_id;
         const opt = document.createElement('option');
         opt.value = w.worker_id;
-        opt.innerText = `${w.worker_name} (${w.worker_emp_id}) - ${w.ward}`;
+        opt.innerText = `[${empCode}] ${w.worker_name} — ${w.ward || 'Belagavi'}`;
         sel.appendChild(opt);
       });
+    }
+
+    async function loginByEmployeeIdInput() {
+      const input = document.getElementById('staff-emp-id-input');
+      const rawCode = (input ? input.value : '').trim();
+      if (!rawCode) {
+        showAppToast("Please enter an Employee ID (e.g. BAS098, MAN501, YAL987).", "warning");
+        return;
+      }
+      try {
+        const res = await fetch(`/api/worker/find-by-code?code=${encodeURIComponent(rawCode)}`);
+        const data = await res.json();
+        if (data.success && data.worker) {
+          activeWorkerId = data.worker.id;
+          activeWorkerProfile = data.worker;
+          closeStaffLoginModal();
+          switchRole('worker');
+          loadWorkerProfile(data.worker.id);
+          showAppToast(`Welcome ${data.worker.name} (Employee ID: ${data.worker.custom_emp_id || data.worker.emp_id})!`, 'success');
+        } else {
+          showAppToast(data.message || `Employee ID "${rawCode}" not found.`, 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showAppToast("Error locating employee ID.", "error");
+      }
     }
 
     async function loginAsSpecificWorker() {
       const sel = document.getElementById('staff-worker-select');
       const workerId = parseInt(sel.value, 10);
+      if (!workerId) return;
       activeWorkerId = workerId;
 
       const targetWorker = workersList.find(w => w.worker_id === workerId);
-      const workerName = targetWorker ? targetWorker.worker_name : 'Sanitation Worker';
+      const workerName = targetWorker ? targetWorker.worker_name : 'Sanitation Employee';
+      const empCode = targetWorker ? (targetWorker.custom_emp_id || targetWorker.employee_id_code || targetWorker.worker_emp_id) : 'EMP';
 
       closeStaffLoginModal();
       switchRole('worker');
       loadWorkerProfile(workerId);
-      showToast(`Logged in as Sanitation Worker: ${workerName}`, "success");
+      showAppToast(`Logged in as Sanitation Employee: ${workerName} (${empCode})`, "success");
     }
 
     function loginAsOfficer() {
@@ -2619,12 +2827,12 @@
     }
 
     // ============================================================
-    // OFFICER WORKER PERSONNEL DIRECTORY (ALL NAMES & IDs)
+    // OFFICER EMPLOYEE PERSONNEL DIRECTORY (ALL NAMES & IDs)
     // ============================================================
     async function loadOfficerWorkersRoster() {
       const tbody = document.getElementById('officer-workers-table-body');
       if (!tbody) return;
-      tbody.innerHTML = `<tr><td colspan="7" class="py-4 text-center text-slate-400">Loading worker roster...</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="7" class="py-4 text-center text-slate-400">Loading employee roster...</td></tr>`;
 
       try {
         const res = await fetch('/api/workers/list');
@@ -2634,24 +2842,26 @@
           tbody.innerHTML = '';
 
           if (workersList.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="7" class="py-4 text-center text-slate-400">No registered workers found in Belagavi.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="7" class="py-4 text-center text-slate-400">No registered employees found in Belagavi.</td></tr>`;
             return;
           }
 
           workersList.forEach(w => {
             const isOnDuty = w.duty_status === 'on_duty';
+            const empCode = w.custom_emp_id || w.employee_id_code || w.worker_emp_id || 'EMP000';
             const tr = document.createElement('tr');
             tr.className = "hover:bg-slate-800/60 transition border-b border-slate-800/80";
             tr.innerHTML = `
               <td class="py-3 font-mono font-bold text-amber-300">
-                <span class="px-2 py-0.5 bg-amber-500/10 border border-amber-500/30 rounded-md">${w.worker_emp_id || 'BCC-W000'}</span>
+                <span class="px-2.5 py-1 bg-amber-500/20 border border-amber-500/40 rounded-lg text-xs tracking-wider">${empCode}</span>
+                <span class="block text-[10px] text-slate-500 font-mono mt-0.5">${w.worker_emp_id || ''}</span>
               </td>
               <td class="py-3 font-bold text-white">
                 <div>${w.worker_name}</div>
                 <div class="text-[10px] text-slate-400 font-mono">UID: ${w.aadhaar ? 'XXXX-XXXX-' + w.aadhaar.slice(-4) : 'N/A'}</div>
               </td>
-              <td class="py-3 text-slate-300">${w.ward || 'Belagavi Beats'}</td>
-              <td class="py-3 font-mono text-slate-300">${w.phone || 'N/A'}</td>
+              <td class="py-3 text-slate-300 font-medium">${w.ward || 'Belagavi Beats'}</td>
+              <td class="py-3 font-mono text-slate-300">${w.phone ? '+91 ' + w.phone : 'N/A'}</td>
               <td class="py-3">
                 <span class="inline-flex items-center space-x-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold ${isOnDuty ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-slate-700 text-slate-300'}">
                   <span class="w-1.5 h-1.5 rounded-full ${isOnDuty ? 'bg-emerald-400 animate-ping' : 'bg-slate-400'}"></span>
@@ -2662,17 +2872,22 @@
                 <div>${w.cleanups_today || 0} today</div>
                 <div class="text-[10px] text-amber-300 font-normal">${w.total_monthly_cleanups || 0} / 500</div>
               </td>
-              <td class="py-3 text-right font-mono font-bold text-sky-400">
-                ${w.performance_score || 95.0}% ⭐
+              <td class="py-3 text-right">
+                <div class="font-mono font-bold text-sky-400 mb-1">${w.performance_score || 95.0}% ⭐</div>
+                <button type="button" onclick="openEmployeeDetailsModal(${w.worker_id})" class="px-2.5 py-1 bg-sky-600/20 hover:bg-sky-600/40 text-sky-300 border border-sky-500/40 rounded-lg text-[10px] font-bold transition inline-flex items-center space-x-1">
+                  <i data-lucide="id-card" class="w-3 h-3"></i>
+                  <span>ℹ️ View All Info</span>
+                </button>
               </td>
             `;
             tbody.appendChild(tr);
           });
           const countBadge = document.getElementById('officer-workers-count');
-          if (countBadge) countBadge.innerText = `${workersList.length} Active Workers`;
+          if (countBadge) countBadge.innerText = `${workersList.length} Active Employees`;
+          lucide.createIcons();
         }
       } catch (err) {
-        console.error("Error loading officer worker roster:", err);
+        console.error("Error loading officer employee roster:", err);
         tbody.innerHTML = `<tr><td colspan="7" class="py-4 text-center text-rose-400">Failed to load roster.</td></tr>`;
       }
     }
@@ -2878,6 +3093,10 @@
         citizenCameraStream.getTracks().forEach(t => t.stop());
         citizenCameraStream = null;
       }
+      const spotLoc = document.getElementById('report-address')?.value || 'Machhe, Belagavi';
+      const liveLatVal = parseFloat(document.getElementById('report-lat')?.value || 15.8285);
+      const liveLngVal = parseFloat(document.getElementById('report-lng')?.value || 74.4690);
+      showLiveCapturedSpotOnMap(liveLatVal, liveLngVal, spotLoc, snapshotUrl);
       showToast("📸 Live photo captured successfully with GPS watermark!", "success");
     }
 
@@ -2929,6 +3148,9 @@
             document.getElementById('citizen-camera-watermark')?.classList.add('hidden');
             document.getElementById('citizen-photo-confirmed-badge')?.classList.remove('hidden');
             const spotLoc = document.getElementById('report-address')?.value || 'Machhe, Belagavi';
+            const liveLatVal = parseFloat(document.getElementById('report-lat')?.value || 15.8285);
+            const liveLngVal = parseFloat(document.getElementById('report-lng')?.value || 74.4690);
+            showLiveCapturedSpotOnMap(liveLatVal, liveLngVal, spotLoc, capturedPhotoData);
             showToast(`📸 Live photo captured & geotagged at ${spotLoc}!`, "success");
           };
           imgObj.src = e.target.result;
@@ -2997,6 +3219,10 @@
         document.getElementById('citizen-camera-stream')?.classList.add('hidden');
         document.getElementById('citizen-camera-watermark')?.classList.add('hidden');
         document.getElementById('citizen-photo-confirmed-badge')?.classList.remove('hidden');
+        const spotLoc = document.getElementById('report-address')?.value || 'Machhe, Belagavi';
+        const liveLatVal = parseFloat(document.getElementById('report-lat')?.value || 15.8285);
+        const liveLngVal = parseFloat(document.getElementById('report-lng')?.value || 74.4690);
+        showLiveCapturedSpotOnMap(liveLatVal, liveLngVal, spotLoc, snapshotUrl);
         showToast("✅ Live photo captured with GPS watermark!", "success");
       } else {
         canvas.classList.remove('hidden');
@@ -3155,6 +3381,16 @@
                   <span>🤖 ${t.assigned_to}: ${r.assigned_worker_name || 'Basavaraj'} (${r.assigned_worker_emp || 'BCC-W2101'})</span>
                 </span>
               </div>
+              <div class="flex items-center justify-between text-xs pt-2 border-t border-slate-800/80">
+                <button type="button" onclick="zoomToReportOnMap(${r.id})" class="px-2.5 py-1 bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 border border-sky-500/40 rounded-lg text-[11px] font-semibold flex items-center space-x-1 transition">
+                  <i data-lucide="map" class="w-3.5 h-3.5"></i>
+                  <span>🗺️ View on Map</span>
+                </button>
+                <button type="button" onclick="showShortestRouteToWorkingPlaceForReport(${r.id})" class="px-2.5 py-1 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 rounded-lg text-[11px] font-bold flex items-center space-x-1 transition">
+                  <i data-lucide="navigation" class="w-3.5 h-3.5"></i>
+                  <span>📍 Shortest Distance</span>
+                </button>
+              </div>
             `;
             pendingContainer.appendChild(card);
           });
@@ -3312,8 +3548,19 @@
               ${r.assigned_worker_name ? `
                 <div class="p-2 bg-indigo-500/10 border border-indigo-500/30 rounded-xl text-[11px] text-indigo-300 flex items-center space-x-1.5">
                   <i data-lucide="user-check" class="w-3.5 h-3.5 shrink-0"></i>
-                  <span>Assigned Worker: <strong>${r.assigned_worker_name}</strong></span>
+                  <span>Assigned Employee: <strong>${r.assigned_worker_name}</strong></span>
                 </div>` : ''}
+
+              <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-800">
+                <button type="button" onclick="showShortestRouteToWorkingPlaceForReport(${r.id})" class="px-3 py-1.5 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 rounded-xl text-xs font-bold flex items-center space-x-1.5 transition">
+                  <i data-lucide="navigation" class="w-3.5 h-3.5"></i>
+                  <span>📍 Shortest Distance & Route</span>
+                </button>
+                <button type="button" onclick="zoomToReportOnMap(${r.id})" class="px-3 py-1.5 bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 border border-sky-500/40 rounded-xl text-xs font-semibold flex items-center space-x-1.5 transition">
+                  <i data-lucide="map" class="w-3.5 h-3.5"></i>
+                  <span>🗺️ View on Map</span>
+                </button>
+              </div>
             `;
             pendingContainer.appendChild(card);
           });
@@ -3381,8 +3628,11 @@
               </div>
 
               <div class="flex items-center justify-between text-[11px] text-slate-400 pt-2 border-t border-slate-800">
-                <span>Cleaned by: <strong class="text-amber-300 font-bold">${r.completed_worker_name || 'BCC Sanitation Worker'}</strong></span>
-                <span class="font-mono text-[10px] text-slate-500">Blockchain Ledger Stamped ⛓️</span>
+                <span>Cleaned by: <strong class="text-amber-300 font-bold">${r.completed_worker_name || 'BCC Sanitation Employee'}</strong></span>
+                <button type="button" onclick="zoomToReportOnMap(${r.id})" class="px-2.5 py-1 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 rounded-lg text-[10px] font-bold flex items-center space-x-1 transition">
+                  <i data-lucide="map" class="w-3 h-3"></i>
+                  <span>🗺️ View on Map</span>
+                </button>
               </div>
             `;
             completedContainer.appendChild(card);
@@ -3703,20 +3953,49 @@
       updateMapMarkers();
     }
 
+    let currentRoutePolyline = null;
+    let liveSpotMarker = null;
+
     function updateMapMarkers() {
       if (!markersLayer) return;
       markersLayer.clearLayers();
 
-      // 1. Incidents in Belagavi
+      // 1. Incidents in Belagavi with Live Image in Map Popup
       allReports.forEach(r => {
         const isVerified = r.status === 'verified';
         const color = isVerified ? '#10b981' : '#ef4444';
         const marker = L.circleMarker([r.latitude, r.longitude], {
-          radius: 10,
+          radius: 11,
           color: color,
           fillColor: color,
-          fillOpacity: 0.8
-        }).bindPopup(`<b>#Report-${r.id} (Belagavi)</b><br>${r.description}<br>Status: <b>${r.status.toUpperCase()}</b><br>Attributed: <b>${r.assigned_worker_name || 'Pending'}</b>`);
+          fillOpacity: 0.85,
+          weight: 2
+        });
+
+        const imgHtml = r.before_image ? `
+          <div style="width:100%; height:85px; overflow:hidden; border-radius:8px; margin:6px 0; background:#0f172a; border:1px solid #334155;">
+            <img src="${r.before_image}" style="width:100%; height:100%; object-fit:cover; cursor:pointer;" onclick="window.open('${r.before_image}', '_blank')" title="Click for full photo" alt="Live Incident Photo">
+          </div>` : '';
+
+        const popupContent = `
+          <div style="min-width:230px; font-family:sans-serif; color:#f8fafc; background:#0f172a; padding:8px; border-radius:10px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-weight:800; font-size:12px; color:#38bdf8;">#Report-${r.id}</span>
+              <span style="font-size:10px; font-weight:700; padding:2px 7px; border-radius:12px; background:${isVerified ? 'rgba(16,185,129,0.2)' : 'rgba(239,68,68,0.2)'}; color:${isVerified ? '#34d399' : '#f87171'}; border:1px solid ${isVerified ? 'rgba(16,185,129,0.4)' : 'rgba(239,68,68,0.4)'};">${r.status.toUpperCase()}</span>
+            </div>
+            ${imgHtml}
+            <div style="font-size:11px; margin-top:3px; color:#f1f5f9; font-weight:600;">${r.description || 'Roadside Waste Spot'}</div>
+            <div style="font-size:10px; color:#94a3b8; margin-top:2px;">📍 <strong>Area:</strong> ${r.address || 'Belagavi Beat'}</div>
+            <div style="font-size:10px; color:#64748b; font-family:monospace;">GPS: ${r.latitude}, ${r.longitude}</div>
+            <div style="font-size:10px; color:#fbbf24; margin-top:2px;">👷 <strong>Assigned:</strong> ${r.assigned_worker_name || 'Basavaraj Belagavi'} (${r.assigned_worker_emp || 'BAS098'})</div>
+            <div style="margin-top:8px; display:flex; gap:6px;">
+              <button onclick="showShortestRouteToWorkingPlaceForReport(${r.id})" style="flex:1; background:#f59e0b; color:#0f172a; font-weight:800; font-size:10px; padding:5px 8px; border:none; border-radius:6px; cursor:pointer;">📍 Shortest Route</button>
+              ${r.before_image ? `<button onclick="window.open('${r.before_image}', '_blank')" style="background:#0284c7; color:#fff; font-size:10px; padding:5px 8px; border:none; border-radius:6px; cursor:pointer;">🖼️ Full Photo</button>` : ''}
+            </div>
+          </div>
+        `;
+
+        marker.bindPopup(popupContent, { maxWidth: 280 });
         markersLayer.addLayer(marker);
       });
 
@@ -3745,27 +4024,50 @@
       const v2Marker = L.marker([15.8520, 74.5090]).bindPopup(`<b>BCC Truck KA-22-G-1802</b><br>Camp - Rani Channamma Circle Beat`);
       markersLayer.addLayer(v2Marker);
 
-      // 4. Individual Sanitation Workers with 5km coverage radius
-      const workersGeo = [
-        { name: 'Basavaraj Belagavi (BCC-W2101)', lat: 15.8340, lng: 74.5020 },
-        { name: 'Yallappa Maratha (BCC-W3402)', lat: 15.8380, lng: 74.5180 },
-        { name: 'Santosh Naik (BCC-W1203)', lat: 15.8530, lng: 74.5100 }
+      // 4. Sanitation Employees Across Belagavi Beats
+      const activeGeoEmployees = (workersList && workersList.length > 0) ? workersList : [
+        { worker_id: 1, worker_name: 'Basavaraj Belagavi', custom_emp_id: 'BAS098', worker_emp_id: 'BCC-W2101', ward: 'Tilakwadi Beat', current_lat: 15.8340, current_lng: 74.5020 },
+        { worker_id: 2, worker_name: 'Yallappa Maratha', custom_emp_id: 'YAL987', worker_emp_id: 'BCC-W3402', ward: 'Bhagya Nagar Beat', current_lat: 15.8380, current_lng: 74.5180 },
+        { worker_id: 3, worker_name: 'Santosh Naik', custom_emp_id: 'SAN876', worker_emp_id: 'BCC-W1203', ward: 'Sadashiv Nagar Beat', current_lat: 15.8530, current_lng: 74.5100 },
+        { worker_id: 4, worker_name: 'Manjunath Patil', custom_emp_id: 'MAN501', worker_emp_id: 'BCC-WMAN501', ward: 'Machhe Beat', current_lat: 15.8285, current_lng: 74.4690 },
+        { worker_id: 5, worker_name: 'Ramesh Jadhav', custom_emp_id: 'RAM502', worker_emp_id: 'BCC-WRAM502', ward: 'Majagaon Beat', current_lat: 15.8150, current_lng: 74.4850 },
+        { worker_id: 6, worker_name: 'Suresh Pujari', custom_emp_id: 'SUR503', worker_emp_id: 'BCC-WSUR503', ward: 'VTU University Beat', current_lat: 15.7950, current_lng: 74.4420 }
       ];
 
-      workersGeo.forEach(w => {
-        const marker = L.circleMarker([w.lat, w.lng], {
+      activeGeoEmployees.forEach(w => {
+        const lat = parseFloat(w.current_lat || 15.8340);
+        const lng = parseFloat(w.current_lng || 74.5020);
+        const empCode = w.custom_emp_id || w.employee_id_code || w.worker_emp_id || 'EMP';
+        const name = w.worker_name || w.name || 'Sanitation Employee';
+        const ward = w.ward || 'Belagavi Beat';
+
+        const marker = L.circleMarker([lat, lng], {
           radius: 8,
           color: '#f59e0b',
           fillColor: '#f59e0b',
-          fillOpacity: 0.9
-        }).bindPopup(`<b>Worker: ${w.name}</b><br>Active on Beat in Belagavi`);
+          fillOpacity: 0.95
+        });
+
+        const empPopup = `
+          <div style="min-width:200px; font-family:sans-serif; color:#f8fafc; background:#0f172a; padding:6px; border-radius:8px;">
+            <div style="font-weight:bold; font-size:12px; color:#fbbf24;">👷 [${empCode}] ${name}</div>
+            <div style="font-size:11px; color:#cbd5e1; margin-top:2px;">📍 Beat: <strong>${ward}</strong></div>
+            <div style="font-size:10px; color:#34d399; margin-top:1px;">Active Duty: 🟢 ON-DUTY</div>
+            <div style="font-size:10px; color:#64748b; font-family:monospace;">GPS: ${lat}, ${lng}</div>
+            <div style="margin-top:6px; display:flex; gap:4px;">
+              <button onclick="openEmployeeDetailsModal(${w.worker_id || 1})" style="flex:1; background:#0284c7; color:#fff; font-size:10px; font-weight:bold; padding:4px 6px; border:none; border-radius:5px; cursor:pointer;">ℹ️ View Info</button>
+              <button onclick="showShortestRouteToActiveWorkingPlace()" style="flex:1; background:#f59e0b; color:#0f172a; font-size:10px; font-weight:bold; padding:4px 6px; border:none; border-radius:5px; cursor:pointer;">📍 Route</button>
+            </div>
+          </div>
+        `;
+        marker.bindPopup(empPopup, { maxWidth: 260 });
         markersLayer.addLayer(marker);
 
-        const circle5km = L.circle([w.lat, w.lng], {
+        const circle5km = L.circle([lat, lng], {
           radius: 5000,
           color: '#f59e0b',
           fillColor: '#fef3c7',
-          fillOpacity: 0.04,
+          fillOpacity: 0.03,
           dashArray: '6, 12'
         });
         markersLayer.addLayer(circle5km);
@@ -4053,6 +4355,329 @@
         }
       }
       lucide.createIcons();
+    }
+
+    const showAppToast = (msg, type, dur) => showToast(msg, type, dur);
+
+    // ============================================================
+    // EMPLOYEE IDENTITY CARD & FULL DETAILS MODAL (Requirement 4)
+    // ============================================================
+    let currentDetailEmployee = null;
+    let isEmpAadhaarVisible = false;
+
+    async function openEmployeeDetailsModal(workerId) {
+      let worker = null;
+      if (workerId) {
+        worker = workersList.find(w => w.worker_id === workerId);
+        if (!worker) {
+          try {
+            const res = await fetch(`/api/worker/profile/${workerId}`);
+            const data = await res.json();
+            if (data.success && data.worker) worker = data.worker;
+          } catch (e) {}
+        }
+      }
+      if (!worker) {
+        worker = activeWorkerProfile || (workersList && workersList[0]) || {
+          worker_id: 1,
+          name: 'Basavaraj Belagavi',
+          worker_name: 'Basavaraj Belagavi',
+          custom_emp_id: 'BAS098',
+          employee_id_code: 'BAS098',
+          emp_id: 'BCC-W2101',
+          worker_emp_id: 'BCC-W2101',
+          phone: '9845011001',
+          aadhaar: '123456781098',
+          ward: 'Tilakwadi Beat, Belagavi',
+          duty_status: 'on_duty',
+          cleanups_today: 16,
+          distance_walked_km: 4.2,
+          total_monthly_cleanups: 498,
+          target_milestone: 500,
+          progress_percentage: 99.6,
+          current_lat: 15.8340,
+          current_lng: 74.5020,
+          gender: 'Male'
+        };
+      }
+
+      currentDetailEmployee = worker;
+      isEmpAadhaarVisible = false;
+
+      const fullName = worker.name || worker.worker_name || 'Sanitation Employee';
+      const customId = worker.custom_emp_id || worker.employee_id_code || (worker.emp_id && worker.emp_id.replace('BCC-W', '')) || 'EMP101';
+      const sysEmpId = worker.emp_id || worker.worker_emp_id || 'BCC-W2101';
+      const ward = worker.ward || 'Tilakwadi Beat, Belagavi';
+      const phone = worker.phone || '9845011001';
+      const isOnDuty = worker.duty_status === 'on_duty';
+      const cleanups = worker.cleanups_today || 0;
+      const dist = worker.distance_walked_km || 0;
+      const monthly = worker.total_monthly_cleanups || 0;
+      const milestone = worker.target_milestone || 500;
+      const pct = worker.progress_percentage || Math.round((monthly / milestone) * 100);
+      const lat = worker.current_lat || 15.8340;
+      const lng = worker.current_lng || 74.5020;
+      const gender = worker.gender || 'Male';
+
+      const avatarImg = document.getElementById('emp-detail-avatar-img');
+      if (avatarImg) avatarImg.src = AVATARS[gender] || AVATARS.Male;
+
+      const elFullName = document.getElementById('emp-detail-full-name');
+      if (elFullName) elFullName.innerText = fullName;
+
+      const elIdCode = document.getElementById('emp-detail-id-code');
+      if (elIdCode) elIdCode.innerText = `ID: ${customId}`;
+
+      const elEmpCode = document.getElementById('emp-detail-emp-code');
+      if (elEmpCode) elEmpCode.innerText = sysEmpId;
+
+      const elDutyBadge = document.getElementById('emp-detail-duty-badge');
+      if (elDutyBadge) {
+        elDutyBadge.className = isOnDuty 
+          ? "px-2 py-0.5 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[11px] font-bold rounded-lg"
+          : "px-2 py-0.5 bg-slate-700 text-slate-300 text-[11px] font-medium rounded-lg";
+        elDutyBadge.innerText = isOnDuty ? "Active On-Duty" : "Off-Duty";
+      }
+
+      const elIdNum = document.getElementById('emp-detail-id-number');
+      if (elIdNum) elIdNum.innerText = customId;
+
+      const elWard = document.getElementById('emp-detail-ward');
+      if (elWard) elWard.innerText = ward;
+
+      const elPhone = document.getElementById('emp-detail-phone');
+      if (elPhone) elPhone.innerText = phone.startsWith('+91') ? phone : `+91 ${phone}`;
+
+      updateEmpAadhaarDisplay();
+
+      const elTodayStats = document.getElementById('emp-detail-today-stats');
+      if (elTodayStats) elTodayStats.innerText = `${cleanups} Spots Cleared • ${dist} km Walked`;
+
+      const elMonthly = document.getElementById('emp-detail-monthly');
+      if (elMonthly) elMonthly.innerText = `${monthly} / ${milestone} Cleanups (${pct}%)`;
+
+      const elCoords = document.getElementById('emp-detail-coords');
+      if (elCoords) elCoords.innerText = `${lat}, ${lng}`;
+
+      const modal = document.getElementById('modal-employee-profile-detail');
+      if (modal) modal.classList.remove('hidden');
+
+      lucide.createIcons();
+    }
+
+    function closeEmployeeProfileModal() {
+      const modal = document.getElementById('modal-employee-profile-detail');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function toggleEmpAadhaarVisibility() {
+      isEmpAadhaarVisible = !isEmpAadhaarVisible;
+      updateEmpAadhaarDisplay();
+    }
+
+    function updateEmpAadhaarDisplay() {
+      const elAadhaar = document.getElementById('emp-detail-aadhaar');
+      const btn = document.getElementById('btn-toggle-emp-aadhaar');
+      if (!elAadhaar || !currentDetailEmployee) return;
+
+      const raw = currentDetailEmployee.aadhaar ? String(currentDetailEmployee.aadhaar) : '123456781098';
+      if (isEmpAadhaarVisible) {
+        elAadhaar.innerText = raw.replace(/(\d{4})(?=\d)/g, '$1 ');
+        if (btn) btn.innerText = 'Hide';
+      } else {
+        const last4 = raw.slice(-4);
+        elAadhaar.innerText = `XXXX-XXXX-${last4}`;
+        if (btn) btn.innerText = 'Show';
+      }
+    }
+
+    function locateEmployeeOnMap() {
+      if (!currentDetailEmployee) return;
+      closeEmployeeProfileModal();
+      const lat = parseFloat(currentDetailEmployee.current_lat || 15.8340);
+      const lng = parseFloat(currentDetailEmployee.current_lng || 74.5020);
+      const empCode = currentDetailEmployee.custom_emp_id || currentDetailEmployee.employee_id_code || currentDetailEmployee.emp_id || 'EMP';
+      const name = currentDetailEmployee.name || currentDetailEmployee.worker_name || 'Sanitation Employee';
+
+      if (mapInstance) {
+        mapInstance.setView([lat, lng], 16);
+        L.popup()
+          .setLatLng([lat, lng])
+          .setContent(`
+            <div style="font-family:sans-serif; min-width:180px; padding:4px;">
+              <strong style="color:#f59e0b;">👷 [${empCode}] ${name}</strong><br>
+              <span style="font-size:11px; color:#475569;">${currentDetailEmployee.ward || 'Belagavi Beat'}</span><br>
+              <span style="font-size:10px; color:#16a34a; font-weight:bold;">🟢 Active On-Duty</span>
+            </div>
+          `)
+          .openOn(mapInstance);
+      }
+
+      const mapEl = document.getElementById('map');
+      if (mapEl) mapEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // ============================================================
+    // OFFICER EMPLOYEE ID GENERATION PREVIEW (Requirement 1 & 3)
+    // Formula: Starting 3 letters of name + Last 3 digits of Aadhaar
+    // ============================================================
+    function updateStaffIdPreview() {
+      const name = (document.getElementById('staff-name')?.value || '').trim();
+      const aadhaar = (document.getElementById('staff-aadhaar')?.value || '').trim();
+      const namePart = (name.replace(/[^A-Za-z]/g, '').slice(0, 3) || 'EMP').toUpperCase();
+      const digits = aadhaar.replace(/\D/g, '');
+      const aadhPart = digits.length >= 3 ? digits.slice(-3) : (digits || '101');
+      const preview = `${namePart}${aadhPart}`;
+      const el = document.getElementById('staff-id-preview-code');
+      if (el) el.innerText = preview;
+    }
+
+    // ============================================================
+    // LIVE CAPTURED SPOT PLOTTING ON MAP (Requirement 5)
+    // ============================================================
+    function showLiveCapturedSpotOnMap(lat, lng, address, imgData) {
+      if (!mapInstance) return;
+      if (liveSpotMarker && markersLayer) {
+        try { markersLayer.removeLayer(liveSpotMarker); } catch(e) {}
+      }
+      liveSpotMarker = L.marker([lat, lng], {
+        icon: L.divIcon({
+          className: 'custom-live-marker',
+          html: `<div style="width:26px; height:26px; border-radius:50%; background:#ef4444; border:3px solid #fff; box-shadow:0 0 14px #ef4444; display:flex; align-items:center; justify-content:center; color:#fff; font-size:12px; font-weight:bold;">📸</div>`,
+          iconSize: [26, 26],
+          iconAnchor: [13, 13]
+        })
+      }).bindPopup(`
+        <div style="min-width:210px; font-family:sans-serif; color:#0f172a; padding:4px;">
+          <div style="font-weight:bold; color:#dc2626; font-size:12px;">📸 Live Captured Incident Spot</div>
+          ${imgData ? `<div style="width:100%; height:80px; overflow:hidden; border-radius:6px; margin:4px 0;"><img src="${imgData}" style="width:100%; height:100%; object-fit:cover;" alt="Spot"></div>` : ''}
+          <div style="font-size:11px; font-weight:600;">📍 ${address || 'Belagavi Live Photo'}</div>
+          <div style="font-size:10px; color:#64748b; font-family:monospace;">GPS: ${lat}, ${lng}</div>
+          <button onclick="showShortestRouteToActiveWorkingPlace()" style="width:100%; margin-top:6px; background:#f59e0b; color:#0f172a; font-size:10px; font-weight:bold; padding:4px 6px; border:none; border-radius:5px; cursor:pointer;">📍 Calculate Shortest Route</button>
+        </div>
+      `);
+      if (markersLayer) markersLayer.addLayer(liveSpotMarker);
+      liveSpotMarker.openPopup();
+      mapInstance.setView([lat, lng], 15);
+    }
+
+    // ============================================================
+    // SHORTEST DISTANCE & ROUTE CALCULATION (Requirement 6)
+    // ============================================================
+    function calculateHaversineDistanceMeters(lat1, lon1, lat2, lon2) {
+      const R = 6371e3; // Earth radius in metres
+      const phi1 = lat1 * Math.PI / 180;
+      const phi2 = lat2 * Math.PI / 180;
+      const deltaPhi = (lat2 - lat1) * Math.PI / 180;
+      const deltaLambda = (lon2 - lon1) * Math.PI / 180;
+
+      const a = Math.sin(deltaPhi / 2) * Math.sin(deltaPhi / 2) +
+                Math.cos(phi1) * Math.cos(phi2) *
+                Math.sin(deltaLambda / 2) * Math.sin(deltaLambda / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+      return Math.round(R * c);
+    }
+
+    function calculateAndDrawRoute(wLat, wLng, wName, sLat, sLng, sAddr) {
+      const distMeters = calculateHaversineDistanceMeters(wLat, wLng, sLat, sLng);
+      const distKm = (distMeters / 1000).toFixed(2);
+      const walkMinutes = Math.max(1, Math.round((distKm / 4.5) * 60)); // ~4.5 km/h walk speed
+      const vehicleMinutes = Math.max(1, Math.round((distKm / 25) * 60)); // ~25 km/h vehicle speed
+
+      if (mapInstance) {
+        if (currentRoutePolyline) {
+          try { mapInstance.removeLayer(currentRoutePolyline); } catch(e) {}
+        }
+        const latlngs = [
+          [wLat, wLng],
+          [sLat, sLng]
+        ];
+        currentRoutePolyline = L.polyline(latlngs, {
+          color: '#f59e0b',
+          weight: 5,
+          opacity: 0.9,
+          dashArray: '10, 10'
+        }).addTo(mapInstance);
+
+        currentRoutePolyline.bindTooltip(
+          `📍 <strong>Shortest Distance:</strong> ${distKm} km (${distMeters} m)<br>🚶 Walk ETA: ~${walkMinutes} min | 🚚 Vehicle ETA: ~${vehicleMinutes} min`,
+          { permanent: true, direction: 'center' }
+        ).openTooltip();
+
+        mapInstance.fitBounds(currentRoutePolyline.getBounds(), { padding: [40, 40] });
+      }
+
+      return { distMeters, distKm, walkMinutes, vehicleMinutes };
+    }
+
+    function showShortestRouteToActiveWorkingPlace() {
+      const targetReport = allReports.find(r => r.id === activeAcceptedTaskId) || allReports.find(r => r.status !== 'verified') || allReports[0];
+      if (!targetReport) {
+        showToast("No active or pending working place selected.", "warning");
+        return;
+      }
+      showShortestRouteToWorkingPlaceForReport(targetReport.id);
+    }
+
+    function showShortestRouteToWorkingPlaceForReport(reportId) {
+      const report = allReports.find(r => r.id === reportId);
+      if (!report) {
+        showToast(`Report #${reportId} not found.`, "error");
+        return;
+      }
+
+      const worker = activeWorkerProfile || (workersList && workersList.find(w => w.worker_id === activeWorkerId)) || {
+        name: 'Basavaraj Belagavi',
+        custom_emp_id: 'BAS098',
+        emp_id: 'BCC-W2101',
+        current_lat: 15.8340,
+        current_lng: 74.5020,
+        ward: 'Tilakwadi Beat'
+      };
+
+      const wLat = parseFloat(worker.current_lat || 15.8340);
+      const wLng = parseFloat(worker.current_lng || 74.5020);
+      const sLat = parseFloat(report.latitude);
+      const sLng = parseFloat(report.longitude);
+
+      const routeInfo = calculateAndDrawRoute(wLat, wLng, worker.name, sLat, sLng, report.address);
+
+      const empCode = worker.custom_emp_id || worker.employee_id_code || worker.emp_id || 'EMP';
+      const msg = `📍 <strong>Shortest Route to Working Place:</strong><br>` +
+                  `• Employee: <strong>${worker.name} (${empCode})</strong><br>` +
+                  `• From: ${worker.ward || 'Employee Beat'}<br>` +
+                  `• To Spot: <strong>${report.address || 'Working Spot'}</strong><br>` +
+                  `• 📏 <strong>Shortest Distance: ${routeInfo.distKm} km (${routeInfo.distMeters} m)</strong><br>` +
+                  `• 🚶 Walk Time: <strong>~${routeInfo.walkMinutes} mins</strong> | 🚚 Vehicle Time: <strong>~${routeInfo.vehicleMinutes} mins</strong>`;
+
+      showToast(msg, "info", 6500);
+
+      const mapEl = document.getElementById('map');
+      if (mapEl) {
+        mapEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    function zoomToReportOnMap(reportId) {
+      const report = allReports.find(r => r.id === reportId);
+      if (!report) return;
+      if (!mapInstance) return;
+
+      mapInstance.setView([report.latitude, report.longitude], 16);
+      if (markersLayer) {
+        markersLayer.eachLayer(layer => {
+          if (layer.getLatLng && 
+              Math.abs(layer.getLatLng().lat - report.latitude) < 0.0001 &&
+              Math.abs(layer.getLatLng().lng - report.longitude) < 0.0001) {
+            layer.openPopup();
+          }
+        });
+      }
+      const mapEl = document.getElementById('map');
+      if (mapEl) {
+        mapEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     }
   </script>
 
