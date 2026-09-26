@@ -104,6 +104,7 @@
     #modal-auth-onboarding > div,
     #modal-employee-profile-detail > div,
     #modal-citizen-profile-detail > div,
+    #modal-edit-citizen-profile > div,
     #modal-ai-cleanliness-comparison > div,
     #staff-login-modal > div,
     #mobile-qr-modal > div,
@@ -361,6 +362,7 @@
     body.theme-light #modal-auth-onboarding > div,
     body.theme-light #modal-employee-profile-detail > div,
     body.theme-light #modal-citizen-profile-detail > div,
+    body.theme-light #modal-edit-citizen-profile > div,
     body.theme-light #modal-ai-cleanliness-comparison > div,
     body.theme-light #staff-login-modal > div,
     body.theme-light #mobile-qr-modal > div,
@@ -824,28 +826,53 @@
           <input type="hidden" id="onboard-gender" value="Male">
         </div>
 
-        <!-- Name Inputs -->
-        <div class="grid grid-cols-2 gap-2.5">
-          <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1">First Name</label>
-            <input type="text" id="onboard-first-name" required placeholder="Praveen" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
+        <!-- Name Inputs (With Lock Notice if Existing User) -->
+        <div class="space-y-1">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-slate-300">Resident Full Name</span>
+            <span id="onboard-name-lock-badge" class="hidden text-[10px] text-amber-400 font-bold flex items-center space-x-1">
+              <i data-lucide="lock" class="w-3 h-3"></i>
+              <span>Name Locked (Cannot Change)</span>
+            </span>
           </div>
-          <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1">Last Name</label>
-            <input type="text" id="onboard-last-name" required placeholder="Kulkarni" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
+          <div class="grid grid-cols-2 gap-2.5">
+            <div>
+              <label class="block text-[10px] text-slate-400 mb-0.5">First Name</label>
+              <input type="text" id="onboard-first-name" required placeholder="Praveen" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
+            </div>
+            <div>
+              <label class="block text-[10px] text-slate-400 mb-0.5">Last Name</label>
+              <input type="text" id="onboard-last-name" required placeholder="Kulkarni" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
+            </div>
           </div>
         </div>
 
-        <!-- Mobile & Aadhaar -->
+        <!-- Numbers Section: Mobile, Alternate Number, House No, Aadhaar -->
         <div class="grid grid-cols-2 gap-2.5">
           <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1">Mobile Number</label>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Primary Mobile Number</label>
             <input type="text" id="onboard-phone" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white font-mono">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">+ Alternate Phone</label>
+            <input type="text" id="onboard-alt-phone" placeholder="e.g. 9845019999" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white font-mono">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2.5">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">+ House / Door Number</label>
+            <input type="text" id="onboard-house-no" placeholder="e.g. House #24/B" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
           </div>
           <div>
             <label class="block text-xs font-semibold text-slate-300 mb-1">Aadhaar (12 Digits)</label>
             <input type="text" id="onboard-aadhaar" value="567890123456" maxlength="12" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white font-mono">
           </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">+ Landmark / Additional Info</label>
+          <input type="text" id="onboard-landmark" placeholder="e.g. Near Lingaraj College" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
         </div>
 
         <!-- Belagavi Home Center Location Section -->
@@ -929,15 +956,18 @@
         </div>
       </div>
 
-      <!-- Detailed Fields List (Requirement 6: Mobile, Location, Name, Aadhaar Number, Sex) -->
-      <div class="space-y-3 bg-slate-950/60 border border-slate-800/80 rounded-2xl p-4">
-        <!-- 1. Full Name -->
+      <!-- Detailed Fields List (Requirement: Only number add, not name change, working with add information) -->
+      <div class="space-y-2.5 bg-slate-950/60 border border-slate-800/80 rounded-2xl p-4">
+        <!-- 1. Full Name (Locked) -->
         <div class="flex items-center justify-between pb-2 border-b border-slate-800/80 text-xs">
           <span class="text-slate-400 font-medium flex items-center space-x-1.5">
             <i data-lucide="user" class="w-3.5 h-3.5 text-slate-400"></i>
             <span>Full Name:</span>
           </span>
-          <span id="detail-field-name" class="font-bold text-white">Praveen Kulkarni</span>
+          <div class="text-right">
+            <span id="detail-field-name" class="font-bold text-white">Praveen Kulkarni</span>
+            <span class="block text-[10px] text-amber-400 font-semibold">🔒 Name Locked (Verified)</span>
+          </div>
         </div>
 
         <!-- 2. Sex / Gender -->
@@ -949,16 +979,52 @@
           <span id="detail-field-gender" class="font-bold text-slate-200">Male</span>
         </div>
 
-        <!-- 3. Mobile Number -->
+        <!-- 3. Primary Mobile Number -->
         <div class="flex items-center justify-between pb-2 border-b border-slate-800/80 text-xs">
           <span class="text-slate-400 font-medium flex items-center space-x-1.5">
             <i data-lucide="phone" class="w-3.5 h-3.5 text-emerald-400"></i>
-            <span>Mobile Number:</span>
+            <span>Primary Mobile:</span>
           </span>
           <span id="detail-field-phone" class="font-mono font-bold text-emerald-400">+91 98800 11111</span>
         </div>
 
-        <!-- 4. Person Location -->
+        <!-- 4. Alternate / WhatsApp Number (Add Number) -->
+        <div class="flex items-center justify-between pb-2 border-b border-slate-800/80 text-xs">
+          <span class="text-slate-400 font-medium flex items-center space-x-1.5">
+            <i data-lucide="phone-forwarded" class="w-3.5 h-3.5 text-sky-400"></i>
+            <span>Alternate Phone:</span>
+          </span>
+          <span id="detail-field-alt-phone" class="font-mono font-bold text-sky-300">+91 98450 19999</span>
+        </div>
+
+        <!-- 5. House / Door Number (Add Number) -->
+        <div class="flex items-center justify-between pb-2 border-b border-slate-800/80 text-xs">
+          <span class="text-slate-400 font-medium flex items-center space-x-1.5">
+            <i data-lucide="home" class="w-3.5 h-3.5 text-amber-400"></i>
+            <span>House / Door Number:</span>
+          </span>
+          <span id="detail-field-house-no" class="font-bold text-amber-300">House #24/B</span>
+        </div>
+
+        <!-- 6. Landmark & Additional Info -->
+        <div class="flex items-center justify-between pb-2 border-b border-slate-800/80 text-xs">
+          <span class="text-slate-400 font-medium flex items-center space-x-1.5">
+            <i data-lucide="compass" class="w-3.5 h-3.5 text-indigo-400"></i>
+            <span>Landmark / Street:</span>
+          </span>
+          <span id="detail-field-landmark" class="font-medium text-slate-200 text-right">Near Lingaraj College</span>
+        </div>
+
+        <!-- 7. Belagavi Ward / Beat -->
+        <div class="flex items-center justify-between pb-2 border-b border-slate-800/80 text-xs">
+          <span class="text-slate-400 font-medium flex items-center space-x-1.5">
+            <i data-lucide="map" class="w-3.5 h-3.5 text-emerald-400"></i>
+            <span>Belagavi Ward:</span>
+          </span>
+          <span id="detail-field-ward" class="font-bold text-emerald-300 text-right">Ward 21 - Tilakwadi</span>
+        </div>
+
+        <!-- 8. Complete Address -->
         <div class="flex items-start justify-between pb-2 border-b border-slate-800/80 text-xs">
           <span class="text-slate-400 font-medium flex items-center space-x-1.5 shrink-0">
             <i data-lucide="map-pin" class="w-3.5 h-3.5 text-sky-400"></i>
@@ -967,7 +1033,7 @@
           <span id="detail-field-location" class="font-bold text-white text-right max-w-[200px]">Congress Road, Tilakwadi, Belagavi</span>
         </div>
 
-        <!-- 5. Aadhaar Number (with Show/Hide Toggle) -->
+        <!-- 9. Aadhaar Number (with Show/Hide Toggle) -->
         <div class="flex items-center justify-between text-xs">
           <span class="text-slate-400 font-medium flex items-center space-x-1.5">
             <i data-lucide="credit-card" class="w-3.5 h-3.5 text-amber-400"></i>
@@ -984,11 +1050,165 @@
 
       <!-- Action Buttons -->
       <div class="pt-1 flex items-center space-x-2">
-        <button type="button" onclick="openOnboardingModal(); closeCitizenProfileModal();" class="flex-1 py-2.5 px-3 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs rounded-xl border border-slate-700 transition text-center">
-          Edit Profile
+        <button type="button" onclick="openEditCitizenProfileModal()" class="flex-1 py-2.5 px-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow transition flex items-center justify-center space-x-1.5 text-center">
+          <i data-lucide="edit-3" class="w-4 h-4"></i>
+          <span>Add Numbers & Info</span>
         </button>
-        <button type="button" onclick="closeCitizenProfileModal()" class="flex-1 py-2.5 px-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow transition text-center">
+        <button type="button" onclick="closeCitizenProfileModal()" class="flex-1 py-2.5 px-3 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs rounded-xl border border-slate-700 transition text-center">
           Done
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- EDIT CITIZEN PROFILE MODAL (ONLY NUMBERS & ADDITIONAL INFO)     -->
+  <!-- User Requirement: Only number add/change, not name change       -->
+  <!-- ============================================================== -->
+  <div id="modal-edit-citizen-profile" class="hidden fixed inset-0 z-[160] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700/80 rounded-3xl max-w-lg w-full shadow-2xl p-6 sm:p-7 space-y-4 relative max-h-[90vh] overflow-y-auto">
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div class="flex items-center space-x-2.5">
+          <div class="p-2 bg-emerald-500/20 text-emerald-400 rounded-xl">
+            <i data-lucide="edit-3" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-white">Update Citizen Information</h3>
+            <p class="text-xs text-slate-400">Add contact numbers & residential details</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeEditCitizenProfileModal()" class="text-slate-400 hover:text-white text-sm p-1 rounded-lg hover:bg-slate-800">✕</button>
+      </div>
+
+      <!-- Security / Name Lock Notice -->
+      <div class="p-3 bg-amber-500/10 border border-amber-500/30 rounded-2xl flex items-start space-x-2.5">
+        <i data-lucide="lock" class="w-4 h-4 text-amber-400 shrink-0 mt-0.5"></i>
+        <div class="text-[11px] text-amber-300">
+          <strong class="font-bold block text-amber-200">Name is Protected & Cannot Be Changed:</strong>
+          Resident identity name is locked to verified civic records. You can add or update your phone numbers, house number, and residence information below.
+        </div>
+      </div>
+
+      <!-- 1. Name Field (Strictly Locked / Read-Only) -->
+      <div>
+        <label class="block text-xs font-semibold text-slate-300 mb-1 flex items-center justify-between">
+          <span>Registered Citizen Name (Locked)</span>
+          <span class="text-[10px] text-amber-400 font-bold flex items-center space-x-1">
+            <i data-lucide="shield" class="w-3 h-3"></i>
+            <span>Government Verified • Read-Only</span>
+          </span>
+        </label>
+        <div class="relative">
+          <input type="text" id="edit-citizen-name" readonly disabled class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-300 font-bold cursor-not-allowed opacity-90 pl-9">
+          <i data-lucide="lock" class="w-4 h-4 text-amber-400 absolute left-3 top-2.5"></i>
+        </div>
+      </div>
+
+      <!-- 2. Numbers Section (Requirement: Only of number add) -->
+      <div class="bg-slate-950/60 border border-slate-800/80 rounded-2xl p-3.5 space-y-3">
+        <span class="text-xs font-bold text-emerald-400 flex items-center space-x-1.5">
+          <i data-lucide="phone-call" class="w-4 h-4"></i>
+          <span>Add & Update Contact Numbers</span>
+        </span>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Primary Mobile Number</label>
+            <input type="tel" id="edit-citizen-phone" maxlength="10" placeholder="10-digit mobile" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white font-mono">
+          </div>
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-300 mb-1 flex items-center justify-between">
+              <span>Add Alternate Phone</span>
+              <span class="text-[10px] text-sky-400 font-medium">+ Add Number</span>
+            </label>
+            <input type="tel" id="edit-citizen-alt-phone" maxlength="10" placeholder="Family / WhatsApp No." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white font-mono">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-300 mb-1 flex items-center justify-between">
+              <span>House / Flat / Door No.</span>
+              <span class="text-[10px] text-amber-400 font-medium">+ Add House No</span>
+            </label>
+            <input type="text" id="edit-citizen-house-no" placeholder="e.g. House #24/B, Flat 301" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
+          </div>
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Aadhaar (12 Digits)</label>
+            <input type="text" id="edit-citizen-aadhaar" maxlength="12" placeholder="12-digit Aadhaar" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white font-mono">
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Additional Residence Information (Requirement: working with add informaction) -->
+      <div class="bg-slate-950/60 border border-slate-800/80 rounded-2xl p-3.5 space-y-3">
+        <span class="text-xs font-bold text-sky-400 flex items-center space-x-1.5">
+          <i data-lucide="map-pin" class="w-4 h-4"></i>
+          <span>Add & Update Residence Information</span>
+        </span>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Landmark / Street Details</label>
+            <input type="text" id="edit-citizen-landmark" placeholder="e.g. Near Lingaraj College" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
+          </div>
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Belagavi Ward / Locality</label>
+            <select id="edit-citizen-ward" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white font-medium">
+              <option value="Ward 21 - Tilakwadi, Belagavi">Ward 21 - Tilakwadi, Belagavi</option>
+              <option value="Ward 34 - Shahapur, Belagavi">Ward 34 - Shahapur, Belagavi</option>
+              <option value="Ward 45 - Camp / Bogarves, Belagavi">Ward 45 - Camp / Bogarves, Belagavi</option>
+              <option value="Ward 29 - Hindwadi, Belagavi">Ward 29 - Hindwadi, Belagavi</option>
+              <option value="Ward 12 - Vadgaon, Belagavi">Ward 12 - Vadgaon, Belagavi</option>
+              <option value="Ward 10 - Machhe, Belagavi">Ward 10 - Machhe, Belagavi</option>
+              <option value="Ward 18 - Khasbag, Belagavi">Ward 18 - Khasbag, Belagavi</option>
+              <option value="Ward 08 - Khade Bazar, Belagavi">Ward 08 - Khade Bazar, Belagavi</option>
+              <option value="Ward 15 - Angol, Belagavi">Ward 15 - Angol, Belagavi</option>
+              <option value="Ward 38 - Shivaji Nagar, Belagavi">Ward 38 - Shivaji Nagar, Belagavi</option>
+              <option value="Ward 42 - Fort Area, Belagavi">Ward 42 - Fort Area, Belagavi</option>
+              <option value="Ward 50 - Auto Nagar, Belagavi">Ward 50 - Auto Nagar, Belagavi</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-semibold text-slate-300 mb-1">Full Home Address</label>
+          <input type="text" id="edit-citizen-address" placeholder="e.g. Congress Road, Tilakwadi, Belagavi" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
+        </div>
+
+        <!-- GPS Coordinates & Presets -->
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="text-[11px] font-semibold text-slate-300">Belagavi Home Center GPS</label>
+            <button type="button" onclick="detectEditHomeCenterGps()" class="text-[10px] text-sky-400 hover:underline flex items-center space-x-1">
+              <i data-lucide="crosshair" class="w-3 h-3"></i>
+              <span>Use Live GPS</span>
+            </button>
+          </div>
+          <div class="grid grid-cols-2 gap-2 mb-2">
+            <input type="text" id="edit-citizen-lat" value="15.8345" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-slate-300 font-mono" readonly>
+            <input type="text" id="edit-citizen-lng" value="74.5015" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-slate-300 font-mono" readonly>
+          </div>
+          <!-- Presets -->
+          <div class="flex flex-wrap gap-1 text-[10px]">
+            <button type="button" onclick="setEditHomePreset(15.8345, 74.5015, 'Ward 21 - Tilakwadi, Belagavi', 'Congress Road, Tilakwadi, Belagavi')" class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 rounded text-slate-300">Tilakwadi</button>
+            <button type="button" onclick="setEditHomePreset(15.8380, 74.5180, 'Ward 34 - Shahapur, Belagavi', 'Shahapur Bazaar, Belagavi')" class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 rounded text-slate-300">Shahapur</button>
+            <button type="button" onclick="setEditHomePreset(15.8540, 74.5080, 'Ward 45 - Camp / Bogarves, Belagavi', 'Camp, Belagavi')" class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 rounded text-slate-300">Camp</button>
+            <button type="button" onclick="setEditHomePreset(15.8285, 74.4690, 'Ward 10 - Machhe, Belagavi', 'Machhe Industrial Area, Belagavi')" class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 rounded text-slate-300">Machhe</button>
+            <button type="button" onclick="setEditHomePreset(15.8420, 74.4980, 'Ward 29 - Hindwadi, Belagavi', 'Hindwadi Main Rd, Belagavi')" class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 rounded text-slate-300">Hindwadi</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="pt-2 flex items-center space-x-2">
+        <button type="button" onclick="closeEditCitizenProfileModal(); openCitizenProfileModal();" class="flex-1 py-2.5 px-3 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs rounded-xl border border-slate-700 transition text-center">
+          Cancel
+        </button>
+        <button type="button" onclick="saveCitizenNumbersAndInfo()" id="btn-save-citizen-info" class="flex-2 py-2.5 px-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow-lg transition flex items-center justify-center space-x-1.5">
+          <i data-lucide="check-circle" class="w-4 h-4"></i>
+          <span>Save Numbers & Information</span>
         </button>
       </div>
     </div>
@@ -2872,16 +3092,20 @@
       }
     }
 
-    // Citizen Personal Identity Modal (Requirement 6)
+    // Citizen Personal Identity Modal (Requirement 6 & Profile Updates)
     function openCitizenProfileModal() {
       const user = currentUser || {
         name: 'Praveen Kulkarni',
         first_name: 'Praveen',
         last_name: 'Kulkarni',
         phone: '9880011111',
+        alt_phone: '9845019999',
+        house_no: 'House #24/B',
+        landmark: 'Near Lingaraj College',
+        ward: 'Ward 21 - Tilakwadi, Belagavi',
+        home_address: 'Congress Road, Tilakwadi, Belagavi',
         aadhaar: '567890123456',
-        gender: 'Male',
-        home_address: 'Congress Road, Tilakwadi, Belagavi'
+        gender: 'Male'
       };
 
       const fullName = user.name || `${user.first_name || ''} ${user.last_name || ''}`.trim() || 'Praveen Kulkarni';
@@ -2896,6 +3120,10 @@
       const dGenderText = document.getElementById('detail-modal-gender-text');
       const dGenderIcon = document.getElementById('detail-modal-gender-icon');
       const dPhone = document.getElementById('detail-field-phone');
+      const dAltPhone = document.getElementById('detail-field-alt-phone');
+      const dHouseNo = document.getElementById('detail-field-house-no');
+      const dLandmark = document.getElementById('detail-field-landmark');
+      const dWard = document.getElementById('detail-field-ward');
       const dLoc = document.getElementById('detail-field-location');
 
       if (dFullName) dFullName.innerText = fullName;
@@ -2904,6 +3132,12 @@
       if (dGenderText) dGenderText.innerText = gender;
       if (dGenderIcon) dGenderIcon.innerText = gender === 'Female' ? '👩' : '👨';
       if (dPhone) dPhone.innerText = phone.startsWith('+91') ? phone : `+91 ${phone}`;
+
+      const altVal = user.alt_phone || '';
+      if (dAltPhone) dAltPhone.innerText = altVal ? (altVal.startsWith('+91') ? altVal : `+91 ${altVal}`) : 'None Added';
+      if (dHouseNo) dHouseNo.innerText = user.house_no || 'House #24/B';
+      if (dLandmark) dLandmark.innerText = user.landmark || 'Near Lingaraj College';
+      if (dWard) dWard.innerText = user.ward || 'Ward 21 - Tilakwadi, Belagavi';
       if (dLoc) dLoc.innerText = location;
 
       const aadhaarDisplay = document.getElementById('detail-field-aadhaar');
@@ -2914,6 +3148,7 @@
 
       updateAvatarImages(gender);
       document.getElementById('modal-citizen-profile-detail')?.classList.remove('hidden');
+      lucide.createIcons();
     }
 
     function toggleAadhaarVisibility() {
@@ -2935,6 +3170,149 @@
 
     function closeCitizenProfileModal() {
       document.getElementById('modal-citizen-profile-detail')?.classList.add('hidden');
+    }
+
+    // ============================================================
+    // EDIT CITIZEN PROFILE: ONLY NUMBER ADD, NOT NAME CHANGE, WORKING WITH ADD INFORMATION
+    // ============================================================
+    function openEditCitizenProfileModal() {
+      closeCitizenProfileModal();
+      const user = currentUser || {
+        name: 'Praveen Kulkarni',
+        first_name: 'Praveen',
+        last_name: 'Kulkarni',
+        phone: '9880011111',
+        alt_phone: '9845019999',
+        house_no: 'House #24/B',
+        landmark: 'Near Lingaraj College',
+        ward: 'Ward 21 - Tilakwadi, Belagavi',
+        home_address: 'Congress Road, Tilakwadi, Belagavi',
+        aadhaar: '567890123456',
+        home_lat: 15.8345,
+        home_lng: 74.5015
+      };
+
+      const fullName = user.name || `${user.first_name || ''} ${user.last_name || ''}`.trim() || 'Praveen Kulkarni';
+      const elName = document.getElementById('edit-citizen-name');
+      const elPhone = document.getElementById('edit-citizen-phone');
+      const elAltPhone = document.getElementById('edit-citizen-alt-phone');
+      const elHouseNo = document.getElementById('edit-citizen-house-no');
+      const elLandmark = document.getElementById('edit-citizen-landmark');
+      const elWard = document.getElementById('edit-citizen-ward');
+      const elAddr = document.getElementById('edit-citizen-address');
+      const elAadhaar = document.getElementById('edit-citizen-aadhaar');
+      const elLat = document.getElementById('edit-citizen-lat');
+      const elLng = document.getElementById('edit-citizen-lng');
+
+      if (elName) elName.value = fullName; // STRICTLY READ-ONLY
+      if (elPhone) elPhone.value = (user.phone || '').replace('+91', '').trim();
+      if (elAltPhone) elAltPhone.value = (user.alt_phone || '').replace('+91', '').trim();
+      if (elHouseNo) elHouseNo.value = user.house_no || '';
+      if (elLandmark) elLandmark.value = user.landmark || '';
+      if (elWard) elWard.value = user.ward || 'Ward 21 - Tilakwadi, Belagavi';
+      if (elAddr) elAddr.value = user.home_address || 'Congress Road, Tilakwadi, Belagavi';
+      if (elAadhaar) elAadhaar.value = user.aadhaar || '567890123456';
+      if (elLat) elLat.value = (user.home_lat || homeCenter.lat || 15.8345);
+      if (elLng) elLng.value = (user.home_lng || homeCenter.lng || 74.5015);
+
+      document.getElementById('modal-edit-citizen-profile')?.classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeEditCitizenProfileModal() {
+      document.getElementById('modal-edit-citizen-profile')?.classList.add('hidden');
+    }
+
+    function setEditHomePreset(lat, lng, ward, address) {
+      const elLat = document.getElementById('edit-citizen-lat');
+      const elLng = document.getElementById('edit-citizen-lng');
+      const elWard = document.getElementById('edit-citizen-ward');
+      const elAddr = document.getElementById('edit-citizen-address');
+      if (elLat) elLat.value = lat;
+      if (elLng) elLng.value = lng;
+      if (elWard) elWard.value = ward;
+      if (elAddr) elAddr.value = address;
+    }
+
+    function detectEditHomeCenterGps() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(pos => {
+          const lat = pos.coords.latitude.toFixed(4);
+          const lng = pos.coords.longitude.toFixed(4);
+          const elLat = document.getElementById('edit-citizen-lat');
+          const elLng = document.getElementById('edit-citizen-lng');
+          const elAddr = document.getElementById('edit-citizen-address');
+          if (elLat) elLat.value = lat;
+          if (elLng) elLng.value = lng;
+          if (elAddr) elAddr.value = "Live GPS Verified Location, Belagavi";
+          showAppToast("Live GPS coordinates detected.", "info");
+        }, () => {
+          showAppToast("Unable to fetch live GPS. Keeping preset location.", "warning");
+        });
+      }
+    }
+
+    async function saveCitizenNumbersAndInfo() {
+      const phone = (document.getElementById('edit-citizen-phone')?.value || '').trim();
+      const altPhone = (document.getElementById('edit-citizen-alt-phone')?.value || '').trim();
+      const houseNo = (document.getElementById('edit-citizen-house-no')?.value || '').trim();
+      const landmark = (document.getElementById('edit-citizen-landmark')?.value || '').trim();
+      const ward = (document.getElementById('edit-citizen-ward')?.value || 'Ward 21 - Tilakwadi, Belagavi').trim();
+      const address = (document.getElementById('edit-citizen-address')?.value || 'Congress Road, Tilakwadi, Belagavi').trim();
+      const aadhaar = (document.getElementById('edit-citizen-aadhaar')?.value || '').trim();
+      const lat = parseFloat(document.getElementById('edit-citizen-lat')?.value || 15.8345);
+      const lng = parseFloat(document.getElementById('edit-citizen-lng')?.value || 74.5015);
+
+      if (!phone) {
+        showAppToast("Please enter a valid Primary Mobile Number.", "warning");
+        return;
+      }
+
+      const btn = document.getElementById('btn-save-citizen-info');
+      if (btn) {
+        btn.disabled = true;
+        btn.innerText = "Saving Information...";
+      }
+
+      try {
+        const payload = {
+          user_id: currentUser ? currentUser.id : 5,
+          phone: phone,
+          alt_phone: altPhone,
+          house_no: houseNo,
+          landmark: landmark,
+          ward: ward,
+          home_address: address,
+          aadhaar: aadhaar || (currentUser ? currentUser.aadhaar : '567890123456'),
+          home_lat: lat,
+          home_lng: lng,
+          gender: currentUser ? currentUser.gender : 'Male'
+        };
+
+        const res = await fetch('/api/user/update-profile', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.success && data.user) {
+          applyUserSession(data.user);
+          closeEditCitizenProfileModal();
+          openCitizenProfileModal();
+          showAppToast("✅ Resident numbers & information saved! Verified name remains locked.", "success");
+        } else {
+          showAppToast(data.message || "Failed to update profile.", "error");
+        }
+      } catch (e) {
+        console.error(e);
+        showAppToast("Network error saving profile information.", "error");
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4"></i><span>Save Numbers & Information</span>`;
+          lucide.createIcons();
+        }
+      }
     }
 
     // Spot Locality Resolver & Preset (Requirement 1, 2, 3: Machhe / Live GPS)
@@ -3147,6 +3525,28 @@
     // ============================================================
     function openOnboardingModal() {
       document.getElementById('modal-auth-onboarding').classList.remove('hidden');
+      if (currentUser) {
+        const lockBadge = document.getElementById('onboard-name-lock-badge');
+        const fInput = document.getElementById('onboard-first-name');
+        const lInput = document.getElementById('onboard-last-name');
+        if (lockBadge) lockBadge.classList.remove('hidden');
+        if (fInput) {
+          fInput.value = currentUser.first_name || (currentUser.name ? currentUser.name.split(' ')[0] : 'Praveen');
+          fInput.readOnly = true;
+          fInput.classList.add('cursor-not-allowed', 'opacity-85');
+        }
+        if (lInput) {
+          lInput.value = currentUser.last_name || (currentUser.name && currentUser.name.split(' ').length > 1 ? currentUser.name.split(' ').slice(1).join(' ') : 'Kulkarni');
+          lInput.readOnly = true;
+          lInput.classList.add('cursor-not-allowed', 'opacity-85');
+        }
+        const altInput = document.getElementById('onboard-alt-phone');
+        if (altInput && currentUser.alt_phone) altInput.value = currentUser.alt_phone;
+        const houseInput = document.getElementById('onboard-house-no');
+        if (houseInput && currentUser.house_no) houseInput.value = currentUser.house_no;
+        const landmarkInput = document.getElementById('onboard-landmark');
+        if (landmarkInput && currentUser.landmark) landmarkInput.value = currentUser.landmark;
+      }
       switchAuthStep(1);
     }
 
@@ -3294,6 +3694,9 @@
       const firstName = document.getElementById('onboard-first-name').value.trim();
       const lastName = document.getElementById('onboard-last-name').value.trim();
       const phone = document.getElementById('onboard-phone').value.trim();
+      const altPhone = document.getElementById('onboard-alt-phone')?.value.trim() || '';
+      const houseNo = document.getElementById('onboard-house-no')?.value.trim() || '';
+      const landmark = document.getElementById('onboard-landmark')?.value.trim() || '';
       const aadhaar = document.getElementById('onboard-aadhaar').value.trim();
       const lat = parseFloat(document.getElementById('onboard-home-lat').value);
       const lng = parseFloat(document.getElementById('onboard-home-lng').value);
@@ -3313,6 +3716,9 @@
         first_name: firstName,
         last_name: lastName,
         phone: phone,
+        alt_phone: altPhone,
+        house_no: houseNo,
+        landmark: landmark,
         aadhaar: aadhaar || '567890123456',
         gender: gender,
         avatar: AVATARS[gender],

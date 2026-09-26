@@ -309,5 +309,54 @@ class TestBCCWasteSystem(unittest.TestCase):
 
         print("[PASS] 12. One Worker One Password verification passed: Unique individual passwords enforced, generic passwords blocked.")
 
+    def test_13_people_profile_change_only_number_add_not_name_change(self):
+        """User Requirement: People profile change only number add, not name change working with add information."""
+        # Citizen Praveen Kulkarni is user_id 5
+        # Attempt to modify numbers and info, while also trying to inject a changed name
+        res = self.client.post('/api/user/update-profile', json={
+            'user_id': 5,
+            'name': 'Malicious Name Change',
+            'first_name': 'Malicious',
+            'last_name': 'Attempt',
+            'phone': '9880011222',
+            'alt_phone': '9880099999',
+            'house_no': 'House #42/C, Basava Nagar',
+            'landmark': 'Near Tilakwadi 2nd Gate',
+            'aadhaar': '567890123456',
+            'ward': 'Ward 21 - Tilakwadi',
+            'home_address': 'Tilakwadi 2nd Gate, Belagavi',
+            'home_lat': 15.8350,
+            'home_lng': 74.5020
+        })
+        self.assertEqual(res.status_code, 200)
+        data = json.loads(res.data)
+        self.assertTrue(data['success'])
+        user = data['user']
+
+        # 1. Verify Name was NOT changed (Protected and locked)
+        self.assertEqual(user['name'], 'Praveen Kulkarni')
+        self.assertEqual(user['first_name'], 'Praveen')
+        self.assertEqual(user['last_name'], 'Kulkarni')
+
+        # 2. Verify Numbers and Information were successfully updated/added
+        self.assertEqual(user['phone'], '9880011222')
+        self.assertEqual(user['alt_phone'], '9880099999')
+        self.assertEqual(user['house_no'], 'House #42/C, Basava Nagar')
+        self.assertEqual(user['landmark'], 'Near Tilakwadi 2nd Gate')
+
+        # 3. Verify persistent storage via GET /api/user/5
+        res_get = self.client.get('/api/user/5')
+        self.assertEqual(res_get.status_code, 200)
+        data_get = json.loads(res_get.data)
+        self.assertTrue(data_get['success'])
+        db_user = data_get['user']
+        self.assertEqual(db_user['name'], 'Praveen Kulkarni')
+        self.assertEqual(db_user['alt_phone'], '9880099999')
+        self.assertEqual(db_user['house_no'], 'House #42/C, Basava Nagar')
+        self.assertEqual(db_user['landmark'], 'Near Tilakwadi 2nd Gate')
+
+        print(f"[PASS] 13. Citizen Profile Name-Lock & Number Addition verified: Name '{db_user['name']}' locked, numbers & info successfully updated.")
+
 if __name__ == '__main__':
     unittest.main()
+

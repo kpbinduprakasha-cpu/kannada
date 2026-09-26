@@ -177,7 +177,10 @@ def init_db():
         ('gender', 'TEXT DEFAULT "Male"'),
         ('avatar', 'TEXT'),
         ('custom_emp_id', 'TEXT'),
-        ('password_hint', 'TEXT')
+        ('password_hint', 'TEXT'),
+        ('alt_phone', 'TEXT'),
+        ('house_no', 'TEXT'),
+        ('landmark', 'TEXT')
     ]:
         try:
             c.execute(f"ALTER TABLE users ADD COLUMN {col_name} {col_def}")
@@ -498,11 +501,18 @@ def init_db():
             15.8345, 74.5015,
             'Congress Road, Tilakwadi, Belagavi'
         ))
+        c.execute('''
+        UPDATE users SET house_no = 'House #24/B', landmark = 'Near Lingaraj College', alt_phone = '9845019999'
+        WHERE phone = '9880011111'
+        ''')
     else:
-        # Update coordinates to Belagavi
+        # Update coordinates and default additional information for Belagavi citizen
         c.execute('''
         UPDATE users SET home_lat = 15.8345, home_lng = 74.5015,
-        home_address = 'Congress Road, Tilakwadi, Belagavi', ward = 'Ward 21 - Tilakwadi, Belagavi'
+        home_address = 'Congress Road, Tilakwadi, Belagavi', ward = 'Ward 21 - Tilakwadi, Belagavi',
+        house_no = COALESCE(house_no, 'House #24/B'),
+        landmark = COALESCE(landmark, 'Near Lingaraj College'),
+        alt_phone = COALESCE(alt_phone, '9845019999')
         WHERE phone = '9880011111'
         ''')
 
@@ -657,11 +667,14 @@ def verify_login_otp():
 
 @app.route('/api/auth/save-profile-home', methods=['POST'])
 def save_profile_home():
-    """Saves First Name, Last Name, Mobile Number, Sex/Gender, and Belagavi Home Center."""
+    """Saves or updates profile details: preserves name for existing accounts and updates numbers & residence info."""
     data = request.json or {}
     first_name = data.get('first_name', '').strip()
     last_name = data.get('last_name', '').strip()
     phone = data.get('phone', '').strip()
+    alt_phone = data.get('alt_phone', '').strip()
+    house_no = data.get('house_no', '').strip()
+    landmark = data.get('landmark', '').strip()
     email = data.get('email', '').strip()
     aadhaar = data.get('aadhaar', '567890123456').strip()
     gender = data.get('gender', 'Male').strip()
@@ -671,37 +684,53 @@ def save_profile_home():
     home_address = data.get('home_address', 'Congress Road, Tilakwadi, Belagavi').strip()
     ward = data.get('ward', 'Ward 21 - Tilakwadi, Belagavi')
 
-    if not first_name:
-        return jsonify({'success': False, 'message': 'First Name is required.'}), 400
     if not phone and not email:
         return jsonify({'success': False, 'message': 'Mobile Number or Email is required.'}), 400
 
-    full_name = f"{first_name} {last_name}".strip()
     conn = get_db_connection()
     c = conn.cursor()
 
     existing = None
-    if phone:
+    user_id = data.get('user_id')
+    if user_id:
+        existing = c.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
+    if not existing and phone:
         existing = c.execute("SELECT * FROM users WHERE phone = ?", (phone,)).fetchone()
     if not existing and email:
         existing = c.execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone()
 
     if existing:
+        # User Requirement: People profile change - ONLY number add/update, NOT name change!
+        # Name is permanent and locked to the citizen's existing verified identity.
+        saved_first_name = existing['first_name'] or (existing['name'].split()[0] if existing['name'] else 'Resident')
+        saved_last_name = existing['last_name'] or (' '.join(existing['name'].split()[1:]) if len(existing['name'].split()) > 1 else '')
+        saved_full_name = existing['name']
+
         c.execute('''
         UPDATE users
-        SET first_name = ?, last_name = ?, name = ?, phone = COALESCE(?, phone), email = COALESCE(?, email),
-            aadhaar = COALESCE(?, aadhaar), home_lat = ?, home_lng = ?, home_address = ?, ward = ?,
+        SET phone = COALESCE(?, phone),
+            alt_phone = CASE WHEN ? != '' THEN ? ELSE alt_phone END,
+            house_no = CASE WHEN ? != '' THEN ? ELSE house_no END,
+            landmark = CASE WHEN ? != '' THEN ? ELSE landmark END,
+            email = COALESCE(?, email),
+            aadhaar = COALESCE(?, aadhaar),
+            home_lat = ?, home_lng = ?, home_address = ?, ward = ?,
             gender = COALESCE(?, gender), avatar = COALESCE(?, avatar)
         WHERE id = ?
-        ''', (first_name, last_name, full_name, phone or None, email or None, aadhaar or None, home_lat, home_lng, home_address, ward, gender, avatar or None, existing['id']))
+        ''', (phone or None, alt_phone, alt_phone, house_no, house_no, landmark, landmark, email or None, aadhaar or None, home_lat, home_lng, home_address, ward, gender, avatar or None, existing['id']))
         user_id = existing['id']
         role = existing['role']
     else:
+        if not first_name:
+            return jsonify({'success': False, 'message': 'First Name is required for initial registration.'}), 400
+        saved_full_name = f"{first_name} {last_name}".strip()
+        saved_first_name = first_name
+        saved_last_name = last_name
         fallback_phone = phone if phone else f"988{int(time.time()) % 10000000:07d}"
         c.execute('''
-        INSERT INTO users (name, first_name, last_name, role, phone, email, aadhaar, home_lat, home_lng, home_address, ward, gender, avatar, status)
-        VALUES (?, ?, ?, 'citizen', ?, ?, ?, ?, ?, ?, ?, ?, ?, 'active')
-        ''', (full_name, first_name, last_name, fallback_phone, email, aadhaar, home_lat, home_lng, home_address, ward, gender, avatar))
+        INSERT INTO users (name, first_name, last_name, role, phone, alt_phone, house_no, landmark, email, aadhaar, home_lat, home_lng, home_address, ward, gender, avatar, status)
+        VALUES (?, ?, ?, 'citizen', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'active')
+        ''', (saved_full_name, saved_first_name, saved_last_name, fallback_phone, alt_phone, house_no, landmark, email, aadhaar, home_lat, home_lng, home_address, ward, gender, avatar))
         user_id = c.lastrowid
         role = 'citizen'
 
@@ -710,14 +739,17 @@ def save_profile_home():
 
     return jsonify({
         'success': True,
-        'message': f'Profile and Belagavi Home Center configured for {full_name}!',
+        'message': f'Profile and Belagavi Home Center configured for {saved_full_name}!',
         'user': {
             'id': user_id,
-            'first_name': first_name,
-            'last_name': last_name,
-            'name': full_name,
+            'first_name': saved_first_name,
+            'last_name': saved_last_name,
+            'name': saved_full_name,
             'role': role,
-            'phone': phone or fallback_phone,
+            'phone': phone or (existing['phone'] if existing else fallback_phone),
+            'alt_phone': alt_phone or (existing['alt_phone'] if existing and 'alt_phone' in existing.keys() else ''),
+            'house_no': house_no or (existing['house_no'] if existing and 'house_no' in existing.keys() else ''),
+            'landmark': landmark or (existing['landmark'] if existing and 'landmark' in existing.keys() else ''),
             'email': email,
             'aadhaar': aadhaar,
             'gender': gender,
@@ -729,9 +761,102 @@ def save_profile_home():
         }
     })
 
+@app.route('/api/user/update-profile', methods=['POST'])
+def update_user_profile():
+    """
+    Dedicated endpoint for People/Citizen Profile Change:
+    User Requirement: "people profile change onley of nmber add not name change working with add informaction"
+    - Name is locked / permanent (name change is blocked).
+    - Allows adding/changing:
+      * Primary mobile number (phone)
+      * Alternate / additional contact number (alt_phone)
+      * House / door / flat number (house_no)
+      * Aadhaar number
+    - Allows adding/updating additional resident information:
+      * Landmark / Street details
+      * Home address
+      * Ward
+      * GPS Lat/Lng coordinates
+      * Gender
+    """
+    data = request.json or {}
+    user_id = data.get('user_id')
+    raw_phone = (data.get('phone') or '').strip()
+
+    conn = get_db_connection()
+    c = conn.cursor()
+
+    user = None
+    if user_id:
+        user = c.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
+    if not user and raw_phone:
+        user = c.execute("SELECT * FROM users WHERE phone = ?", (raw_phone,)).fetchone()
+
+    if not user:
+        user = c.execute("SELECT * FROM users WHERE role = 'citizen' LIMIT 1").fetchone()
+
+    if not user:
+        conn.close()
+        return jsonify({'success': False, 'message': 'Citizen profile not found.'}), 404
+
+    # Strict Requirement: Name CANNOT be changed.
+    permanent_name = user['name']
+    permanent_first_name = user['first_name'] or (user['name'].split()[0] if user['name'] else 'Resident')
+    permanent_last_name = user['last_name'] or (' '.join(user['name'].split()[1:]) if len(user['name'].split()) > 1 else '')
+
+    new_phone = raw_phone if raw_phone else user['phone']
+    alt_phone = data.get('alt_phone', user['alt_phone'] if 'alt_phone' in user.keys() else '').strip()
+    house_no = data.get('house_no', user['house_no'] if 'house_no' in user.keys() else '').strip()
+    landmark = data.get('landmark', user['landmark'] if 'landmark' in user.keys() else '').strip()
+    aadhaar = data.get('aadhaar', user['aadhaar']).strip()
+    home_address = data.get('home_address', user['home_address']).strip()
+    ward = data.get('ward', user['ward']).strip()
+    gender = data.get('gender', user['gender'] if 'gender' in user.keys() else 'Male').strip()
+    home_lat = float(data.get('home_lat', user['home_lat'] or 15.8345))
+    home_lng = float(data.get('home_lng', user['home_lng'] or 74.5015))
+
+    c.execute('''
+    UPDATE users
+    SET phone = ?,
+        alt_phone = ?,
+        house_no = ?,
+        landmark = ?,
+        aadhaar = ?,
+        home_address = ?,
+        ward = ?,
+        gender = ?,
+        home_lat = ?,
+        home_lng = ?
+    WHERE id = ?
+    ''', (new_phone, alt_phone, house_no, landmark, aadhaar, home_address, ward, gender, home_lat, home_lng, user['id']))
+    conn.commit()
+    conn.close()
+
+    return jsonify({
+        'success': True,
+        'message': f'Profile updated! Numbers & information saved. (Name "{permanent_name}" is locked to verified record).',
+        'user': {
+            'id': user['id'],
+            'name': permanent_name,
+            'first_name': permanent_first_name,
+            'last_name': permanent_last_name,
+            'role': user['role'],
+            'phone': new_phone,
+            'alt_phone': alt_phone,
+            'house_no': house_no,
+            'landmark': landmark,
+            'aadhaar': aadhaar,
+            'home_address': home_address,
+            'ward': ward,
+            'gender': gender,
+            'home_lat': home_lat,
+            'home_lng': home_lng
+        }
+    })
+
 @app.route('/api/user/<int:user_id>', methods=['GET'])
 def get_user_profile_detail(user_id):
-    """Fetch complete citizen person details including gender, avatar, aadhaar, and location."""
+    """Fetch complete citizen person details including gender, avatar, aadhaar, numbers, and additional info."""
     conn = get_db_connection()
     c = conn.cursor()
     u = c.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
@@ -748,6 +873,9 @@ def get_user_profile_detail(user_id):
             'last_name': u.get('last_name'),
             'role': u['role'],
             'phone': u['phone'],
+            'alt_phone': u.get('alt_phone', ''),
+            'house_no': u.get('house_no', ''),
+            'landmark': u.get('landmark', ''),
             'email': u.get('email'),
             'aadhaar': u.get('aadhaar'),
             'gender': u.get('gender', 'Male'),
