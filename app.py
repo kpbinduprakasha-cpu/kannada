@@ -69,6 +69,17 @@ def compute_employee_id_code(name, aadhaar):
     suffix = clean_aadhaar[-3:] if len(clean_aadhaar) >= 3 else '101'
     return f"{prefix}{suffix}"
 
+def compute_worker_default_password(name, aadhaar):
+    """
+    One Worker, One Password: Each sanitation worker has a unique personal password.
+    Formula: First 5 letters of Name (Capitalized) + '@' + Last 3 digits of Aadhaar (e.g. Basav@098).
+    """
+    clean_name = ''.join(c for c in (name or '') if c.isalpha())
+    prefix = (clean_name[:5] if len(clean_name) >= 5 else clean_name.ljust(5, 'x')).capitalize()
+    clean_aadhaar = ''.join(c for c in str(aadhaar or '') if c.isdigit())
+    suffix = clean_aadhaar[-3:] if len(clean_aadhaar) >= 3 else '101'
+    return f"{prefix}@{suffix}"
+
 def get_db_connection():
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
@@ -165,7 +176,8 @@ def init_db():
         ('home_address', 'TEXT DEFAULT "Congress Road, Tilakwadi, Belagavi"'),
         ('gender', 'TEXT DEFAULT "Male"'),
         ('avatar', 'TEXT'),
-        ('custom_emp_id', 'TEXT')
+        ('custom_emp_id', 'TEXT'),
+        ('password_hint', 'TEXT')
     ]:
         try:
             c.execute(f"ALTER TABLE users ADD COLUMN {col_name} {col_def}")
@@ -461,6 +473,12 @@ def init_db():
         else:
             c.execute("UPDATE users SET custom_emp_id = ? WHERE phone = ?", (aw['custom_emp_id'], aw['phone']))
             c.execute("UPDATE worker_progress SET custom_emp_id = ? WHERE worker_id = ?", (aw['custom_emp_id'], chk['id']))
+
+    # One Worker One Password: Ensure every individual sanitation worker has their own unique password
+    all_workers = c.execute("SELECT id, name, aadhaar FROM users WHERE role = 'worker'").fetchall()
+    for w in all_workers:
+        u_pass = compute_worker_default_password(w['name'], w['aadhaar'])
+        c.execute("UPDATE users SET password_hint = ?, password_hash = ? WHERE id = ?", (u_pass, generate_password_hash(u_pass), w['id']))
 
     # Seed Sample Belagavi Citizen
     citizen = c.execute("SELECT * FROM users WHERE phone = '9880011111'").fetchone()
@@ -806,11 +824,12 @@ def officer_create_account():
     last_name = parts[1] if len(parts) > 1 else ''
     custom_emp_id = compute_employee_id_code(name, aadhaar)
     emp_id = f"BCC-W{custom_emp_id}"
+    worker_password = compute_worker_default_password(name, aadhaar)
 
     c.execute('''
-    INSERT INTO users (name, first_name, last_name, role, phone, aadhaar, password_hash, ward, worker_emp_id, custom_emp_id, status)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'active')
-    ''', (name, first_name, last_name, role, phone, aadhaar, generate_password_hash('worker123'), ward, emp_id, custom_emp_id))
+    INSERT INTO users (name, first_name, last_name, role, phone, aadhaar, password_hash, password_hint, ward, worker_emp_id, custom_emp_id, status)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'active')
+    ''', (name, first_name, last_name, role, phone, aadhaar, generate_password_hash(worker_password), worker_password, ward, emp_id, custom_emp_id))
     new_user_id = c.lastrowid
 
     if role == 'worker':
@@ -824,11 +843,13 @@ def officer_create_account():
 
     return jsonify({
         'success': True,
-        'message': f'New individual {role.upper()} ({custom_emp_id}) authorized for Belagavi City Corporation.',
+        'message': f'New individual {role.upper()} ({custom_emp_id}) authorized for Belagavi City Corporation with unique password.',
         'user_id': new_user_id,
         'worker_emp_id': emp_id,
         'custom_emp_id': custom_emp_id,
-        'employee_id': custom_emp_id
+        'employee_id': custom_emp_id,
+        'worker_password': worker_password,
+        'password': worker_password
     })
 
 # -------------------------------------------------------------
@@ -840,7 +861,7 @@ def list_workers():
     conn = get_db_connection()
     c = conn.cursor()
     workers = c.execute('''
-        SELECT wp.*, u.phone, u.ward, u.aadhaar, u.custom_emp_id as u_custom_id
+        SELECT wp.*, u.phone, u.ward, u.aadhaar, u.custom_emp_id as u_custom_id, u.password_hint
         FROM worker_progress wp
         JOIN users u ON wp.worker_id = u.id
         ORDER BY wp.worker_id ASC
@@ -852,6 +873,7 @@ def list_workers():
         item = dict(w)
         item['custom_emp_id'] = item.get('u_custom_id') or item.get('custom_emp_id') or compute_employee_id_code(item.get('worker_name'), item.get('aadhaar'))
         item['employee_id_code'] = item['custom_emp_id']
+        item['password_hint'] = item.get('password_hint') or compute_worker_default_password(item.get('worker_name'), item.get('aadhaar'))
         workers_list.append(item)
 
     return jsonify({
@@ -879,6 +901,7 @@ def get_worker_profile(worker_id):
     target = 500
     monthly = progress['total_monthly_cleanups'] if progress else 0
     c_emp_id = user['custom_emp_id'] or compute_employee_id_code(user['name'], user['aadhaar'])
+    p_hint = user['password_hint'] or compute_worker_default_password(user['name'], user['aadhaar'])
 
     return jsonify({
         'success': True,
@@ -888,6 +911,7 @@ def get_worker_profile(worker_id):
             'emp_id': progress['worker_emp_id'] if progress else 'BCC-W000',
             'custom_emp_id': c_emp_id,
             'employee_id_code': c_emp_id,
+            'password_hint': p_hint,
             'phone': user['phone'],
             'ward': user['ward'],
             'aadhaar': user['aadhaar'],
@@ -906,6 +930,95 @@ def get_worker_profile(worker_id):
             'performance_score': progress['performance_score'] if progress else 95.0
         },
         'assigned_tasks': [dict(t) for t in assigned_tasks]
+    })
+
+@app.route('/api/worker/login', methods=['POST'])
+def worker_login():
+    """One Worker One Password: Authenticates an individual worker by Employee ID and their unique personal password."""
+    data = request.json or {}
+    raw_code = (data.get('code') or data.get('custom_emp_id') or data.get('emp_id') or '').strip().upper()
+    password = (data.get('password') or '').strip()
+
+    if not raw_code:
+        return jsonify({'success': False, 'message': 'Employee ID is required.'}), 400
+    if not password:
+        return jsonify({'success': False, 'message': 'Personal password is required. Each employee has an individual password.'}), 400
+
+    conn = get_db_connection()
+    c = conn.cursor()
+    user = c.execute('''
+        SELECT * FROM users
+        WHERE role = 'worker' AND (
+            UPPER(custom_emp_id) = ? OR
+            UPPER(worker_emp_id) = ? OR
+            phone = ? OR
+            id = ?
+        )
+    ''', (raw_code, raw_code, raw_code, int(raw_code) if raw_code.isdigit() else -1)).fetchone()
+
+    if not user:
+        all_workers = c.execute("SELECT * FROM users WHERE role = 'worker'").fetchall()
+        for w in all_workers:
+            c_code = compute_employee_id_code(w['name'], w['aadhaar'])
+            if c_code.upper() == raw_code or f"BCC-W{c_code}".upper() == raw_code:
+                user = w
+                break
+
+    if not user:
+        conn.close()
+        return jsonify({'success': False, 'message': f'Employee with ID "{raw_code}" not found.'}), 404
+
+    expected_default_pass = compute_worker_default_password(user['name'], user['aadhaar'])
+    is_valid_pass = False
+
+    if user['password_hash'] and check_password_hash(user['password_hash'], password):
+        is_valid_pass = True
+    elif password == expected_default_pass:
+        is_valid_pass = True
+    elif user['password_hint'] and password == user['password_hint']:
+        is_valid_pass = True
+
+    if not is_valid_pass:
+        conn.close()
+        return jsonify({
+            'success': False,
+            'message': f'Incorrect password for {user["name"]} ({user["custom_emp_id"] or raw_code}). Each employee has a unique individual password.'
+        }), 401
+
+    worker_id = user['id']
+    progress = c.execute("SELECT * FROM worker_progress WHERE worker_id = ?", (worker_id,)).fetchone()
+    conn.close()
+
+    u = dict(user)
+    p = dict(progress) if progress else {}
+    c_emp_id = u.get('custom_emp_id') or compute_employee_id_code(u.get('name'), u.get('aadhaar'))
+    w_emp_id = u.get('worker_emp_id') or p.get('worker_emp_id') or f'BCC-W{c_emp_id}'
+
+    return jsonify({
+        'success': True,
+        'message': f'Welcome back, {u.get("name")}! Employee session authorized.',
+        'worker': {
+            'id': u.get('id'),
+            'worker_id': u.get('id'),
+            'name': u.get('name'),
+            'worker_name': u.get('name'),
+            'custom_emp_id': c_emp_id,
+            'employee_id_code': c_emp_id,
+            'emp_id': w_emp_id,
+            'worker_emp_id': w_emp_id,
+            'phone': u.get('phone'),
+            'ward': u.get('ward'),
+            'aadhaar': u.get('aadhaar'),
+            'gender': u.get('gender') or 'Male',
+            'duty_status': p.get('duty_status', 'on_duty'),
+            'current_lat': p.get('current_lat', 15.8340),
+            'current_lng': p.get('current_lng', 74.5020),
+            'cleanups_today': p.get('cleanups_today', 0),
+            'distance_walked_km': p.get('distance_walked_km', 0.0),
+            'total_monthly_cleanups': p.get('total_monthly_cleanups', 0),
+            'performance_score': p.get('performance_score', 95.0),
+            'password_hint': expected_default_pass
+        }
     })
 
 @app.route('/api/worker/find-by-code', methods=['GET'])
@@ -954,6 +1067,7 @@ def find_worker_by_code():
     target = 500
     monthly = progress['total_monthly_cleanups'] if progress else 0
     c_emp_id = user['custom_emp_id'] or compute_employee_id_code(user['name'], user['aadhaar'])
+    p_hint = user['password_hint'] or compute_worker_default_password(user['name'], user['aadhaar'])
 
     return jsonify({
         'success': True,
@@ -963,6 +1077,7 @@ def find_worker_by_code():
             'emp_id': progress['worker_emp_id'] if progress else 'BCC-W000',
             'custom_emp_id': c_emp_id,
             'employee_id_code': c_emp_id,
+            'password_hint': p_hint,
             'phone': user['phone'],
             'ward': user['ward'],
             'aadhaar': user['aadhaar'],

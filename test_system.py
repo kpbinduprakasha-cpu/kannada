@@ -264,5 +264,50 @@ class TestBCCWasteSystem(unittest.TestCase):
         self.client.post('/api/worker/update-duty', json={'worker_id': 2, 'duty_status': 'on_duty'})
         print(f"[PASS] 11. Individual Worker Personal Accounts & Active Working Progress verified: {w['name']} ({w['emp_id']}) with {w['cleanups_today']} cleanups today and {w['distance_walked_km']} km walked.")
 
+    def test_12_one_worker_one_password_login(self):
+        """User Requirement: One worker one password, not all is swatch/generic."""
+        # 1. Login with correct worker ID and individual password (Basavaraj Belagavi - BAS098 / Basav@098)
+        res_ok = self.client.post('/api/worker/login', json={
+            'code': 'BAS098',
+            'password': 'Basav@098'
+        })
+        self.assertEqual(res_ok.status_code, 200)
+        data_ok = json.loads(res_ok.data)
+        self.assertTrue(data_ok['success'])
+        self.assertEqual(data_ok['worker']['name'], 'Basavaraj Belagavi')
+        self.assertEqual(data_ok['worker']['password_hint'], 'Basav@098')
+
+        # 2. Login with second worker's credentials (Manjunath Patil - MAN501 / Manju@501)
+        res_ok2 = self.client.post('/api/worker/login', json={
+            'code': 'MAN501',
+            'password': 'Manju@501'
+        })
+        self.assertEqual(res_ok2.status_code, 200)
+        data_ok2 = json.loads(res_ok2.data)
+        self.assertTrue(data_ok2['success'])
+        self.assertEqual(data_ok2['worker']['name'], 'Manjunath Patil')
+        self.assertEqual(data_ok2['worker']['password_hint'], 'Manju@501')
+
+        # 3. Reject generic/swachha password
+        res_generic = self.client.post('/api/worker/login', json={
+            'code': 'BAS098',
+            'password': 'swachhabelagavi'
+        })
+        self.assertEqual(res_generic.status_code, 401)
+        data_generic = json.loads(res_generic.data)
+        self.assertFalse(data_generic['success'])
+        self.assertIn('Incorrect password', data_generic['message'])
+
+        # 4. Reject cross-worker password mismatch (e.g. Manju's password for Basav)
+        res_cross = self.client.post('/api/worker/login', json={
+            'code': 'BAS098',
+            'password': 'Manju@501'
+        })
+        self.assertEqual(res_cross.status_code, 401)
+        data_cross = json.loads(res_cross.data)
+        self.assertFalse(data_cross['success'])
+
+        print("[PASS] 12. One Worker One Password verification passed: Unique individual passwords enforced, generic passwords blocked.")
+
 if __name__ == '__main__':
     unittest.main()
