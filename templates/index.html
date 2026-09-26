@@ -290,20 +290,27 @@
     }
 
     /* ============================================================== */
-    /* LIGHT THEME (WHITE COLOR / MARSHMALLOW PORCELAIN CLAY)        */
+    /* THEME: LITE PINK & WHITE COMBINE (REPLACES HARSH WHITE)        */
+    /* Soothing soft pastel rose-quartz & white claymorphism blend    */
     /* ============================================================== */
     body.theme-light {
-      background-color: #e9eef5 !important;
+      background-color: #fce7f3 !important;
+      background-image: 
+        radial-gradient(at 0% 0%, #fff1f2 0px, transparent 50%),
+        radial-gradient(at 100% 0%, #fbcfe8 0px, transparent 50%),
+        radial-gradient(at 50% 100%, #fdf2f8 0px, transparent 50%),
+        linear-gradient(135deg, #fff5f7 0%, #fce7f3 50%, #fdf2f8 100%) !important;
+      background-attachment: fixed !important;
       color: #0f172a !important;
     }
     body.theme-light header {
-      background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%) !important;
-      border-bottom: 1.5px solid #cbd5e1 !important;
-      box-shadow: 0 12px 28px -4px rgba(148, 163, 184, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.95) !important;
+      background: linear-gradient(180deg, #fff1f2 0%, #fce7f3 100%) !important;
+      border-bottom: 1.5px solid #fbcfe8 !important;
+      box-shadow: 0 12px 28px -4px rgba(244, 114, 182, 0.22), inset 0 2px 4px rgba(255, 255, 255, 0.95) !important;
       border-radius: 0 0 28px 28px !important;
     }
 
-    /* Marshmallow Clay Cards in Light Theme */
+    /* Soft Lite Pink & White Inflated Clay Cards & Surfaces */
     body.theme-light .bg-slate-800,
     body.theme-light .bg-slate-800\/80,
     body.theme-light .bg-slate-800\/90,
@@ -322,18 +329,18 @@
     body.theme-light .bg-slate-950\/95,
     body.theme-light [class*="rounded-2xl"]:not(input):not(textarea):not(select):not(img):not(video):not(canvas):not(.leaflet-container):not(.leaflet-pane *):not(#worker-tracking-map):not(#map),
     body.theme-light [class*="rounded-3xl"]:not(input):not(textarea):not(select):not(img):not(video):not(canvas):not(.leaflet-container):not(.leaflet-pane *):not(#worker-tracking-map):not(#map) {
-      background: linear-gradient(145deg, #ffffff, #edf2f7) !important;
-      color: #0f172a !important;
-      border: 1.5px solid rgba(255, 255, 255, 0.95) !important;
-      box-shadow: 12px 20px 34px -4px rgba(148, 163, 184, 0.4), -8px -8px 18px rgba(255, 255, 255, 0.95), inset 3px 3px 6px rgba(255, 255, 255, 0.95), inset -3px -3px 6px rgba(203, 213, 225, 0.65) !important;
+      background: linear-gradient(145deg, #fff5f7 0%, #ffe4e6 50%, #fce7f3 100%) !important;
+      color: #1e293b !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.9) !important;
+      box-shadow: 10px 18px 30px -4px rgba(244, 114, 182, 0.25), -6px -6px 16px rgba(255, 255, 255, 0.95), inset 3px 3px 6px rgba(255, 255, 255, 0.95), inset -3px -3px 6px rgba(251, 207, 232, 0.7) !important;
     }
 
     body.theme-light .bg-slate-800:hover,
     body.theme-light .bg-slate-900:hover {
-      box-shadow: 14px 24px 38px -4px rgba(148, 163, 184, 0.45), -10px -10px 20px rgba(255, 255, 255, 0.95), inset 3px 3px 6px rgba(255, 255, 255, 0.95), inset -3px -3px 6px rgba(203, 213, 225, 0.65) !important;
+      box-shadow: 12px 22px 34px -4px rgba(244, 114, 182, 0.32), -8px -8px 18px rgba(255, 255, 255, 0.98), inset 3px 3px 6px rgba(255, 255, 255, 0.95), inset -3px -3px 6px rgba(251, 207, 232, 0.75) !important;
     }
 
-    /* Marshmallow Modals in Light Theme */
+    /* Soft Lite Pink & White Inflated Modals */
     body.theme-light #modal-auth-onboarding > div,
     body.theme-light #modal-employee-profile-detail > div,
     body.theme-light #modal-citizen-profile-detail > div,
@@ -341,26 +348,34 @@
     body.theme-light #staff-login-modal > div,
     body.theme-light #mobile-qr-modal > div,
     body.theme-light #modal-officer-console > div {
-      background: linear-gradient(145deg, #ffffff, #eef2f6) !important;
-      box-shadow: 0 30px 65px -10px rgba(100, 116, 139, 0.45), inset 3px 3px 6px rgba(255, 255, 255, 0.95), inset -4px -4px 10px rgba(203, 213, 225, 0.7) !important;
+      background: linear-gradient(145deg, #fff5f7 0%, #ffe4e6 50%, #fce7f3 100%) !important;
+      box-shadow: 0 30px 65px -10px rgba(219, 39, 119, 0.28), inset 3px 3px 6px rgba(255, 255, 255, 0.98), inset -4px -4px 10px rgba(251, 207, 232, 0.8) !important;
       border: 2px solid rgba(255, 255, 255, 0.95) !important;
     }
 
-    /* Marshmallow Recessed Inputs */
+    /* Soft Lite Pink Recessed Molded Inputs */
     body.theme-light input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="submit"]):not([type="button"]),
     body.theme-light textarea,
     body.theme-light select {
-      background-color: #f1f5f9 !important;
-      color: #0f172a !important;
-      border: 1.5px solid #cbd5e1 !important;
-      box-shadow: inset 3px 3px 6px rgba(203, 213, 225, 0.75), inset -2px -2px 5px rgba(255, 255, 255, 0.95), 0 2px 4px rgba(148, 163, 184, 0.12) !important;
+      background-color: #fff0f3 !important;
+      color: #1e293b !important;
+      border: 1.5px solid #fbcfe8 !important;
+      box-shadow: inset 3px 3px 6px rgba(244, 114, 182, 0.35), inset -2px -2px 5px rgba(255, 255, 255, 0.95), 0 2px 4px rgba(244, 114, 182, 0.08) !important;
     }
     body.theme-light input::placeholder,
     body.theme-light textarea::placeholder {
-      color: #94a3b8 !important;
+      color: #be185d !important;
+      opacity: 0.55 !important;
+    }
+    body.theme-light input:focus,
+    body.theme-light textarea:focus,
+    body.theme-light select:focus {
+      outline: none !important;
+      border-color: #ec4899 !important;
+      box-shadow: inset 3px 3px 6px rgba(236, 72, 153, 0.3), inset -2px -2px 4px rgba(255, 255, 255, 0.9), 0 0 12px rgba(236, 72, 153, 0.3) !important;
     }
 
-    /* Light Theme Typography */
+    /* Lite Pink & White Typography Contrast */
     body.theme-light .text-white {
       color: #0f172a !important;
     }
@@ -377,23 +392,30 @@
     body.theme-light .border-slate-700,
     body.theme-light .border-slate-700\/80,
     body.theme-light .border-slate-800 {
-      border-color: #cbd5e1 !important;
+      border-color: #fbcfe8 !important;
     }
 
-    /* Light Theme Neutral Buttons */
+    /* Soft Lite Pink Neutral Buttons */
     body.theme-light button[class*="bg-slate"],
     body.theme-light .btn-slate {
-      background: linear-gradient(145deg, #ffffff, #e2e8f0) !important;
-      color: #1e293b !important;
-      border: 1px solid #cbd5e1 !important;
-      box-shadow: 0 8px 18px -2px rgba(148, 163, 184, 0.35), inset 2px 2px 4px rgba(255, 255, 255, 0.95), inset -2.5px -2.5px 5px rgba(203, 213, 225, 0.7) !important;
+      background: linear-gradient(145deg, #ffffff, #ffe4e6) !important;
+      color: #4a044e !important;
+      border: 1px solid #fecdd3 !important;
+      box-shadow: 0 8px 18px -2px rgba(244, 114, 182, 0.25), inset 2px 2px 4px rgba(255, 255, 255, 0.95), inset -2.5px -2.5px 5px rgba(251, 207, 232, 0.7) !important;
     }
 
-    /* Light Theme Switcher Box */
+    /* Soft Lite Pink Theme Switcher Box */
     body.theme-light #theme-switcher-container {
-      background: #e2e8f0 !important;
-      border-color: #cbd5e1 !important;
-      box-shadow: inset 2px 2px 4px rgba(203, 213, 225, 0.6), inset -2px -2px 4px rgba(255, 255, 255, 0.9) !important;
+      background: #ffe4e6 !important;
+      border-color: #fbcfe8 !important;
+      box-shadow: inset 2px 2px 4px rgba(244, 114, 182, 0.35), inset -2px -2px 4px rgba(255, 255, 255, 0.9) !important;
+    }
+
+    /* Soft Lite Pink Mobile Bottom Navigation Bar */
+    body.theme-light #mobile-bottom-nav {
+      background: linear-gradient(180deg, #fff1f2 0%, #fce7f3 100%) !important;
+      border-top: 1.5px solid #fbcfe8 !important;
+      box-shadow: 0 -8px 24px -4px rgba(244, 114, 182, 0.22) !important;
     }
 
     /* Zomato-Style Live Route Tracking & Worker Avatar */
@@ -1125,15 +1147,15 @@
         </button>
       </div>
 
-      <!-- Theme Switcher (Black Screen / White Color) -->
+      <!-- Theme Switcher (Black Screen / Lite Pink & White) -->
       <div class="flex items-center space-x-1 bg-slate-900 border border-slate-800 p-1 rounded-xl" id="theme-switcher-container">
         <button type="button" onclick="setThemeMode('dark')" id="btn-theme-dark" class="px-3 py-1.5 text-xs font-bold rounded-lg transition bg-slate-800 text-white shadow border border-slate-700 flex items-center space-x-1.5" title="Black Screen">
           <span class="w-2.5 h-2.5 rounded-full bg-black border border-slate-600 inline-block"></span>
           <span>Black Screen</span>
         </button>
-        <button type="button" onclick="setThemeMode('light')" id="btn-theme-light" class="px-3 py-1.5 text-xs font-semibold rounded-lg transition text-slate-400 hover:text-white flex items-center space-x-1.5" title="White Color">
-          <span class="w-2.5 h-2.5 rounded-full bg-white border border-slate-300 inline-block"></span>
-          <span>White Color</span>
+        <button type="button" onclick="setThemeMode('light')" id="btn-theme-light" class="px-3 py-1.5 text-xs font-semibold rounded-lg transition text-slate-400 hover:text-white flex items-center space-x-1.5" title="Lite Pink & White">
+          <span class="w-2.5 h-2.5 rounded-full bg-pink-300 border border-pink-400 inline-block"></span>
+          <span>Lite Pink & White</span>
         </button>
       </div>
 
@@ -2889,7 +2911,7 @@
     };
 
     // ============================================================
-    // THEME SWITCHER (BLACK SCREEN / WHITE COLOR)
+    // THEME SWITCHER (BLACK SCREEN / LITE PINK & WHITE)
     // ============================================================
     function setThemeMode(mode) {
       localStorage.setItem('bcc_theme_mode', mode);
@@ -2898,7 +2920,7 @@
       if (mode === 'light') {
         document.body.classList.add('theme-light');
         if (btnLight) {
-          btnLight.className = "px-3 py-1.5 text-xs font-bold rounded-lg transition bg-white text-slate-900 shadow border border-slate-300 flex items-center space-x-1.5";
+          btnLight.className = "px-3 py-1.5 text-xs font-bold rounded-lg transition bg-gradient-to-r from-pink-200 via-rose-100 to-pink-200 text-rose-950 shadow border border-pink-300 flex items-center space-x-1.5";
         }
         if (btnDark) {
           btnDark.className = "px-3 py-1.5 text-xs font-semibold rounded-lg transition text-slate-400 hover:text-white flex items-center space-x-1.5";
