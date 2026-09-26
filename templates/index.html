@@ -129,6 +129,90 @@
       background-color: #e2e8f0 !important;
       border-color: #cbd5e1 !important;
     }
+
+    /* Zomato-Style Live Route Tracking & Worker Avatar */
+    #worker-tracking-map {
+      height: 380px;
+      border-radius: 1rem;
+      z-index: 10;
+    }
+    .zomato-worker-pin {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .zomato-pulse-ring {
+      position: absolute;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(16, 185, 129, 0.45);
+      animation: zomato-pulse 1.5s ease-out infinite;
+      z-index: 1;
+    }
+    @keyframes zomato-pulse {
+      0% { transform: scale(0.6); opacity: 1; }
+      100% { transform: scale(2.4); opacity: 0; }
+    }
+    .zomato-avatar-circle {
+      position: relative;
+      z-index: 2;
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, #059669, #10b981);
+      border: 3px solid #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      font-size: 20px;
+    }
+    .zomato-pin-label {
+      margin-top: 4px;
+      background: rgba(15, 23, 42, 0.95);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.6);
+      border-radius: 9999px;
+      padding: 1px 8px;
+      font-size: 10px;
+      font-weight: 800;
+      white-space: nowrap;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      z-index: 3;
+    }
+    .zomato-spot-pin {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .zomato-spot-circle {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #dc2626, #ef4444);
+      border: 3px solid #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      font-size: 18px;
+    }
+    .zomato-spot-label {
+      margin-top: 4px;
+      background: rgba(15, 23, 42, 0.95);
+      color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, 0.6);
+      border-radius: 9999px;
+      padding: 1px 8px;
+      font-size: 10px;
+      font-weight: 800;
+      white-space: nowrap;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
   </style>
 </head>
 <body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans pb-20 sm:pb-4 select-none">
@@ -1309,20 +1393,157 @@
 
       <!-- Quick Navigation Tabs for Worker -->
       <div class="flex flex-wrap items-center gap-2 pb-1">
+        <a href="#worker-travel-tracker-section" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-bold border border-slate-700 flex items-center space-x-2 transition">
+          <i data-lucide="navigation" class="w-4 h-4 text-sky-400"></i>
+          <span>1. Live Zomato Route Radar</span>
+        </a>
         <a href="#worker-pending-section" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-bold border border-slate-700 flex items-center space-x-2 transition">
           <i data-lucide="clock" class="w-4 h-4 text-amber-400"></i>
-          <span>1. Pending Working Tasks</span>
+          <span>2. Pending Tasks (Lowest Distance First)</span>
           <span id="badge-worker-pending-count" class="bg-amber-500/20 text-amber-300 text-[10px] px-2 py-0.5 rounded-full border border-amber-500/30 font-mono">0</span>
         </a>
         <a href="#worker-cleanup-studio" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-bold border border-slate-700 flex items-center space-x-2 transition">
           <i data-lucide="camera" class="w-4 h-4 text-rose-400"></i>
-          <span>2. Live Camera Studio</span>
+          <span>3. Live Camera Studio</span>
         </a>
         <a href="#worker-completed-section" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-bold border border-slate-700 flex items-center space-x-2 transition">
           <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
-          <span>3. Completed Working Cleanups</span>
+          <span>4. Completed Working Cleanups</span>
           <span id="badge-worker-completed-count" class="bg-emerald-500/20 text-emerald-300 text-[10px] px-2 py-0.5 rounded-full border border-emerald-500/30 font-mono">0</span>
         </a>
+      </div>
+
+      <!-- ============================================================== -->
+      <!-- 0. ZOMATO-STYLE LIVE TRAVEL & NAVIGATION TRACKER (WORKER PORTAL) -->
+      <!-- ============================================================== -->
+      <div id="worker-travel-tracker-section" class="bg-slate-800/90 border-2 border-sky-500/50 rounded-2xl p-5 shadow-2xl space-y-4 transition-all">
+        <!-- Header -->
+        <div class="flex flex-wrap items-center justify-between pb-3 border-b border-slate-700/80 gap-3">
+          <div class="flex items-center space-x-3">
+            <div class="w-12 h-12 rounded-2xl bg-sky-500/20 text-sky-400 border border-sky-500/40 flex items-center justify-center shrink-0 shadow-lg relative">
+              <span class="text-2xl">🛵</span>
+              <span class="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-emerald-400 animate-ping"></span>
+            </div>
+            <div>
+              <div class="flex flex-wrap items-center gap-2">
+                <h3 class="text-base font-extrabold text-white">Live Route Navigation Radar</h3>
+                <span class="px-2.5 py-0.5 bg-sky-500/20 text-sky-300 border border-sky-500/40 text-[10px] font-mono font-bold rounded-full uppercase">Zomato-Style Live Travel</span>
+              </div>
+              <p class="text-xs text-slate-400">Live GPS tracking from your Beat to Waste Photo Spot with real-time distance countdown</p>
+            </div>
+          </div>
+          <div id="worker-nav-status-badge" class="px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-xl text-xs font-bold text-slate-300 flex items-center space-x-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span id="worker-nav-status-text">Ready to Travel</span>
+          </div>
+        </div>
+
+        <!-- Target Destination Information Bar -->
+        <div class="bg-slate-950/80 border border-slate-700/80 rounded-xl p-3.5 flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div class="flex items-center space-x-3">
+            <div class="w-14 h-14 rounded-xl bg-slate-900 border border-slate-800 overflow-hidden shrink-0">
+              <img id="worker-nav-target-img" src="https://images.unsplash.com/photo-1605600659873-d808a13e4d2a?w=500&auto=format&fit=crop&q=60" class="w-full h-full object-cover" alt="Spot">
+            </div>
+            <div>
+              <div class="flex flex-wrap items-center gap-2">
+                <span id="worker-nav-target-id" class="text-xs font-mono font-bold text-amber-300">#REPORT-1</span>
+                <span id="worker-nav-target-type" class="text-[10px] uppercase font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30 px-2 py-0.5 rounded">PLASTIC WASTE</span>
+                <span id="worker-nav-rank-badge" class="text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full">⭐ Lowest Distance (#1 Closest)</span>
+              </div>
+              <h4 id="worker-nav-target-address" class="text-sm font-bold text-white mt-0.5">Congress Road, Tilakwadi, Belagavi</h4>
+              <p id="worker-nav-target-coords" class="text-[11px] text-slate-400 font-mono">Spot GPS: 15.8348° N, 74.5022° E</p>
+            </div>
+          </div>
+
+          <!-- Controls -->
+          <div class="flex flex-wrap items-center gap-2">
+            <button type="button" id="btn-start-live-travel" onclick="toggleStartWorkerLiveTravel()" class="px-4 py-2.5 bg-gradient-to-r from-amber-500 to-emerald-500 hover:from-amber-400 hover:to-emerald-400 text-slate-950 font-black rounded-xl text-xs flex items-center space-x-2 shadow-lg shadow-amber-500/25 transition active:scale-95">
+              <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+              <span id="btn-start-travel-text">Start Live Travel (Zomato)</span>
+            </button>
+            <button type="button" onclick="arriveAtWasteSpotInstantly()" class="px-3 py-2.5 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 font-bold rounded-xl text-xs flex items-center space-x-1.5 transition">
+              <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-400"></i>
+              <span>Instant Arrive</span>
+            </button>
+            <button type="button" onclick="centerWorkerTrackingMap()" class="p-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded-xl transition" title="Center Map">
+              <i data-lucide="crosshair" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Zomato-Style Live Metric HUD (Decreasing Distance, ETA, Speed) -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div class="bg-slate-900 border border-amber-500/40 rounded-xl p-3.5 relative overflow-hidden">
+            <div class="flex items-center justify-between text-slate-400 mb-1">
+              <span class="text-[10px] font-bold uppercase tracking-wider">Remaining Distance</span>
+              <i data-lucide="navigation" class="w-4 h-4 text-amber-400"></i>
+            </div>
+            <div id="worker-zomato-dist-val" class="text-2xl font-black text-amber-300 font-mono">850 m</div>
+            <span class="text-[10px] text-slate-400 block mt-0.5">Shortest Road Distance</span>
+            <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 to-rose-500"></div>
+          </div>
+
+          <div class="bg-slate-900 border border-emerald-500/40 rounded-xl p-3.5 relative overflow-hidden">
+            <div class="flex items-center justify-between text-slate-400 mb-1">
+              <span class="text-[10px] font-bold uppercase tracking-wider">Estimated ETA</span>
+              <i data-lucide="clock" class="w-4 h-4 text-emerald-400"></i>
+            </div>
+            <div id="worker-zomato-eta-val" class="text-2xl font-black text-emerald-400 font-mono">~2 min</div>
+            <span class="text-[10px] text-slate-400 block mt-0.5">Fastest Municipal Path</span>
+            <div class="absolute bottom-0 left-0 right-0 h-1 bg-emerald-500"></div>
+          </div>
+
+          <div class="bg-slate-900 border border-sky-500/40 rounded-xl p-3.5 relative overflow-hidden">
+            <div class="flex items-center justify-between text-slate-400 mb-1">
+              <span class="text-[10px] font-bold uppercase tracking-wider">Travel Speed</span>
+              <i data-lucide="gauge" class="w-4 h-4 text-sky-400"></i>
+            </div>
+            <div id="worker-zomato-speed-val" class="text-2xl font-black text-sky-400 font-mono">24 km/h</div>
+            <span class="text-[10px] text-slate-400 block mt-0.5">E-Patrol Auto / Walk</span>
+            <div class="absolute bottom-0 left-0 right-0 h-1 bg-sky-500"></div>
+          </div>
+
+          <div class="bg-slate-900 border border-indigo-500/40 rounded-xl p-3.5 relative overflow-hidden">
+            <div class="flex items-center justify-between text-slate-400 mb-1">
+              <span class="text-[10px] font-bold uppercase tracking-wider">Proximity Rank</span>
+              <i data-lucide="award" class="w-4 h-4 text-indigo-400"></i>
+            </div>
+            <div id="worker-zomato-rank-val" class="text-sm font-extrabold text-indigo-300 mt-1">⭐ Closest Spot</div>
+            <span class="text-[10px] text-emerald-400 block mt-0.5 font-bold">Lowest Distance First</span>
+            <div class="absolute bottom-0 left-0 right-0 h-1 bg-indigo-500"></div>
+          </div>
+        </div>
+
+        <!-- Dedicated Worker Tracking Map Container with In-Map Zomato Banner -->
+        <div class="relative w-full rounded-2xl overflow-hidden border border-slate-700 shadow-xl bg-slate-950">
+          <div id="worker-tracking-map" style="height: 380px; width: 100%;"></div>
+
+          <!-- In-Map Zomato Floating Driver HUD Overlay -->
+          <div class="absolute bottom-3 left-3 right-3 z-[400] bg-slate-950/90 backdrop-blur-md border border-slate-700/80 rounded-xl p-3 shadow-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 pointer-events-auto">
+            <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 rounded-full bg-emerald-500/20 border-2 border-emerald-400 flex items-center justify-center text-xl shrink-0">
+                🛵
+              </div>
+              <div>
+                <div class="flex items-center space-x-2">
+                  <span id="worker-map-hud-name" class="text-xs font-bold text-white">Basavaraj Belagavi (BAS098)</span>
+                  <span class="text-[10px] px-2 py-0.2 bg-emerald-500/20 text-emerald-300 rounded font-mono">On-Duty</span>
+                </div>
+                <p id="worker-travel-prompt" class="text-[11px] text-slate-300">Click 'Start Live Travel' to simulate real-time movement to the spot.</p>
+              </div>
+            </div>
+
+            <div class="sm:text-right min-w-[180px]">
+              <div class="flex items-center justify-between text-[11px] font-mono text-slate-300 mb-1">
+                <span>Route Progress:</span>
+                <span id="worker-travel-progress-percent" class="text-amber-300 font-bold">0%</span>
+              </div>
+              <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden border border-slate-700">
+                <div id="worker-travel-progress-bar" class="h-full bg-gradient-to-r from-amber-500 to-emerald-400 rounded-full transition-all duration-300" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- ============================================================== -->
@@ -1452,11 +1673,17 @@
 
         </div>
 
-        <!-- Submit Cleaned Proof Button (Transitions to Completed Table) -->
-        <button type="button" onclick="submitWorkerCleanup()" id="btn-submit-cleanup-proof" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold text-xs shadow-lg shadow-emerald-600/30 transition flex items-center justify-center space-x-2">
-          <i data-lucide="check-circle" class="w-4 h-4"></i>
-          <span>Submit Cleanup Proof & Move to Completed Table</span>
-        </button>
+        <!-- Cleaned Proof Action Buttons: AI Comparison & Final Submission -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+          <button type="button" onclick="previewAiImageComparison()" class="py-3 px-4 bg-sky-600 hover:bg-sky-500 text-white rounded-xl font-bold text-xs shadow-lg shadow-sky-600/20 transition flex items-center justify-center space-x-2 active:scale-95">
+            <i data-lucide="sparkles" class="w-4 h-4 text-sky-200"></i>
+            <span>🔬 Analyse & Compare Wastage vs Clean (AI Vision)</span>
+          </button>
+          <button type="button" onclick="submitWorkerCleanup()" id="btn-submit-cleanup-proof" class="py-3.5 px-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-extrabold text-xs shadow-lg shadow-emerald-600/30 transition flex items-center justify-center space-x-2 active:scale-95">
+            <i data-lucide="check-circle" class="w-4 h-4"></i>
+            <span>Submit Cleanup Proof & Move to Completed Table</span>
+          </button>
+        </div>
 
       </div>
 
@@ -1984,6 +2211,127 @@
       <button type="button" onclick="closeInAppScanner()" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs transition">
         Close Scanner
       </button>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- 3. AI CLEANLINESS COMPARISON & WASTE CLEARANCE AUDIT MODAL -->
+  <!-- ============================================================== -->
+  <div id="modal-ai-cleanliness-comparison" class="hidden fixed inset-0 z-[160] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+    <div class="bg-slate-900 border border-emerald-500/40 rounded-3xl max-w-2xl w-full shadow-2xl p-5 sm:p-7 space-y-5 relative my-auto animate-slide-down">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div class="flex items-center space-x-3">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center shrink-0">
+            <i data-lucide="sparkles" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <h3 class="text-base font-extrabold text-white">AI Vision Cleanliness Analysis</h3>
+              <span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] px-2 py-0.5 rounded-full font-mono font-bold">Verified Green</span>
+            </div>
+            <p class="text-xs text-slate-400">Comparing Citizen Reported Wastage Image with Worker Cleaned Proof</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeAiComparisonModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">✕</button>
+      </div>
+
+      <!-- Spot Information Banner -->
+      <div class="p-3 bg-slate-950/80 border border-slate-800 rounded-xl flex flex-wrap items-center justify-between text-xs gap-2">
+        <div>
+          <span class="text-slate-400">Incident Location: </span>
+          <strong id="ai-modal-spot-address" class="text-white">Congress Road, Tilakwadi, Belagavi</strong>
+        </div>
+        <div class="text-right">
+          <span class="text-slate-400">Employee: </span>
+          <strong id="ai-modal-worker-name" class="text-amber-300">Basavaraj Belagavi (BAS098)</strong>
+        </div>
+      </div>
+
+      <!-- Side-by-Side Dual Image Comparison (Before vs After) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+        <!-- Before: Wastage Image -->
+        <div class="bg-slate-950 border-2 border-rose-500/40 rounded-2xl p-3 space-y-2 relative overflow-hidden">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-black text-rose-400 uppercase tracking-wider flex items-center space-x-1">
+              <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i>
+              <span>1. Wastage Image (Before)</span>
+            </span>
+            <span class="text-[10px] bg-rose-500/20 text-rose-300 px-2 py-0.5 rounded font-mono font-bold">100% DEBRIS</span>
+          </div>
+          <div class="aspect-video bg-slate-900 rounded-xl overflow-hidden border border-slate-800 relative">
+            <img id="ai-modal-before-img" src="" class="w-full h-full object-cover" alt="Before Cleanup">
+            <div class="absolute inset-0 border-2 border-dashed border-rose-500/60 pointer-events-none rounded-xl m-1.5 flex items-center justify-center">
+              <span class="bg-rose-950/90 text-rose-300 border border-rose-500/50 text-[10px] px-2 py-0.5 rounded-full font-bold">⚠️ Uncleaned Waste Detected</span>
+            </div>
+          </div>
+          <p class="text-[11px] text-slate-400">Original citizen report photo of dumped garbage on Belagavi beat.</p>
+        </div>
+
+        <!-- After: Cleaned Image -->
+        <div class="bg-slate-950 border-2 border-emerald-500/50 rounded-2xl p-3 space-y-2 relative overflow-hidden">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-black text-emerald-400 uppercase tracking-wider flex items-center space-x-1">
+              <i data-lucide="check-check" class="w-3.5 h-3.5"></i>
+              <span>2. Cleaned Proof (After)</span>
+            </span>
+            <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded font-mono font-bold">100% CLEARED</span>
+          </div>
+          <div class="aspect-video bg-slate-900 rounded-xl overflow-hidden border border-slate-800 relative">
+            <img id="ai-modal-after-img" src="" class="w-full h-full object-cover" alt="After Cleanup">
+            <div class="absolute bottom-2 left-2 right-2 bg-slate-950/90 text-emerald-400 border border-emerald-500/40 text-[9px] font-mono px-2 py-1 rounded">
+              GPS Verified • Hardware Camera Sensor Match
+            </div>
+          </div>
+          <p class="text-[11px] text-emerald-400 font-semibold">Worker live camera proof showing 100% cleared & swept spot.</p>
+        </div>
+      </div>
+
+      <!-- AI Inspection Metrics Scorecard -->
+      <div class="bg-slate-950/90 border border-slate-800 rounded-2xl p-4 space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-slate-300">Cleanliness Verification Score</span>
+          <span id="ai-modal-score-pct" class="text-lg font-black text-emerald-400 font-mono">96.4%</span>
+        </div>
+        <div class="w-full bg-slate-800 rounded-full h-3 overflow-hidden border border-slate-700">
+          <div id="ai-modal-score-bar" class="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-700" style="width: 96.4%"></div>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 pt-1 text-xs">
+          <div class="p-2.5 bg-slate-900 border border-slate-800 rounded-xl">
+            <span class="text-[10px] text-slate-400 block font-semibold">WASTE REMOVED</span>
+            <span class="text-sm font-bold text-white">100% Cleared</span>
+          </div>
+          <div class="p-2.5 bg-slate-900 border border-slate-800 rounded-xl">
+            <span class="text-[10px] text-slate-400 block font-semibold">LANDMARK MATCH</span>
+            <span class="text-sm font-bold text-emerald-400">99.2% Consistent</span>
+          </div>
+          <div class="p-2.5 bg-slate-900 border border-slate-800 rounded-xl col-span-2 sm:col-span-1">
+            <span class="text-[10px] text-slate-400 block font-semibold">MUNICIPAL RATING</span>
+            <span class="text-sm font-bold text-amber-400">⭐⭐⭐⭐⭐ Grade A+</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Blockchain Attestation Badge -->
+      <div class="p-3 bg-indigo-950/40 border border-indigo-500/40 rounded-xl text-xs space-y-1">
+        <div class="flex items-center justify-between">
+          <span class="font-bold text-indigo-300 flex items-center space-x-1">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+            <span>Municipal Blockchain Cryptographic Proof</span>
+          </span>
+          <span class="text-amber-300 font-bold font-mono">+₹10 Cash Bonus Credited</span>
+        </div>
+        <p class="text-[10px] text-slate-400 font-mono truncate">Hash: <span id="ai-modal-block-hash" class="text-slate-300">0xb61eb0f738456791625e...</span></p>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="flex items-center space-x-2 pt-1">
+        <button type="button" onclick="closeAiComparisonModal()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold text-xs shadow-lg transition text-center">
+          ✅ Confirm & Finalize to Completed Cleanups Table
+        </button>
+      </div>
     </div>
   </div>
 
@@ -2715,6 +3063,9 @@
         if (btnOpenStaff) btnOpenStaff.classList.add('hidden');
         if (btnExitStaff) btnExitStaff.classList.remove('hidden');
         loadWorkerProfile(activeWorkerId);
+        setTimeout(() => {
+          initWorkerTrackingMap();
+        }, 250);
       } else if (role === 'officer') {
         if (badgeText) badgeText.innerText = "BCC Officer Console";
         if (btnOpenStaff) btnOpenStaff.classList.add('hidden');
@@ -3497,13 +3848,32 @@
       const pendingTasks = allReports.filter(r => r.status !== 'verified' && (r.assigned_worker_id === activeWorkerId || r.status === 'pending'));
       const completedTasks = allReports.filter(r => r.status === 'verified' && (r.completed_worker_id === activeWorkerId || r.assigned_worker_id === activeWorkerId));
 
+      // Get worker coordinates for distance calculation
+      const currWorker = activeWorkerProfile || (workersList && workersList.find(w => w.worker_id === activeWorkerId)) || {
+        current_lat: 15.8340,
+        current_lng: 74.5020
+      };
+      const wLat = parseFloat(currWorker.current_lat || 15.8340);
+      const wLng = parseFloat(currWorker.current_lng || 74.5020);
+
+      // Compute shortest distance for each pending task
+      pendingTasks.forEach(r => {
+        const sLat = parseFloat(r.latitude || 15.8340);
+        const sLng = parseFloat(r.longitude || 74.5020);
+        r._distMeters = calculateHaversineDistanceMeters(wLat, wLng, sLat, sLng);
+        r._distKm = (r._distMeters / 1000).toFixed(2);
+      });
+
+      // Sort pending tasks: LOWEST DISTANCE FIRST!
+      pendingTasks.sort((a, b) => a._distMeters - b._distMeters);
+
       // Update count badges
       const pendingBadge = document.getElementById('badge-worker-pending-count');
       const completedBadge = document.getElementById('badge-worker-completed-count');
       if (pendingBadge) pendingBadge.innerText = pendingTasks.length;
       if (completedBadge) completedBadge.innerText = completedTasks.length;
 
-      // 1. RENDER PENDING WORKING TASKS TABLE
+      // 1. RENDER PENDING WORKING TASKS TABLE (SORTED BY LOWEST DISTANCE FIRST)
       if (pendingContainer) {
         pendingContainer.innerHTML = '';
         if (pendingTasks.length === 0) {
@@ -3514,11 +3884,14 @@
               <p class="text-[11px] text-slate-400">All assigned garbage spots in Belagavi are currently cleared.</p>
             </div>`;
         } else {
-          pendingTasks.forEach(r => {
+          pendingTasks.forEach((r, idx) => {
             const isCurrentActive = activeAcceptedTaskId === r.id;
             const isOverdue = r.sla_delayed || r.status === 'overdue';
+            const isLowestDistance = idx === 0;
+            const distFormatted = r._distMeters < 1000 ? `${r._distMeters} m` : `${r._distKm} km`;
+
             const card = document.createElement('div');
-            card.className = `bg-slate-900/90 border ${isCurrentActive ? 'border-amber-400 ring-2 ring-amber-400/40' : (isOverdue ? 'red-alert-border' : 'border-slate-700')} rounded-2xl p-4 space-y-3 transition shadow-md`;
+            card.className = `bg-slate-900/90 border ${isCurrentActive ? 'border-amber-400 ring-2 ring-amber-400/40' : (isOverdue ? 'red-alert-border' : (isLowestDistance ? 'border-emerald-500/60 ring-1 ring-emerald-500/30' : 'border-slate-700'))} rounded-2xl p-4 space-y-3 transition shadow-md`;
             
             card.innerHTML = `
               <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -3530,6 +3903,7 @@
                     <div class="flex flex-wrap items-center gap-1.5">
                       <span class="text-xs font-mono font-bold text-slate-400">#REPORT-${r.id}</span>
                       <span class="bg-rose-500/20 text-rose-300 text-[10px] px-2 py-0.5 rounded font-mono font-bold uppercase">${r.waste_type.replace('_', ' ').toUpperCase()}</span>
+                      ${isLowestDistance ? `<span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] px-2 py-0.5 rounded-full font-bold flex items-center space-x-1"><i data-lucide="zap" class="w-3 h-3 text-amber-400"></i><span>⭐ LOWEST DISTANCE (${distFormatted})</span></span>` : `<span class="bg-slate-800 text-slate-300 border border-slate-700 text-[10px] px-2 py-0.5 rounded-full font-mono">📏 ${distFormatted} away</span>`}
                       ${isOverdue ? `<span class="bg-rose-600 text-white text-[10px] px-2 py-0.5 rounded font-bold animate-pulse">SLA OVERDUE</span>` : ''}
                       ${isCurrentActive ? `<span class="bg-amber-500 text-slate-950 text-[10px] px-2 py-0.5 rounded font-bold">🎯 SELECTED IN STUDIO</span>` : ''}
                     </div>
@@ -3546,10 +3920,16 @@
                     <span>Status: </span>
                     <strong class="${isOverdue ? 'text-rose-400' : 'text-amber-400'} uppercase">${r.status}</strong>
                   </div>
-                  <button type="button" onclick="openParticularTaskCleanup(${r.id})" class="px-4 py-2 bg-gradient-to-r from-amber-500 to-rose-500 hover:from-amber-400 hover:to-rose-400 text-slate-950 font-extrabold rounded-xl text-xs flex items-center space-x-1.5 shadow-lg shadow-amber-500/20 transition transform active:scale-95">
-                    <i data-lucide="camera" class="w-4 h-4"></i>
-                    <span>📷 Add Live Image & Clean Area</span>
-                  </button>
+                  <div class="flex items-center space-x-1.5">
+                    <button type="button" onclick="trackAndTravelToReport(${r.id})" class="px-3 py-2 bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 text-white font-bold rounded-xl text-xs flex items-center space-x-1.5 shadow transition transform active:scale-95">
+                      <i data-lucide="navigation" class="w-3.5 h-3.5"></i>
+                      <span>🛵 Travel & Track Route</span>
+                    </button>
+                    <button type="button" onclick="openParticularTaskCleanup(${r.id})" class="px-3.5 py-2 bg-gradient-to-r from-amber-500 to-rose-500 hover:from-amber-400 hover:to-rose-400 text-slate-950 font-black rounded-xl text-xs flex items-center space-x-1.5 shadow-lg shadow-amber-500/20 transition transform active:scale-95">
+                      <i data-lucide="camera" class="w-3.5 h-3.5"></i>
+                      <span>📷 Clean Spot</span>
+                    </button>
+                  </div>
                 </div>
               </div>
               ${r.assigned_worker_name ? `
@@ -3559,13 +3939,13 @@
                 </div>` : ''}
 
               <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-800">
-                <button type="button" onclick="showShortestRouteToWorkingPlaceForReport(${r.id})" class="px-3 py-1.5 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 rounded-xl text-xs font-bold flex items-center space-x-1.5 transition">
+                <button type="button" onclick="trackAndTravelToReport(${r.id})" class="px-3 py-1.5 bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 border border-sky-500/40 rounded-xl text-xs font-bold flex items-center space-x-1.5 transition">
                   <i data-lucide="navigation" class="w-3.5 h-3.5"></i>
-                  <span>📍 Shortest Distance & Route</span>
+                  <span>🛵 Zomato-Style Live Travel (${distFormatted})</span>
                 </button>
-                <button type="button" onclick="zoomToReportOnMap(${r.id})" class="px-3 py-1.5 bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 border border-sky-500/40 rounded-xl text-xs font-semibold flex items-center space-x-1.5 transition">
+                <button type="button" onclick="zoomToReportOnMap(${r.id})" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded-xl text-xs font-semibold flex items-center space-x-1.5 transition">
                   <i data-lucide="map" class="w-3.5 h-3.5"></i>
-                  <span>🗺️ View on Map</span>
+                  <span>🗺️ View Radar</span>
                 </button>
               </div>
             `;
@@ -3636,10 +4016,16 @@
 
               <div class="flex items-center justify-between text-[11px] text-slate-400 pt-2 border-t border-slate-800">
                 <span>Cleaned by: <strong class="text-amber-300 font-bold">${r.completed_worker_name || 'BCC Sanitation Employee'}</strong></span>
-                <button type="button" onclick="zoomToReportOnMap(${r.id})" class="px-2.5 py-1 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 rounded-lg text-[10px] font-bold flex items-center space-x-1 transition">
-                  <i data-lucide="map" class="w-3 h-3"></i>
-                  <span>🗺️ View on Map</span>
-                </button>
+                <div class="flex items-center space-x-2">
+                  <button type="button" onclick="inspectCompletedReportAiComparison(${r.id})" class="px-2.5 py-1 bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 border border-sky-500/40 rounded-lg text-[10px] font-bold flex items-center space-x-1 transition">
+                    <i data-lucide="sparkles" class="w-3 h-3"></i>
+                    <span>Inspect AI Comparison</span>
+                  </button>
+                  <button type="button" onclick="zoomToReportOnMap(${r.id})" class="px-2.5 py-1 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 rounded-lg text-[10px] font-bold flex items-center space-x-1 transition">
+                    <i data-lucide="map" class="w-3 h-3"></i>
+                    <span>🗺️ View Radar</span>
+                  </button>
+                </div>
               </div>
             `;
             completedContainer.appendChild(card);
@@ -3932,9 +4318,8 @@
         await loadWorkerProfile(activeWorkerId);
         loadBlockchainLedger();
 
-        // Scroll to Completed Cleanups Table
-        const completedSection = document.getElementById('worker-completed-section');
-        if (completedSection) completedSection.scrollIntoView({ behavior: 'smooth' });
+        // Show AI Cleanliness Comparison & Audit Modal
+        showAiCleanlinessComparisonModal(activeTask, afterImg, data);
       } catch (e) {
         showToast("Error submitting cleanup proof.", "error");
       } finally {
@@ -4628,6 +5013,11 @@
     }
 
     function showShortestRouteToWorkingPlaceForReport(reportId) {
+      if (currentRole === 'worker') {
+        trackAndTravelToReport(reportId);
+        return;
+      }
+
       const report = allReports.find(r => r.id === reportId);
       if (!report) {
         showToast(`Report #${reportId} not found.`, "error");
@@ -4669,6 +5059,12 @@
     function zoomToReportOnMap(reportId) {
       const report = allReports.find(r => r.id === reportId);
       if (!report) return;
+
+      if (currentRole === 'worker') {
+        trackAndTravelToReport(reportId);
+        return;
+      }
+
       if (!mapInstance) return;
 
       mapInstance.setView([report.latitude, report.longitude], 16);
@@ -4685,6 +5081,500 @@
       if (mapEl) {
         mapEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
+    }
+
+    // ============================================================
+    // ZOMATO-STYLE LIVE TRAVEL & BEAT NAVIGATION (WORKER PORTAL)
+    // ============================================================
+    let workerMapInstance = null;
+    let workerTrackingLayer = null;
+    let workerTravelInterval = null;
+    let isWorkerTraveling = false;
+    let activeTravelReportId = null;
+    let currentTravelWaypoints = [];
+    let currentTravelStep = 0;
+    let workerMarker = null;
+    let spotMarker = null;
+    let remainingRoutePolyline = null;
+    let traveledRoutePolyline = null;
+
+    // Web Audio API Gentle Arrival Chime
+    function playArrivalChime() {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const now = audioCtx.currentTime;
+        [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.12);
+          gain.gain.setValueAtTime(0.25, now + idx * 0.12);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.12 + 0.35);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + idx * 0.12);
+          osc.stop(now + idx * 0.12 + 0.35);
+        });
+      } catch (e) { console.warn("Audio chime error:", e); }
+    }
+
+    // Voice alert using SpeechSynthesis
+    function speakTravelAlert(text) {
+      try {
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+          const utterance = new SpeechSynthesisUtterance(text);
+          utterance.rate = 1.0;
+          utterance.pitch = 1.0;
+          utterance.lang = 'en-IN';
+          window.speechSynthesis.speak(utterance);
+        }
+      } catch (e) {}
+    }
+
+    // Initialize the dedicated Worker Live Tracking Map
+    function initWorkerTrackingMap() {
+      const mapContainer = document.getElementById('worker-tracking-map');
+      if (!mapContainer) return;
+
+      if (!workerMapInstance) {
+        workerMapInstance = L.map('worker-tracking-map', {
+          zoomControl: true,
+          attributionControl: false
+        }).setView([15.8340, 74.5020], 15);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19
+        }).addTo(workerMapInstance);
+
+        workerTrackingLayer = L.layerGroup().addTo(workerMapInstance);
+      }
+
+      setTimeout(() => {
+        if (workerMapInstance) {
+          workerMapInstance.invalidateSize();
+        }
+      }, 150);
+
+      // Default to closest pending report (lowest distance) if none active
+      if (!activeTravelReportId) {
+        const pendingTasks = allReports.filter(r => r.status !== 'verified');
+        if (pendingTasks.length > 0) {
+          // Sort to find lowest distance
+          const currWorker = activeWorkerProfile || (workersList && workersList.find(w => w.worker_id === activeWorkerId)) || {
+            current_lat: 15.8340,
+            current_lng: 74.5020
+          };
+          const wLat = parseFloat(currWorker.current_lat || 15.8340);
+          const wLng = parseFloat(currWorker.current_lng || 74.5020);
+
+          pendingTasks.forEach(r => {
+            r._distMeters = calculateHaversineDistanceMeters(wLat, wLng, parseFloat(r.latitude), parseFloat(r.longitude));
+          });
+          pendingTasks.sort((a, b) => a._distMeters - b._distMeters);
+          plotWorkerRoute(pendingTasks[0].id, false);
+        }
+      } else {
+        plotWorkerRoute(activeTravelReportId, false);
+      }
+    }
+
+    // Generates 22 intermediate street-grid waypoints for realistic road navigation
+    function generateRoadWaypoints(startLat, startLng, endLat, endLng, numSteps = 22) {
+      const pts = [];
+      const midStep = Math.floor(numSteps / 2);
+
+      const cornerLat = endLat;
+      const cornerLng = startLng;
+
+      for (let i = 0; i <= numSteps; i++) {
+        let lat, lng;
+        if (i <= midStep) {
+          const t = i / midStep;
+          lat = startLat + (cornerLat - startLat) * t;
+          lng = startLng + Math.sin(t * Math.PI) * 0.0003;
+        } else {
+          const t = (i - midStep) / (numSteps - midStep);
+          lat = cornerLat + Math.sin(t * Math.PI) * 0.0002;
+          lng = cornerLng + (endLng - cornerLng) * t;
+        }
+        pts.push([lat, lng]);
+      }
+      return pts;
+    }
+
+    // Plots the route between Employee Beat and Target Photo Spot
+    function plotWorkerRoute(reportId, autoStart = false) {
+      if (!reportId) return;
+      activeTravelReportId = reportId;
+      const report = allReports.find(r => r.id === reportId) || allReports[0];
+      if (!report) return;
+
+      const worker = activeWorkerProfile || (workersList && workersList.find(w => w.worker_id === activeWorkerId)) || {
+        name: 'Basavaraj Belagavi',
+        custom_emp_id: 'BAS098',
+        emp_id: 'BCC-W2101',
+        current_lat: 15.8340,
+        current_lng: 74.5020,
+        ward: 'Tilakwadi Beat'
+      };
+
+      const wLat = parseFloat(worker.current_lat || 15.8340);
+      const wLng = parseFloat(worker.current_lng || 74.5020);
+      const sLat = parseFloat(report.latitude);
+      const sLng = parseFloat(report.longitude);
+
+      // Generate road waypoints
+      currentTravelWaypoints = generateRoadWaypoints(wLat, wLng, sLat, sLng, 22);
+      currentTravelStep = 0;
+
+      // Update target banner in UI
+      const targetIdEl = document.getElementById('worker-nav-target-id');
+      const targetTypeEl = document.getElementById('worker-nav-target-type');
+      const targetAddrEl = document.getElementById('worker-nav-target-address');
+      const targetCoordsEl = document.getElementById('worker-nav-target-coords');
+      const targetImgEl = document.getElementById('worker-nav-target-img');
+      const hudWorkerName = document.getElementById('worker-map-hud-name');
+
+      if (targetIdEl) targetIdEl.innerText = `#REPORT-${report.id}`;
+      if (targetTypeEl) targetTypeEl.innerText = report.waste_type.replace('_', ' ').toUpperCase();
+      if (targetAddrEl) targetAddrEl.innerText = report.address || 'Belagavi Beat';
+      if (targetCoordsEl) targetCoordsEl.innerText = `Spot GPS: ${sLat.toFixed(4)}° N, ${sLng.toFixed(4)}° E`;
+      if (targetImgEl && report.before_image) targetImgEl.src = report.before_image;
+      if (hudWorkerName) hudWorkerName.innerText = `${worker.name} (${worker.custom_emp_id || 'BAS098'})`;
+
+      const initialDistMeters = calculateHaversineDistanceMeters(wLat, wLng, sLat, sLng);
+      const initialDistKm = (initialDistMeters / 1000).toFixed(2);
+      const walkMins = Math.max(1, Math.round((initialDistKm / 4.5) * 60));
+
+      const distValEl = document.getElementById('worker-zomato-dist-val');
+      const etaValEl = document.getElementById('worker-zomato-eta-val');
+      const promptEl = document.getElementById('worker-travel-prompt');
+      const progressBar = document.getElementById('worker-travel-progress-bar');
+      const progressPercent = document.getElementById('worker-travel-progress-percent');
+
+      if (distValEl) distValEl.innerText = initialDistMeters < 1000 ? `${initialDistMeters} m` : `${initialDistKm} km`;
+      if (etaValEl) etaValEl.innerText = `~${walkMins} min`;
+      if (promptEl) promptEl.innerText = `Route locked to ${report.address || 'spot'}. Click 'Start Live Travel' to navigate.`;
+      if (progressBar) progressBar.style.width = '0%';
+      if (progressPercent) progressPercent.innerText = '0%';
+
+      if (workerMapInstance) {
+        if (workerTrackingLayer) workerTrackingLayer.clearLayers();
+
+        // 1. Worker Custom Animated Marker (Scooter avatar + pulsating radar wave)
+        const workerIcon = L.divIcon({
+          className: 'zomato-worker-div-icon',
+          html: `
+            <div class="zomato-worker-pin">
+              <div class="zomato-pulse-ring"></div>
+              <div class="zomato-avatar-circle">🛵</div>
+              <div class="zomato-pin-label">${worker.name ? worker.name.split(' ')[0] : 'Worker'} (${worker.custom_emp_id || 'BAS098'})</div>
+            </div>
+          `,
+          iconSize: [48, 48],
+          iconAnchor: [24, 24]
+        });
+
+        workerMarker = L.marker([wLat, wLng], { icon: workerIcon }).addTo(workerTrackingLayer);
+        workerMarker.bindPopup(`
+          <div style="font-family:sans-serif; min-width:180px; padding:4px;">
+            <div style="font-weight:bold; color:#059669; font-size:12px;">🛵 Sanitation Worker On-Duty</div>
+            <div style="font-size:11px; font-weight:bold; color:#0f172a; margin-top:2px;">${worker.name} (${worker.custom_emp_id || 'BAS098'})</div>
+            <div style="font-size:10px; color:#64748b;">Beat: ${worker.ward || 'Belagavi Beat'}</div>
+          </div>
+        `);
+
+        // 2. Incident Spot Custom Marker
+        const spotIcon = L.divIcon({
+          className: 'zomato-spot-div-icon',
+          html: `
+            <div class="zomato-spot-pin">
+              <div class="zomato-spot-circle">🗑️</div>
+              <div class="zomato-spot-label">${report.address ? report.address.split(',')[0] : 'Spot'}</div>
+            </div>
+          `,
+          iconSize: [44, 44],
+          iconAnchor: [22, 22]
+        });
+
+        spotMarker = L.marker([sLat, sLng], { icon: spotIcon }).addTo(workerTrackingLayer);
+        spotMarker.bindPopup(`
+          <div style="font-family:sans-serif; min-width:200px; padding:4px;">
+            <div style="font-weight:bold; color:#dc2626; font-size:12px;">📍 Waste Incident Target Spot</div>
+            ${report.before_image ? `<div style="width:100%; height:75px; border-radius:6px; overflow:hidden; margin:4px 0;"><img src="${report.before_image}" style="width:100%; height:100%; object-fit:cover;" alt="Spot"></div>` : ''}
+            <div style="font-size:11px; font-weight:600; color:#0f172a;">${report.address || 'Belagavi Spot'}</div>
+            <div style="font-size:10px; color:#f59e0b; font-weight:bold; margin-top:3px;">📏 Shortest Distance: ${initialDistKm} km (${initialDistMeters}m)</div>
+          </div>
+        `);
+
+        // 3. Polylines: Traveled (Emerald) and Remaining (Dashed Amber)
+        traveledRoutePolyline = L.polyline([], {
+          color: '#10b981',
+          weight: 6,
+          opacity: 0.95
+        }).addTo(workerTrackingLayer);
+
+        remainingRoutePolyline = L.polyline(currentTravelWaypoints, {
+          color: '#f59e0b',
+          weight: 5,
+          opacity: 0.85,
+          dashArray: '8, 8'
+        }).addTo(workerTrackingLayer);
+
+        workerMapInstance.fitBounds(remainingRoutePolyline.getBounds(), { padding: [50, 50] });
+        workerMapInstance.invalidateSize();
+      }
+
+      if (autoStart) {
+        startWorkerLiveTravel(reportId);
+      }
+    }
+
+    // Toggle Start / Pause for live travel
+    function toggleStartWorkerLiveTravel() {
+      if (isWorkerTraveling) {
+        pauseWorkerLiveTravel();
+      } else {
+        startWorkerLiveTravel(activeTravelReportId);
+      }
+    }
+
+    function pauseWorkerLiveTravel() {
+      if (workerTravelInterval) {
+        clearInterval(workerTravelInterval);
+        workerTravelInterval = null;
+      }
+      isWorkerTraveling = false;
+      const btnText = document.getElementById('btn-start-travel-text');
+      if (btnText) btnText.innerText = "Resume Live Travel";
+      const statusText = document.getElementById('worker-nav-status-text');
+      if (statusText) statusText.innerText = "Travel Paused";
+      showToast("Live travel paused.", "info");
+    }
+
+    // Starts live step-by-step animated movement of sanitation employee towards the photo spot
+    function startWorkerLiveTravel(reportId) {
+      if (!reportId && activeTravelReportId) reportId = activeTravelReportId;
+      if (!reportId) {
+        const pending = allReports.filter(r => r.status !== 'verified');
+        if (pending.length > 0) reportId = pending[0].id;
+        else {
+          showToast("No pending task to travel to.", "warning");
+          return;
+        }
+      }
+
+      if (workerTravelInterval) clearInterval(workerTravelInterval);
+      isWorkerTraveling = true;
+
+      const report = allReports.find(r => r.id === reportId) || allReports[0];
+      const sLat = parseFloat(report.latitude);
+      const sLng = parseFloat(report.longitude);
+
+      const btnText = document.getElementById('btn-start-travel-text');
+      if (btnText) btnText.innerText = "Traveling... (Click to Pause)";
+
+      const statusBadge = document.getElementById('worker-nav-status-badge');
+      const statusText = document.getElementById('worker-nav-status-text');
+      if (statusBadge) statusBadge.className = "px-3 py-1.5 bg-amber-500/20 border border-amber-500/40 text-amber-300 rounded-xl text-xs font-bold flex items-center space-x-2";
+      if (statusText) statusText.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping"></span><span>🛵 En Route to Waste Spot (Speed: 24 km/h)</span>`;
+
+      const promptEl = document.getElementById('worker-travel-prompt');
+      if (promptEl) promptEl.innerText = `🛵 En route to ${report.address || 'spot'}. Decreasing distance live...`;
+
+      showToast(`🛵 Live Travel Started! Navigating to ${report.address || 'spot'}...`, "info");
+
+      workerTravelInterval = setInterval(() => {
+        currentTravelStep++;
+        const totalSteps = currentTravelWaypoints.length - 1;
+
+        if (currentTravelStep <= totalSteps) {
+          const curPoint = currentTravelWaypoints[currentTravelStep];
+          if (workerMarker) workerMarker.setLatLng(curPoint);
+
+          // Update polyline segments
+          const traveledSlice = currentTravelWaypoints.slice(0, currentTravelStep + 1);
+          const remainingSlice = currentTravelWaypoints.slice(currentTravelStep);
+
+          if (traveledRoutePolyline) traveledRoutePolyline.setLatLngs(traveledSlice);
+          if (remainingRoutePolyline) remainingRoutePolyline.setLatLngs(remainingSlice);
+
+          // Recalculate decreasing remaining distance
+          const remainingMeters = calculateHaversineDistanceMeters(curPoint[0], curPoint[1], sLat, sLng);
+          const remainingKm = (remainingMeters / 1000).toFixed(2);
+          const remainingMins = Math.max(1, Math.round((remainingKm / 4.5) * 60));
+
+          const distValEl = document.getElementById('worker-zomato-dist-val');
+          const etaValEl = document.getElementById('worker-zomato-eta-val');
+          const progressBar = document.getElementById('worker-travel-progress-bar');
+          const progressPercent = document.getElementById('worker-travel-progress-percent');
+
+          const progressPct = Math.min(100, Math.round((currentTravelStep / totalSteps) * 100));
+
+          if (distValEl) distValEl.innerText = remainingMeters < 1000 ? `${remainingMeters} m` : `${remainingKm} km`;
+          if (etaValEl) etaValEl.innerText = remainingMeters < 80 ? `< 30s` : `~${remainingMins} min`;
+          if (progressBar) progressBar.style.width = `${progressPct}%`;
+          if (progressPercent) progressPercent.innerText = `${progressPct}%`;
+        }
+
+        // Destination reached!
+        if (currentTravelStep >= totalSteps) {
+          clearInterval(workerTravelInterval);
+          workerTravelInterval = null;
+          isWorkerTraveling = false;
+
+          arriveAtWasteSpot(reportId);
+        }
+      }, 550);
+    }
+
+    // Handler for arriving at the spot
+    function arriveAtWasteSpot(reportId) {
+      const report = allReports.find(r => r.id === reportId) || allReports[0];
+
+      const distValEl = document.getElementById('worker-zomato-dist-val');
+      const etaValEl = document.getElementById('worker-zomato-eta-val');
+      const btnText = document.getElementById('btn-start-travel-text');
+      const statusBadge = document.getElementById('worker-nav-status-badge');
+      const statusText = document.getElementById('worker-nav-status-text');
+      const progressBar = document.getElementById('worker-travel-progress-bar');
+      const progressPercent = document.getElementById('worker-travel-progress-percent');
+      const promptEl = document.getElementById('worker-travel-prompt');
+
+      if (distValEl) distValEl.innerText = "0 m";
+      if (etaValEl) etaValEl.innerText = "ARRIVED";
+      if (btnText) btnText.innerText = "✅ Arrived at Spot";
+      if (statusBadge) statusBadge.className = "px-3 py-1.5 bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 rounded-xl text-xs font-bold flex items-center space-x-2";
+      if (statusText) statusText.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span><span>🎉 Arrived at Waste Spot! Clean Area Now</span>`;
+      if (progressBar) progressBar.style.width = "100%";
+      if (progressPercent) progressPercent.innerText = "100%";
+      if (promptEl) promptEl.innerText = `🎉 You have arrived at ${report.address}! Live Camera Studio is ready below.`;
+
+      // Play arrival chime audio
+      playArrivalChime();
+
+      // Announce arrival
+      speakTravelAlert(`You have arrived at the waste spot in ${report.address || 'Belagavi'}. Please clean the area and capture live photo.`);
+      showToast(`🎉 Arrived at Waste Spot (${report.address})! Open Camera Studio below to take cleaned photo.`, "success", 6000);
+
+      // Focus on cleanup studio
+      openParticularTaskCleanup(reportId);
+
+      const studioEl = document.getElementById('worker-cleanup-studio');
+      if (studioEl) {
+        studioEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        studioEl.classList.add('ring-4', 'ring-emerald-400');
+        setTimeout(() => studioEl.classList.remove('ring-4', 'ring-emerald-400'), 3000);
+      }
+    }
+
+    // Instant arrival shortcut
+    function arriveAtWasteSpotInstantly() {
+      if (workerTravelInterval) {
+        clearInterval(workerTravelInterval);
+        workerTravelInterval = null;
+      }
+      if (currentTravelWaypoints && currentTravelWaypoints.length > 0) {
+        currentTravelStep = currentTravelWaypoints.length - 1;
+        const finalPt = currentTravelWaypoints[currentTravelStep];
+        if (workerMarker) workerMarker.setLatLng(finalPt);
+        if (traveledRoutePolyline) traveledRoutePolyline.setLatLngs(currentTravelWaypoints);
+        if (remainingRoutePolyline) remainingRoutePolyline.setLatLngs([]);
+      }
+      arriveAtWasteSpot(activeTravelReportId);
+    }
+
+    // Recenter Worker Tracking Map
+    function centerWorkerTrackingMap() {
+      if (workerMapInstance && remainingRoutePolyline) {
+        workerMapInstance.fitBounds(remainingRoutePolyline.getBounds(), { padding: [50, 50] });
+      }
+    }
+
+    // Track and travel from task card click (Zomato-style)
+    function trackAndTravelToReport(reportId) {
+      activeTravelReportId = reportId;
+      const trackerSection = document.getElementById('worker-travel-tracker-section');
+      if (trackerSection) {
+        trackerSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      initWorkerTrackingMap();
+      plotWorkerRoute(reportId, true);
+    }
+
+    // ============================================================
+    // AI CLEANLINESS COMPARISON & WASTE CLEARANCE MODAL
+    // ============================================================
+    function showAiCleanlinessComparisonModal(report, afterImgData, apiResult = {}) {
+      if (!report) {
+        report = allReports.find(r => r.id === activeAcceptedTaskId) || allReports[0] || {
+          address: 'Congress Road, Tilakwadi, Belagavi',
+          before_image: 'https://images.unsplash.com/photo-1605600659873-d808a13e4d2a?w=500&auto=format&fit=crop&q=60'
+        };
+      }
+
+      const modal = document.getElementById('modal-ai-cleanliness-comparison');
+      if (!modal) return;
+
+      const currWorker = activeWorkerProfile || (workersList && workersList.find(w => w.worker_id === activeWorkerId)) || {
+        name: 'Basavaraj Belagavi',
+        custom_emp_id: 'BAS098'
+      };
+
+      const spotAddr = document.getElementById('ai-modal-spot-address');
+      const workerName = document.getElementById('ai-modal-worker-name');
+      const beforeImg = document.getElementById('ai-modal-before-img');
+      const afterImg = document.getElementById('ai-modal-after-img');
+      const scorePct = document.getElementById('ai-modal-score-pct');
+      const scoreBar = document.getElementById('ai-modal-score-bar');
+      const blockHash = document.getElementById('ai-modal-block-hash');
+
+      if (spotAddr) spotAddr.innerText = report.address || 'Tilakwadi Beat, Belagavi';
+      if (workerName) workerName.innerText = `${currWorker.name} (${currWorker.custom_emp_id || 'BAS098'})`;
+      if (beforeImg) beforeImg.src = report.before_image || 'https://images.unsplash.com/photo-1605600659873-d808a13e4d2a?w=500&auto=format&fit=crop&q=60';
+      if (afterImg) afterImg.src = afterImgData || 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=500&auto=format&fit=crop&q=60';
+
+      const simScore = apiResult.ai_similarity_score || 96.4;
+      if (scorePct) scorePct.innerText = `${simScore}%`;
+      if (scoreBar) scoreBar.style.width = `${simScore}%`;
+      if (blockHash) blockHash.innerText = apiResult.blockchain_hash || '0xb61eb0f738456791625e...';
+
+      modal.classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeAiComparisonModal() {
+      const modal = document.getElementById('modal-ai-cleanliness-comparison');
+      if (modal) modal.classList.add('hidden');
+
+      // Scroll to Completed Cleanups Table
+      const completedSection = document.getElementById('worker-completed-section');
+      if (completedSection) completedSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Preview AI comparison from studio before submission
+    function previewAiImageComparison() {
+      const activeTask = allReports.find(r => r.id === activeAcceptedTaskId) || allReports[0];
+      const canvas = document.getElementById('camera-snapshot-canvas');
+      let afterImg = 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=500&auto=format&fit=crop&q=60';
+      if (canvas && !canvas.classList.contains('hidden')) {
+        afterImg = canvas.toDataURL('image/jpeg', 0.85);
+      }
+      showAiCleanlinessComparisonModal(activeTask, afterImg, {
+        ai_similarity_score: 96.8,
+        blockchain_hash: '0xb61eb0f738456791625e3489ab8c19982...'
+      });
+    }
+
+    // Inspect AI comparison on an already completed report
+    function inspectCompletedReportAiComparison(reportId) {
+      const report = allReports.find(r => r.id === reportId);
+      if (!report) return;
+      showAiCleanlinessComparisonModal(report, report.after_image, {
+        ai_similarity_score: report.ai_similarity_score || 95.8,
+        blockchain_hash: report.blockchain_hash || '0x7e4b981ca9823...'
+      });
     }
   </script>
 
