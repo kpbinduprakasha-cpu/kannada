@@ -52,22 +52,263 @@
       border-radius: 9999px;
     }
 
-    /* THEME SWITCHER (WHITE COLOR & BLACK SCREEN) */
+    /* ============================================================== */
+    /* CLAYMORPHISM DESIGN SYSTEM - SOFT, INFLATED, 3D-LIKE SHAPES    */
+    /* Belagavi City Corporation (BCC) Clean City Modern 3D Redesign  */
+    /* ============================================================== */
+
+    :root {
+      --clay-bg-dark: #0f172a;
+      --clay-card-dark: linear-gradient(145deg, #1e293b, #0f172a);
+      --clay-modal-dark: linear-gradient(145deg, #1e293b, #090e17);
+      --clay-recessed-dark: #090e17;
+      --clay-shadow-dark: 10px 18px 30px -4px rgba(0, 0, 0, 0.55), -4px -4px 12px -2px rgba(255, 255, 255, 0.04), inset 2.5px 2.5px 5px rgba(255, 255, 255, 0.13), inset -3.5px -3.5px 7px rgba(0, 0, 0, 0.6);
+      --clay-shadow-hover-dark: 12px 22px 36px -4px rgba(0, 0, 0, 0.65), -5px -5px 14px -2px rgba(255, 255, 255, 0.06), inset 2.5px 2.5px 5px rgba(255, 255, 255, 0.16), inset -3.5px -3.5px 7px rgba(0, 0, 0, 0.65);
+      --clay-radius: 24px;
+      --clay-radius-lg: 32px;
+      --clay-radius-btn: 16px;
+    }
+
+    /* 1. CLAYMORPHIC CARDS, PANELS & SURFACES (INFLATED 3D VOLUME) */
+    .bg-slate-800,
+    .bg-slate-800\/80,
+    .bg-slate-800\/90,
+    .bg-slate-900:not(#app-splash-screen):not(#camera-video):not(#camera-canvas),
+    .bg-slate-900\/50,
+    .bg-slate-900\/60,
+    .bg-slate-900\/70,
+    .bg-slate-900\/80,
+    .bg-slate-900\/90,
+    .bg-slate-950\/60,
+    .bg-slate-950\/70,
+    .bg-slate-950\/80,
+    .bg-slate-950\/85,
+    .bg-slate-950\/90,
+    .bg-slate-950\/95,
+    [class*="rounded-2xl"]:not(input):not(textarea):not(select):not(img):not(video):not(canvas):not(.leaflet-container):not(.leaflet-pane *):not(#worker-tracking-map):not(#map),
+    [class*="rounded-3xl"]:not(input):not(textarea):not(select):not(img):not(video):not(canvas):not(.leaflet-container):not(.leaflet-pane *):not(#worker-tracking-map):not(#map) {
+      border-radius: 24px !important;
+      background: linear-gradient(145deg, #1e293b, #0f172a) !important;
+      box-shadow: 10px 18px 30px -4px rgba(0, 0, 0, 0.55), -4px -4px 12px -2px rgba(255, 255, 255, 0.04), inset 2.5px 2.5px 5px rgba(255, 255, 255, 0.13), inset -3.5px -3.5px 7px rgba(0, 0, 0, 0.6) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease !important;
+    }
+
+    /* Subtle Lift on Card Hover */
+    .bg-slate-800:hover,
+    .bg-slate-900:hover {
+      box-shadow: 12px 22px 36px -4px rgba(0, 0, 0, 0.65), -5px -5px 14px -2px rgba(255, 255, 255, 0.06), inset 2.5px 2.5px 5px rgba(255, 255, 255, 0.16), inset -3.5px -3.5px 7px rgba(0, 0, 0, 0.65) !important;
+    }
+
+    /* 2. CLAYMORPHIC MODAL DIALOGS (HIGH ELEVATION 3D INFLATION) */
+    #modal-auth-onboarding > div,
+    #modal-employee-profile-detail > div,
+    #modal-citizen-profile-detail > div,
+    #modal-ai-cleanliness-comparison > div,
+    #staff-login-modal > div,
+    #mobile-qr-modal > div,
+    #modal-officer-console > div {
+      border-radius: 32px !important;
+      background: linear-gradient(145deg, #1e293b, #090e17) !important;
+      box-shadow: 0 30px 70px -10px rgba(0, 0, 0, 0.85), inset 3px 3px 6px rgba(255, 255, 255, 0.16), inset -4px -4px 10px rgba(0, 0, 0, 0.75) !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.12) !important;
+    }
+
+    /* 3. CLAYMORPHIC TACTILE SQUISHY BUTTONS (PRESS-DOWN 3D FEEL) */
+    button:not(.leaflet-control-zoom-in):not(.leaflet-control-zoom-out):not([class*="leaflet"]),
+    input[type="button"],
+    input[type="submit"] {
+      border-radius: 16px !important;
+      font-weight: 700 !important;
+      transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Hover Lift */
+    button:hover:not(:disabled):not(.leaflet-control-zoom-in):not(.leaflet-control-zoom-out) {
+      transform: translateY(-2px);
+    }
+
+    /* Tactile Squishy Active/Click State */
+    button:active:not(:disabled):not(.leaflet-control-zoom-in):not(.leaflet-control-zoom-out) {
+      transform: translateY(2px) scale(0.97) !important;
+    }
+
+    /* 3A. Emerald Clay Buttons (Clean City / Primary / Success / Done) */
+    button[class*="bg-emerald"],
+    button[class*="from-emerald"],
+    .btn-emerald {
+      background: linear-gradient(145deg, #10b981, #059669) !important;
+      color: #ffffff !important;
+      border: 1px solid rgba(255, 255, 255, 0.25) !important;
+      box-shadow: 0 8px 20px -2px rgba(16, 185, 129, 0.45), inset 2.5px 2.5px 5px rgba(255, 255, 255, 0.45), inset -3px -3px 6px rgba(4, 120, 87, 0.8) !important;
+    }
+    button[class*="bg-emerald"]:hover,
+    button[class*="from-emerald"]:hover {
+      box-shadow: 0 12px 26px -2px rgba(16, 185, 129, 0.55), inset 3px 3px 6px rgba(255, 255, 255, 0.55), inset -3px -3px 6px rgba(4, 120, 87, 0.85) !important;
+    }
+    button[class*="bg-emerald"]:active,
+    button[class*="from-emerald"]:active {
+      box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4), inset 3.5px 3.5px 6px rgba(0, 0, 0, 0.35), inset -2px -2px 4px rgba(255, 255, 255, 0.25) !important;
+    }
+
+    /* 3B. Amber Clay Buttons (Employee / Route / Tracking / Action) */
+    button[class*="bg-amber"],
+    button[class*="from-amber"],
+    .btn-amber {
+      background: linear-gradient(145deg, #f59e0b, #d97706) !important;
+      color: #0f172a !important;
+      font-weight: 800 !important;
+      border: 1px solid rgba(255, 255, 255, 0.3) !important;
+      box-shadow: 0 8px 20px -2px rgba(245, 158, 11, 0.45), inset 2.5px 2.5px 5px rgba(255, 255, 255, 0.55), inset -3px -3px 6px rgba(180, 83, 9, 0.8) !important;
+    }
+    button[class*="bg-amber"]:hover,
+    button[class*="from-amber"]:hover {
+      box-shadow: 0 12px 26px -2px rgba(245, 158, 11, 0.55), inset 3px 3px 6px rgba(255, 255, 255, 0.65), inset -3px -3px 6px rgba(180, 83, 9, 0.85) !important;
+    }
+    button[class*="bg-amber"]:active,
+    button[class*="from-amber"]:active {
+      box-shadow: 0 4px 10px rgba(245, 158, 11, 0.4), inset 3.5px 3.5px 6px rgba(0, 0, 0, 0.35), inset -2px -2px 4px rgba(255, 255, 255, 0.25) !important;
+    }
+
+    /* 3C. Sky & Cyan Clay Buttons (Live GPS / Mobile QR / Maps) */
+    button[class*="bg-sky"],
+    button[class*="from-sky"],
+    button[class*="bg-cyan"],
+    .btn-sky {
+      background: linear-gradient(145deg, #0ea5e9, #0284c7) !important;
+      color: #ffffff !important;
+      border: 1px solid rgba(255, 255, 255, 0.25) !important;
+      box-shadow: 0 8px 20px -2px rgba(14, 165, 233, 0.45), inset 2.5px 2.5px 5px rgba(255, 255, 255, 0.45), inset -3px -3px 6px rgba(3, 105, 161, 0.8) !important;
+    }
+    button[class*="bg-sky"]:hover,
+    button[class*="from-sky"]:hover {
+      box-shadow: 0 12px 26px -2px rgba(14, 165, 233, 0.55), inset 3px 3px 6px rgba(255, 255, 255, 0.55), inset -3px -3px 6px rgba(3, 105, 161, 0.85) !important;
+    }
+    button[class*="bg-sky"]:active,
+    button[class*="from-sky"]:active {
+      box-shadow: 0 4px 10px rgba(14, 165, 233, 0.4), inset 3.5px 3.5px 6px rgba(0, 0, 0, 0.35), inset -2px -2px 4px rgba(255, 255, 255, 0.25) !important;
+    }
+
+    /* 3D. Indigo Clay Buttons (Officer Portal / Governance) */
+    button[class*="bg-indigo"],
+    button[class*="from-indigo"],
+    .btn-indigo {
+      background: linear-gradient(145deg, #6366f1, #4f46e5) !important;
+      color: #ffffff !important;
+      border: 1px solid rgba(255, 255, 255, 0.25) !important;
+      box-shadow: 0 8px 20px -2px rgba(99, 102, 241, 0.45), inset 2.5px 2.5px 5px rgba(255, 255, 255, 0.45), inset -3px -3px 6px rgba(49, 46, 129, 0.8) !important;
+    }
+
+    /* 3E. Rose / Red Clay Buttons (Emergency / Urgent / Exit) */
+    button[class*="bg-rose"],
+    button[class*="bg-red"],
+    .btn-rose {
+      background: linear-gradient(145deg, #f43f5e, #e11d48) !important;
+      color: #ffffff !important;
+      border: 1px solid rgba(255, 255, 255, 0.25) !important;
+      box-shadow: 0 8px 20px -2px rgba(244, 63, 94, 0.45), inset 2.5px 2.5px 5px rgba(255, 255, 255, 0.45), inset -3px -3px 6px rgba(159, 18, 57, 0.8) !important;
+    }
+
+    /* 3F. Slate / Charcoal Clay Buttons (Secondary / Back / Cancel / Demo) */
+    button[class*="bg-slate-800"],
+    button[class*="bg-slate-900"],
+    button[class*="bg-slate-700"],
+    .btn-slate {
+      background: linear-gradient(145deg, #334155, #1e293b) !important;
+      color: #f1f5f9 !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      box-shadow: 0 6px 16px -2px rgba(0, 0, 0, 0.45), inset 2px 2px 4px rgba(255, 255, 255, 0.15), inset -2.5px -2.5px 5px rgba(0, 0, 0, 0.55) !important;
+    }
+    button[class*="bg-slate"]:hover {
+      background: linear-gradient(145deg, #3f4f66, #243247) !important;
+      box-shadow: 0 8px 20px -2px rgba(0, 0, 0, 0.55), inset 2px 2px 4px rgba(255, 255, 255, 0.2), inset -2.5px -2.5px 5px rgba(0, 0, 0, 0.6) !important;
+    }
+    button[class*="bg-slate"]:active {
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4), inset 3px 3px 5px rgba(0, 0, 0, 0.45), inset -1.5px -1.5px 3px rgba(255, 255, 255, 0.1) !important;
+    }
+
+    /* 4. RECESSED MOLDED CLAY INPUTS & SELECTS (CARVED INTO SURFACE) */
+    input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="submit"]):not([type="button"]),
+    textarea,
+    select {
+      border-radius: 16px !important;
+      background-color: #090e17 !important;
+      color: #ffffff !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.08) !important;
+      box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.65), inset -2px -2px 4px rgba(255, 255, 255, 0.06), 0 2px 4px rgba(0, 0, 0, 0.25) !important;
+      transition: all 0.2s ease !important;
+    }
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none !important;
+      border-color: #10b981 !important;
+      box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.75), inset -2px -2px 4px rgba(16, 185, 129, 0.25), 0 0 14px rgba(16, 185, 129, 0.35) !important;
+    }
+
+    /* 5. PUFFY 3D CLAY BADGES & PILL CHIPS */
+    .rounded-full:not(.zomato-pulse-ring):not(#splash-progress-bar):not(#map *):not(#worker-tracking-map *) {
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25), inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.3), inset -1.5px -1.5px 3px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    /* 6. CLAYMORPHIC STICKY HEADER */
+    header {
+      background: linear-gradient(180deg, #090e17 0%, #0f172a 100%) !important;
+      border-bottom: 1.5px solid rgba(255, 255, 255, 0.1) !important;
+      box-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.65), inset 0 2px 4px rgba(255, 255, 255, 0.1) !important;
+      border-radius: 0 0 28px 28px !important;
+    }
+
+    /* 7. CLAY FRAMES FOR LEAFLET GIS MAPS */
+    #map,
+    #worker-tracking-map {
+      border-radius: 24px !important;
+      box-shadow: 10px 20px 35px -5px rgba(0, 0, 0, 0.65), inset 2.5px 2.5px 5px rgba(255, 255, 255, 0.15), inset -3.5px -3.5px 7px rgba(0, 0, 0, 0.65) !important;
+      border: 2px solid rgba(255, 255, 255, 0.1) !important;
+      overflow: hidden;
+      z-index: 10;
+    }
+    /* Protect Leaflet Tiles & Controls from distortion */
+    .leaflet-pane,
+    .leaflet-tile-container,
+    .leaflet-tile,
+    .leaflet-marker-icon,
+    .leaflet-popup {
+      box-shadow: none !important;
+      border-radius: 0 !important;
+    }
+
+    /* Protect Camera and Images from Inset Shadows */
+    video,
+    canvas,
+    img:not(.clay-img) {
+      box-shadow: none;
+    }
+
+    /* ============================================================== */
+    /* LIGHT THEME (WHITE COLOR / MARSHMALLOW PORCELAIN CLAY)        */
+    /* ============================================================== */
     body.theme-light {
-      background-color: #f8fafc !important;
+      background-color: #e9eef5 !important;
       color: #0f172a !important;
     }
     body.theme-light header {
-      background-color: #ffffff !important;
-      border-color: #e2e8f0 !important;
+      background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%) !important;
+      border-bottom: 1.5px solid #cbd5e1 !important;
+      box-shadow: 0 12px 28px -4px rgba(148, 163, 184, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.95) !important;
+      border-radius: 0 0 28px 28px !important;
     }
-    body.theme-light .bg-slate-900,
-    body.theme-light .bg-slate-950,
-    body.theme-light .bg-black {
-      background-color: #ffffff !important;
-      color: #0f172a !important;
-      border-color: #e2e8f0 !important;
-    }
+
+    /* Marshmallow Clay Cards in Light Theme */
+    body.theme-light .bg-slate-800,
+    body.theme-light .bg-slate-800\/80,
+    body.theme-light .bg-slate-800\/90,
+    body.theme-light .bg-slate-900:not(#app-splash-screen),
+    body.theme-light .bg-slate-950:not(#app-splash-screen),
     body.theme-light .bg-slate-900\/50,
     body.theme-light .bg-slate-900\/60,
     body.theme-light .bg-slate-900\/70,
@@ -78,24 +319,48 @@
     body.theme-light .bg-slate-950\/80,
     body.theme-light .bg-slate-950\/85,
     body.theme-light .bg-slate-950\/90,
-    body.theme-light .bg-slate-950\/95 {
-      background-color: #f1f5f9 !important;
-      border-color: #cbd5e1 !important;
-    }
-    body.theme-light .bg-slate-800,
-    body.theme-light .bg-slate-800\/80,
-    body.theme-light .bg-slate-800\/90 {
-      background-color: #ffffff !important;
+    body.theme-light .bg-slate-950\/95,
+    body.theme-light [class*="rounded-2xl"]:not(input):not(textarea):not(select):not(img):not(video):not(canvas):not(.leaflet-container):not(.leaflet-pane *):not(#worker-tracking-map):not(#map),
+    body.theme-light [class*="rounded-3xl"]:not(input):not(textarea):not(select):not(img):not(video):not(canvas):not(.leaflet-container):not(.leaflet-pane *):not(#worker-tracking-map):not(#map) {
+      background: linear-gradient(145deg, #ffffff, #edf2f7) !important;
       color: #0f172a !important;
-      border-color: #e2e8f0 !important;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05) !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.95) !important;
+      box-shadow: 12px 20px 34px -4px rgba(148, 163, 184, 0.4), -8px -8px 18px rgba(255, 255, 255, 0.95), inset 3px 3px 6px rgba(255, 255, 255, 0.95), inset -3px -3px 6px rgba(203, 213, 225, 0.65) !important;
     }
+
     body.theme-light .bg-slate-800:hover,
-    body.theme-light .hover\:bg-slate-700:hover,
-    body.theme-light .hover\:bg-slate-800:hover {
+    body.theme-light .bg-slate-900:hover {
+      box-shadow: 14px 24px 38px -4px rgba(148, 163, 184, 0.45), -10px -10px 20px rgba(255, 255, 255, 0.95), inset 3px 3px 6px rgba(255, 255, 255, 0.95), inset -3px -3px 6px rgba(203, 213, 225, 0.65) !important;
+    }
+
+    /* Marshmallow Modals in Light Theme */
+    body.theme-light #modal-auth-onboarding > div,
+    body.theme-light #modal-employee-profile-detail > div,
+    body.theme-light #modal-citizen-profile-detail > div,
+    body.theme-light #modal-ai-cleanliness-comparison > div,
+    body.theme-light #staff-login-modal > div,
+    body.theme-light #mobile-qr-modal > div,
+    body.theme-light #modal-officer-console > div {
+      background: linear-gradient(145deg, #ffffff, #eef2f6) !important;
+      box-shadow: 0 30px 65px -10px rgba(100, 116, 139, 0.45), inset 3px 3px 6px rgba(255, 255, 255, 0.95), inset -4px -4px 10px rgba(203, 213, 225, 0.7) !important;
+      border: 2px solid rgba(255, 255, 255, 0.95) !important;
+    }
+
+    /* Marshmallow Recessed Inputs */
+    body.theme-light input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="submit"]):not([type="button"]),
+    body.theme-light textarea,
+    body.theme-light select {
       background-color: #f1f5f9 !important;
       color: #0f172a !important;
+      border: 1.5px solid #cbd5e1 !important;
+      box-shadow: inset 3px 3px 6px rgba(203, 213, 225, 0.75), inset -2px -2px 5px rgba(255, 255, 255, 0.95), 0 2px 4px rgba(148, 163, 184, 0.12) !important;
     }
+    body.theme-light input::placeholder,
+    body.theme-light textarea::placeholder {
+      color: #94a3b8 !important;
+    }
+
+    /* Light Theme Typography */
     body.theme-light .text-white {
       color: #0f172a !important;
     }
@@ -112,28 +377,29 @@
     body.theme-light .border-slate-700,
     body.theme-light .border-slate-700\/80,
     body.theme-light .border-slate-800 {
-      border-color: #e2e8f0 !important;
-    }
-    body.theme-light input,
-    body.theme-light textarea,
-    body.theme-light select {
-      background-color: #ffffff !important;
-      color: #0f172a !important;
       border-color: #cbd5e1 !important;
     }
-    body.theme-light input::placeholder,
-    body.theme-light textarea::placeholder {
-      color: #94a3b8 !important;
+
+    /* Light Theme Neutral Buttons */
+    body.theme-light button[class*="bg-slate"],
+    body.theme-light .btn-slate {
+      background: linear-gradient(145deg, #ffffff, #e2e8f0) !important;
+      color: #1e293b !important;
+      border: 1px solid #cbd5e1 !important;
+      box-shadow: 0 8px 18px -2px rgba(148, 163, 184, 0.35), inset 2px 2px 4px rgba(255, 255, 255, 0.95), inset -2.5px -2.5px 5px rgba(203, 213, 225, 0.7) !important;
     }
+
+    /* Light Theme Switcher Box */
     body.theme-light #theme-switcher-container {
-      background-color: #e2e8f0 !important;
+      background: #e2e8f0 !important;
       border-color: #cbd5e1 !important;
+      box-shadow: inset 2px 2px 4px rgba(203, 213, 225, 0.6), inset -2px -2px 4px rgba(255, 255, 255, 0.9) !important;
     }
 
     /* Zomato-Style Live Route Tracking & Worker Avatar */
     #worker-tracking-map {
       height: 380px;
-      border-radius: 1rem;
+      border-radius: 1.5rem !important;
       z-index: 10;
     }
     .zomato-worker-pin {
@@ -147,7 +413,7 @@
       position: absolute;
       width: 48px;
       height: 48px;
-      border-radius: 50%;
+      border-radius: 50% !important;
       background: rgba(16, 185, 129, 0.45);
       animation: zomato-pulse 1.5s ease-out infinite;
       z-index: 1;
@@ -159,15 +425,15 @@
     .zomato-avatar-circle {
       position: relative;
       z-index: 2;
-      width: 42px;
-      height: 42px;
+      width: 44px;
+      height: 44px;
       background: linear-gradient(135deg, #059669, #10b981);
       border: 3px solid #ffffff;
-      border-radius: 50%;
+      border-radius: 50% !important;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.5), inset 2px 2px 4px rgba(255,255,255,0.6), inset -2px -2px 4px rgba(0,0,0,0.3) !important;
       font-size: 20px;
     }
     .zomato-pin-label {
@@ -175,12 +441,12 @@
       background: rgba(15, 23, 42, 0.95);
       color: #38bdf8;
       border: 1px solid rgba(56, 189, 248, 0.6);
-      border-radius: 9999px;
+      border-radius: 9999px !important;
       padding: 1px 8px;
       font-size: 10px;
       font-weight: 800;
       white-space: nowrap;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5), inset 1px 1px 2px rgba(255,255,255,0.3) !important;
       z-index: 3;
     }
     .zomato-spot-pin {
@@ -190,15 +456,15 @@
       justify-content: center;
     }
     .zomato-spot-circle {
-      width: 40px;
-      height: 40px;
+      width: 42px;
+      height: 42px;
       background: linear-gradient(135deg, #dc2626, #ef4444);
       border: 3px solid #ffffff;
-      border-radius: 50%;
+      border-radius: 50% !important;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.5), inset 2px 2px 4px rgba(255,255,255,0.6), inset -2px -2px 4px rgba(0,0,0,0.3) !important;
       font-size: 18px;
     }
     .zomato-spot-label {
@@ -206,12 +472,12 @@
       background: rgba(15, 23, 42, 0.95);
       color: #fca5a5;
       border: 1px solid rgba(239, 68, 68, 0.6);
-      border-radius: 9999px;
+      border-radius: 9999px !important;
       padding: 1px 8px;
       font-size: 10px;
       font-weight: 800;
       white-space: nowrap;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5), inset 1px 1px 2px rgba(255,255,255,0.3) !important;
     }
   </style>
 </head>
