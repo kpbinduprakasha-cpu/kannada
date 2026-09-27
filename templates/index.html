@@ -820,8 +820,8 @@
   <!-- ============================================================== -->
   <!-- 3-SECOND FULL PAGE CLEAN CITY SPLASH SCREEN (Requirement 7)    -->
   <!-- ============================================================== -->
-  <div id="app-splash-screen" class="fixed inset-0 z-[99999] bg-gradient-to-b from-[#064E3B] via-[#04392b] to-[#022c22] flex flex-col items-center justify-center p-6 text-[#F8E7C9] transition-opacity duration-700 select-none">
-    <div class="flex flex-col items-center text-center space-y-6 max-w-sm w-full animate-fade-in">
+  <div id="app-splash-screen" onclick="dismissSplashScreen()" class="fixed inset-0 z-[99999] bg-gradient-to-b from-[#064E3B] via-[#04392b] to-[#022c22] flex flex-col items-center justify-center p-6 text-[#F8E7C9] transition-opacity duration-700 select-none cursor-pointer">
+    <div class="flex flex-col items-center text-center space-y-5 max-w-sm w-full animate-fade-in" onclick="event.stopPropagation()">
       <!-- Clean City Official Logo Emblem -->
       <div class="relative flex items-center justify-center">
         <div class="absolute w-44 h-44 bg-emerald-400/20 rounded-full blur-2xl animate-pulse"></div>
@@ -842,17 +842,35 @@
       </div>
 
       <!-- 3-Second Progress Bar & Countdown -->
-      <div class="w-full space-y-2 pt-2">
+      <div class="w-full space-y-2 pt-1">
         <div class="w-full h-2 bg-[#02231a] rounded-full overflow-hidden border border-[#D6BD90]/50">
-          <div id="splash-progress-bar" class="h-full bg-gradient-to-r from-emerald-400 via-[#F8E7C9] to-emerald-300 rounded-full transition-all duration-[3000ms] ease-out" style="width: 0%;"></div>
+          <div id="splash-progress-bar" class="h-full bg-gradient-to-r from-emerald-400 via-[#F8E7C9] to-emerald-300 rounded-full transition-all duration-[2000ms] ease-out" style="width: 0%;"></div>
         </div>
         <div class="flex justify-between items-center text-[11px] font-mono text-[#EBD5AE]">
           <span id="splash-status-text" class="text-[#F8E7C9] font-bold">Loading Clean City Portal...</span>
-          <span id="splash-timer-text">3s</span>
+          <span id="splash-timer-text">2s</span>
         </div>
       </div>
+
+      <!-- Instant Enter Button -->
+      <button type="button" onclick="dismissSplashScreen()" class="mt-1 px-5 py-2 rounded-xl bg-[#F8E7C9]/20 hover:bg-[#F8E7C9]/35 border border-[#D6BD90] text-[#F8E7C9] text-xs font-bold transition flex items-center space-x-1.5 cursor-pointer active:scale-95 shadow-md">
+        <span>Enter Portal Now</span>
+        <span>→</span>
+      </button>
     </div>
   </div>
+
+  <script>
+    // Independent inline failsafe: guarantees splash screen dismisses automatically
+    function dismissSplashScreen() {
+      var s = document.getElementById('app-splash-screen');
+      if (s) {
+        s.classList.add('opacity-0', 'pointer-events-none');
+        setTimeout(function() { s.style.display = 'none'; }, 600);
+      }
+    }
+    setTimeout(dismissSplashScreen, 2200);
+  </script>
 
   <!-- ============================================================== -->
   <!-- FLOATING IN-APP TOAST NOTIFICATIONS (NO BLOCKING POPUPS) -->
@@ -3438,7 +3456,7 @@
     let currentSelectedGender = 'Male';
     let isAadhaarVisible = false;
 
-    // 3-Second Full Page Clean City Splash Screen (Requirement 7)
+    // 2-Second Clean City Splash Screen
     function initSplashScreen() {
       const splash = document.getElementById('app-splash-screen');
       const bar = document.getElementById('splash-progress-bar');
@@ -3448,23 +3466,19 @@
 
       setTimeout(() => { if (bar) bar.style.width = '100%'; }, 50);
 
-      let remaining = 3;
+      let remaining = 2;
       const interval = setInterval(() => {
         remaining--;
-        if (remaining === 2) {
-          if (timerText) timerText.innerText = '2s';
-          if (statusText) statusText.innerText = 'Connecting Belagavi Sanitation Beat...';
-        } else if (remaining === 1) {
+        if (remaining === 1) {
           if (timerText) timerText.innerText = '1s';
           if (statusText) statusText.innerText = 'Syncing Live GPS Geofence...';
         } else if (remaining <= 0) {
           clearInterval(interval);
           if (timerText) timerText.innerText = '0s';
           if (statusText) statusText.innerText = 'Welcome!';
-          splash.classList.add('opacity-0', 'pointer-events-none');
-          setTimeout(() => { splash.style.display = 'none'; }, 700);
+          dismissSplashScreen();
         }
-      }, 1000);
+      }, 700);
     }
 
     // Gender / Sex selection in Admission Modal
@@ -3948,9 +3962,13 @@
     }
 
     // Default immediately to the user's requested Emerald Ink & Champagne theme
-    const savedTheme = localStorage.getItem('bcc_theme_mode');
-    const initialSavedTheme = (savedTheme === 'dark') ? 'dark' : 'champagne';
-    setThemeMode('champagne');
+    try {
+      const savedTheme = localStorage.getItem('bcc_theme_mode');
+      const initialSavedTheme = (savedTheme === 'dark') ? 'dark' : 'champagne';
+      setThemeMode('champagne');
+    } catch (e) {
+      console.warn("Theme storage warning:", e);
+    }
 
     function setAppLanguage(lang) {
       appLang = 'en';
@@ -3972,36 +3990,55 @@
       address: 'Congress Road, Tilakwadi, Belagavi'
     };
 
-    // Initialize on load
-    document.addEventListener('DOMContentLoaded', () => {
-      lucide.createIcons();
-      initSplashScreen();
+    // Initialize application safely
+    function initApp() {
+      try {
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+          window.lucide.createIcons();
+        }
+      } catch (e) { console.warn("Lucide icons warning:", e); }
 
-      const stored = localStorage.getItem('bcc_user');
-      if (stored) {
-        try {
-          currentUser = JSON.parse(stored);
-          applyUserSession(currentUser);
-          closeOnboardingModal();
-        } catch(e) {
+      try {
+        initSplashScreen();
+      } catch (e) {
+        dismissSplashScreen();
+      }
+
+      try {
+        const stored = localStorage.getItem('bcc_user');
+        if (stored) {
+          try {
+            currentUser = JSON.parse(stored);
+            applyUserSession(currentUser);
+            closeOnboardingModal();
+          } catch(e) {
+            openOnboardingModal();
+          }
+        } else {
           openOnboardingModal();
         }
-      } else {
+      } catch (e) {
+        console.warn("Storage read warning:", e);
         openOnboardingModal();
       }
 
-      updateAvatarImages(currentUser?.gender || 'Male');
-      detectLiveSpotGps();
+      try { updateAvatarImages(currentUser?.gender || 'Male'); } catch (e) {}
+      try { detectLiveSpotGps(); } catch (e) {}
+      try { initMap(); } catch (e) {}
+      try { loadWorkersList(); } catch (e) {}
+      try { loadAllReports(); } catch (e) {}
+      try { checkProximityAlert(); } catch (e) {}
+      try { loadBlockchainLedger(); } catch (e) {}
+      try { updateWatermarkTime(); } catch (e) {}
+      try { setInterval(updateWatermarkTime, 1000); } catch (e) {}
+      try { setInterval(checkProximityAlert, 6000); } catch (e) {}
+    }
 
-      initMap();
-      loadWorkersList();
-      loadAllReports();
-      checkProximityAlert();
-      loadBlockchainLedger();
-      updateWatermarkTime();
-      setInterval(updateWatermarkTime, 1000);
-      setInterval(checkProximityAlert, 6000);
-    });
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+      initApp();
+    }
 
     // ============================================================
     // ONBOARDING & LOGIN FLOW (BELAGAVI)
