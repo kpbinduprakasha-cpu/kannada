@@ -98,7 +98,7 @@ def dynamic_decision_dispatch(incident_lat, incident_lng, c):
     5. Returns optimal worker with decision justification for transparent person attribution.
     """
     workers = c.execute('''
-        SELECT wp.*, u.phone, u.name, u.ward, u.aadhaar
+        SELECT wp.*, u.phone, u.name, u.ward, u.aadhaar, u.custom_emp_id
         FROM worker_progress wp
         JOIN users u ON wp.worker_id = u.id
         WHERE wp.duty_status = 'on_duty'
@@ -116,11 +116,14 @@ def dynamic_decision_dispatch(incident_lat, incident_lng, c):
                     WHERE assigned_worker_id = ? AND status IN ('assigned', 'in_progress', 'overdue')
                 ''', (w['worker_id'],)).fetchone()['count']
 
+                c_code = w['custom_emp_id'] if ('custom_emp_id' in w.keys() and w['custom_emp_id']) else compute_employee_id_code(w['name'], w['aadhaar'])
                 score = (dist * 1.5) + (active_tasks * 2.0)
                 candidates.append({
                     'worker_id': w['worker_id'],
                     'name': w['name'],
                     'emp_id': w['worker_emp_id'],
+                    'custom_emp_id': c_code,
+                    'employee_id_code': c_code,
                     'phone': w['phone'],
                     'ward': w['ward'],
                     'distance_km': dist,
@@ -1007,6 +1010,58 @@ def list_workers():
     return jsonify({
         'success': True,
         'workers': workers_list
+    })
+
+@app.route('/api/workers/nearest', methods=['GET'])
+def get_nearest_workers():
+    """Returns surrounding sanitation workers sorted by distance from coordinates in Belagavi."""
+    try:
+        lat = float(request.args.get('lat', 15.8340))
+        lng = float(request.args.get('lng', 74.5020))
+    except (ValueError, TypeError):
+        lat, lng = 15.8340, 74.5020
+
+    conn = get_db_connection()
+    c = conn.cursor()
+    workers = c.execute('''
+        SELECT wp.*, u.phone, u.name, u.ward, u.aadhaar, u.custom_emp_id
+        FROM worker_progress wp
+        JOIN users u ON wp.worker_id = u.id
+        WHERE wp.duty_status = 'on_duty'
+    ''').fetchall()
+
+    results = []
+    for w in workers:
+        w_lat = w['current_lat']
+        w_lng = w['current_lng']
+        if w_lat and w_lng:
+            dist_km = calculate_distance_km(lat, lng, w_lat, w_lng)
+            c_code = w['custom_emp_id'] or compute_employee_id_code(w['name'], w['aadhaar'])
+            active_count = c.execute('''
+                SELECT COUNT(*) as count FROM waste_reports
+                WHERE assigned_worker_id = ? AND status IN ('assigned', 'in_progress', 'overdue')
+            ''', (w['worker_id'],)).fetchone()['count']
+            results.append({
+                'worker_id': w['worker_id'],
+                'name': w['name'],
+                'emp_id': w['worker_emp_id'],
+                'custom_emp_id': c_code,
+                'employee_id_code': c_code,
+                'phone': w['phone'],
+                'ward': w['ward'],
+                'current_lat': w_lat,
+                'current_lng': w_lng,
+                'active_tasks': active_count,
+                'distance_km': round(dist_km, 2),
+                'distance_meters': round(dist_km * 1000.0, 1)
+            })
+    conn.close()
+
+    results.sort(key=lambda x: x['distance_meters'])
+    return jsonify({
+        'success': True,
+        'nearest_workers': results,
+        'top_worker': results[0] if results else None
     })
 
 @app.route('/api/worker/profile/<int:worker_id>', methods=['GET'])

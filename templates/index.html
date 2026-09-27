@@ -1959,6 +1959,15 @@
                 <button type="button" onclick="setSpotLocPreset(15.8180, 74.4920, 'Udyambag, Belagavi')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition">
                   Udyambag
                 </button>
+                <button type="button" onclick="setSpotLocPreset(15.8600, 74.5200, 'Belagavi Fort, Belagavi')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition">
+                  Belagavi Fort
+                </button>
+                <button type="button" onclick="setSpotLocPreset(15.8480, 74.5050, 'Bogarves, Belagavi')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition">
+                  Bogarves
+                </button>
+                <button type="button" onclick="setSpotLocPreset(15.8200, 74.5050, 'Angol, Belagavi')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition">
+                  Angol
+                </button>
               </div>
 
               <!-- Lat/Lng and Address inputs (Defaults to Machhe Spot Location) -->
@@ -1967,6 +1976,27 @@
                 <input type="text" id="report-lng" value="74.4690" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs font-mono text-slate-300" readonly>
               </div>
               <input type="text" id="report-address" value="Machhe, Belagavi" placeholder="Enter or confirm incident spot location" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 focus:border-emerald-500">
+
+              <!-- Surrounding Sanitation Employee Card for This Spot -->
+              <div id="citizen-surrounding-worker-card" class="bg-slate-950/80 border border-emerald-500/40 rounded-xl p-3 flex items-center justify-between gap-2 shadow-sm">
+                <div class="flex items-center space-x-2.5">
+                  <div class="w-9 h-9 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-lg shrink-0">
+                    👷
+                  </div>
+                  <div>
+                    <div class="text-[10px] text-emerald-400 font-bold uppercase tracking-wider flex items-center space-x-1">
+                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                      <span>Surrounding Staff Assigned</span>
+                    </div>
+                    <div id="citizen-nearest-worker-name" class="text-xs font-bold text-white">Basavaraj Belagavi (BCC-W2101 / BAS098)</div>
+                    <div id="citizen-nearest-worker-dist" class="text-[10px] text-slate-400">📏 140m away in Tilakwadi Beat • On-Duty</div>
+                  </div>
+                </div>
+                <button type="button" id="btn-open-surrounding-worker" onclick="openWorkerPortalForNearest()" class="px-2.5 py-1.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 rounded-lg text-[11px] font-extrabold shrink-0 transition flex items-center space-x-1 shadow-sm">
+                  <span>Open Worker</span>
+                  <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                </button>
+              </div>
             </div>
 
             <!-- Citizen Universal 1-Click Live Camera (Mobile & Laptop) -->
@@ -2013,13 +2043,30 @@
                   </button>
                 </div>
 
-                <!-- Single Universal 1-Click Live Camera Button (Mobile & Laptop) -->
+                <!-- 1-Click Hardware Camera for Laptop & Mobile + File Picker -->
                 <div>
-                  <label for="report-photo-input" class="w-full cursor-pointer py-3 px-4 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-xs font-bold flex items-center justify-center space-x-2 transition shadow-lg shadow-rose-600/30 text-center">
-                    <i data-lucide="camera" class="w-4 h-4 shrink-0"></i>
-                    <span id="btn-phone-cam-label">Take Live Photo</span>
-                    <input type="file" id="report-photo-input" accept="image/*" capture="environment" onchange="previewCitizenImage(this)" class="hidden">
-                  </label>
+                  <div id="citizen-cam-controls-ready" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <button type="button" id="btn-open-citizen-cam" onclick="openCitizenHardwareCamera()" class="w-full py-3 px-3 bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white rounded-xl text-xs font-bold flex items-center justify-center space-x-2 transition shadow-lg shadow-rose-600/30">
+                      <i data-lucide="camera" class="w-4 h-4 shrink-0"></i>
+                      <span id="btn-phone-cam-label">📷 Turn ON Live Camera</span>
+                    </button>
+                    <label for="report-photo-input" class="w-full cursor-pointer py-3 px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-xl text-xs font-semibold flex items-center justify-center space-x-2 transition text-center">
+                      <i data-lucide="upload" class="w-4 h-4 text-slate-400"></i>
+                      <span>📁 Choose Image File</span>
+                      <input type="file" id="report-photo-input" accept="image/*" capture="environment" onchange="previewCitizenImage(this)" class="hidden">
+                    </label>
+                  </div>
+
+                  <!-- Active Live Camera Controls (When camera is streaming) -->
+                  <div id="citizen-cam-controls-active" class="hidden flex items-center gap-2">
+                    <button type="button" id="btn-snap-citizen-cam" onclick="captureCitizenLiveSnapshot()" class="flex-1 py-3 px-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-extrabold flex items-center justify-center space-x-2 shadow-lg shadow-emerald-600/30 transition animate-pulse">
+                      <i data-lucide="aperture" class="w-4 h-4"></i>
+                      <span>🔴 SNAP LIVE PHOTO</span>
+                    </button>
+                    <button type="button" onclick="stopCitizenCamera()" class="py-3 px-3.5 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-slate-700 rounded-xl text-xs font-bold transition">
+                      <span>✕ Close Camera</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -2330,12 +2377,38 @@
             </div>
           </div>
 
-          <!-- Controls -->
+          <!-- Controls & Mode Selector -->
           <div class="flex flex-wrap items-center gap-2">
+            <!-- Mode Selector: Real GPS vs Demo Walk -->
+            <div class="flex bg-slate-900 border border-slate-700 rounded-xl p-0.5 text-xs">
+              <button type="button" id="btn-mode-real-gps" onclick="setWorkerTrackingMode('real_gps')" class="px-2.5 py-1.5 rounded-lg font-bold transition bg-emerald-600 text-white flex items-center space-x-1 shadow-sm">
+                <i data-lucide="satellite" class="w-3.5 h-3.5"></i>
+                <span>🛰️ Real GPS</span>
+              </button>
+              <button type="button" id="btn-mode-demo-sim" onclick="setWorkerTrackingMode('demo_sim')" class="px-2.5 py-1.5 rounded-lg font-bold transition text-slate-400 hover:text-white flex items-center space-x-1">
+                <i data-lucide="play-circle" class="w-3.5 h-3.5"></i>
+                <span>🎮 Demo Walk</span>
+              </button>
+            </div>
+
+            <!-- Primary Action Button (Real GPS Watch or Demo Walk) -->
             <button type="button" id="btn-start-live-travel" onclick="toggleStartWorkerLiveTravel()" class="px-4 py-2.5 bg-gradient-to-r from-amber-500 to-emerald-500 hover:from-amber-400 hover:to-emerald-400 text-slate-950 font-black rounded-xl text-xs flex items-center space-x-2 shadow-lg shadow-amber-500/25 transition active:scale-95">
-              <i data-lucide="play" class="w-4 h-4 fill-current"></i>
-              <span id="btn-start-travel-text">Start Live Travel (Zomato)</span>
+              <i data-lucide="navigation" class="w-4 h-4 fill-current"></i>
+              <span id="btn-start-travel-text">Start Real GPS Navigation</span>
             </button>
+
+            <!-- Step Forward Button (Available in Demo Mode) -->
+            <button type="button" id="btn-step-demo-walk" onclick="stepWorkerDemoWalk()" class="hidden px-2.5 py-2.5 bg-slate-800 hover:bg-slate-700 text-sky-300 border border-slate-700 font-bold rounded-xl text-xs flex items-center space-x-1 transition" title="Move 1 step forward">
+              <i data-lucide="skip-forward" class="w-3.5 h-3.5"></i>
+              <span>Step</span>
+            </button>
+
+            <!-- Voice Guidance Mute / Unmute Button -->
+            <button type="button" id="btn-nav-voice" onclick="toggleNavVoice()" class="px-3 py-2.5 bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 rounded-xl text-xs font-bold flex items-center space-x-1.5 transition">
+              <i data-lucide="volume-2" id="icon-nav-voice" class="w-4 h-4 text-emerald-400"></i>
+              <span id="label-nav-voice">Voice ON</span>
+            </button>
+
             <button type="button" onclick="arriveAtWasteSpotInstantly()" class="px-3 py-2.5 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 font-bold rounded-xl text-xs flex items-center space-x-1.5 transition">
               <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-400"></i>
               <span>Instant Arrive</span>
@@ -2346,7 +2419,31 @@
           </div>
         </div>
 
-        <!-- Zomato-Style Live Metric HUD (Decreasing Distance, ETA, Speed) -->
+        <!-- Live Turn-by-Turn Instruction Banner (Voice Navigation Process) -->
+        <div id="worker-nav-hud-bar" class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border-2 border-emerald-500/50 rounded-2xl p-4 shadow-xl flex items-center justify-between gap-3">
+          <div class="flex items-center space-x-3.5">
+            <div id="worker-nav-turn-icon" class="w-12 h-12 rounded-2xl bg-emerald-500 text-slate-950 flex items-center justify-center font-black text-2xl shadow-lg shadow-emerald-500/30 shrink-0">
+              ⬆️
+            </div>
+            <div>
+              <div class="flex items-center space-x-2">
+                <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30">Turn-by-Turn Navigation</span>
+                <span id="worker-nav-turn-dist" class="text-xs font-mono font-bold text-amber-300">In 85m</span>
+              </div>
+              <h4 id="worker-nav-turn-instruction" class="text-sm md:text-base font-extrabold text-white mt-0.5 leading-snug">Head straight on Tilakwadi Main Road</h4>
+              <p id="worker-nav-turn-sub" class="text-[11px] text-slate-400">Then turn left towards incident photo spot</p>
+            </div>
+          </div>
+          <div class="hidden sm:flex flex-col items-end shrink-0">
+            <span class="text-[10px] uppercase font-bold text-slate-400">Audio Voice</span>
+            <span id="worker-nav-voice-indicator" class="text-xs text-emerald-400 font-bold flex items-center space-x-1">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span>Guidance Active</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Zomato-Style Live Metric HUD (Decreasing Distance, ETA, Speed, Elapsed Travel Time) -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
           <div class="bg-slate-900 border border-amber-500/40 rounded-xl p-3.5 relative overflow-hidden">
             <div class="flex items-center justify-between text-slate-400 mb-1">
@@ -2370,21 +2467,21 @@
 
           <div class="bg-slate-900 border border-sky-500/40 rounded-xl p-3.5 relative overflow-hidden">
             <div class="flex items-center justify-between text-slate-400 mb-1">
-              <span class="text-[10px] font-bold uppercase tracking-wider">Travel Speed</span>
+              <span class="text-[10px] font-bold uppercase tracking-wider">Traveling Speed</span>
               <i data-lucide="gauge" class="w-4 h-4 text-sky-400"></i>
             </div>
-            <div id="worker-zomato-speed-val" class="text-2xl font-black text-sky-400 font-mono">24 km/h</div>
-            <span class="text-[10px] text-slate-400 block mt-0.5">E-Patrol Auto / Walk</span>
+            <div id="worker-zomato-speed-val" class="text-2xl font-black text-sky-400 font-mono">0.0 km/h</div>
+            <span id="worker-zomato-speed-label" class="text-[10px] text-slate-400 block mt-0.5">Stationary (No Movement)</span>
             <div class="absolute bottom-0 left-0 right-0 h-1 bg-sky-500"></div>
           </div>
 
           <div class="bg-slate-900 border border-indigo-500/40 rounded-xl p-3.5 relative overflow-hidden">
             <div class="flex items-center justify-between text-slate-400 mb-1">
-              <span class="text-[10px] font-bold uppercase tracking-wider">Proximity Rank</span>
-              <i data-lucide="award" class="w-4 h-4 text-indigo-400"></i>
+              <span class="text-[10px] font-bold uppercase tracking-wider">Travel Time Elapsed</span>
+              <i data-lucide="timer" class="w-4 h-4 text-indigo-400"></i>
             </div>
-            <div id="worker-zomato-rank-val" class="text-sm font-extrabold text-indigo-300 mt-1">⭐ Closest Spot</div>
-            <span class="text-[10px] text-emerald-400 block mt-0.5 font-bold">Lowest Distance First</span>
+            <div id="worker-zomato-time-val" class="text-2xl font-black text-indigo-300 font-mono">00:00</div>
+            <span class="text-[10px] text-emerald-400 block mt-0.5 font-bold">Live Travel Session</span>
             <div class="absolute bottom-0 left-0 right-0 h-1 bg-indigo-500"></div>
           </div>
         </div>
@@ -3210,6 +3307,56 @@
     </div>
   </div>
 
+  <!-- Modal: Citizen Report Dispatch Success & Surrounding Employee Link -->
+  <div id="modal-citizen-dispatch-success" class="hidden fixed inset-0 z-[170] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-slate-900 border-2 border-emerald-500/50 rounded-2xl p-6 max-w-md w-full shadow-2xl space-y-4 text-center">
+      <div class="w-16 h-16 rounded-full bg-emerald-500/20 border-2 border-emerald-400 text-3xl flex items-center justify-center mx-auto shadow-lg shadow-emerald-500/30">
+        🎉
+      </div>
+      <div>
+        <h3 class="text-lg font-black text-white" id="dispatch-modal-title">Report Dispatched!</h3>
+        <p class="text-xs text-slate-300 mt-1" id="dispatch-modal-sub">Attributed to the nearest on-duty sanitation employee in Belagavi.</p>
+      </div>
+
+      <!-- Surrounding Employee Details Card -->
+      <div class="bg-slate-950/90 border border-emerald-500/40 rounded-xl p-4 text-left space-y-2.5">
+        <div class="flex items-center justify-between">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 flex items-center space-x-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>Assigned Surrounding Employee</span>
+          </span>
+          <span class="text-[10px] font-mono bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded font-bold">10-Min SLA Active</span>
+        </div>
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-full bg-emerald-500/20 border border-emerald-400 flex items-center justify-center text-xl shrink-0">
+            👷
+          </div>
+          <div>
+            <div id="dispatch-modal-worker-name" class="text-sm font-extrabold text-white">Basavaraj Belagavi</div>
+            <div class="text-xs text-amber-300 font-mono font-bold" id="dispatch-modal-emp-id">Employee ID: BCC-W2101 (BAS098)</div>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-300 pt-1 border-t border-slate-800">
+          <div>📏 Distance: <strong id="dispatch-modal-dist" class="text-emerald-300 font-mono">140 m away</strong></div>
+          <div>📍 Beat: <span id="dispatch-modal-ward" class="text-slate-300">Tilakwadi Beat</span></div>
+          <div>📞 Mobile: <span id="dispatch-modal-phone" class="text-sky-300 font-mono">9845011001</span></div>
+          <div>Duty: <span class="text-emerald-400 font-bold">🟢 ON-DUTY</span></div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="space-y-2 pt-1">
+        <button type="button" id="btn-dispatch-modal-open-worker" onclick="openDispatchedWorkerPortal()" class="w-full py-3.5 px-4 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black rounded-xl text-xs flex items-center justify-center space-x-2 shadow-lg shadow-emerald-500/30 transition active:scale-95">
+          <span>🚀 Open Employee Portal & Start Travel</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
+        <button type="button" onclick="closeDispatchModal()" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-bold transition">
+          Stay on Citizen Page
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- FOOTER -->
   <footer class="bg-slate-950 border-t border-slate-800 py-4 text-center text-xs text-slate-500">
     BCC Swachha Belagavi &bull; Belagavi City Corporation &bull; 5km Geofence Radar &bull; SHA-256 Blockchain Ledger
@@ -3531,7 +3678,9 @@
       }
     }
 
-    // Spot Locality Resolver & Preset (Requirement 1, 2, 3: Machhe / Live GPS)
+    // Spot Locality Resolver & Surrounding Worker Integration (Belagavi)
+    let currentNearestWorker = null;
+
     function resolveBelagaviLocality(lat, lng) {
       const spots = [
         { name: "Machhe, Belagavi", lat: 15.8285, lng: 74.4690 },
@@ -3540,7 +3689,12 @@
         { name: "Camp / Rani Channamma Circle, Belagavi", lat: 15.8530, lng: 74.5100 },
         { name: "Hindwadi, Belagavi", lat: 15.8420, lng: 74.4980 },
         { name: "Vadgaon, Belagavi", lat: 15.8240, lng: 74.5150 },
-        { name: "Udyambag Industrial Area, Belagavi", lat: 15.8180, lng: 74.4920 }
+        { name: "Udyambag Industrial Area, Belagavi", lat: 15.8180, lng: 74.4920 },
+        { name: "Belagavi Fort, Belagavi", lat: 15.8600, lng: 74.5200 },
+        { name: "Bogarves, Belagavi", lat: 15.8480, lng: 74.5050 },
+        { name: "Angol, Belagavi", lat: 15.8200, lng: 74.5050 },
+        { name: "Khasbag, Belagavi", lat: 15.8300, lng: 74.5100 },
+        { name: "Kakati Industrial Beat, Belagavi", lat: 15.9100, lng: 74.5200 }
       ];
       let closest = spots[0];
       let minD = 999999;
@@ -3554,16 +3708,67 @@
       return closest.name;
     }
 
+    async function updateNearestSurroundingWorker(lat, lng) {
+      try {
+        const res = await fetch(`/api/workers/nearest?lat=${lat}&lng=${lng}`);
+        const data = await res.json();
+        if (data.success && data.top_worker) {
+          currentNearestWorker = data.top_worker;
+          const wName = document.getElementById('citizen-nearest-worker-name');
+          const wDist = document.getElementById('citizen-nearest-worker-dist');
+          if (wName) {
+            wName.innerText = `${data.top_worker.name} (${data.top_worker.custom_emp_id || data.top_worker.emp_id})`;
+          }
+          if (wDist) {
+            wDist.innerText = `📏 ${data.top_worker.distance_meters}m away in ${data.top_worker.ward} • On-Duty`;
+          }
+        }
+      } catch (e) {
+        console.warn("Error fetching nearest worker:", e);
+      }
+    }
+
+    function openWorkerPortalForNearest() {
+      if (!currentNearestWorker) {
+        showToast("No surrounding sanitation worker detected.", "warning");
+        return;
+      }
+      activeWorkerId = currentNearestWorker.worker_id;
+      switchRole('worker');
+      loadWorkerProfile(currentNearestWorker.worker_id);
+      showToast(`Switched to Sanitation Employee Portal for ${currentNearestWorker.name} (${currentNearestWorker.custom_emp_id || currentNearestWorker.emp_id})!`, "success");
+      setTimeout(() => {
+        const vw = document.getElementById('view-worker');
+        if (vw) vw.scrollIntoView({ behavior: 'smooth' });
+      }, 150);
+    }
+
     function setSpotLocPreset(lat, lng, name) {
       document.getElementById('report-lat').value = lat.toFixed(4);
       document.getElementById('report-lng').value = lng.toFixed(4);
       document.getElementById('report-address').value = name;
+      updateNearestSurroundingWorker(lat, lng);
+      if (mapInstance) {
+        if (!liveSpotMarker) {
+          liveSpotMarker = L.marker([lat, lng], {
+            icon: L.divIcon({
+              className: 'live-spot-pin-icon',
+              html: `<div style="background:#ef4444; color:#fff; font-weight:bold; font-size:12px; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 15px #ef4444; border:2px solid #fff;">📍</div>`,
+              iconSize: [32, 32],
+              iconAnchor: [16, 16]
+            })
+          }).addTo(mapInstance);
+        } else {
+          liveSpotMarker.setLatLng([lat, lng]);
+        }
+        mapInstance.panTo([lat, lng]);
+      }
       showToast(`📍 Incident spot location set to ${name}`, "info");
     }
 
     function detectLiveSpotGps() {
       if (navigator.geolocation) {
-        showToast("📡 Fetching high-accuracy live GPS...", "info");
+        showToast("📡 Fetching high-accuracy live GPS in Belagavi...", "info");
         navigator.geolocation.getCurrentPosition(pos => {
           const lat = pos.coords.latitude;
           const lng = pos.coords.longitude;
@@ -3571,13 +3776,24 @@
           document.getElementById('report-lng').value = lng.toFixed(4);
           const resolved = resolveBelagaviLocality(lat, lng);
           document.getElementById('report-address').value = resolved;
+          updateNearestSurroundingWorker(lat, lng);
+          if (mapInstance) {
+            if (!liveSpotMarker) {
+              liveSpotMarker = L.marker([lat, lng]).addTo(mapInstance);
+            } else {
+              liveSpotMarker.setLatLng([lat, lng]);
+            }
+            mapInstance.panTo([lat, lng]);
+          }
           showToast(`📍 Live Spot Location detected: ${resolved} (${lat.toFixed(4)}, ${lng.toFixed(4)})`, "success");
         }, (err) => {
           console.warn("GPS error:", err);
           showToast("Using default Belagavi spot location (Machhe).", "warning");
+          updateNearestSurroundingWorker(15.8285, 74.4690);
         }, { enableHighAccuracy: true, timeout: 6000, maximumAge: 0 });
       } else {
         showToast("Geolocation not supported on this browser.", "error");
+        updateNearestSurroundingWorker(15.8285, 74.4690);
       }
     }
 
@@ -4480,6 +4696,8 @@
       document.getElementById('citizen-camera-watermark')?.classList.add('hidden');
       document.getElementById('citizen-photo-confirmed-badge')?.classList.add('hidden');
       document.getElementById('btn-snap-citizen-cam')?.classList.add('hidden');
+      document.getElementById('citizen-cam-controls-ready')?.classList.remove('hidden');
+      document.getElementById('citizen-cam-controls-active')?.classList.add('hidden');
       const fileInput = document.getElementById('report-photo-input');
       if (fileInput) fileInput.value = '';
     }
@@ -4512,12 +4730,37 @@
         if (idle) idle.classList.add('hidden');
         if (watermark) watermark.classList.remove('hidden');
         if (snapBtn) snapBtn.classList.remove('hidden');
+
+        document.getElementById('citizen-cam-controls-ready')?.classList.add('hidden');
+        document.getElementById('citizen-cam-controls-active')?.classList.remove('hidden');
+
         showToast("Webcam active. Click to capture live photo.", "info");
       } catch (err) {
         console.warn("Live getUserMedia camera not accessible, using fallback:", err);
         showToast("Webcam not accessible. Please use mobile camera or upload.", "warning");
         generateSampleLiveSnapshot('citizen');
       }
+    }
+
+    function openCitizenHardwareCamera() {
+      startCitizenCamera();
+    }
+
+    function stopCitizenCamera() {
+      if (citizenCameraStream) {
+        citizenCameraStream.getTracks().forEach(t => t.stop());
+        citizenCameraStream = null;
+      }
+      const video = document.getElementById('citizen-camera-stream');
+      if (video) {
+        video.srcObject = null;
+        video.classList.add('hidden');
+      }
+      document.getElementById('citizen-camera-idle')?.classList.remove('hidden');
+      document.getElementById('citizen-camera-watermark')?.classList.add('hidden');
+      document.getElementById('citizen-cam-controls-ready')?.classList.remove('hidden');
+      document.getElementById('citizen-cam-controls-active')?.classList.add('hidden');
+      showToast("Camera closed", "info");
     }
 
     function stampGpsWatermark(ctx, target = 'citizen') {
@@ -4579,6 +4822,8 @@
       if (idle) idle.classList.add('hidden');
       if (watermark) watermark.classList.add('hidden');
       if (snapBtn) snapBtn.classList.add('hidden');
+      document.getElementById('citizen-cam-controls-ready')?.classList.remove('hidden');
+      document.getElementById('citizen-cam-controls-active')?.classList.add('hidden');
       document.getElementById('citizen-photo-confirmed-badge')?.classList.remove('hidden');
 
       if (citizenCameraStream) {
@@ -4710,6 +4955,8 @@
         document.getElementById('citizen-camera-idle')?.classList.add('hidden');
         document.getElementById('citizen-camera-stream')?.classList.add('hidden');
         document.getElementById('citizen-camera-watermark')?.classList.add('hidden');
+        document.getElementById('citizen-cam-controls-ready')?.classList.remove('hidden');
+        document.getElementById('citizen-cam-controls-active')?.classList.add('hidden');
         document.getElementById('citizen-photo-confirmed-badge')?.classList.remove('hidden');
         const spotLoc = document.getElementById('report-address')?.value || 'Machhe, Belagavi';
         const liveLatVal = parseFloat(document.getElementById('report-lat')?.value || 15.8285);
@@ -4759,9 +5006,35 @@
           body: JSON.stringify(payload)
         });
         const data = await res.json();
-        showToast("✅ Report submitted successfully!", "success");
-        document.getElementById('report-description').value = '';
-        loadAllReports();
+        if (data.success) {
+          const w = data.attributed_worker;
+          lastDispatchedWorkerId = w ? w.worker_id : 2;
+          lastDispatchedReportId = data.report_id;
+          
+          if (w) {
+            const titleEl = document.getElementById('dispatch-modal-title');
+            const nameEl = document.getElementById('dispatch-modal-worker-name');
+            const empEl = document.getElementById('dispatch-modal-emp-id');
+            const distEl = document.getElementById('dispatch-modal-dist');
+            const wardEl = document.getElementById('dispatch-modal-ward');
+            const phoneEl = document.getElementById('dispatch-modal-phone');
+
+            if (titleEl) titleEl.innerText = `Report #${data.report_id} Dispatched!`;
+            if (nameEl) nameEl.innerText = w.name || 'Sanitation Employee';
+            if (empEl) empEl.innerText = `Employee ID: ${w.custom_emp_id || w.emp_id || 'BCC-W2101'}`;
+            if (distEl) distEl.innerText = `${w.distance_meters || 140} m away`;
+            if (wardEl) wardEl.innerText = w.ward || 'Belagavi Beat';
+            if (phoneEl) phoneEl.innerText = w.phone || '9845011001';
+
+            document.getElementById('modal-citizen-dispatch-success')?.classList.remove('hidden');
+          }
+          showToast(`✅ Report #${data.report_id} submitted! Dispatched to ${w ? w.name : 'Sanitation Employee'}.`, "success");
+          document.getElementById('report-description').value = '';
+          retakeCitizenPhoto();
+          loadAllReports();
+        } else {
+          showToast(data.message || "Failed to submit report.", "error");
+        }
       } catch (err) {
         showToast("Error submitting report.", "error");
       } finally {
@@ -4769,6 +5042,31 @@
         btn.innerHTML = `<i data-lucide="send" class="w-4 h-4"></i><span>Submit Report</span>`;
         lucide.createIcons();
       }
+    }
+
+    let lastDispatchedWorkerId = 2;
+    let lastDispatchedReportId = null;
+
+    function closeDispatchModal() {
+      document.getElementById('modal-citizen-dispatch-success')?.classList.add('hidden');
+    }
+
+    function openDispatchedWorkerPortal() {
+      closeDispatchModal();
+      if (!lastDispatchedWorkerId) lastDispatchedWorkerId = 2;
+      activeWorkerId = lastDispatchedWorkerId;
+      switchRole('worker');
+      loadWorkerProfile(lastDispatchedWorkerId);
+      if (lastDispatchedReportId) {
+        setTimeout(() => {
+          trackAndTravelToReport(lastDispatchedReportId);
+        }, 200);
+      }
+      showToast(`Switched to Sanitation Employee Portal! Ready to navigate to spot.`, "success");
+      setTimeout(() => {
+        const vw = document.getElementById('view-worker');
+        if (vw) vw.scrollIntoView({ behavior: 'smooth' });
+      }, 150);
     }
 
     async function loadAllReports() {
@@ -5476,6 +5774,15 @@
         attribution: '&copy; OpenStreetMap contributors'
       }).addTo(mapInstance);
       markersLayer = L.layerGroup().addTo(mapInstance);
+
+      // Allow clicking ANY place on the map to set the live spot and find surrounding workers!
+      mapInstance.on('click', function(e) {
+        const clickedLat = e.latlng.lat;
+        const clickedLng = e.latlng.lng;
+        const locName = resolveBelagaviLocality(clickedLat, clickedLng);
+        setSpotLocPreset(clickedLat, clickedLng, locName);
+      });
+
       updateMapMarkers();
     }
 
@@ -6494,6 +6801,91 @@
       }
     }
 
+    // ==============================================================
+    // WORKER REAL GPS TRAVEL, TURN-BY-TURN & VOICE GUIDANCE ENGINE
+    // ==============================================================
+    let workerTrackingMode = 'real_gps'; // 'real_gps' or 'demo_sim'
+    let workerGpsWatchId = null;
+    let lastWorkerGpsCoords = null;
+    let lastWorkerGpsTime = null;
+    let navVoiceEnabled = true;
+    let lastAnnouncedManeuver = '';
+    let travelTimerSeconds = 0;
+    let travelTimerInterval = null;
+
+    function setWorkerTrackingMode(mode) {
+      workerTrackingMode = mode;
+      const btnGps = document.getElementById('btn-mode-real-gps');
+      const btnSim = document.getElementById('btn-mode-demo-sim');
+      const btnStep = document.getElementById('btn-step-demo-walk');
+      const btnTravelText = document.getElementById('btn-start-travel-text');
+
+      if (mode === 'real_gps') {
+        if (btnGps) { btnGps.className = "px-2.5 py-1.5 rounded-lg font-bold transition bg-emerald-600 text-white flex items-center space-x-1 shadow-sm"; }
+        if (btnSim) { btnSim.className = "px-2.5 py-1.5 rounded-lg font-bold transition text-slate-400 hover:text-white flex items-center space-x-1"; }
+        if (btnStep) btnStep.classList.add('hidden');
+        if (btnTravelText) btnTravelText.innerText = isWorkerTraveling ? "Pause Real GPS" : "Start Real GPS Navigation";
+        if (workerTravelInterval) { clearInterval(workerTravelInterval); workerTravelInterval = null; }
+        showToast("🛰️ Switched to Real GPS Tracking Mode. Only your physical movement will advance the map.", "info");
+      } else {
+        if (btnSim) { btnSim.className = "px-2.5 py-1.5 rounded-lg font-bold transition bg-sky-600 text-white flex items-center space-x-1 shadow-sm"; }
+        if (btnGps) { btnGps.className = "px-2.5 py-1.5 rounded-lg font-bold transition text-slate-400 hover:text-white flex items-center space-x-1"; }
+        if (btnStep) btnStep.classList.remove('hidden');
+        if (btnTravelText) btnTravelText.innerText = isWorkerTraveling ? "Pause Demo Walk" : "Run Demo Walk";
+        if (workerGpsWatchId && navigator.geolocation) { navigator.geolocation.clearWatch(workerGpsWatchId); workerGpsWatchId = null; }
+        showToast("🎮 Switched to Demo Walk Simulation Mode. Use Play or Step to demonstrate.", "info");
+      }
+    }
+
+    function toggleNavVoice() {
+      navVoiceEnabled = !navVoiceEnabled;
+      const icon = document.getElementById('icon-nav-voice');
+      const label = document.getElementById('label-nav-voice');
+      const indicator = document.getElementById('worker-nav-voice-indicator');
+
+      if (navVoiceEnabled) {
+        if (icon) icon.className = "w-4 h-4 text-emerald-400";
+        if (label) label.innerText = "Voice ON";
+        if (indicator) indicator.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span><span>Guidance Active</span>`;
+        speakNavInstruction("Voice navigation active. Guiding route to cleanup spot.", true);
+        showToast("🔊 Voice Navigation ON", "success");
+      } else {
+        if (icon) icon.className = "w-4 h-4 text-slate-500";
+        if (label) label.innerText = "Voice MUTED";
+        if (indicator) indicator.innerHTML = `<span class="w-2 h-2 rounded-full bg-slate-500"></span><span class="text-slate-500">Muted</span>`;
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        showToast("🔇 Voice Navigation Muted", "info");
+      }
+      lucide.createIcons();
+    }
+
+    function speakNavInstruction(text, force = false) {
+      if (!navVoiceEnabled) return;
+      if (!('speechSynthesis' in window)) return;
+      if (lastAnnouncedManeuver === text && !force) return;
+      lastAnnouncedManeuver = text;
+
+      try {
+        window.speechSynthesis.cancel();
+        const utt = new SpeechSynthesisUtterance(text);
+        utt.rate = 0.95;
+        utt.pitch = 1.0;
+        utt.lang = (tableLang === 'kn') ? 'kn-IN' : 'en-IN';
+        window.speechSynthesis.speak(utt);
+      } catch (e) {
+        console.warn("Speech synthesis error:", e);
+      }
+    }
+
+    function calculateBearingDegrees(lat1, lon1, lat2, lon2) {
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const y = Math.sin(dLon) * Math.cos(lat2 * Math.PI / 180);
+      const x = Math.cos(lat1 * Math.PI / 180) * Math.sin(lat2 * Math.PI / 180) -
+                Math.sin(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.cos(dLon);
+      let brng = Math.atan2(y, x) * 180 / Math.PI;
+      return (brng + 360) % 360;
+    }
+
     // Toggle Start / Pause for live travel
     function toggleStartWorkerLiveTravel() {
       if (isWorkerTraveling) {
@@ -6504,19 +6896,26 @@
     }
 
     function pauseWorkerLiveTravel() {
+      if (workerGpsWatchId && navigator.geolocation) {
+        navigator.geolocation.clearWatch(workerGpsWatchId);
+        workerGpsWatchId = null;
+      }
       if (workerTravelInterval) {
         clearInterval(workerTravelInterval);
         workerTravelInterval = null;
       }
+      if (travelTimerInterval) {
+        clearInterval(travelTimerInterval);
+        travelTimerInterval = null;
+      }
       isWorkerTraveling = false;
       const btnText = document.getElementById('btn-start-travel-text');
-      if (btnText) btnText.innerText = "Resume Live Travel";
+      if (btnText) btnText.innerText = workerTrackingMode === 'real_gps' ? "Resume Real GPS Navigation" : "Resume Demo Walk";
       const statusText = document.getElementById('worker-nav-status-text');
-      if (statusText) statusText.innerText = "Travel Paused";
+      if (statusText) statusText.innerText = "Navigation Paused";
       showToast("Live travel paused.", "info");
     }
 
-    // Starts live step-by-step animated movement of sanitation employee towards the photo spot
     function startWorkerLiveTravel(reportId) {
       if (!reportId && activeTravelReportId) reportId = activeTravelReportId;
       if (!reportId) {
@@ -6528,6 +6927,201 @@
         }
       }
 
+      activeTravelReportId = reportId;
+      isWorkerTraveling = true;
+
+      // Start elapsed timer
+      if (travelTimerInterval) clearInterval(travelTimerInterval);
+      travelTimerInterval = setInterval(() => {
+        travelTimerSeconds++;
+        const mins = String(Math.floor(travelTimerSeconds / 60)).padStart(2, '0');
+        const secs = String(travelTimerSeconds % 60).padStart(2, '0');
+        const timerEl = document.getElementById('worker-zomato-time-val');
+        if (timerEl) timerEl.innerText = `${mins}:${secs}`;
+      }, 1000);
+
+      if (workerTrackingMode === 'real_gps') {
+        startRealGpsTracking(reportId);
+      } else {
+        startDemoSimulatedTravel(reportId);
+      }
+    }
+
+    // 🛰️ REAL GPS TRACKING: Only updates when worker actually physically moves!
+    function startRealGpsTracking(reportId) {
+      const report = allReports.find(r => r.id === reportId) || allReports[0];
+      const sLat = parseFloat(report.latitude);
+      const sLng = parseFloat(report.longitude);
+
+      const btnText = document.getElementById('btn-start-travel-text');
+      if (btnText) btnText.innerText = "Tracking Real GPS (Click to Pause)";
+
+      const statusBadge = document.getElementById('worker-nav-status-badge');
+      const statusText = document.getElementById('worker-nav-status-text');
+      if (statusBadge) statusBadge.className = "px-3 py-1.5 bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 rounded-xl text-xs font-bold flex items-center space-x-2";
+      if (statusText) statusText.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span><span>🛰️ Real GPS Active (Awaiting Movement)</span>`;
+
+      const promptEl = document.getElementById('worker-travel-prompt');
+      if (promptEl) promptEl.innerText = `🛰️ Real GPS locked. Walk or ride to navigate to ${report.address || 'spot'}.`;
+
+      speakNavInstruction(`Starting navigation to ${report.address || 'spot'}. Head straight.`);
+      showToast(`🛰️ Real GPS Tracking active! Map will update as you physically walk or ride.`, "success");
+
+      if (navigator.geolocation) {
+        if (workerGpsWatchId) navigator.geolocation.clearWatch(workerGpsWatchId);
+        workerGpsWatchId = navigator.geolocation.watchPosition(
+          pos => handleWorkerRealGpsFix(pos, reportId),
+          err => {
+            console.warn("Worker GPS watch error:", err);
+            showToast("GPS signal weak. Standing at assigned Belagavi beat.", "warning");
+          },
+          { enableHighAccuracy: true, maximumAge: 1000, timeout: 10000 }
+        );
+      } else {
+        showToast("Geolocation not supported. Switch to Demo Walk mode to test.", "error");
+      }
+    }
+
+    function handleWorkerRealGpsFix(pos, reportId) {
+      if (!isWorkerTraveling) return;
+      const report = allReports.find(r => r.id === reportId) || allReports[0];
+      const sLat = parseFloat(report.latitude);
+      const sLng = parseFloat(report.longitude);
+
+      const cLat = pos.coords.latitude;
+      const cLng = pos.coords.longitude;
+      const now = Date.now();
+
+      let deltaMeters = 0;
+      let calculatedSpeedKmh = 0.0;
+
+      if (lastWorkerGpsCoords && lastWorkerGpsTime) {
+        deltaMeters = calculateHaversineDistanceMeters(lastWorkerGpsCoords.lat, lastWorkerGpsCoords.lng, cLat, cLng);
+        const dtSeconds = (now - lastWorkerGpsTime) / 1000;
+        if (pos.coords.speed !== null && pos.coords.speed !== undefined && pos.coords.speed >= 0) {
+          calculatedSpeedKmh = pos.coords.speed * 3.6;
+        } else if (dtSeconds > 0) {
+          calculatedSpeedKmh = (deltaMeters / dtSeconds) * 3.6;
+        }
+      }
+
+      // Check movement threshold: If moved less than 2.5 meters, user is standing still!
+      const isStationary = deltaMeters < 2.5;
+
+      const speedValEl = document.getElementById('worker-zomato-speed-val');
+      const speedLabelEl = document.getElementById('worker-zomato-speed-label');
+      const statusText = document.getElementById('worker-nav-status-text');
+      const promptEl = document.getElementById('worker-travel-prompt');
+
+      if (isStationary) {
+        if (speedValEl) speedValEl.innerText = "0.0 km/h";
+        if (speedLabelEl) speedLabelEl.innerText = "Stationary (No Movement)";
+        if (statusText) statusText.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span><span>Standing Still (GPS Ready)</span>`;
+        if (promptEl) promptEl.innerText = `📍 Standing still at current location. Walk or ride to move closer to ${report.address || 'spot'}.`;
+        // NO artificial movement: worker marker stays still!
+      } else {
+        // Physical movement detected! Update position & speed
+        if (speedValEl) speedValEl.innerText = `${calculatedSpeedKmh.toFixed(1)} km/h`;
+        const modeDesc = calculatedSpeedKmh > 12 ? "🛵 Riding" : "🚶 Walking";
+        if (speedLabelEl) speedLabelEl.innerText = `${modeDesc} at ${calculatedSpeedKmh.toFixed(1)} km/h`;
+        if (statusText) statusText.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span><span>${modeDesc} (${calculatedSpeedKmh.toFixed(1)} km/h)</span>`;
+        if (promptEl) promptEl.innerText = `${modeDesc} to ${report.address || 'spot'}...`;
+
+        if (workerMarker) workerMarker.setLatLng([cLat, cLng]);
+        if (traveledRoutePolyline) {
+          const latlngs = traveledRoutePolyline.getLatLngs();
+          latlngs.push([cLat, cLng]);
+          traveledRoutePolyline.setLatLngs(latlngs);
+        }
+      }
+
+      // Calculate remaining distance to target waste photo location
+      const remainingMeters = calculateHaversineDistanceMeters(cLat, cLng, sLat, sLng);
+      const remainingKm = (remainingMeters / 1000).toFixed(2);
+      const effectiveSpeed = calculatedSpeedKmh > 1.5 ? calculatedSpeedKmh : 4.5;
+      const remainingMins = Math.max(1, Math.round(((remainingMeters / 1000) / effectiveSpeed) * 60));
+
+      const distValEl = document.getElementById('worker-zomato-dist-val');
+      const etaValEl = document.getElementById('worker-zomato-eta-val');
+      if (distValEl) distValEl.innerText = remainingMeters < 1000 ? `${remainingMeters} m` : `${remainingKm} km`;
+      if (etaValEl) etaValEl.innerText = remainingMeters < 30 ? "< 30s" : `~${remainingMins} min`;
+
+      // Update Turn-by-Turn Guidance HUD & Voice Instructions
+      updateNavigationTurnInstruction(cLat, cLng, sLat, sLng, remainingMeters, report.address);
+
+      // Arrival threshold: within 20 meters of spot
+      if (remainingMeters <= 20) {
+        if (workerGpsWatchId && navigator.geolocation) {
+          navigator.geolocation.clearWatch(workerGpsWatchId);
+          workerGpsWatchId = null;
+        }
+        isWorkerTraveling = false;
+        arriveAtWasteSpot(reportId);
+      }
+
+      lastWorkerGpsCoords = { lat: cLat, lng: cLng };
+      lastWorkerGpsTime = now;
+    }
+
+    // Turn-By-Turn HUD & Voice Announcement Calculation
+    function updateNavigationTurnInstruction(curLat, curLng, targetLat, targetLng, remainingMeters, address) {
+      const turnIconEl = document.getElementById('worker-nav-turn-icon');
+      const turnDistEl = document.getElementById('worker-nav-turn-dist');
+      const turnInstEl = document.getElementById('worker-nav-turn-instruction');
+      const turnSubEl = document.getElementById('worker-nav-turn-sub');
+
+      const street = address ? address.split(',')[0].trim() : 'Spot Lane';
+      let icon = '⬆️';
+      let instruction = `Head straight on Congress Road (${remainingMeters}m)`;
+      let sub = `Continue towards ${street}`;
+      let spokenText = '';
+
+      if (remainingMeters <= 25) {
+        icon = '🎯';
+        instruction = `Arriving at waste cleanup location ahead (< 25m)!`;
+        sub = `Prepare to clean area and open Camera Studio below`;
+        spokenText = `Approaching waste spot. Prepare to take clean photo.`;
+      } else {
+        // Calculate bearing from worker to corner and from corner to spot
+        const cornerLat = targetLat;
+        const cornerLng = curLng;
+        const distToCorner = calculateHaversineDistanceMeters(curLat, curLng, cornerLat, cornerLng);
+
+        const b1 = calculateBearingDegrees(curLat, curLng, cornerLat, cornerLng);
+        const b2 = calculateBearingDegrees(cornerLat, cornerLng, targetLat, targetLng);
+        const turnDiff = (b2 - b1 + 360) % 360;
+
+        const isRightTurn = (turnDiff > 25 && turnDiff < 165);
+        const isLeftTurn = (turnDiff > 195 && turnDiff < 335);
+
+        if (distToCorner > 45) {
+          icon = '⬆️';
+          instruction = `Go straight towards ${street} (${distToCorner}m)`;
+          sub = `Then prepare to turn ${isRightTurn ? 'right' : 'left'}`;
+          spokenText = `Go straight for ${distToCorner} meters.`;
+        } else if (distToCorner > 15) {
+          icon = isRightTurn ? '➡️' : '⬅️';
+          instruction = `In ${distToCorner}m, Turn ${isRightTurn ? 'RIGHT' : 'LEFT'} onto ${street}`;
+          sub = `Follow lane to the marked waste location`;
+          spokenText = `In ${distToCorner} meters, turn ${isRightTurn ? 'right' : 'left'}.`;
+        } else {
+          icon = isRightTurn ? '➡️' : '⬅️';
+          instruction = `Turn ${isRightTurn ? 'RIGHT' : 'LEFT'} NOW onto ${street}`;
+          sub = `Destination is 30 meters ahead on your side`;
+          spokenText = `Turn ${isRightTurn ? 'right' : 'left'} now.`;
+        }
+      }
+
+      if (turnIconEl) turnIconEl.innerText = icon;
+      if (turnDistEl) turnDistEl.innerText = remainingMeters < 1000 ? `${remainingMeters}m` : `${(remainingMeters/1000).toFixed(1)}km`;
+      if (turnInstEl) turnInstEl.innerText = instruction;
+      if (turnSubEl) turnSubEl.innerText = sub;
+
+      speakNavInstruction(spokenText);
+    }
+
+    // 🎮 DEMO WALK SIMULATION (Manual or Step)
+    function startDemoSimulatedTravel(reportId) {
       if (workerTravelInterval) clearInterval(workerTravelInterval);
       isWorkerTraveling = true;
 
@@ -6536,68 +7130,97 @@
       const sLng = parseFloat(report.longitude);
 
       const btnText = document.getElementById('btn-start-travel-text');
-      if (btnText) btnText.innerText = "Traveling... (Click to Pause)";
+      if (btnText) btnText.innerText = "Simulating Demo Walk (Click to Pause)";
 
       const statusBadge = document.getElementById('worker-nav-status-badge');
       const statusText = document.getElementById('worker-nav-status-text');
-      if (statusBadge) statusBadge.className = "px-3 py-1.5 bg-amber-500/20 border border-amber-500/40 text-amber-300 rounded-xl text-xs font-bold flex items-center space-x-2";
-      if (statusText) statusText.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping"></span><span>🛵 En Route to Waste Spot (Speed: 24 km/h)</span>`;
+      if (statusBadge) statusBadge.className = "px-3 py-1.5 bg-sky-500/20 border border-sky-500/40 text-sky-300 rounded-xl text-xs font-bold flex items-center space-x-2";
+      if (statusText) statusText.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-sky-400 animate-ping"></span><span>🎮 Demo Walk Active (18 km/h)</span>`;
 
       const promptEl = document.getElementById('worker-travel-prompt');
-      if (promptEl) promptEl.innerText = `🛵 En route to ${report.address || 'spot'}. Decreasing distance live...`;
+      if (promptEl) promptEl.innerText = `🎮 Simulating transit to ${report.address || 'spot'}...`;
 
-      showToast(`🛵 Live Travel Started! Navigating to ${report.address || 'spot'}...`, "info");
+      speakNavInstruction(`Starting demo travel to ${report.address || 'spot'}. Head straight.`);
+      showToast(`🎮 Demo Walk started! Advancing waypoints along road.`, "info");
 
       workerTravelInterval = setInterval(() => {
-        currentTravelStep++;
-        const totalSteps = currentTravelWaypoints.length - 1;
+        stepWorkerDemoWalk();
+      }, 700);
+    }
 
-        if (currentTravelStep <= totalSteps) {
-          const curPoint = currentTravelWaypoints[currentTravelStep];
-          if (workerMarker) workerMarker.setLatLng(curPoint);
+    function stepWorkerDemoWalk() {
+      if (!currentTravelWaypoints || currentTravelWaypoints.length === 0) return;
+      currentTravelStep++;
+      const totalSteps = currentTravelWaypoints.length - 1;
+      const report = allReports.find(r => r.id === activeTravelReportId) || allReports[0];
+      const sLat = parseFloat(report.latitude);
+      const sLng = parseFloat(report.longitude);
 
-          // Update polyline segments
-          const traveledSlice = currentTravelWaypoints.slice(0, currentTravelStep + 1);
-          const remainingSlice = currentTravelWaypoints.slice(currentTravelStep);
+      if (currentTravelStep <= totalSteps) {
+        const curPoint = currentTravelWaypoints[currentTravelStep];
+        if (workerMarker) workerMarker.setLatLng(curPoint);
 
-          if (traveledRoutePolyline) traveledRoutePolyline.setLatLngs(traveledSlice);
-          if (remainingRoutePolyline) remainingRoutePolyline.setLatLngs(remainingSlice);
+        const traveledSlice = currentTravelWaypoints.slice(0, currentTravelStep + 1);
+        const remainingSlice = currentTravelWaypoints.slice(currentTravelStep);
 
-          // Recalculate decreasing remaining distance
-          const remainingMeters = calculateHaversineDistanceMeters(curPoint[0], curPoint[1], sLat, sLng);
-          const remainingKm = (remainingMeters / 1000).toFixed(2);
-          const remainingMins = Math.max(1, Math.round((remainingKm / 4.5) * 60));
+        if (traveledRoutePolyline) traveledRoutePolyline.setLatLngs(traveledSlice);
+        if (remainingRoutePolyline) remainingRoutePolyline.setLatLngs(remainingSlice);
 
-          const distValEl = document.getElementById('worker-zomato-dist-val');
-          const etaValEl = document.getElementById('worker-zomato-eta-val');
-          const progressBar = document.getElementById('worker-travel-progress-bar');
-          const progressPercent = document.getElementById('worker-travel-progress-percent');
+        const remainingMeters = calculateHaversineDistanceMeters(curPoint[0], curPoint[1], sLat, sLng);
+        const remainingKm = (remainingMeters / 1000).toFixed(2);
+        const remainingMins = Math.max(1, Math.round((remainingKm / 4.5) * 60));
 
-          const progressPct = Math.min(100, Math.round((currentTravelStep / totalSteps) * 100));
+        const distValEl = document.getElementById('worker-zomato-dist-val');
+        const etaValEl = document.getElementById('worker-zomato-eta-val');
+        const speedValEl = document.getElementById('worker-zomato-speed-val');
+        const speedLabelEl = document.getElementById('worker-zomato-speed-label');
+        const progressBar = document.getElementById('worker-travel-progress-bar');
+        const progressPercent = document.getElementById('worker-travel-progress-percent');
 
-          if (distValEl) distValEl.innerText = remainingMeters < 1000 ? `${remainingMeters} m` : `${remainingKm} km`;
-          if (etaValEl) etaValEl.innerText = remainingMeters < 80 ? `< 30s` : `~${remainingMins} min`;
-          if (progressBar) progressBar.style.width = `${progressPct}%`;
-          if (progressPercent) progressPercent.innerText = `${progressPct}%`;
-        }
+        const progressPct = Math.min(100, Math.round((currentTravelStep / totalSteps) * 100));
 
-        // Destination reached!
-        if (currentTravelStep >= totalSteps) {
+        if (distValEl) distValEl.innerText = remainingMeters < 1000 ? `${remainingMeters} m` : `${remainingKm} km`;
+        if (etaValEl) etaValEl.innerText = remainingMeters < 60 ? "< 30s" : `~${remainingMins} min`;
+        if (speedValEl) speedValEl.innerText = "18.5 km/h";
+        if (speedLabelEl) speedLabelEl.innerText = "Simulated E-Patrol Transit";
+        if (progressBar) progressBar.style.width = `${progressPct}%`;
+        if (progressPercent) progressPercent.innerText = `${progressPct}%`;
+
+        updateNavigationTurnInstruction(curPoint[0], curPoint[1], sLat, sLng, remainingMeters, report.address);
+      }
+
+      if (currentTravelStep >= totalSteps) {
+        if (workerTravelInterval) {
           clearInterval(workerTravelInterval);
           workerTravelInterval = null;
-          isWorkerTraveling = false;
-
-          arriveAtWasteSpot(reportId);
         }
-      }, 550);
+        isWorkerTraveling = false;
+        arriveAtWasteSpot(activeTravelReportId);
+      }
     }
 
     // Handler for arriving at the spot
     function arriveAtWasteSpot(reportId) {
+      if (workerGpsWatchId && navigator.geolocation) {
+        navigator.geolocation.clearWatch(workerGpsWatchId);
+        workerGpsWatchId = null;
+      }
+      if (workerTravelInterval) {
+        clearInterval(workerTravelInterval);
+        workerTravelInterval = null;
+      }
+      if (travelTimerInterval) {
+        clearInterval(travelTimerInterval);
+        travelTimerInterval = null;
+      }
+      isWorkerTraveling = false;
+
       const report = allReports.find(r => r.id === reportId) || allReports[0];
 
       const distValEl = document.getElementById('worker-zomato-dist-val');
       const etaValEl = document.getElementById('worker-zomato-eta-val');
+      const speedValEl = document.getElementById('worker-zomato-speed-val');
+      const speedLabelEl = document.getElementById('worker-zomato-speed-label');
       const btnText = document.getElementById('btn-start-travel-text');
       const statusBadge = document.getElementById('worker-nav-status-badge');
       const statusText = document.getElementById('worker-nav-status-text');
@@ -6607,6 +7230,8 @@
 
       if (distValEl) distValEl.innerText = "0 m";
       if (etaValEl) etaValEl.innerText = "ARRIVED";
+      if (speedValEl) speedValEl.innerText = "0.0 km/h";
+      if (speedLabelEl) speedLabelEl.innerText = "Arrived at Destination";
       if (btnText) btnText.innerText = "✅ Arrived at Spot";
       if (statusBadge) statusBadge.className = "px-3 py-1.5 bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 rounded-xl text-xs font-bold flex items-center space-x-2";
       if (statusText) statusText.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span><span>🎉 Arrived at Waste Spot! Clean Area Now</span>`;
@@ -6614,11 +7239,19 @@
       if (progressPercent) progressPercent.innerText = "100%";
       if (promptEl) promptEl.innerText = `🎉 You have arrived at ${report.address}! Live Camera Studio is ready below.`;
 
+      // Update Turn HUD
+      const turnIconEl = document.getElementById('worker-nav-turn-icon');
+      const turnInstEl = document.getElementById('worker-nav-turn-instruction');
+      const turnSubEl = document.getElementById('worker-nav-turn-sub');
+      if (turnIconEl) turnIconEl.innerText = '🏁';
+      if (turnInstEl) turnInstEl.innerText = `Arrived at Waste Spot! (${report.address || 'Belagavi'})`;
+      if (turnSubEl) turnSubEl.innerText = `Open Live Camera Studio below to take clean photo proof.`;
+
       // Play arrival chime audio
       playArrivalChime();
 
-      // Announce arrival
-      speakTravelAlert(`You have arrived at the waste spot in ${report.address || 'Belagavi'}. Please clean the area and capture live photo.`);
+      // Announce arrival with voice
+      speakNavInstruction(`You have arrived at the waste spot in ${report.address || 'Belagavi'}. Please clean the area and capture live photo.`, true);
       showToast(`🎉 Arrived at Waste Spot (${report.address})! Open Camera Studio below to take cleaned photo.`, "success", 6000);
 
       // Focus on cleanup studio
@@ -6634,6 +7267,10 @@
 
     // Instant arrival shortcut
     function arriveAtWasteSpotInstantly() {
+      if (workerGpsWatchId && navigator.geolocation) {
+        navigator.geolocation.clearWatch(workerGpsWatchId);
+        workerGpsWatchId = null;
+      }
       if (workerTravelInterval) {
         clearInterval(workerTravelInterval);
         workerTravelInterval = null;
