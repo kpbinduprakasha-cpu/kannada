@@ -291,255 +291,443 @@
     }
 
     /* ============================================================== */
-    /* SKEUOMORPHISM UI: REAL-WORLD PHYSICAL OBJECT MIMICRY           */
-    /* Heavy industrial brushed metal, chamfered bevels, tactile      */
-    /* mechanical push-buttons, and debossed digital readout meters   */
+    /* EMERALD INK (#064E3B) & CHAMPAGNE (#F8E7C9) COLOR COMBINATION   */
+    /* Skeuomorphism Real-World Physical Object Mimicry & Claymorphism */
+    /* Tactile Champagne Plates, Machined Emerald Ink Consoles,       */
+    /* Mechanical Push-Buttons, and Debossed Stamped Digital Wells    */
     /* ============================================================== */
-    body.theme-light {
-      background-color: #d1d8e0 !important;
+
+    :root {
+      --color-emerald-ink: #064E3B;
+      --color-emerald-ink-dark: #022c22;
+      --color-emerald-ink-light: #065f46;
+      --color-champagne: #F8E7C9;
+      --color-champagne-light: #FFFDF8;
+      --color-champagne-dark: #EBD5AE;
+      --color-champagne-border: #D6BD90;
+      --color-champagne-bevel: #B89C68;
+    }
+
+    /* Champagne Body Canvas with Tactile Physical Grain */
+    body.theme-champagne,
+    body.theme-light,
+    body:not(.theme-dark) {
+      background-color: #F8E7C9 !important;
       background-image: 
-        radial-gradient(ellipse at 50% 0%, #f1f5f9 0%, #cbd5e1 55%, #94a3b8 100%),
-        repeating-linear-gradient(45deg, rgba(255,255,255,0.06) 0px, rgba(255,255,255,0.06) 2px, transparent 2px, transparent 4px) !important;
+        radial-gradient(ellipse at 50% 0%, #FFFDF8 0%, #F8E7C9 50%, #EBD5AE 100%),
+        repeating-linear-gradient(45deg, rgba(6, 78, 59, 0.02) 0px, rgba(6, 78, 59, 0.02) 2px, transparent 2px, transparent 4px) !important;
       background-attachment: fixed !important;
-      color: #0f172a !important;
+      color: #064E3B !important;
     }
 
-    /* Skeuomorphic Machined Chrome & Brushed Steel Header Console */
-    body.theme-light header {
-      background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 35%, #cbd5e1 90%, #94a3b8 100%) !important;
-      border-bottom: 3.5px solid #64748b !important;
+    /* Skeuomorphic Machined Emerald Ink Header Console */
+    body.theme-champagne header,
+    body.theme-light header,
+    body:not(.theme-dark) header {
+      background: linear-gradient(180deg, #076b50 0%, #064E3B 45%, #033628 90%, #02231a 100%) !important;
+      border-bottom: 3.5px solid #D6BD90 !important;
       box-shadow: 
-        0 8px 24px rgba(15, 23, 42, 0.3),
-        inset 0 1.5px 0 #ffffff,
-        inset 0 -2px 0 #94a3b8 !important;
-      border-radius: 0 0 20px 20px !important;
+        0 8px 24px rgba(6, 78, 59, 0.45),
+        inset 0 1.5px 0 #10b981,
+        inset 0 -2px 0 #02231a !important;
+      border-radius: 0 0 24px 24px !important;
     }
 
-    /* Physical Brushed Steel Instrument Plates (Cards, Panels, Surfaces) */
+    body.theme-champagne header .text-white,
+    body.theme-light header .text-white,
+    body:not(.theme-dark) header .text-white,
+    body.theme-champagne header h1,
+    body.theme-light header h1,
+    body:not(.theme-dark) header h1,
+    body.theme-champagne header h2,
+    body.theme-light header h2,
+    body:not(.theme-dark) header h2,
+    body.theme-champagne header h3,
+    body.theme-light header h3,
+    body:not(.theme-dark) header h3,
+    body.theme-champagne header span:not(.badge-inner),
+    body.theme-light header span:not(.badge-inner),
+    body:not(.theme-dark) header span:not(.badge-inner) {
+      color: #F8E7C9 !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
+    }
+    body.theme-champagne header .text-slate-300,
+    body.theme-light header .text-slate-300,
+    body:not(.theme-dark) header .text-slate-300,
+    body.theme-champagne header .text-slate-400,
+    body.theme-light header .text-slate-400,
+    body:not(.theme-dark) header .text-slate-400 {
+      color: #EBD5AE !important;
+    }
+
+    /* Physical Champagne Instrument Plates (Cards, Panels, Surfaces) */
+    body.theme-champagne .bg-slate-800,
     body.theme-light .bg-slate-800,
+    body:not(.theme-dark) .bg-slate-800,
+    body.theme-champagne .bg-slate-800\/80,
     body.theme-light .bg-slate-800\/80,
+    body:not(.theme-dark) .bg-slate-800\/80,
+    body.theme-champagne .bg-slate-800\/90,
     body.theme-light .bg-slate-800\/90,
-    body.theme-light .bg-slate-900:not(#app-splash-screen),
+    body:not(.theme-dark) .bg-slate-800\/90,
+    body.theme-champagne .bg-slate-900:not(#app-splash-screen):not(#camera-video):not(#camera-canvas),
+    body.theme-light .bg-slate-900:not(#app-splash-screen):not(#camera-video):not(#camera-canvas),
+    body:not(.theme-dark) .bg-slate-900:not(#app-splash-screen):not(#camera-video):not(#camera-canvas),
+    body.theme-champagne .bg-slate-950:not(#app-splash-screen),
     body.theme-light .bg-slate-950:not(#app-splash-screen),
+    body:not(.theme-dark) .bg-slate-950:not(#app-splash-screen),
+    body.theme-champagne .bg-slate-900\/50,
     body.theme-light .bg-slate-900\/50,
+    body:not(.theme-dark) .bg-slate-900\/50,
+    body.theme-champagne .bg-slate-900\/60,
     body.theme-light .bg-slate-900\/60,
+    body:not(.theme-dark) .bg-slate-900\/60,
+    body.theme-champagne .bg-slate-900\/70,
     body.theme-light .bg-slate-900\/70,
+    body:not(.theme-dark) .bg-slate-900\/70,
+    body.theme-champagne .bg-slate-900\/80,
     body.theme-light .bg-slate-900\/80,
+    body:not(.theme-dark) .bg-slate-900\/80,
+    body.theme-champagne .bg-slate-900\/90,
     body.theme-light .bg-slate-900\/90,
-    body.theme-light .bg-slate-950\/60,
-    body.theme-light .bg-slate-950\/70,
-    body.theme-light .bg-slate-950\/80,
-    body.theme-light .bg-slate-950\/85,
-    body.theme-light .bg-slate-950\/90,
-    body.theme-light .bg-slate-950\/95,
+    body:not(.theme-dark) .bg-slate-900\/90,
+    body.theme-champagne [class*="rounded-2xl"]:not(input):not(textarea):not(select):not(img):not(video):not(canvas):not(.leaflet-container):not(.leaflet-pane *):not(#worker-tracking-map):not(#map),
     body.theme-light [class*="rounded-2xl"]:not(input):not(textarea):not(select):not(img):not(video):not(canvas):not(.leaflet-container):not(.leaflet-pane *):not(#worker-tracking-map):not(#map),
-    body.theme-light [class*="rounded-3xl"]:not(input):not(textarea):not(select):not(img):not(video):not(canvas):not(.leaflet-container):not(.leaflet-pane *):not(#worker-tracking-map):not(#map) {
-      background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 35%, #e2e8f0 80%, #cbd5e1 100%) !important;
-      color: #0f172a !important;
-      border-top: 2px solid #ffffff !important;
-      border-left: 2px solid #e2e8f0 !important;
-      border-right: 2px solid #94a3b8 !important;
-      border-bottom: 3.5px solid #64748b !important;
+    body:not(.theme-dark) [class*="rounded-2xl"]:not(input):not(textarea):not(select):not(img):not(video):not(canvas):not(.leaflet-container):not(.leaflet-pane *):not(#worker-tracking-map):not(#map),
+    body.theme-champagne [class*="rounded-3xl"]:not(input):not(textarea):not(select):not(img):not(video):not(canvas):not(.leaflet-container):not(.leaflet-pane *):not(#worker-tracking-map):not(#map),
+    body.theme-light [class*="rounded-3xl"]:not(input):not(textarea):not(select):not(img):not(video):not(canvas):not(.leaflet-container):not(.leaflet-pane *):not(#worker-tracking-map):not(#map),
+    body:not(.theme-dark) [class*="rounded-3xl"]:not(input):not(textarea):not(select):not(img):not(video):not(canvas):not(.leaflet-container):not(.leaflet-pane *):not(#worker-tracking-map):not(#map) {
+      background: linear-gradient(150deg, #FFFDF8 0%, #F8E7C9 45%, #EBD5AE 100%) !important;
+      color: #064E3B !important;
+      border-top: 2.5px solid #FFFFFF !important;
+      border-left: 2px solid #FFFDF8 !important;
+      border-right: 2px solid #D6BD90 !important;
+      border-bottom: 3.5px solid #B89C68 !important;
       box-shadow: 
-        0 8px 20px -2px rgba(15, 23, 42, 0.28),
-        0 2px 5px rgba(0, 0, 0, 0.1),
-        inset 0 1.5px 0 #ffffff,
-        inset 0 -2px 0 #94a3b8 !important;
-      border-radius: 18px !important;
+        0 10px 24px -2px rgba(6, 78, 59, 0.16),
+        0 3px 8px rgba(0, 0, 0, 0.06),
+        inset 0 1.5px 0 #FFFFFF,
+        inset 0 -2px 0 #D6BD90 !important;
+      border-radius: 20px !important;
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
 
+    body.theme-champagne .bg-slate-800:hover,
     body.theme-light .bg-slate-800:hover,
-    body.theme-light .bg-slate-900:hover {
+    body:not(.theme-dark) .bg-slate-800:hover,
+    body.theme-champagne .bg-slate-900:hover,
+    body.theme-light .bg-slate-900:hover,
+    body:not(.theme-dark) .bg-slate-900:hover {
       box-shadow: 
-        0 12px 28px -2px rgba(15, 23, 42, 0.35),
-        0 4px 8px rgba(0, 0, 0, 0.15),
-        inset 0 1.5px 0 #ffffff,
-        inset 0 -2px 0 #94a3b8 !important;
+        0 14px 30px -2px rgba(6, 78, 59, 0.22),
+        0 5px 10px rgba(0, 0, 0, 0.08),
+        inset 0 1.5px 0 #FFFFFF,
+        inset 0 -2px 0 #D6BD90 !important;
     }
 
-    /* Skeuomorphic Industrial Utility Lockbox Modals */
+    /* Recessed Champagne Wells Inside Cards */
+    body.theme-champagne .bg-slate-950\/60,
+    body.theme-light .bg-slate-950\/60,
+    body:not(.theme-dark) .bg-slate-950\/60,
+    body.theme-champagne .bg-slate-950\/70,
+    body.theme-light .bg-slate-950\/70,
+    body:not(.theme-dark) .bg-slate-950\/70,
+    body.theme-champagne .bg-slate-950\/80,
+    body.theme-light .bg-slate-950\/80,
+    body:not(.theme-dark) .bg-slate-950\/80,
+    body.theme-champagne .bg-slate-950\/85,
+    body.theme-light .bg-slate-950\/85,
+    body:not(.theme-dark) .bg-slate-950\/85,
+    body.theme-champagne .bg-slate-950\/90,
+    body.theme-light .bg-slate-950\/90,
+    body:not(.theme-dark) .bg-slate-950\/90,
+    body.theme-champagne .bg-slate-950\/95,
+    body.theme-light .bg-slate-950\/95,
+    body:not(.theme-dark) .bg-slate-950\/95 {
+      background: linear-gradient(145deg, #F5E3C2 0%, #EBD2A4 100%) !important;
+      border: 1.5px solid #D6BD90 !important;
+      box-shadow: 
+        inset 2px 2px 5px rgba(6, 78, 59, 0.12),
+        inset -2px -2px 5px rgba(255, 255, 255, 0.8) !important;
+      color: #064E3B !important;
+      border-radius: 16px !important;
+    }
+
+    /* Skeuomorphic Champagne Industrial Lockbox Modals */
+    body.theme-champagne #modal-auth-onboarding > div,
     body.theme-light #modal-auth-onboarding > div,
+    body:not(.theme-dark) #modal-auth-onboarding > div,
+    body.theme-champagne #modal-employee-profile-detail > div,
     body.theme-light #modal-employee-profile-detail > div,
+    body:not(.theme-dark) #modal-employee-profile-detail > div,
+    body.theme-champagne #modal-citizen-profile-detail > div,
     body.theme-light #modal-citizen-profile-detail > div,
+    body:not(.theme-dark) #modal-citizen-profile-detail > div,
+    body.theme-champagne #modal-edit-citizen-profile > div,
     body.theme-light #modal-edit-citizen-profile > div,
+    body:not(.theme-dark) #modal-edit-citizen-profile > div,
+    body.theme-champagne #modal-ai-cleanliness-comparison > div,
     body.theme-light #modal-ai-cleanliness-comparison > div,
+    body:not(.theme-dark) #modal-ai-cleanliness-comparison > div,
+    body.theme-champagne #staff-login-modal > div,
     body.theme-light #staff-login-modal > div,
+    body:not(.theme-dark) #staff-login-modal > div,
+    body.theme-champagne #mobile-qr-modal > div,
     body.theme-light #mobile-qr-modal > div,
-    body.theme-light #modal-officer-console > div {
-      background: linear-gradient(180deg, #ffffff 0%, #edf2f7 35%, #e2e8f0 80%, #cbd5e1 100%) !important;
-      border-top: 3px solid #ffffff !important;
-      border-left: 3px solid #e2e8f0 !important;
-      border-right: 3px solid #94a3b8 !important;
-      border-bottom: 5px solid #475569 !important;
+    body:not(.theme-dark) #mobile-qr-modal > div,
+    body.theme-champagne #modal-officer-console > div,
+    body.theme-light #modal-officer-console > div,
+    body:not(.theme-dark) #modal-officer-console > div {
+      background: linear-gradient(160deg, #FFFCF5 0%, #F8E7C9 40%, #EBD5AE 100%) !important;
+      border-top: 3.5px solid #FFFFFF !important;
+      border-left: 3px solid #FFFCF5 !important;
+      border-right: 3px solid #D6BD90 !important;
+      border-bottom: 5px solid #997843 !important;
       box-shadow: 
-        0 25px 65px -10px rgba(15, 23, 42, 0.6),
-        0 8px 20px rgba(0, 0, 0, 0.25),
-        inset 0 2px 0 #ffffff,
-        inset 0 -3px 0 #64748b !important;
-      border-radius: 24px !important;
+        0 30px 75px -10px rgba(6, 78, 59, 0.45),
+        0 10px 25px rgba(0, 0, 0, 0.18),
+        inset 0 2px 0 #FFFFFF,
+        inset 0 -3px 0 #BFA06B !important;
+      border-radius: 26px !important;
+      color: #064E3B !important;
     }
 
-    /* Skeuomorphic Debossed Stamped Digital Meters (Inputs & Selects) */
+    /* Recessed Debossed Stamped Digital Wells (Inputs & Selects) */
+    body.theme-champagne input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="submit"]):not([type="button"]),
     body.theme-light input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="submit"]):not([type="button"]),
+    body:not(.theme-dark) input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="submit"]):not([type="button"]),
+    body.theme-champagne textarea,
     body.theme-light textarea,
-    body.theme-light select {
-      background: linear-gradient(180deg, #e2e8f0 0%, #f1f5f9 25%, #ffffff 100%) !important;
-      color: #0f172a !important;
-      border-top: 2.5px solid #64748b !important;
-      border-left: 2px solid #94a3b8 !important;
-      border-right: 1.5px solid #cbd5e1 !important;
-      border-bottom: 1.5px solid #ffffff !important;
+    body:not(.theme-dark) textarea,
+    body.theme-champagne select,
+    body.theme-light select,
+    body:not(.theme-dark) select {
+      background: linear-gradient(180deg, #E6D4B2 0%, #F3E4C7 25%, #FDF9F2 100%) !important;
+      color: #064E3B !important;
+      border-top: 2.5px solid #BBA176 !important;
+      border-left: 2px solid #CCAF85 !important;
+      border-right: 1.5px solid #EBD5AE !important;
+      border-bottom: 1.5px solid #FFFFFF !important;
       box-shadow: 
-        inset 0 3px 6px rgba(15, 23, 42, 0.24),
-        inset 0 1px 2px rgba(0, 0, 0, 0.15),
-        0 1px 0 #ffffff !important;
-      border-radius: 12px !important;
-      font-weight: 600 !important;
+        inset 0 3px 6px rgba(6, 78, 59, 0.2),
+        inset 0 1px 2px rgba(0, 0, 0, 0.1),
+        0 1px 0 #FFFFFF !important;
+      border-radius: 14px !important;
+      font-weight: 700 !important;
     }
+    body.theme-champagne input::placeholder,
     body.theme-light input::placeholder,
-    body.theme-light textarea::placeholder {
-      color: #64748b !important;
-      opacity: 0.75 !important;
+    body:not(.theme-dark) input::placeholder,
+    body.theme-champagne textarea::placeholder,
+    body.theme-light textarea::placeholder,
+    body:not(.theme-dark) textarea::placeholder {
+      color: #064E3B !important;
+      opacity: 0.55 !important;
     }
+    body.theme-champagne input:focus,
     body.theme-light input:focus,
+    body:not(.theme-dark) input:focus,
+    body.theme-champagne textarea:focus,
     body.theme-light textarea:focus,
-    body.theme-light select:focus {
+    body:not(.theme-dark) textarea:focus,
+    body.theme-champagne select:focus,
+    body.theme-light select:focus,
+    body:not(.theme-dark) select:focus {
       outline: none !important;
-      border-top-color: #059669 !important;
+      border-top-color: #064E3B !important;
       box-shadow: 
-        inset 0 3px 6px rgba(5, 150, 105, 0.25),
-        0 0 0 3px rgba(16, 185, 129, 0.35),
-        0 1px 0 #ffffff !important;
+        inset 0 3px 6px rgba(6, 78, 59, 0.25),
+        0 0 0 3px rgba(6, 78, 59, 0.35),
+        0 1px 0 #FFFFFF !important;
     }
 
-    /* Tactile Mechanical Push-Buttons (Skeuomorphic Button Physics) */
-    body.theme-light button:not(.leaflet-control-zoom-in):not(.leaflet-control-zoom-out):not([class*="leaflet"]) {
+    /* Tactile Mechanical Push-Buttons */
+    body.theme-champagne button:not(.leaflet-control-zoom-in):not(.leaflet-control-zoom-out):not([class*="leaflet"]),
+    body.theme-light button:not(.leaflet-control-zoom-in):not(.leaflet-control-zoom-out):not([class*="leaflet"]),
+    body:not(.theme-dark) button:not(.leaflet-control-zoom-in):not(.leaflet-control-zoom-out):not([class*="leaflet"]) {
       border-radius: 14px !important;
       font-weight: 800 !important;
       transition: all 0.12s cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
-    body.theme-light button:hover:not(:disabled):not(.leaflet-control-zoom-in):not(.leaflet-control-zoom-out) {
+    body.theme-champagne button:hover:not(:disabled):not(.leaflet-control-zoom-in):not(.leaflet-control-zoom-out),
+    body.theme-light button:hover:not(:disabled):not(.leaflet-control-zoom-in):not(.leaflet-control-zoom-out),
+    body:not(.theme-dark) button:hover:not(:disabled):not(.leaflet-control-zoom-in):not(.leaflet-control-zoom-out) {
       transform: translateY(-1px);
     }
-    body.theme-light button:active:not(:disabled):not(.leaflet-control-zoom-in):not(.leaflet-control-zoom-out) {
+    body.theme-champagne button:active:not(:disabled):not(.leaflet-control-zoom-in):not(.leaflet-control-zoom-out),
+    body.theme-light button:active:not(:disabled):not(.leaflet-control-zoom-in):not(.leaflet-control-zoom-out),
+    body:not(.theme-dark) button:active:not(:disabled):not(.leaflet-control-zoom-in):not(.leaflet-control-zoom-out) {
       transform: translateY(3px) !important;
     }
 
-    /* Emerald Physical Push Button */
+    /* Emerald Ink Push Button (Primary / Clean / Submit) */
+    body.theme-champagne button[class*="bg-emerald"],
     body.theme-light button[class*="bg-emerald"],
+    body:not(.theme-dark) button[class*="bg-emerald"],
+    body.theme-champagne button[class*="from-emerald"],
     body.theme-light button[class*="from-emerald"],
-    body.theme-light .btn-emerald {
-      background: linear-gradient(180deg, #34d399 0%, #10b981 45%, #059669 85%, #047857 100%) !important;
-      color: #ffffff !important;
-      text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.45) !important;
-      border-top: 1.5px solid #a7f3d0 !important;
-      border-bottom: 3.5px solid #064e3b !important;
-      border-left: 1px solid #059669 !important;
-      border-right: 1px solid #059669 !important;
+    body:not(.theme-dark) button[class*="from-emerald"],
+    body.theme-champagne .btn-emerald,
+    body.theme-light .btn-emerald,
+    body:not(.theme-dark) .btn-emerald {
+      background: linear-gradient(180deg, #096a50 0%, #064E3B 50%, #033a2b 100%) !important;
+      color: #F8E7C9 !important;
+      text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.6) !important;
+      border-top: 1.5px solid #34d399 !important;
+      border-bottom: 3.5px solid #02231a !important;
+      border-left: 1px solid #044332 !important;
+      border-right: 1px solid #044332 !important;
       box-shadow: 
-        0 4px 0 #064e3b,
-        0 6px 14px rgba(5, 150, 105, 0.4),
-        inset 0 1.5px 0 rgba(255, 255, 255, 0.6) !important;
+        0 4px 0 #02231a,
+        0 6px 14px rgba(6, 78, 59, 0.45),
+        inset 0 1.5px 0 rgba(255, 255, 255, 0.3) !important;
     }
-    body.theme-light button[class*="bg-emerald"]:active {
-      box-shadow: 0 1px 0 #064e3b, inset 0 3px 6px rgba(0, 0, 0, 0.45) !important;
+    body.theme-champagne button[class*="bg-emerald"]:active,
+    body.theme-light button[class*="bg-emerald"]:active,
+    body:not(.theme-dark) button[class*="bg-emerald"]:active {
+      box-shadow: 0 1px 0 #02231a, inset 0 3px 6px rgba(0, 0, 0, 0.5) !important;
     }
 
-    /* Amber Caution Physical Push Button */
+    /* Champagne Secondary Push Button (Amber / Slate / Secondary) */
+    body.theme-champagne button[class*="bg-amber"],
     body.theme-light button[class*="bg-amber"],
+    body:not(.theme-dark) button[class*="bg-amber"],
+    body.theme-champagne button[class*="from-amber"],
     body.theme-light button[class*="from-amber"],
-    body.theme-light .btn-amber {
-      background: linear-gradient(180deg, #fde68a 0%, #f59e0b 45%, #d97706 85%, #b45309 100%) !important;
-      color: #451a03 !important;
-      font-weight: 800 !important;
-      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) !important;
-      border-top: 1.5px solid #fef3c7 !important;
-      border-bottom: 3.5px solid #78350f !important;
-      border-left: 1px solid #d97706 !important;
-      border-right: 1px solid #d97706 !important;
-      box-shadow: 
-        0 4px 0 #78350f,
-        0 6px 14px rgba(217, 119, 6, 0.4),
-        inset 0 1.5px 0 rgba(255, 255, 255, 0.7) !important;
-    }
-    body.theme-light button[class*="bg-amber"]:active {
-      box-shadow: 0 1px 0 #78350f, inset 0 3px 6px rgba(0, 0, 0, 0.45) !important;
-    }
-
-    /* Sky / Radar Physical Push Button */
-    body.theme-light button[class*="bg-sky"],
-    body.theme-light button[class*="from-sky"],
-    body.theme-light .btn-sky {
-      background: linear-gradient(180deg, #7dd3fc 0%, #0ea5e9 45%, #0284c7 85%, #0369a1 100%) !important;
-      color: #ffffff !important;
-      text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.45) !important;
-      border-top: 1.5px solid #bae6fd !important;
-      border-bottom: 3.5px solid #075985 !important;
-      border-left: 1px solid #0284c7 !important;
-      border-right: 1px solid #0284c7 !important;
-      box-shadow: 
-        0 4px 0 #075985,
-        0 6px 14px rgba(2, 132, 199, 0.4),
-        inset 0 1.5px 0 rgba(255, 255, 255, 0.6) !important;
-    }
-    body.theme-light button[class*="bg-sky"]:active {
-      box-shadow: 0 1px 0 #075985, inset 0 3px 6px rgba(0, 0, 0, 0.45) !important;
-    }
-
-    /* Brushed Metal Rocker / Neutral Button */
+    body:not(.theme-dark) button[class*="from-amber"],
+    body.theme-champagne .btn-amber,
+    body.theme-light .btn-amber,
+    body:not(.theme-dark) .btn-amber,
+    body.theme-champagne button[class*="bg-slate"],
     body.theme-light button[class*="bg-slate"],
-    body.theme-light .btn-slate {
-      background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 45%, #e2e8f0 85%, #cbd5e1 100%) !important;
-      color: #1e293b !important;
-      border-top: 1.5px solid #ffffff !important;
-      border-bottom: 3.5px solid #64748b !important;
-      border-left: 1px solid #cbd5e1 !important;
-      border-right: 1px solid #cbd5e1 !important;
+    body:not(.theme-dark) button[class*="bg-slate"],
+    body.theme-champagne .btn-slate,
+    body.theme-light .btn-slate,
+    body:not(.theme-dark) .btn-slate {
+      background: linear-gradient(180deg, #FFF9ED 0%, #F8E7C9 50%, #EBD5AE 100%) !important;
+      color: #064E3B !important;
+      font-weight: 800 !important;
+      border-top: 1.5px solid #FFFFFF !important;
+      border-bottom: 3.5px solid #B89C68 !important;
+      border-left: 1px solid #D6BD90 !important;
+      border-right: 1px solid #D6BD90 !important;
       box-shadow: 
-        0 4px 0 #64748b,
-        0 6px 12px rgba(15, 23, 42, 0.18),
-        inset 0 1.5px 0 #ffffff !important;
-      text-shadow: 0 1px 0 #ffffff !important;
+        0 4px 0 #B89C68,
+        0 6px 12px rgba(6, 78, 59, 0.18),
+        inset 0 1.5px 0 #FFFFFF !important;
+      text-shadow: 0 1px 0 #FFFFFF !important;
     }
-    body.theme-light button[class*="bg-slate"]:active {
-      box-shadow: 0 1px 0 #64748b, inset 0 3px 6px rgba(0, 0, 0, 0.3) !important;
+    body.theme-champagne button[class*="bg-amber"]:active,
+    body.theme-light button[class*="bg-amber"]:active,
+    body:not(.theme-dark) button[class*="bg-amber"]:active,
+    body.theme-champagne button[class*="bg-slate"]:active,
+    body.theme-light button[class*="bg-slate"]:active,
+    body:not(.theme-dark) button[class*="bg-slate"]:active {
+      box-shadow: 0 1px 0 #B89C68, inset 0 3px 6px rgba(184, 156, 104, 0.4) !important;
     }
 
-    /* Real-World Stamped Typography */
-    body.theme-light .text-white {
-      color: #0f172a !important;
-      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+    /* Sky / Radar Push Button */
+    body.theme-champagne button[class*="bg-sky"],
+    body.theme-light button[class*="bg-sky"],
+    body:not(.theme-dark) button[class*="bg-sky"],
+    body.theme-champagne button[class*="from-sky"],
+    body.theme-light button[class*="from-sky"],
+    body:not(.theme-dark) button[class*="from-sky"],
+    body.theme-champagne .btn-sky,
+    body.theme-light .btn-sky,
+    body:not(.theme-dark) .btn-sky {
+      background: linear-gradient(180deg, #0284c7 0%, #0369a1 50%, #075985 100%) !important;
+      color: #F8E7C9 !important;
+      border-top: 1.5px solid #38bdf8 !important;
+      border-bottom: 3.5px solid #082f49 !important;
+      box-shadow: 0 4px 0 #082f49, 0 6px 14px rgba(2, 132, 199, 0.35), inset 0 1.5px 0 rgba(255, 255, 255, 0.3) !important;
     }
+
+    /* Real-World Stamped Typography: Deep Emerald Ink */
+    body.theme-champagne .text-white,
+    body.theme-light .text-white,
+    body:not(.theme-dark) .text-white {
+      color: #064E3B !important;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+    }
+    body.theme-champagne .text-slate-100,
     body.theme-light .text-slate-100,
-    body.theme-light .text-slate-200 {
-      color: #1e293b !important;
-      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+    body:not(.theme-dark) .text-slate-100,
+    body.theme-champagne .text-slate-200,
+    body.theme-light .text-slate-200,
+    body:not(.theme-dark) .text-slate-200 {
+      color: #064E3B !important;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) !important;
     }
-    body.theme-light .text-slate-300 {
-      color: #334155 !important;
+    body.theme-champagne .text-slate-300,
+    body.theme-light .text-slate-300,
+    body:not(.theme-dark) .text-slate-300 {
+      color: #0c4837 !important;
     }
-    body.theme-light .text-slate-400 {
-      color: #475569 !important;
+    body.theme-champagne .text-slate-400,
+    body.theme-light .text-slate-400,
+    body:not(.theme-dark) .text-slate-400 {
+      color: #115743 !important;
     }
+    body.theme-champagne .border-slate-700,
     body.theme-light .border-slate-700,
+    body:not(.theme-dark) .border-slate-700,
+    body.theme-champagne .border-slate-700\/60,
+    body.theme-light .border-slate-700\/60,
+    body:not(.theme-dark) .border-slate-700\/60,
+    body.theme-champagne .border-slate-700\/80,
     body.theme-light .border-slate-700\/80,
-    body.theme-light .border-slate-800 {
-      border-color: #cbd5e1 !important;
+    body:not(.theme-dark) .border-slate-700\/80,
+    body.theme-champagne .border-slate-800,
+    body.theme-light .border-slate-800,
+    body:not(.theme-dark) .border-slate-800,
+    body.theme-champagne .border-slate-800\/80,
+    body.theme-light .border-slate-800\/80,
+    body:not(.theme-dark) .border-slate-800\/80 {
+      border-color: #D6BD90 !important;
     }
 
     /* Skeuomorphic Metallic Theme Switcher Housing */
-    body.theme-light #theme-switcher-container {
-      background: linear-gradient(180deg, #cbd5e1 0%, #e2e8f0 100%) !important;
-      border: 2px solid #94a3b8 !important;
-      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25), 0 1px 0 #ffffff !important;
+    body.theme-champagne #theme-switcher-container,
+    body.theme-light #theme-switcher-container,
+    body:not(.theme-dark) #theme-switcher-container {
+      background: linear-gradient(180deg, #04382b 0%, #02231a 100%) !important;
+      border: 2px solid #D6BD90 !important;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4), 0 1px 0 rgba(255, 255, 255, 0.1) !important;
     }
 
     /* Skeuomorphic Fixed Bottom Navigation Bar */
-    body.theme-light #mobile-bottom-nav {
-      background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%) !important;
-      border-top: 3px solid #64748b !important;
-      box-shadow: 0 -8px 24px rgba(15, 23, 42, 0.25), inset 0 1.5px 0 #ffffff !important;
+    body.theme-champagne #mobile-bottom-nav,
+    body.theme-light #mobile-bottom-nav,
+    body:not(.theme-dark) #mobile-bottom-nav {
+      background: linear-gradient(180deg, #065f46 0%, #064E3B 50%, #023829 100%) !important;
+      border-top: 3.5px solid #D6BD90 !important;
+      box-shadow: 0 -8px 24px rgba(6, 78, 59, 0.35), inset 0 1.5px 0 #10b981 !important;
+    }
+    body.theme-champagne #mobile-bottom-nav button span,
+    body.theme-light #mobile-bottom-nav button span,
+    body:not(.theme-dark) #mobile-bottom-nav button span {
+      color: #F8E7C9 !important;
+    }
+
+    /* Clean Belagavi Official Mission Brand Card */
+    body.theme-champagne .bg-gradient-to-r.from-slate-900,
+    body.theme-light .bg-gradient-to-r.from-slate-900,
+    body:not(.theme-dark) .bg-gradient-to-r.from-slate-900 {
+      background: linear-gradient(135deg, #076b50 0%, #064E3B 40%, #033628 100%) !important;
+      border: 2.5px solid #D6BD90 !important;
+      color: #F8E7C9 !important;
+    }
+    body.theme-champagne .bg-gradient-to-r.from-slate-900 h2,
+    body.theme-light .bg-gradient-to-r.from-slate-900 h2,
+    body:not(.theme-dark) .bg-gradient-to-r.from-slate-900 h2 {
+      color: #F8E7C9 !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
+    }
+    body.theme-champagne .bg-gradient-to-r.from-slate-900 p,
+    body.theme-light .bg-gradient-to-r.from-slate-900 p,
+    body:not(.theme-dark) .bg-gradient-to-r.from-slate-900 p {
+      color: #EBD5AE !important;
     }
 
     /* Zomato-Style Live Route Tracking & Worker Avatar */
@@ -627,39 +815,39 @@
     }
   </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans pb-20 sm:pb-4 select-none">
+<body class="theme-champagne bg-[#F8E7C9] text-[#064E3B] min-h-screen flex flex-col font-sans pb-20 sm:pb-4 select-none">
 
   <!-- ============================================================== -->
   <!-- 3-SECOND FULL PAGE CLEAN CITY SPLASH SCREEN (Requirement 7)    -->
   <!-- ============================================================== -->
-  <div id="app-splash-screen" class="fixed inset-0 z-[99999] bg-slate-950 flex flex-col items-center justify-center p-6 text-white transition-opacity duration-700 select-none">
+  <div id="app-splash-screen" class="fixed inset-0 z-[99999] bg-gradient-to-b from-[#064E3B] via-[#04392b] to-[#022c22] flex flex-col items-center justify-center p-6 text-[#F8E7C9] transition-opacity duration-700 select-none">
     <div class="flex flex-col items-center text-center space-y-6 max-w-sm w-full animate-fade-in">
       <!-- Clean City Official Logo Emblem -->
       <div class="relative flex items-center justify-center">
-        <div class="absolute w-44 h-44 bg-emerald-500/25 rounded-full blur-2xl animate-pulse"></div>
-        <img src="/static/clean_belagavi_logo.png" alt="Clean Belagavi Official Logo" class="w-48 sm:w-56 h-auto object-contain relative z-10 drop-shadow-2xl rounded-3xl bg-white/10 p-3 border-2 border-emerald-400/40">
+        <div class="absolute w-44 h-44 bg-emerald-400/20 rounded-full blur-2xl animate-pulse"></div>
+        <img src="/static/clean_belagavi_logo.png" alt="Clean Belagavi Official Logo" class="w-48 sm:w-56 h-auto object-contain relative z-10 drop-shadow-2xl rounded-3xl bg-[#F8E7C9]/10 p-3 border-2 border-[#D6BD90]">
       </div>
 
       <!-- Typography -->
       <div class="space-y-2">
-        <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase bg-[#F8E7C9]/20 text-[#F8E7C9] border border-[#D6BD90]">
           Clean City Mission • ಸ್ವಚ್ಛ ಬೆಳಗಾವಿ
         </span>
-        <h1 class="text-2xl sm:text-3xl font-black tracking-tight text-white">
+        <h1 class="text-2xl sm:text-3xl font-black tracking-tight text-[#F8E7C9]">
           SWACHHA BELAGAVI
         </h1>
-        <p class="text-xs text-slate-300 font-medium">
+        <p class="text-xs text-[#EBD5AE] font-medium">
           Belagavi Mahanagara Palike • Smart Municipal Waste Management & Cleanliness
         </p>
       </div>
 
       <!-- 3-Second Progress Bar & Countdown -->
       <div class="w-full space-y-2 pt-2">
-        <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden border border-slate-700">
-          <div id="splash-progress-bar" class="h-full bg-gradient-to-r from-emerald-500 via-teal-400 to-sky-400 rounded-full transition-all duration-[3000ms] ease-out" style="width: 0%;"></div>
+        <div class="w-full h-2 bg-[#02231a] rounded-full overflow-hidden border border-[#D6BD90]/50">
+          <div id="splash-progress-bar" class="h-full bg-gradient-to-r from-emerald-400 via-[#F8E7C9] to-emerald-300 rounded-full transition-all duration-[3000ms] ease-out" style="width: 0%;"></div>
         </div>
-        <div class="flex justify-between items-center text-[11px] font-mono text-slate-400">
-          <span id="splash-status-text" class="text-emerald-400">Loading Clean City Portal...</span>
+        <div class="flex justify-between items-center text-[11px] font-mono text-[#EBD5AE]">
+          <span id="splash-status-text" class="text-[#F8E7C9] font-bold">Loading Clean City Portal...</span>
           <span id="splash-timer-text">3s</span>
         </div>
       </div>
@@ -1518,15 +1706,15 @@
         </button>
       </div>
 
-      <!-- Theme Switcher (Black Screen / Skeuomorphic UI) -->
-      <div class="flex items-center space-x-1 bg-slate-900 border border-slate-800 p-1 rounded-xl" id="theme-switcher-container">
-        <button type="button" onclick="setThemeMode('dark')" id="btn-theme-dark" class="px-3 py-1.5 text-xs font-bold rounded-lg transition bg-slate-800 text-white shadow border border-slate-700 flex items-center space-x-1.5" title="Black Screen">
-          <span class="w-2.5 h-2.5 rounded-full bg-black border border-slate-600 inline-block"></span>
-          <span>Black Screen</span>
+      <!-- Theme Switcher (Emerald & Champagne / Obsidian Dark) -->
+      <div class="flex items-center space-x-1 bg-[#04382b] border border-[#D6BD90] p-1 rounded-xl shadow-inner" id="theme-switcher-container">
+        <button type="button" onclick="setThemeMode('champagne')" id="btn-theme-champagne" class="px-3 py-1.5 text-xs font-bold rounded-lg transition bg-gradient-to-b from-[#FFFDF8] to-[#F8E7C9] text-[#064E3B] shadow border border-[#D6BD90] flex items-center space-x-1.5" title="Emerald Ink & Champagne Combination">
+          <span class="w-3 h-3 rounded-full bg-[#064E3B] border border-[#F8E7C9] inline-block shadow-sm"></span>
+          <span>🌿 Emerald & Champagne</span>
         </button>
-        <button type="button" onclick="setThemeMode('light')" id="btn-theme-light" class="px-3 py-1.5 text-xs font-semibold rounded-lg transition text-slate-400 hover:text-white flex items-center space-x-1.5" title="Skeuomorphic Real-World Physical UI">
-          <span class="w-2.5 h-2.5 rounded-full bg-slate-300 border border-slate-400 inline-block shadow-inner"></span>
-          <span>⚙️ Skeuomorphic UI</span>
+        <button type="button" onclick="setThemeMode('dark')" id="btn-theme-dark" class="px-3 py-1.5 text-xs font-semibold rounded-lg transition text-[#EBD5AE] hover:text-white flex items-center space-x-1.5" title="Obsidian Dark UI">
+          <span class="w-2.5 h-2.5 rounded-full bg-slate-900 border border-slate-600 inline-block"></span>
+          <span>🌙 Dark</span>
         </button>
       </div>
 
@@ -3440,34 +3628,37 @@
     };
 
     // ============================================================
-    // THEME SWITCHER (BLACK SCREEN / SKEUOMORPHIC UI)
+    // THEME SWITCHER (EMERALD INK & CHAMPAGNE / OBSIDIAN DARK)
     // ============================================================
     function setThemeMode(mode) {
       localStorage.setItem('bcc_theme_mode', mode);
+      const btnChampagne = document.getElementById('btn-theme-champagne');
       const btnDark = document.getElementById('btn-theme-dark');
-      const btnLight = document.getElementById('btn-theme-light');
-      if (mode === 'light') {
-        document.body.classList.add('theme-light');
-        if (btnLight) {
-          btnLight.className = "px-3 py-1.5 text-xs font-bold rounded-lg transition bg-gradient-to-b from-[#e2e8f0] to-[#cbd5e1] text-slate-900 shadow-md border-t-2 border-white border-b-2 border-slate-500 border-l border-r border-slate-300 flex items-center space-x-1.5";
-        }
+      if (mode === 'dark') {
+        document.body.classList.remove('theme-champagne', 'theme-light');
+        document.body.classList.add('theme-dark');
         if (btnDark) {
-          btnDark.className = "px-3 py-1.5 text-xs font-semibold rounded-lg transition text-slate-500 hover:text-slate-900 flex items-center space-x-1.5";
+          btnDark.className = "px-3 py-1.5 text-xs font-bold rounded-lg transition bg-[#022c22] text-[#F8E7C9] shadow border border-[#D6BD90] flex items-center space-x-1.5";
+        }
+        if (btnChampagne) {
+          btnChampagne.className = "px-3 py-1.5 text-xs font-semibold rounded-lg transition text-[#D6BD90] hover:text-white flex items-center space-x-1.5";
         }
       } else {
-        document.body.classList.remove('theme-light');
-        if (btnDark) {
-          btnDark.className = "px-3 py-1.5 text-xs font-bold rounded-lg transition bg-slate-800 text-white shadow border border-slate-700 flex items-center space-x-1.5";
+        document.body.classList.remove('theme-dark');
+        document.body.classList.add('theme-champagne');
+        if (btnChampagne) {
+          btnChampagne.className = "px-3 py-1.5 text-xs font-bold rounded-lg transition bg-gradient-to-b from-[#FFFDF8] to-[#F8E7C9] text-[#064E3B] shadow-md border-t-2 border-white border-b-2 border-[#B89C68] border-l border-r border-[#D6BD90] flex items-center space-x-1.5";
         }
-        if (btnLight) {
-          btnLight.className = "px-3 py-1.5 text-xs font-semibold rounded-lg transition text-slate-400 hover:text-white flex items-center space-x-1.5";
+        if (btnDark) {
+          btnDark.className = "px-3 py-1.5 text-xs font-semibold rounded-lg transition text-[#EBD5AE] hover:text-white flex items-center space-x-1.5";
         }
       }
     }
 
-    // Apply saved theme immediately on script execution
-    const initialSavedTheme = localStorage.getItem('bcc_theme_mode') || 'dark';
-    setThemeMode(initialSavedTheme);
+    // Default immediately to the user's requested Emerald Ink & Champagne theme
+    const savedTheme = localStorage.getItem('bcc_theme_mode');
+    const initialSavedTheme = (savedTheme === 'dark') ? 'dark' : 'champagne';
+    setThemeMode('champagne');
 
     function setAppLanguage(lang) {
       appLang = 'en';
