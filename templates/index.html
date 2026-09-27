@@ -1616,23 +1616,23 @@
             <span>Instant 1-Tap Employee Login:</span>
           </span>
           <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-[11px]">
-            <button type="button" onclick="quickFillStaffLogin('BAS098', 'Basav@098')" class="px-2.5 py-2 bg-gradient-to-r from-amber-500/20 to-emerald-500/20 hover:from-amber-500/30 hover:to-emerald-500/30 border border-amber-500/40 rounded-xl font-bold text-left truncate flex items-center space-x-1.5 shadow-sm text-slate-200">
-              <span>👷 Basavaraj</span>
+            <button type="button" onclick="openPortalWithId('BCC-W2101')" class="px-2.5 py-2 bg-gradient-to-r from-amber-500/20 to-emerald-500/20 hover:from-amber-500/30 hover:to-emerald-500/30 border border-amber-500/40 rounded-xl font-bold text-left truncate flex items-center space-x-1.5 shadow-sm text-slate-200 active:scale-95">
+              <span>👷 Basavaraj (W2101)</span>
             </button>
-            <button type="button" onclick="quickFillStaffLogin('YAL987', 'Yalla@987')" class="px-2.5 py-2 bg-gradient-to-r from-amber-500/20 to-emerald-500/20 hover:from-amber-500/30 hover:to-emerald-500/30 border border-amber-500/40 rounded-xl font-bold text-left truncate flex items-center space-x-1.5 shadow-sm text-slate-200">
-              <span>👷 Yallappa</span>
+            <button type="button" onclick="openPortalWithId('BCC-W3402')" class="px-2.5 py-2 bg-gradient-to-r from-amber-500/20 to-emerald-500/20 hover:from-amber-500/30 hover:to-emerald-500/30 border border-amber-500/40 rounded-xl font-bold text-left truncate flex items-center space-x-1.5 shadow-sm text-slate-200 active:scale-95">
+              <span>👷 Yallappa (W3402)</span>
             </button>
-            <button type="button" onclick="quickFillStaffLogin('SAN876', 'Santo@876')" class="px-2.5 py-2 bg-gradient-to-r from-amber-500/20 to-emerald-500/20 hover:from-amber-500/30 hover:to-emerald-500/30 border border-amber-500/40 rounded-xl font-bold text-left truncate flex items-center space-x-1.5 shadow-sm text-slate-200">
-              <span>👷 Santosh</span>
+            <button type="button" onclick="openPortalWithId('BCC-W7287')" class="px-2.5 py-2 bg-gradient-to-r from-amber-500/20 to-emerald-500/20 hover:from-amber-500/30 hover:to-emerald-500/30 border border-amber-500/40 rounded-xl font-bold text-left truncate flex items-center space-x-1.5 shadow-sm text-slate-200 active:scale-95">
+              <span>👷 Shankar (W7287)</span>
             </button>
-            <button type="button" onclick="quickFillStaffLogin('bindu', 'Bindu@387')" class="px-2.5 py-2 bg-gradient-to-r from-amber-500/20 to-emerald-500/20 hover:from-amber-500/30 hover:to-emerald-500/30 border border-amber-500/40 rounded-xl font-bold text-left truncate flex items-center space-x-1.5 shadow-sm text-slate-200">
-              <span>👷 Bindu</span>
+            <button type="button" onclick="openPortalWithId('BCC-W3871')" class="px-2.5 py-2 bg-gradient-to-r from-amber-500/20 to-emerald-500/20 hover:from-amber-500/30 hover:to-emerald-500/30 border border-amber-500/40 rounded-xl font-bold text-left truncate flex items-center space-x-1.5 shadow-sm text-slate-200 active:scale-95">
+              <span>👷 Bindu (W3871)</span>
             </button>
-            <button type="button" onclick="quickFillStaffLogin('guru', 'Guru@765')" class="px-2.5 py-2 bg-gradient-to-r from-amber-500/20 to-emerald-500/20 hover:from-amber-500/30 hover:to-emerald-500/30 border border-amber-500/40 rounded-xl font-bold text-left truncate flex items-center space-x-1.5 shadow-sm text-slate-200">
-              <span>👷 Guru</span>
+            <button type="button" onclick="openPortalWithId('BCC-W8402')" class="px-2.5 py-2 bg-gradient-to-r from-amber-500/20 to-emerald-500/20 hover:from-amber-500/30 hover:to-emerald-500/30 border border-amber-500/40 rounded-xl font-bold text-left truncate flex items-center space-x-1.5 shadow-sm text-slate-200 active:scale-95">
+              <span>👷 Guru (W8402)</span>
             </button>
-            <button type="button" onclick="quickFillStaffLogin('BCC-W2101', 'Basav@098')" class="px-2.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl font-bold text-left truncate flex items-center space-x-1.5">
-              <span>🆔 BCC-W2101</span>
+            <button type="button" onclick="openPortalWithId('CIT-BELAGAVI')" class="px-2.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl font-bold text-left truncate flex items-center space-x-1.5 active:scale-95">
+              <span>👤 Citizen Praveen</span>
             </button>
           </div>
         </div>
@@ -1685,6 +1685,13 @@
       <!-- Officer Login Section -->
       <div id="staff-form-officer" class="hidden space-y-3.5">
         <p class="text-xs text-slate-300">Chief Municipal Officer administrative console with live GIS radar & employee directory:</p>
+
+        <!-- 1-Click Instant Officer Button -->
+        <button type="button" onclick="openPortalWithId('BCC-OFF01')" class="w-full py-2.5 bg-indigo-600/30 hover:bg-indigo-600 text-indigo-200 hover:text-white border border-indigo-500/50 rounded-xl font-bold text-xs transition flex items-center justify-center space-x-1.5 active:scale-95 shadow">
+          <i data-lucide="zap" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+          <span>⚡ 1-Click Instant Open: Anand Patil (BCC-OFF01)</span>
+        </button>
+
         <div>
           <label class="block text-xs font-semibold text-slate-300 mb-1">Officer Passcode</label>
           <input type="password" id="staff-officer-passcode" placeholder="Enter admin passcode (admin123)" value="admin123" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white">
@@ -1787,6 +1794,55 @@
       </div>
     </div>
   </header>
+
+  <!-- ============================================================== -->
+  <!-- 1-CLICK ID DIRECT OPEN BAR (NO PHONE NUMBER • NO OTP • DIRECT ACCESS) -->
+  <!-- ============================================================== -->
+  <div id="quick-id-access-bar" class="w-full bg-[#031c15] border-b-2 border-emerald-500/40 px-3 sm:px-6 py-2 shadow-xl sticky top-0 z-40 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-2 text-xs">
+      <div class="flex items-center space-x-2 flex-wrap gap-1.5">
+        <span class="text-emerald-400 font-black flex items-center space-x-1 shrink-0 text-xs mr-1 uppercase tracking-wider">
+          <i data-lucide="zap" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+          <span>Click ID to Open:</span>
+        </span>
+
+        <!-- Citizen ID -->
+        <button type="button" onclick="openPortalWithId('CIT-BELAGAVI')" id="quick-id-btn-cit" class="px-3 py-1.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500 text-emerald-300 hover:text-white border border-emerald-500/50 font-bold transition-all flex items-center space-x-1.5 shadow-sm active:scale-95 group" title="Open Citizen Portal">
+          <span>👤 Praveen (CIT-BELAGAVI)</span>
+        </button>
+
+        <!-- Worker 1: Basavaraj -->
+        <button type="button" onclick="openPortalWithId('BCC-W2101')" id="quick-id-btn-w2101" class="px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500 text-amber-300 hover:text-slate-950 border border-amber-500/50 font-bold transition-all flex items-center space-x-1.5 shadow-sm active:scale-95 group" title="Open Worker: Basavaraj Belagavi">
+          <span>👷 Basavaraj (BCC-W2101)</span>
+        </button>
+
+        <!-- Worker 2: Yallappa -->
+        <button type="button" onclick="openPortalWithId('BCC-W3402')" id="quick-id-btn-w3402" class="px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500 text-amber-300 hover:text-slate-950 border border-amber-500/50 font-bold transition-all flex items-center space-x-1.5 shadow-sm active:scale-95 group" title="Open Worker: Yallappa Patil">
+          <span>👷 Yallappa (BCC-W3402)</span>
+        </button>
+
+        <!-- Worker 3: Shankar -->
+        <button type="button" onclick="openPortalWithId('BCC-W7287')" id="quick-id-btn-w7287" class="px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500 text-amber-300 hover:text-slate-950 border border-amber-500/50 font-bold transition-all flex items-center space-x-1.5 shadow-sm active:scale-95 group" title="Open Worker: Shankar Naik">
+          <span>👷 Shankar (BCC-W7287)</span>
+        </button>
+
+        <!-- Worker 4: Bindu -->
+        <button type="button" onclick="openPortalWithId('BCC-W3871')" id="quick-id-btn-w3871" class="px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500 text-amber-300 hover:text-slate-950 border border-amber-500/50 font-bold transition-all flex items-center space-x-1.5 shadow-sm active:scale-95 group" title="Open Worker: Bindu">
+          <span>👷 Bindu (BCC-W3871)</span>
+        </button>
+
+        <!-- Officer: Anand Patil -->
+        <button type="button" onclick="openPortalWithId('BCC-OFF01')" id="quick-id-btn-off" class="px-3 py-1.5 rounded-xl bg-indigo-500/20 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/50 font-bold transition-all flex items-center space-x-1.5 shadow-sm active:scale-95 group" title="Open BCC Officer Console">
+          <span>🏛️ Officer (BCC-OFF01)</span>
+        </button>
+      </div>
+
+      <div class="hidden md:flex items-center space-x-2 text-[11px] text-emerald-300 font-medium">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+        <span>Direct 1-Click Open • No Number • No OTP</span>
+      </div>
+    </div>
+  </div>
 
   <!-- MAIN CONTAINER -->
   <main class="max-w-7xl mx-auto px-4 py-6 flex-1 w-full">
@@ -4028,7 +4084,7 @@
       }
 
       try { updateAvatarImages(currentUser?.gender || 'Male'); } catch (e) {}
-      try { detectLiveSpotGps(); } catch (e) {}
+      try { updateQuickIdBarHighlight(currentUser?.role || 'citizen', currentUser?.emp_id || 'CIT-BELAGAVI'); } catch (e) {}
       try { initMap(); } catch (e) {}
       try { loadWorkersList(); } catch (e) {}
       try { loadAllReports(); } catch (e) {}
@@ -4542,6 +4598,41 @@
       }
 
       checkProximityAlert();
+      try { updateQuickIdBarHighlight(user.role, user.emp_id || user.custom_emp_id); } catch(e){}
+    }
+
+    function updateQuickIdBarHighlight(role, empId) {
+      const citBtn = document.getElementById('quick-id-btn-cit');
+      const w2101Btn = document.getElementById('quick-id-btn-w2101');
+      const w3402Btn = document.getElementById('quick-id-btn-w3402');
+      const w7287Btn = document.getElementById('quick-id-btn-w7287');
+      const w3871Btn = document.getElementById('quick-id-btn-w3871');
+      const offBtn = document.getElementById('quick-id-btn-off');
+
+      [citBtn, w2101Btn, w3402Btn, w7287Btn, w3871Btn, offBtn].forEach(b => {
+        if (b) {
+          b.classList.remove('ring-2', 'ring-white', 'scale-105', 'bg-emerald-500', 'bg-amber-500', 'bg-indigo-600', 'text-white', 'text-slate-950');
+        }
+      });
+
+      const upper = (empId || '').toUpperCase();
+      if (role === 'officer') {
+        if (offBtn) offBtn.classList.add('ring-2', 'ring-white', 'scale-105', 'bg-indigo-600', 'text-white');
+      } else if (role === 'worker') {
+        if (upper.includes('2101') || upper.includes('BAS')) {
+          if (w2101Btn) w2101Btn.classList.add('ring-2', 'ring-white', 'scale-105', 'bg-amber-500', 'text-slate-950');
+        } else if (upper.includes('3402') || upper.includes('YAL')) {
+          if (w3402Btn) w3402Btn.classList.add('ring-2', 'ring-white', 'scale-105', 'bg-amber-500', 'text-slate-950');
+        } else if (upper.includes('7287') || upper.includes('SAN')) {
+          if (w7287Btn) w7287Btn.classList.add('ring-2', 'ring-white', 'scale-105', 'bg-amber-500', 'text-slate-950');
+        } else if (upper.includes('3871') || upper.includes('BIN')) {
+          if (w3871Btn) w3871Btn.classList.add('ring-2', 'ring-white', 'scale-105', 'bg-amber-500', 'text-slate-950');
+        } else {
+          if (w2101Btn) w2101Btn.classList.add('ring-2', 'ring-white', 'scale-105', 'bg-amber-500', 'text-slate-950');
+        }
+      } else {
+        if (citBtn) citBtn.classList.add('ring-2', 'ring-white', 'scale-105', 'bg-emerald-500', 'text-white');
+      }
     }
 
     // Load All Workers for Switcher
