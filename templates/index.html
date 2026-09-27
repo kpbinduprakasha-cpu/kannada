@@ -2014,7 +2014,7 @@
               <div class="bg-black/90 border-2 border-slate-700 rounded-2xl p-3 relative overflow-hidden space-y-2.5">
                 <!-- Video Stream Feed & Preview Viewfinder -->
                 <div class="relative aspect-video w-full rounded-xl overflow-hidden bg-slate-950 flex items-center justify-center border border-slate-800">
-                  <video id="citizen-camera-stream" autoplay playsinline class="w-full h-full object-cover hidden"></video>
+                  <video id="citizen-camera-stream" autoplay playsinline muted class="w-full h-full object-cover hidden"></video>
                   <img id="citizen-live-snapshot-img" class="w-full h-full object-cover hidden rounded-xl" alt="Live Captured Waste">
                   <canvas id="citizen-live-canvas" class="hidden"></canvas>
                   
@@ -2023,6 +2023,12 @@
                     <div class="w-16 h-16 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center border border-rose-500/30 shadow-lg">
                       <i data-lucide="camera" class="w-8 h-8"></i>
                     </div>
+                  </div>
+
+                  <!-- Active Camera Indicator Pill -->
+                  <div id="citizen-cam-mode-pill" class="hidden absolute top-2.5 right-2.5 bg-emerald-500 text-slate-950 font-black text-[10px] px-2.5 py-0.5 rounded-full flex items-center space-x-1.5 shadow-lg shadow-emerald-500/40 z-10">
+                    <span class="w-2 h-2 rounded-full bg-slate-950 animate-ping"></span>
+                    <span id="citizen-cam-mode-text">📷 BACK CAMERA ON</span>
                   </div>
 
                   <!-- Live GPS Watermark Badge on Camera View -->
@@ -2046,11 +2052,11 @@
                 <!-- 1-Click Hardware Camera for Laptop & Mobile + File Picker -->
                 <div>
                   <div id="citizen-cam-controls-ready" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    <button type="button" id="btn-open-citizen-cam" onclick="openCitizenHardwareCamera()" class="w-full py-3 px-3 bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white rounded-xl text-xs font-bold flex items-center justify-center space-x-2 transition shadow-lg shadow-rose-600/30">
+                    <button type="button" id="btn-open-citizen-cam" onclick="openCitizenHardwareCamera()" class="w-full py-3 px-3 bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white rounded-xl text-xs font-bold flex items-center justify-center space-x-2 transition shadow-lg shadow-rose-600/30 active:scale-95">
                       <i data-lucide="camera" class="w-4 h-4 shrink-0"></i>
                       <span id="btn-phone-cam-label">📷 Turn ON Live Camera</span>
                     </button>
-                    <label for="report-photo-input" class="w-full cursor-pointer py-3 px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-xl text-xs font-semibold flex items-center justify-center space-x-2 transition text-center">
+                    <label for="report-photo-input" class="w-full cursor-pointer py-3 px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-xl text-xs font-semibold flex items-center justify-center space-x-2 transition text-center active:scale-95">
                       <i data-lucide="upload" class="w-4 h-4 text-slate-400"></i>
                       <span>📁 Choose Image File</span>
                       <input type="file" id="report-photo-input" accept="image/*" capture="environment" onchange="previewCitizenImage(this)" class="hidden">
@@ -2058,13 +2064,17 @@
                   </div>
 
                   <!-- Active Live Camera Controls (When camera is streaming) -->
-                  <div id="citizen-cam-controls-active" class="hidden flex items-center gap-2">
-                    <button type="button" id="btn-snap-citizen-cam" onclick="captureCitizenLiveSnapshot()" class="flex-1 py-3 px-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-extrabold flex items-center justify-center space-x-2 shadow-lg shadow-emerald-600/30 transition animate-pulse">
+                  <div id="citizen-cam-controls-active" class="hidden flex flex-wrap items-center gap-2">
+                    <button type="button" id="btn-snap-citizen-cam" onclick="captureCitizenLiveSnapshot()" class="flex-1 py-3 px-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-extrabold flex items-center justify-center space-x-2 shadow-lg shadow-emerald-600/30 transition animate-pulse active:scale-95">
                       <i data-lucide="aperture" class="w-4 h-4"></i>
                       <span>🔴 SNAP LIVE PHOTO</span>
                     </button>
-                    <button type="button" onclick="stopCitizenCamera()" class="py-3 px-3.5 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-slate-700 rounded-xl text-xs font-bold transition">
-                      <span>✕ Close Camera</span>
+                    <button type="button" onclick="flipCitizenCamera()" title="Switch between Back Camera & Front Camera" class="py-3 px-3 bg-slate-800 hover:bg-slate-700 text-sky-400 border border-slate-700 rounded-xl text-xs font-bold transition flex items-center space-x-1 active:scale-95">
+                      <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                      <span id="citizen-cam-flip-label">🔄 Flip Cam</span>
+                    </button>
+                    <button type="button" onclick="stopCitizenCamera()" class="py-3 px-3 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-slate-700 rounded-xl text-xs font-bold transition active:scale-95">
+                      <span>✕ Close</span>
                     </button>
                   </div>
                 </div>
@@ -2613,13 +2623,19 @@
 
             <!-- Viewfinder Stream Feed -->
             <div class="relative bg-black rounded-lg overflow-hidden aspect-video border border-slate-700 flex items-center justify-center">
-              <video id="live-camera-feed" autoplay playsinline class="w-full h-full object-cover hidden"></video>
+              <video id="live-camera-feed" autoplay playsinline muted class="w-full h-full object-cover hidden"></video>
               <canvas id="camera-snapshot-canvas" class="hidden w-full h-full object-cover"></canvas>
               
               <div id="camera-mock-preview" class="flex items-center justify-center p-6">
                 <div class="w-14 h-14 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30 shadow-lg">
                   <i data-lucide="camera" class="w-7 h-7"></i>
                 </div>
+              </div>
+
+              <!-- Active Camera Indicator Pill -->
+              <div id="worker-cam-mode-pill" class="hidden absolute top-2.5 right-2.5 bg-emerald-500 text-slate-950 font-black text-[10px] px-2.5 py-0.5 rounded-full flex items-center space-x-1.5 shadow-lg shadow-emerald-500/40 z-10">
+                <span class="w-2 h-2 rounded-full bg-slate-950 animate-ping"></span>
+                <span id="worker-cam-mode-text">📷 BACK CAMERA ON</span>
               </div>
 
               <!-- Live GPS Watermark Overlay -->
@@ -2632,13 +2648,45 @@
               </div>
             </div>
 
-            <!-- Single Universal 1-Click Cleaned Photo Button -->
-            <div class="pt-1">
-              <label for="worker-hardware-cam" class="w-full cursor-pointer py-3 px-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold flex items-center justify-center space-x-2 transition shadow text-center">
-                <i data-lucide="camera" class="w-4 h-4 shrink-0"></i>
-                <span>Take Live Cleaned Photo</span>
-                <input type="file" id="worker-hardware-cam" accept="image/*" capture="environment" onchange="previewWorkerHardwareImage(this)" class="hidden">
-              </label>
+            <!-- Worker Camera Controls (1-Click Hardware Camera for Laptop & Mobile) -->
+            <div>
+              <div id="worker-cam-controls-ready" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button type="button" id="btn-open-worker-cam" onclick="openWorkerHardwareCamera()" class="w-full py-3 px-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-xl text-xs font-bold flex items-center justify-center space-x-2 transition shadow-lg shadow-emerald-600/30 active:scale-95">
+                  <i data-lucide="camera" class="w-4 h-4 shrink-0"></i>
+                  <span>📷 Turn ON Live Camera</span>
+                </button>
+                <label for="worker-hardware-cam" class="w-full cursor-pointer py-3 px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-xl text-xs font-semibold flex items-center justify-center space-x-2 transition text-center active:scale-95">
+                  <i data-lucide="upload" class="w-4 h-4 text-slate-400"></i>
+                  <span>📁 Choose Image File</span>
+                  <input type="file" id="worker-hardware-cam" accept="image/*" capture="environment" onchange="previewWorkerHardwareImage(this)" class="hidden">
+                </label>
+              </div>
+
+              <!-- Active Live Camera Controls (When camera is streaming) -->
+              <div id="worker-cam-controls-active" class="hidden flex flex-wrap items-center gap-2">
+                <button type="button" id="btn-snap-worker-cam" onclick="captureLiveSnapshot()" class="flex-1 py-3 px-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-extrabold flex items-center justify-center space-x-2 shadow-lg shadow-emerald-600/30 transition animate-pulse active:scale-95">
+                  <i data-lucide="aperture" class="w-4 h-4"></i>
+                  <span>🔴 SNAP LIVE CLEANED PHOTO</span>
+                </button>
+                <button type="button" onclick="flipWorkerCamera()" title="Switch between Back Camera & Front Camera" class="py-3 px-3 bg-slate-800 hover:bg-slate-700 text-sky-400 border border-slate-700 rounded-xl text-xs font-bold transition flex items-center space-x-1 active:scale-95">
+                  <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                  <span id="worker-cam-flip-label">🔄 Flip Cam</span>
+                </button>
+                <button type="button" onclick="stopWorkerCamera()" class="py-3 px-3 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-slate-700 rounded-xl text-xs font-bold transition active:scale-95">
+                  <span>✕ Close</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Proof Photo Confirmed Status -->
+            <div id="worker-photo-confirmed-badge" class="hidden flex items-center justify-between bg-emerald-500/10 border border-emerald-500/30 rounded-xl px-3 py-1.5 text-xs text-emerald-300">
+              <div class="flex items-center space-x-1.5">
+                <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+                <span class="font-bold">Cleaned Proof Photo Confirmed</span>
+              </div>
+              <button type="button" onclick="retakeWorkerPhoto()" class="text-sky-400 hover:underline font-semibold text-[11px]">
+                Retake Photo
+              </button>
             </div>
 
           </div>
@@ -4684,6 +4732,13 @@
     // UNIVERSAL LIVE CAMERA ENGINE (LAPTOP WEBCAM & MOBILE HARDWARE)
     // (Requirement 1: Not live photo captured in laptop and mobile - 100% FIXED)
     // ============================================================
+    // ============================================================
+    // UNIVERSAL LIVE CAMERA ENGINE (LAPTOP WEBCAM & MOBILE HARDWARE)
+    // 1-Click Turn-on with Back / Rear camera support, flip, & auto-fallback
+    // ============================================================
+    let citizenFacingMode = 'environment'; // Default to Back Camera for photographing waste!
+    let citizenCameraStream = null;
+
     function retakeCitizenPhoto() {
       capturedPhotoData = null;
       const img = document.getElementById('citizen-live-snapshot-img');
@@ -4694,6 +4749,7 @@
       document.getElementById('citizen-camera-idle')?.classList.remove('hidden');
       document.getElementById('citizen-camera-stream')?.classList.add('hidden');
       document.getElementById('citizen-camera-watermark')?.classList.add('hidden');
+      document.getElementById('citizen-cam-mode-pill')?.classList.add('hidden');
       document.getElementById('citizen-photo-confirmed-badge')?.classList.add('hidden');
       document.getElementById('btn-snap-citizen-cam')?.classList.add('hidden');
       document.getElementById('citizen-cam-controls-ready')?.classList.remove('hidden');
@@ -4702,29 +4758,67 @@
       if (fileInput) fileInput.value = '';
     }
 
-    async function startCitizenCamera() {
+    async function startCitizenCamera(facing = null) {
+      if (facing) citizenFacingMode = facing;
       const video = document.getElementById('citizen-camera-stream');
       const img = document.getElementById('citizen-live-snapshot-img');
       const idle = document.getElementById('citizen-camera-idle');
       const watermark = document.getElementById('citizen-camera-watermark');
       const snapBtn = document.getElementById('btn-snap-citizen-cam');
+      const modePill = document.getElementById('citizen-cam-mode-pill');
+      const modeText = document.getElementById('citizen-cam-mode-text');
+      const flipLabel = document.getElementById('citizen-cam-flip-label');
 
-      try {
-        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-          throw new Error("WebRTC not supported on plain HTTP or this device");
+      if (citizenCameraStream) {
+        citizenCameraStream.getTracks().forEach(t => t.stop());
+        citizenCameraStream = null;
+      }
+
+      let stream = null;
+
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        // Attempt 1: Preferred facing mode with resolution
+        try {
+          stream = await navigator.mediaDevices.getUserMedia({
+            video: {
+              facingMode: { ideal: citizenFacingMode },
+              width: { ideal: 1280 },
+              height: { ideal: 720 }
+            },
+            audio: false
+          });
+        } catch (e1) {
+          console.warn("Camera attempt 1 failed, trying facingMode:", e1);
+          // Attempt 2: Preferred facing mode without resolution constraint
+          try {
+            stream = await navigator.mediaDevices.getUserMedia({
+              video: { facingMode: citizenFacingMode },
+              audio: false
+            });
+          } catch (e2) {
+            console.warn("Camera attempt 2 failed, falling back to any available video (laptop webcam):", e2);
+            // Attempt 3: Simple video: true (universal fallback for any webcam)
+            try {
+              stream = await navigator.mediaDevices.getUserMedia({
+                video: true,
+                audio: false
+              });
+            } catch (e3) {
+              console.warn("WebRTC access denied or unavailable:", e3);
+            }
+          }
         }
-        if (citizenCameraStream) {
-          citizenCameraStream.getTracks().forEach(t => t.stop());
+      }
+
+      if (stream) {
+        citizenCameraStream = stream;
+        video.srcObject = stream;
+        video.muted = true;
+        try {
+          await video.play();
+        } catch (playErr) {
+          console.warn("Video play warning:", playErr);
         }
-        citizenCameraStream = await navigator.mediaDevices.getUserMedia({
-          video: {
-            facingMode: { ideal: 'environment' },
-            width: { ideal: 1280 },
-            height: { ideal: 720 }
-          },
-          audio: false
-        });
-        video.srcObject = citizenCameraStream;
         video.classList.remove('hidden');
         if (img) img.classList.add('hidden');
         if (idle) idle.classList.add('hidden');
@@ -4734,16 +4828,30 @@
         document.getElementById('citizen-cam-controls-ready')?.classList.add('hidden');
         document.getElementById('citizen-cam-controls-active')?.classList.remove('hidden');
 
-        showToast("Webcam active. Click to capture live photo.", "info");
-      } catch (err) {
-        console.warn("Live getUserMedia camera not accessible, using fallback:", err);
-        showToast("Webcam not accessible. Please use mobile camera or upload.", "warning");
-        generateSampleLiveSnapshot('citizen');
+        const track = stream.getVideoTracks()[0];
+        const settings = track ? track.getSettings() : {};
+        const isBack = settings.facingMode === 'environment' || citizenFacingMode === 'environment';
+
+        if (modePill) modePill.classList.remove('hidden');
+        if (modeText) modeText.innerText = isBack ? '📷 BACK CAMERA ON' : '🤳 FRONT CAMERA ON';
+        if (flipLabel) flipLabel.innerText = isBack ? '🔄 Switch to Front' : '🔄 Switch to Back';
+
+        showToast(`📷 Camera active (${isBack ? 'Back / Rear Camera' : 'Laptop Webcam'})! Click SNAP to capture.`, "success");
+      } else {
+        // Fallback for mobile browsers on plain HTTP where WebRTC getUserMedia is restricted
+        showToast("Opening device native hardware camera...", "info");
+        const fileInput = document.getElementById('report-photo-input');
+        if (fileInput) fileInput.click();
       }
     }
 
     function openCitizenHardwareCamera() {
       startCitizenCamera();
+    }
+
+    async function flipCitizenCamera() {
+      citizenFacingMode = citizenFacingMode === 'environment' ? 'user' : 'environment';
+      await startCitizenCamera();
     }
 
     function stopCitizenCamera() {
@@ -4758,6 +4866,7 @@
       }
       document.getElementById('citizen-camera-idle')?.classList.remove('hidden');
       document.getElementById('citizen-camera-watermark')?.classList.add('hidden');
+      document.getElementById('citizen-cam-mode-pill')?.classList.add('hidden');
       document.getElementById('citizen-cam-controls-ready')?.classList.remove('hidden');
       document.getElementById('citizen-cam-controls-active')?.classList.add('hidden');
       showToast("Camera closed", "info");
@@ -4805,8 +4914,11 @@
       if (citizenCameraStream && !video.classList.contains('hidden') && video.readyState >= 2) {
         ctx.drawImage(video, 0, 0, 640, 360);
       } else {
-        generateSampleLiveSnapshot('citizen');
-        return;
+        const fileInput = document.getElementById('report-photo-input');
+        if (fileInput) {
+          fileInput.click();
+          return;
+        }
       }
 
       stampGpsWatermark(ctx, 'citizen');
@@ -4822,6 +4934,7 @@
       if (idle) idle.classList.add('hidden');
       if (watermark) watermark.classList.add('hidden');
       if (snapBtn) snapBtn.classList.add('hidden');
+      document.getElementById('citizen-cam-mode-pill')?.classList.add('hidden');
       document.getElementById('citizen-cam-controls-ready')?.classList.remove('hidden');
       document.getElementById('citizen-cam-controls-active')?.classList.add('hidden');
       document.getElementById('citizen-photo-confirmed-badge')?.classList.remove('hidden');
@@ -5558,20 +5671,133 @@
       }, 1000);
     }
 
-    // Camera Hardware Stream & Snapshot (Laptop & Mobile)
-    async function startCamera() {
+    // ============================================================
+    // WORKER CLEANED PROOF CAMERA ENGINE (LAPTOP WEBCAM & MOBILE BACK CAMERA)
+    // 1-Click Hardware Camera, Flip Back/Front, & Native Hardware Fallback
+    // ============================================================
+    let workerFacingMode = 'environment'; // Default to Back Camera for photographing cleaned ground
+    let workerCameraStream = null;
+
+    async function startWorkerCamera(facing = null) {
+      if (facing) workerFacingMode = facing;
       const video = document.getElementById('live-camera-feed');
+      const canvas = document.getElementById('camera-snapshot-canvas');
       const mock = document.getElementById('camera-mock-preview');
-      try {
-        cameraStream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: { ideal: 'environment' } }
-        });
-        video.srcObject = cameraStream;
-        video.classList.remove('hidden');
-        mock.classList.add('hidden');
-      } catch (err) {
-        showToast("Camera active (Belagavi GPS stamped).", "info");
+      const modePill = document.getElementById('worker-cam-mode-pill');
+      const modeText = document.getElementById('worker-cam-mode-text');
+      const flipLabel = document.getElementById('worker-cam-flip-label');
+
+      if (workerCameraStream) {
+        workerCameraStream.getTracks().forEach(t => t.stop());
+        workerCameraStream = null;
       }
+
+      let stream = null;
+
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        try {
+          stream = await navigator.mediaDevices.getUserMedia({
+            video: {
+              facingMode: { ideal: workerFacingMode },
+              width: { ideal: 1280 },
+              height: { ideal: 720 }
+            },
+            audio: false
+          });
+        } catch (e1) {
+          console.warn("Worker camera attempt 1 failed, trying facingMode:", e1);
+          try {
+            stream = await navigator.mediaDevices.getUserMedia({
+              video: { facingMode: workerFacingMode },
+              audio: false
+            });
+          } catch (e2) {
+            console.warn("Worker camera attempt 2 failed, falling back to any available video (laptop webcam):", e2);
+            try {
+              stream = await navigator.mediaDevices.getUserMedia({
+                video: true,
+                audio: false
+              });
+            } catch (e3) {
+              console.warn("Worker WebRTC denied or unavailable:", e3);
+            }
+          }
+        }
+      }
+
+      if (stream) {
+        workerCameraStream = stream;
+        video.srcObject = stream;
+        video.muted = true;
+        try {
+          await video.play();
+        } catch (err) {
+          console.warn("Worker video play warning:", err);
+        }
+        video.classList.remove('hidden');
+        if (canvas) canvas.classList.add('hidden');
+        if (mock) mock.classList.add('hidden');
+
+        document.getElementById('worker-cam-controls-ready')?.classList.add('hidden');
+        document.getElementById('worker-cam-controls-active')?.classList.remove('hidden');
+
+        const track = stream.getVideoTracks()[0];
+        const settings = track ? track.getSettings() : {};
+        const isBack = settings.facingMode === 'environment' || workerFacingMode === 'environment';
+
+        if (modePill) modePill.classList.remove('hidden');
+        if (modeText) modeText.innerText = isBack ? '📷 BACK CAMERA ON' : '🤳 FRONT CAMERA ON';
+        if (flipLabel) flipLabel.innerText = isBack ? '🔄 Switch to Front' : '🔄 Switch to Back';
+
+        showToast(`📷 Worker Camera Active (${isBack ? 'Back / Rear Camera' : 'Laptop Webcam'})!`, "success");
+      } else {
+        showToast("Opening mobile camera for cleaned proof...", "info");
+        const fileInput = document.getElementById('worker-hardware-cam');
+        if (fileInput) fileInput.click();
+      }
+    }
+
+    function openWorkerHardwareCamera() {
+      startWorkerCamera();
+    }
+
+    async function flipWorkerCamera() {
+      workerFacingMode = workerFacingMode === 'environment' ? 'user' : 'environment';
+      await startWorkerCamera();
+    }
+
+    function stopWorkerCamera() {
+      if (workerCameraStream) {
+        workerCameraStream.getTracks().forEach(t => t.stop());
+        workerCameraStream = null;
+      }
+      const video = document.getElementById('live-camera-feed');
+      if (video) {
+        video.srcObject = null;
+        video.classList.add('hidden');
+      }
+      document.getElementById('camera-mock-preview')?.classList.remove('hidden');
+      document.getElementById('worker-cam-mode-pill')?.classList.add('hidden');
+      document.getElementById('worker-cam-controls-ready')?.classList.remove('hidden');
+      document.getElementById('worker-cam-controls-active')?.classList.add('hidden');
+      showToast("Worker camera closed", "info");
+    }
+
+    function retakeWorkerPhoto() {
+      const canvas = document.getElementById('camera-snapshot-canvas');
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        canvas.classList.add('hidden');
+      }
+      document.getElementById('camera-mock-preview')?.classList.remove('hidden');
+      document.getElementById('live-camera-feed')?.classList.add('hidden');
+      document.getElementById('worker-cam-mode-pill')?.classList.add('hidden');
+      document.getElementById('worker-photo-confirmed-badge')?.classList.add('hidden');
+      document.getElementById('worker-cam-controls-ready')?.classList.remove('hidden');
+      document.getElementById('worker-cam-controls-active')?.classList.add('hidden');
+      const fileInput = document.getElementById('worker-hardware-cam');
+      if (fileInput) fileInput.value = '';
     }
 
     function captureLiveSnapshot() {
@@ -5583,68 +5809,58 @@
       canvas.height = 360;
       const ctx = canvas.getContext('2d');
 
-      if (!video.classList.contains('hidden') && video.readyState >= 2) {
+      if (workerCameraStream && !video.classList.contains('hidden') && video.readyState >= 2) {
         ctx.drawImage(video, 0, 0, 640, 360);
       } else {
-        // High-fidelity cleaned pavement simulator
-        ctx.fillStyle = '#1e293b';
-        ctx.fillRect(0, 0, 640, 360);
-        ctx.strokeStyle = '#334155';
-        ctx.lineWidth = 2;
-        for (let x = 0; x < 640; x += 50) {
-          ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 360); ctx.stroke();
+        const fileInput = document.getElementById('worker-hardware-cam');
+        if (fileInput) {
+          fileInput.click();
+          return;
         }
-        for (let y = 0; y < 360; y += 50) {
-          ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(640, y); ctx.stroke();
-        }
-        ctx.fillStyle = '#10b981';
-        ctx.beginPath(); ctx.arc(320, 140, 45, 0, 2 * Math.PI); ctx.fill();
-        ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 26px sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText('CLEANED', 320, 148);
-        ctx.fillStyle = '#38bdf8';
-        ctx.font = '14px monospace';
-        ctx.fillText('100% GARBAGE CLEARED', 320, 210);
       }
 
       const task = allReports.find(r => r.id === activeAcceptedTaskId);
-      const lat = task ? task.latitude : (document.getElementById('camera-watermark-lat').innerText || '15.8340');
-      const lng = task ? task.longitude : (document.getElementById('camera-watermark-lng').innerText || '74.5020');
+      const lat = task ? task.latitude : (document.getElementById('camera-watermark-lat')?.innerText || '15.8340');
+      const lng = task ? task.longitude : (document.getElementById('camera-watermark-lng')?.innerText || '74.5020');
       const addr = task ? task.address : 'Tilakwadi, Belagavi';
       const timeStr = new Date().toISOString().replace('T', ' ').substring(0, 19);
 
       const currWorker = workersList.find(w => w.worker_id === activeWorkerId);
-      const workerEmp = currWorker ? currWorker.worker_emp_id : 'BCC-W2101';
-      const workerName = currWorker ? currWorker.worker_name : 'Basavaraj Belagavi';
+      const workerEmp = currWorker ? (currWorker.custom_emp_id || currWorker.worker_emp_id) : 'BCC-W2101';
+      const workerName = currWorker ? (currWorker.name || currWorker.worker_name) : 'Basavaraj Belagavi';
 
-      ctx.fillStyle = 'rgba(2, 6, 23, 0.85)';
-      ctx.fillRect(10, 275, 620, 75);
+      ctx.fillStyle = 'rgba(2, 6, 23, 0.88)';
+      ctx.fillRect(10, 265, 620, 85);
       ctx.strokeStyle = '#10b981';
       ctx.lineWidth = 2;
-      ctx.strokeRect(10, 275, 620, 75);
+      ctx.strokeRect(10, 265, 620, 85);
 
       ctx.fillStyle = '#10b981';
       ctx.font = 'bold 12px monospace';
       ctx.textAlign = 'left';
-      ctx.fillText(`📍 GPS: ${lat}° N, ${lng}° E | ${addr}`, 22, 298);
+      ctx.fillText(`📍 GPS: ${lat}° N, ${lng}° E | ${addr}`, 22, 288);
 
       ctx.fillStyle = '#f8fafc';
       ctx.font = '11px monospace';
-      ctx.fillText(`🕒 CLEANED: ${timeStr} IST | HARDWARE LIVE SNAPSHOT`, 22, 318);
+      ctx.fillText(`🕒 CLEANED: ${timeStr} IST | HARDWARE LIVE CAMERA SNAPSHOT`, 22, 310);
 
       ctx.fillStyle = '#f59e0b';
       ctx.font = 'bold 11px monospace';
-      ctx.fillText(`👷 ATTRIBUTED WORKER: ${workerEmp} (${workerName}) | BCC SWACHHA BELAGAVI`, 22, 338);
+      ctx.fillText(`👷 ATTRIBUTED WORKER: ${workerEmp} (${workerName}) | BCC SWACHHA BELAGAVI`, 22, 332);
 
       canvas.classList.remove('hidden');
       video.classList.add('hidden');
-      mock.classList.add('hidden');
+      if (mock) mock.classList.add('hidden');
+      document.getElementById('worker-cam-mode-pill')?.classList.add('hidden');
+      document.getElementById('worker-cam-controls-ready')?.classList.remove('hidden');
+      document.getElementById('worker-cam-controls-active')?.classList.add('hidden');
+      document.getElementById('worker-photo-confirmed-badge')?.classList.remove('hidden');
 
-      if (cameraStream) {
-        cameraStream.getTracks().forEach(t => t.stop());
-        cameraStream = null;
+      if (workerCameraStream) {
+        workerCameraStream.getTracks().forEach(t => t.stop());
+        workerCameraStream = null;
       }
+      showToast("📸 Cleaned proof photo captured with Belagavi GPS watermark!", "success");
     }
 
     function previewWorkerHardwareImage(input) {
@@ -5663,37 +5879,41 @@
             ctx.drawImage(img, 0, 0, 640, 360);
 
             const task = allReports.find(r => r.id === activeAcceptedTaskId);
-            const lat = task ? task.latitude : (document.getElementById('camera-watermark-lat').innerText || '15.8340');
-            const lng = task ? task.longitude : (document.getElementById('camera-watermark-lng').innerText || '74.5020');
+            const lat = task ? task.latitude : (document.getElementById('camera-watermark-lat')?.innerText || '15.8340');
+            const lng = task ? task.longitude : (document.getElementById('camera-watermark-lng')?.innerText || '74.5020');
             const addr = task ? task.address : 'Tilakwadi, Belagavi';
             const timeStr = new Date().toISOString().replace('T', ' ').substring(0, 19);
 
             const currWorker = workersList.find(w => w.worker_id === activeWorkerId);
-            const workerEmp = currWorker ? currWorker.worker_emp_id : 'BCC-W2101';
-            const workerName = currWorker ? currWorker.worker_name : 'Basavaraj Belagavi';
+            const workerEmp = currWorker ? (currWorker.custom_emp_id || currWorker.worker_emp_id) : 'BCC-W2101';
+            const workerName = currWorker ? (currWorker.name || currWorker.worker_name) : 'Basavaraj Belagavi';
 
-            ctx.fillStyle = 'rgba(2, 6, 23, 0.85)';
-            ctx.fillRect(10, 275, 620, 75);
+            ctx.fillStyle = 'rgba(2, 6, 23, 0.88)';
+            ctx.fillRect(10, 265, 620, 85);
             ctx.strokeStyle = '#10b981';
             ctx.lineWidth = 2;
-            ctx.strokeRect(10, 275, 620, 75);
+            ctx.strokeRect(10, 265, 620, 85);
 
             ctx.fillStyle = '#10b981';
             ctx.font = 'bold 12px monospace';
-            ctx.fillText(`📍 GPS: ${lat}° N, ${lng}° E | ${addr}`, 22, 298);
+            ctx.fillText(`📍 GPS: ${lat}° N, ${lng}° E | ${addr}`, 22, 288);
 
             ctx.fillStyle = '#f8fafc';
             ctx.font = '11px monospace';
-            ctx.fillText(`🕒 CLEANED: ${timeStr} IST | HARDWARE MOBILE CAMERA PROOF`, 22, 318);
+            ctx.fillText(`🕒 CLEANED: ${timeStr} IST | HARDWARE MOBILE CAMERA PROOF`, 22, 310);
 
             ctx.fillStyle = '#f59e0b';
             ctx.font = 'bold 11px monospace';
-            ctx.fillText(`👷 WORKER: ${workerEmp} (${workerName}) | BCC SWACHHA BELAGAVI`, 22, 338);
+            ctx.fillText(`👷 ATTRIBUTED WORKER: ${workerEmp} (${workerName}) | BCC SWACHHA BELAGAVI`, 22, 332);
 
             canvas.classList.remove('hidden');
             if (video) video.classList.add('hidden');
             if (mock) mock.classList.add('hidden');
-            showToast("📸 Live cleaned photo captured successfully with GPS watermark!", "success");
+            document.getElementById('worker-cam-mode-pill')?.classList.add('hidden');
+            document.getElementById('worker-cam-controls-ready')?.classList.remove('hidden');
+            document.getElementById('worker-cam-controls-active')?.classList.add('hidden');
+            document.getElementById('worker-photo-confirmed-badge')?.classList.remove('hidden');
+            showToast("📸 Cleaned proof photo loaded & geotagged!", "success");
           };
           img.src = e.target.result;
         };
