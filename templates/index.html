@@ -738,56 +738,31 @@
   <!-- ============================================================== -->
   <!-- 3-SECOND FULL PAGE CLEAN CITY SPLASH SCREEN (Requirement 7)    -->
   <!-- ============================================================== -->
-  <div id="app-splash-screen" onclick="dismissSplashScreen()" class="fixed inset-0 z-[99999] bg-gradient-to-b from-[#064E3B] via-[#04392b] to-[#022c22] flex flex-col items-center justify-center p-6 text-white transition-opacity duration-700 select-none cursor-pointer">
-    <div class="flex flex-col items-center text-center space-y-5 max-w-sm w-full animate-fade-in" onclick="event.stopPropagation()">
-      <!-- Clean City Official Logo Emblem (Transparent PNG) -->
+  <div id="app-splash-screen" onclick="dismissSplashScreen()" class="hidden fixed inset-0 z-[99999] bg-gradient-to-b from-[#064E3B] via-[#04392b] to-[#022c22] flex flex-col items-center justify-center p-6 text-white select-none cursor-pointer" style="display:none !important;">
+    <div class="flex flex-col items-center text-center space-y-5 max-w-sm w-full" onclick="event.stopPropagation()">
       <div class="relative flex items-center justify-center">
-        <div class="absolute w-44 h-44 bg-emerald-400/20 rounded-full blur-2xl animate-pulse"></div>
         <img src="/static/clean_belagavi_logo.png" alt="Clean Belagavi Official Logo" class="w-48 sm:w-56 h-auto object-contain relative z-10 drop-shadow-2xl">
       </div>
-
-      <!-- Typography -->
       <div class="space-y-2">
-        <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
-          Clean City Mission • ಸ್ವಚ್ಛ ಬೆಳಗಾವಿ
-        </span>
-        <h1 class="text-2xl sm:text-3xl font-black tracking-tight text-white">
-          SWACHHA BELAGAVI
-        </h1>
-        <p class="text-xs text-emerald-200/80 font-medium">
-          Belagavi Mahanagara Palike • Smart Municipal Waste Management & Cleanliness
-        </p>
+        <h1 class="text-2xl sm:text-3xl font-black tracking-tight text-white">SWACHHA BELAGAVI</h1>
       </div>
-
-      <!-- 3-Second Progress Bar & Countdown -->
-      <div class="w-full space-y-2 pt-1">
-        <div class="w-full h-2 bg-[#011711] rounded-full overflow-hidden border border-emerald-500/30">
-          <div id="splash-progress-bar" class="h-full bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-200 rounded-full transition-all duration-[2000ms] ease-out" style="width: 0%;"></div>
-        </div>
-        <div class="flex justify-between items-center text-[11px] font-mono text-emerald-300/80">
-          <span id="splash-status-text" class="text-white font-bold">Loading Clean City Portal...</span>
-          <span id="splash-timer-text">2s</span>
-        </div>
+      <div style="display:none;">
+        <div id="splash-progress-bar"></div>
+        <span id="splash-status-text">Ready</span>
+        <span id="splash-timer-text">0s</span>
       </div>
-
-      <!-- Instant Enter Button -->
-      <button type="button" onclick="dismissSplashScreen()" class="mt-1 px-5 py-2 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/35 border border-emerald-400/40 text-white text-xs font-bold transition flex items-center space-x-1.5 cursor-pointer active:scale-95 shadow-md">
-        <span>Enter Portal Now</span>
-        <span>→</span>
-      </button>
+      <button type="button" onclick="dismissSplashScreen()" class="mt-1 px-5 py-2 rounded-xl bg-emerald-500/20 text-white text-xs font-bold">Enter</button>
     </div>
   </div>
 
   <script>
-    // Independent inline failsafe: guarantees splash screen dismisses automatically
     function dismissSplashScreen() {
       var s = document.getElementById('app-splash-screen');
       if (s) {
-        s.classList.add('opacity-0', 'pointer-events-none');
-        setTimeout(function() { s.style.display = 'none'; }, 600);
+        s.style.setProperty('display', 'none', 'important');
       }
     }
-    setTimeout(dismissSplashScreen, 2200);
+    dismissSplashScreen();
   </script>
 
   <!-- ============================================================== -->
@@ -827,7 +802,7 @@
   <!-- ============================================================== -->
   <!-- ONBOARDING & LOGIN MODAL (OPENS FIRST ON WEBSITE LOAD) -->
   <!-- ============================================================== -->
-  <div id="modal-auth-onboarding" class="fixed inset-0 z-[100] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+  <div id="modal-auth-onboarding" class="hidden fixed inset-0 z-[100] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4" style="display:none !important;">
     <div class="bg-slate-900 border border-slate-700/80 rounded-3xl max-w-lg w-full shadow-2xl p-6 sm:p-8 space-y-6 relative overflow-hidden">
       
       <!-- Top Decorative Accent -->
@@ -3495,29 +3470,9 @@
     let currentSelectedGender = 'Male';
     let isAadhaarVisible = false;
 
-    // 2-Second Clean City Splash Screen
+    // Splash screen disabled - instant portal access
     function initSplashScreen() {
-      const splash = document.getElementById('app-splash-screen');
-      const bar = document.getElementById('splash-progress-bar');
-      const timerText = document.getElementById('splash-timer-text');
-      const statusText = document.getElementById('splash-status-text');
-      if (!splash) return;
-
-      setTimeout(() => { if (bar) bar.style.width = '100%'; }, 50);
-
-      let remaining = 2;
-      const interval = setInterval(() => {
-        remaining--;
-        if (remaining === 1) {
-          if (timerText) timerText.innerText = '1s';
-          if (statusText) statusText.innerText = 'Syncing Live GPS Geofence...';
-        } else if (remaining <= 0) {
-          clearInterval(interval);
-          if (timerText) timerText.innerText = '0s';
-          if (statusText) statusText.innerText = 'Welcome!';
-          dismissSplashScreen();
-        }
-      }, 700);
+      dismissSplashScreen();
     }
 
     // Gender / Sex selection in Admission Modal
@@ -4049,16 +4004,27 @@
           try {
             currentUser = JSON.parse(stored);
             applyUserSession(currentUser);
-            closeOnboardingModal();
-          } catch(e) {
-            openOnboardingModal();
-          }
-        } else {
-          openOnboardingModal();
+          } catch(e) {}
         }
+        if (!currentUser) {
+          currentUser = {
+            id: 1,
+            name: 'Praveen Kulkarni',
+            first_name: 'Praveen',
+            role: 'citizen',
+            phone: '9880011111',
+            emp_id: 'CIT-BELAGAVI',
+            home_address: 'Congress Road, Tilakwadi, Belagavi',
+            home_lat: 15.8348,
+            home_lng: 74.5022
+          };
+          try { localStorage.setItem('bcc_user', JSON.stringify(currentUser)); } catch(e){}
+          applyUserSession(currentUser);
+        }
+        closeOnboardingModal();
       } catch (e) {
-        console.warn("Storage read warning:", e);
-        openOnboardingModal();
+        console.warn("User session initialization warning:", e);
+        closeOnboardingModal();
       }
 
       try { updateAvatarImages(currentUser?.gender || 'Male'); } catch (e) {}
@@ -4086,7 +4052,7 @@
       const modal = document.getElementById('modal-auth-onboarding');
       if (modal) {
         modal.classList.remove('hidden');
-        modal.style.display = 'flex';
+        modal.style.setProperty('display', 'flex', 'important');
       }
       if (currentUser) {
         const lockBadge = document.getElementById('onboard-name-lock-badge');
@@ -4117,7 +4083,7 @@
       const modal = document.getElementById('modal-auth-onboarding');
       if (modal) {
         modal.classList.add('hidden');
-        modal.style.display = 'none';
+        modal.style.setProperty('display', 'none', 'important');
       }
       document.body.style.overflow = 'auto';
     }
