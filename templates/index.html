@@ -1575,11 +1575,39 @@
 
       <!-- Employee Login Section (Shows individual employee ID entry + profile selection + unique password) -->
       <div id="staff-form-worker" class="space-y-3.5">
-        <p class="text-xs text-slate-300">Enter your personal Employee ID and secret password, or select your profile below:</p>
+        <p class="text-xs text-slate-300">Enter your Employee ID, Name, or Mobile, and password, or tap any quick-login profile below:</p>
+
+        <!-- Quick 1-Tap Employee Login Profiles -->
+        <div class="bg-slate-950/60 border border-[#D6BD90]/50 rounded-2xl p-3 space-y-2">
+          <span class="text-[11px] font-bold uppercase tracking-wider text-amber-300 block flex items-center space-x-1">
+            <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-400"></i>
+            <span>Instant 1-Tap Employee Login:</span>
+          </span>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-[11px]">
+            <button type="button" onclick="quickFillStaffLogin('BAS098', 'Basav@098')" class="px-2.5 py-2 bg-gradient-to-r from-amber-500/20 to-emerald-500/20 hover:from-amber-500/30 hover:to-emerald-500/30 border border-amber-500/40 rounded-xl font-bold text-left truncate flex items-center space-x-1.5 shadow-sm text-slate-200">
+              <span>👷 Basavaraj</span>
+            </button>
+            <button type="button" onclick="quickFillStaffLogin('YAL987', 'Yalla@987')" class="px-2.5 py-2 bg-gradient-to-r from-amber-500/20 to-emerald-500/20 hover:from-amber-500/30 hover:to-emerald-500/30 border border-amber-500/40 rounded-xl font-bold text-left truncate flex items-center space-x-1.5 shadow-sm text-slate-200">
+              <span>👷 Yallappa</span>
+            </button>
+            <button type="button" onclick="quickFillStaffLogin('SAN876', 'Santo@876')" class="px-2.5 py-2 bg-gradient-to-r from-amber-500/20 to-emerald-500/20 hover:from-amber-500/30 hover:to-emerald-500/30 border border-amber-500/40 rounded-xl font-bold text-left truncate flex items-center space-x-1.5 shadow-sm text-slate-200">
+              <span>👷 Santosh</span>
+            </button>
+            <button type="button" onclick="quickFillStaffLogin('bindu', 'Bindu@387')" class="px-2.5 py-2 bg-gradient-to-r from-amber-500/20 to-emerald-500/20 hover:from-amber-500/30 hover:to-emerald-500/30 border border-amber-500/40 rounded-xl font-bold text-left truncate flex items-center space-x-1.5 shadow-sm text-slate-200">
+              <span>👷 Bindu</span>
+            </button>
+            <button type="button" onclick="quickFillStaffLogin('guru', 'Guru@765')" class="px-2.5 py-2 bg-gradient-to-r from-amber-500/20 to-emerald-500/20 hover:from-amber-500/30 hover:to-emerald-500/30 border border-amber-500/40 rounded-xl font-bold text-left truncate flex items-center space-x-1.5 shadow-sm text-slate-200">
+              <span>👷 Guru</span>
+            </button>
+            <button type="button" onclick="quickFillStaffLogin('BCC-W2101', 'Basav@098')" class="px-2.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl font-bold text-left truncate flex items-center space-x-1.5">
+              <span>🆔 BCC-W2101</span>
+            </button>
+          </div>
+        </div>
         
         <!-- Quick Select Profile Dropdown -->
         <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1">Select Employee Profile (Belagavi Beats)</label>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Or Select Employee Profile (Belagavi Beats)</label>
           <select id="staff-worker-select" onchange="onStaffWorkerSelectChange()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white font-mono">
             <!-- Dynamically populated with all 11 beats and formatted IDs -->
           </select>
@@ -1593,26 +1621,26 @@
         <!-- 1. Employee ID Input -->
         <div>
           <label class="block text-xs font-semibold text-slate-300 mb-1 flex items-center justify-between">
-            <span>Employee ID Number</span>
-            <span class="text-[10px] text-amber-400 font-mono font-normal">First 3 of Name + Last 3 of Aadhaar</span>
+            <span>Employee ID, Name, or Mobile</span>
+            <span class="text-[10px] text-amber-400 font-mono font-normal">e.g. BAS098, Basavaraj, bindu, 9845011001</span>
           </label>
-          <input type="text" id="staff-emp-id-input" placeholder="e.g. BAS098, MAN501, YAL987" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white uppercase font-mono font-bold tracking-wider placeholder-slate-500 focus:outline-none focus:border-amber-400">
+          <input type="text" id="staff-emp-id-input" placeholder="Enter Employee ID, Name, or Mobile Number" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white font-mono font-bold tracking-wider placeholder-slate-500 focus:outline-none focus:border-amber-400">
         </div>
 
-        <!-- 2. Personal Employee Secret Password Input (Requirement: One worker one password, not swatch) -->
+        <!-- 2. Personal Employee Secret Password Input -->
         <div>
           <label class="block text-xs font-semibold text-slate-300 mb-1 flex items-center justify-between">
             <span>Individual Employee Password</span>
-            <span id="staff-worker-password-hint" class="text-[10px] text-rose-400 font-mono font-normal">Unique per worker</span>
+            <span id="staff-worker-password-hint" class="text-[10px] text-emerald-400 font-mono font-bold">Unique per worker</span>
           </label>
           <div class="relative">
-            <input type="password" id="staff-worker-password" placeholder="e.g. Basav@098, Manju@501, Yalla@987" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white font-mono tracking-wider placeholder-slate-500 pr-10 focus:outline-none focus:border-amber-400">
+            <input type="password" id="staff-worker-password" placeholder="Enter password (e.g. Basav@098, Bindu@387, Guru@765)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white font-mono tracking-wider placeholder-slate-500 pr-10 focus:outline-none focus:border-amber-400">
             <button type="button" onclick="toggleStaffPasswordVisibility()" class="absolute right-3 top-2.5 text-slate-400 hover:text-white transition">
               <i data-lucide="eye" id="staff-pass-toggle-icon" class="w-4 h-4"></i>
             </button>
           </div>
           <p class="text-[10px] text-slate-400 mt-1">
-            🔒 <strong>One Worker One Password:</strong> Password formula is <code>First 5 letters of Name + @ + Last 3 digits of Aadhaar</code> (e.g., <strong>Basav@098</strong> for Basavaraj Belagavi, <strong>Yalla@987</strong> for Yallappa Maratha). Generic passwords like "swachha" are disabled.
+            🔒 <strong>Accepted Passwords:</strong> Your unique password formula (<code>First 5 letters + @ + Last 3 of Aadhaar</code>, e.g. <strong>Basav@098</strong>, <strong>Bindu@387</strong>, <strong>Guru@765</strong>) or lowercase / without @ or your registered phone number.
           </p>
         </div>
 
@@ -3849,7 +3877,20 @@
             // Automatically transitions straight into the user's main profile!
             applyUserSession(data.user);
             closeOnboardingModal();
-            showToast(`Welcome back to Swachha Belagavi, ${data.user.first_name || data.user.name}!`, "success");
+            if (data.user.role === 'worker') {
+              activeWorkerId = data.user.id;
+              activeWorkerProfile = data.user;
+              localStorage.setItem('bcc_worker_session', JSON.stringify(data.user));
+              switchRole('worker');
+              loadWorkerProfile(data.user.id);
+              showToast(`Welcome back, ${data.user.name}! Sanitation Employee Portal opened.`, "success");
+              setTimeout(() => {
+                const vw = document.getElementById('view-worker');
+                if (vw) vw.scrollIntoView({ behavior: 'smooth' });
+              }, 150);
+            } else {
+              showToast(`Welcome back to Swachha Belagavi, ${data.user.first_name || data.user.name}!`, "success");
+            }
           }
         } else {
           showToast(data.message || "Invalid OTP entered.", "error");
@@ -4205,18 +4246,26 @@
       lucide.createIcons();
     }
 
+    function quickFillStaffLogin(id, pass) {
+      const idInp = document.getElementById('staff-emp-id-input');
+      const passInp = document.getElementById('staff-worker-password');
+      if (idInp) idInp.value = id;
+      if (passInp) passInp.value = pass;
+      loginByEmployeeIdInput();
+    }
+
     async function loginByEmployeeIdInput() {
       const idInput = document.getElementById('staff-emp-id-input');
       const passInput = document.getElementById('staff-worker-password');
-      const rawCode = (idInput ? idInput.value : '').trim().toUpperCase();
+      const rawCode = (idInput ? idInput.value : '').trim();
       const rawPass = (passInput ? passInput.value : '').trim();
 
       if (!rawCode) {
-        showAppToast("Please enter an Employee ID (e.g. BAS098, MAN501, YAL987).", "warning");
+        showAppToast("Please enter an Employee ID, Name, or Mobile Number.", "warning");
         return;
       }
       if (!rawPass) {
-        showAppToast("Please enter your personal employee password.", "warning");
+        showAppToast("Please enter your employee password.", "warning");
         return;
       }
 
@@ -4230,10 +4279,16 @@
         if (data.success && data.worker) {
           activeWorkerId = data.worker.id;
           activeWorkerProfile = data.worker;
+          localStorage.setItem('bcc_worker_session', JSON.stringify(data.worker));
           closeStaffLoginModal();
+          closeOnboardingModal();
           switchRole('worker');
           loadWorkerProfile(data.worker.id);
           showAppToast(`Authorized: Welcome ${data.worker.name} (${data.worker.custom_emp_id || data.worker.emp_id})!`, 'success');
+          setTimeout(() => {
+            const vw = document.getElementById('view-worker');
+            if (vw) vw.scrollIntoView({ behavior: 'smooth' });
+          }, 150);
         } else {
           showAppToast(data.message || `Authentication failed. Each employee has their own unique password.`, 'error');
         }

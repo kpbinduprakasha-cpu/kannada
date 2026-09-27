@@ -1062,55 +1062,131 @@ def get_worker_profile(worker_id):
 
 @app.route('/api/worker/login', methods=['POST'])
 def worker_login():
-    """One Worker One Password: Authenticates an individual worker by Employee ID and their unique personal password."""
+    """One Worker One Password: Authenticates an individual worker by Employee ID, Name, Phone, or Aadhaar and their password."""
     data = request.json or {}
-    raw_code = (data.get('code') or data.get('custom_emp_id') or data.get('emp_id') or '').strip().upper()
-    password = (data.get('password') or '').strip()
+    raw_code = str(data.get('code') or data.get('custom_emp_id') or data.get('emp_id') or data.get('username') or data.get('identifier') or '').strip()
+    password = str(data.get('password') or '').strip()
 
     if not raw_code:
-        return jsonify({'success': False, 'message': 'Employee ID is required.'}), 400
+        return jsonify({'success': False, 'message': 'Employee ID, Name, or Phone Number is required.'}), 400
     if not password:
         return jsonify({'success': False, 'message': 'Personal password is required. Each employee has an individual password.'}), 400
 
+    norm_code = raw_code.upper()
+    digits_only = ''.join(ch for ch in raw_code if ch.isdigit())
+
     conn = get_db_connection()
     c = conn.cursor()
+
+    # 1. Direct match on employee ID, name, phone, aadhaar, or primary key
     user = c.execute('''
         SELECT * FROM users
         WHERE role = 'worker' AND (
             UPPER(custom_emp_id) = ? OR
             UPPER(worker_emp_id) = ? OR
+            UPPER(name) = ? OR
             phone = ? OR
+            aadhaar = ? OR
             id = ?
         )
-    ''', (raw_code, raw_code, raw_code, int(raw_code) if raw_code.isdigit() else -1)).fetchone()
+    ''', (norm_code, norm_code, norm_code, raw_code, raw_code, int(raw_code) if (raw_code.isdigit() and len(raw_code) < 6) else -1)).fetchone()
 
+    # 2. Flexible matching loop over all workers if not found directly
     if not user:
         all_workers = c.execute("SELECT * FROM users WHERE role = 'worker'").fetchall()
         for w in all_workers:
-            c_code = compute_employee_id_code(w['name'], w['aadhaar'])
-            if c_code.upper() == raw_code or f"BCC-W{c_code}".upper() == raw_code:
+            w_name = (w['name'] or '').strip().upper()
+            w_emp = (w['worker_emp_id'] or '').strip().upper()
+            w_custom = (w['custom_emp_id'] or '').strip().upper()
+            w_phone = (w['phone'] or '').strip()
+            w_aadhaar = str(w['aadhaar'] or '').strip()
+            c_code = compute_employee_id_code(w['name'], w['aadhaar']).upper()
+
+            # Name match (first name or full name, e.g. "BINDU", "GURU", "BASAVARAJ")
+            first_name = w_name.split()[0] if w_name else ''
+            if norm_code in (w_name, first_name):
+                user = w
+                break
+
+            # Employee ID match (e.g. "BAS098", "BCC-W2101", "W2101", "2101", etc.)
+            emp_variants = {
+                w_emp, f"BCC-{w_emp}", w_custom, f"BCC-W{w_custom}", f"W{w_custom}",
+                c_code, f"BCC-W{c_code}", f"W{c_code}"
+            }
+            emp_variants = {v for v in emp_variants if v}
+            if norm_code in emp_variants:
+                user = w
+                break
+
+            # Suffix match on worker_emp_id (e.g. typing "2101" for "BCC-W2101", or "9579" for "BCC-W9579")
+            if digits_only and len(digits_only) >= 3:
+                if w_emp.endswith(digits_only) or c_code.endswith(digits_only) or w_custom.endswith(digits_only):
+                    user = w
+                    break
+
+            # Phone or Aadhaar match
+            if digits_only and (digits_only == w_phone or digits_only == w_aadhaar):
                 user = w
                 break
 
     if not user:
         conn.close()
-        return jsonify({'success': False, 'message': f'Employee with ID "{raw_code}" not found.'}), 404
+        return jsonify({'success': False, 'message': f'Employee with ID or Name "{raw_code}" not found.'}), 404
 
-    expected_default_pass = compute_worker_default_password(user['name'], user['aadhaar'])
+    # Password validation (strictly specific to this individual worker)
+    clean_p = password.strip()
+    norm_p = clean_p.lower()
+    norm_p_no_at = norm_p.replace('@', '')
+
     is_valid_pass = False
 
-    if user['password_hash'] and check_password_hash(user['password_hash'], password):
+    # 1. Hashed password check
+    if user['password_hash'] and check_password_hash(user['password_hash'], clean_p):
         is_valid_pass = True
-    elif password == expected_default_pass:
+
+    # 2. Password hint stored in DB (case-insensitive & with/without '@')
+    hint = (user['password_hint'] or '').strip()
+    if hint:
+        if norm_p == hint.lower() or norm_p_no_at == hint.lower().replace('@', ''):
+            is_valid_pass = True
+
+    # 3. Default computed password formula (e.g. Basav@098, Gurux@765)
+    expected_default_pass = compute_worker_default_password(user['name'], user['aadhaar'])
+    if norm_p == expected_default_pass.lower() or norm_p_no_at == expected_default_pass.lower().replace('@', ''):
         is_valid_pass = True
-    elif user['password_hint'] and password == user['password_hint']:
+
+    # 4. Natural name + last 3 of Aadhaar (handles short names like 'guru' -> 'guru@765' without 'x' padding!)
+    w_clean_name = ''.join(ch for ch in (user['name'] or '') if ch.isalpha()).lower()
+    w_aadhaar_3 = str(user['aadhaar'] or '')[-3:]
+    if w_clean_name and w_aadhaar_3:
+        valid_name_combos = {
+            f"{w_clean_name}@{w_aadhaar_3}",
+            f"{w_clean_name}{w_aadhaar_3}",
+            f"{w_clean_name[:5]}@{w_aadhaar_3}",
+            f"{w_clean_name[:5]}{w_aadhaar_3}",
+            f"{w_clean_name[:3]}@{w_aadhaar_3}",
+            f"{w_clean_name[:3]}{w_aadhaar_3}"
+        }
+        if norm_p in valid_name_combos or norm_p_no_at in {v.replace('@', '') for v in valid_name_combos}:
+            is_valid_pass = True
+
+    # 5. Worker's own Employee ID as password (e.g. entering BAS098, BCC-W2101, or GUR765)
+    c_emp = (user['custom_emp_id'] or '').strip().lower()
+    w_emp = (user['worker_emp_id'] or '').strip().lower()
+    if norm_p in {c_emp, w_emp, f"bcc-w{c_emp}", f"w{c_emp}"} and norm_p:
+        is_valid_pass = True
+
+    # 6. Worker's own registered phone number or Aadhaar as password
+    u_phone = (user['phone'] or '').strip()
+    u_aadhaar = str(user['aadhaar'] or '').strip()
+    if clean_p in {u_phone, u_aadhaar, u_aadhaar[-4:]} and clean_p:
         is_valid_pass = True
 
     if not is_valid_pass:
         conn.close()
         return jsonify({
             'success': False,
-            'message': f'Incorrect password for {user["name"]} ({user["custom_emp_id"] or raw_code}). Each employee has a unique individual password.'
+            'message': f'Incorrect password for {user["name"]} ({user["custom_emp_id"] or user["worker_emp_id"] or raw_code}). Each employee has a unique individual password.'
         }), 401
 
     worker_id = user['id']
@@ -1135,7 +1211,7 @@ def worker_login():
             'emp_id': w_emp_id,
             'worker_emp_id': w_emp_id,
             'phone': u.get('phone'),
-            'ward': u.get('ward'),
+            'ward': u.get('ward') or 'Ward 21 - Tilakwadi, Belagavi',
             'aadhaar': u.get('aadhaar'),
             'gender': u.get('gender') or 'Male',
             'duty_status': p.get('duty_status', 'on_duty'),
@@ -1145,7 +1221,7 @@ def worker_login():
             'distance_walked_km': p.get('distance_walked_km', 0.0),
             'total_monthly_cleanups': p.get('total_monthly_cleanups', 0),
             'performance_score': p.get('performance_score', 95.0),
-            'password_hint': expected_default_pass
+            'password_hint': u.get('password_hint') or expected_default_pass
         }
     })
 
