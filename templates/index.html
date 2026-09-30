@@ -13,6 +13,17 @@
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
+    /* CRITICAL: Ensure hidden elements & modal overlays are completely removed from viewport & layout */
+    .hidden,
+    [hidden],
+    div.hidden,
+    button.hidden,
+    span.hidden,
+    p.hidden,
+    input.hidden {
+      display: none !important;
+    }
+
     @keyframes pulse-red {
       0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
       50% { box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); }
@@ -116,9 +127,9 @@
     }
 
     /* 3. CLAYMORPHIC TACTILE SQUISHY BUTTONS (PRESS-DOWN 3D FEEL) */
-    button:not(.leaflet-control-zoom-in):not(.leaflet-control-zoom-out):not([class*="leaflet"]),
-    input[type="button"],
-    input[type="submit"] {
+    button:not(.leaflet-control-zoom-in):not(.leaflet-control-zoom-out):not([class*="leaflet"]):not(.hidden),
+    input[type="button"]:not(.hidden),
+    input[type="submit"]:not(.hidden) {
       border-radius: 16px !important;
       font-weight: 700 !important;
       transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
@@ -760,6 +771,7 @@
       var s = document.getElementById('app-splash-screen');
       if (s) {
         s.style.setProperty('display', 'none', 'important');
+        s.style.pointerEvents = 'none';
       }
     }
     dismissSplashScreen();
@@ -774,7 +786,7 @@
   <!-- ============================================================== -->
   <!-- REAL SMS GATEWAY POPUP (DISPATCHES REAL OTP ON SCREEN) -->
   <!-- ============================================================== -->
-  <div id="sms-toast-banner" class="hidden fixed top-4 left-4 right-4 sm:left-auto sm:right-6 sm:w-96 z-[250] bg-slate-950/95 border-2 border-emerald-500/80 shadow-2xl rounded-2xl p-4 backdrop-blur-xl animate-slide-down">
+  <div id="sms-toast-banner" class="hidden fixed top-4 left-4 right-4 sm:left-auto sm:right-6 sm:w-96 z-[250] bg-slate-950/95 border-2 border-emerald-500/80 shadow-2xl rounded-2xl p-4 backdrop-blur-xl animate-slide-down" style="display: none;">
     <div class="flex items-start space-x-3">
       <div class="p-2.5 bg-emerald-500/20 text-emerald-400 rounded-xl flex-shrink-0 border border-emerald-500/40">
         <i data-lucide="message-square" class="w-5 h-5"></i>
@@ -1143,7 +1155,7 @@
   <!-- CITIZEN PERSONAL IDENTITY & DETAILS MODAL (Requirement 6)     -->
   <!-- Shows all person details: Name, Mobile, Location, Aadhaar, Sex -->
   <!-- ============================================================== -->
-  <div id="modal-citizen-profile-detail" class="hidden fixed inset-0 z-[150] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+  <div id="modal-citizen-profile-detail" class="hidden fixed inset-0 z-[150] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4" style="display: none;">
     <div class="bg-slate-900 border border-slate-700/80 rounded-3xl max-w-md w-full shadow-2xl p-6 sm:p-7 space-y-5 relative">
       <!-- Modal Header -->
       <div class="flex items-center justify-between pb-3 border-b border-slate-800">
@@ -1285,7 +1297,7 @@
   <!-- EDIT CITIZEN PROFILE MODAL (ONLY NUMBERS & ADDITIONAL INFO)     -->
   <!-- User Requirement: Only number add/change, not name change       -->
   <!-- ============================================================== -->
-  <div id="modal-edit-citizen-profile" class="hidden fixed inset-0 z-[160] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+  <div id="modal-edit-citizen-profile" class="hidden fixed inset-0 z-[160] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4" style="display: none;">
     <div class="bg-slate-900 border border-slate-700/80 rounded-3xl max-w-lg w-full shadow-2xl p-6 sm:p-7 space-y-4 relative max-h-[90vh] overflow-y-auto">
       <!-- Modal Header -->
       <div class="flex items-center justify-between pb-3 border-b border-slate-800">
@@ -1437,7 +1449,7 @@
   <!-- ============================================================== -->
   <!-- EMPLOYEE IDENTITY & FULL INFORMATION MODAL (Requirement 4)     -->
   <!-- ============================================================== -->
-  <div id="modal-employee-profile-detail" class="hidden fixed inset-0 z-[140] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+  <div id="modal-employee-profile-detail" class="hidden fixed inset-0 z-[140] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4" style="display: none;">
     <div class="bg-slate-900 border border-slate-700/80 rounded-3xl max-w-lg w-full shadow-2xl p-6 sm:p-7 space-y-5 relative overflow-hidden animate-slide-down">
       
       <!-- Top Accent Glow -->
@@ -1582,7 +1594,7 @@
   <!-- ============================================================== -->
   <!-- STAFF LOGIN MODAL (RESTRICTS EMPLOYEE & OFFICER VIEWS FROM GENERAL CITIZENS) -->
   <!-- ============================================================== -->
-  <div id="modal-staff-login" class="hidden fixed inset-0 z-[120] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+  <div id="modal-staff-login" class="hidden fixed inset-0 z-[120] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4" style="display: none;">
     <div class="bg-slate-900 border border-slate-700/80 rounded-3xl max-w-md w-full shadow-2xl p-6 space-y-5 relative">
       <div class="flex items-center justify-between pb-3 border-b border-slate-800">
         <div class="flex items-center space-x-3">
@@ -1798,7 +1810,7 @@
   <!-- ============================================================== -->
   <!-- 1-CLICK ID DIRECT OPEN BAR (NO PHONE NUMBER • NO OTP • DIRECT ACCESS) -->
   <!-- ============================================================== -->
-  <div id="quick-id-access-bar" class="w-full bg-[#031c15] border-b-2 border-emerald-500/40 px-3 sm:px-6 py-2 shadow-xl sticky top-0 z-40 backdrop-blur-md">
+  <div id="quick-id-access-bar" class="w-full bg-[#031c15] border-b-2 border-emerald-500/40 px-3 sm:px-6 py-2.5 shadow-xl relative z-40 backdrop-blur-md">
     <div class="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-2 text-xs">
       <div class="flex items-center space-x-2 flex-wrap gap-1.5">
         <span class="text-emerald-400 font-black flex items-center space-x-1 shrink-0 text-xs mr-1 uppercase tracking-wider">
@@ -3169,7 +3181,7 @@
   <!-- ============================================================== -->
   <!-- CHANGE BELAGAVI HOME CENTER MODAL -->
   <!-- ============================================================== -->
-  <div id="modal-edit-home" class="hidden fixed inset-0 z-[90] bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+  <div id="modal-edit-home" class="hidden fixed inset-0 z-[90] bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4" style="display: none;">
     <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-md w-full p-6 space-y-4">
       <div class="flex items-center justify-between pb-3 border-b border-slate-800">
         <h3 class="text-base font-bold text-white flex items-center space-x-1.5">
@@ -3203,7 +3215,7 @@
   <!-- ============================================================== -->
   <!-- 1. MOBILE QR SCANNER MODAL (FOR OPENING WEBSITE LINK ON PHONE) -->
   <!-- ============================================================== -->
-  <div id="modal-mobile-qr" class="hidden fixed inset-0 z-[120] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+  <div id="modal-mobile-qr" class="hidden fixed inset-0 z-[120] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4" style="display: none;">
     <div class="bg-slate-900 border border-sky-500/40 rounded-3xl max-w-md w-full p-6 space-y-5 shadow-2xl relative">
       <div class="flex items-center justify-between pb-3 border-b border-slate-800">
         <div class="flex items-center space-x-2.5">
@@ -3262,7 +3274,7 @@
   <!-- ============================================================== -->
   <!-- 2. IN-APP MOBILE WASTE & BIN SCANNER MODAL -->
   <!-- ============================================================== -->
-  <div id="modal-inapp-scanner" class="hidden fixed inset-0 z-[130] bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4">
+  <div id="modal-inapp-scanner" class="hidden fixed inset-0 z-[130] bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4" style="display: none;">
     <div class="bg-slate-900 border border-emerald-500/40 rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl relative">
       <div class="flex items-center justify-between pb-3 border-b border-slate-800">
         <div class="flex items-center space-x-2.5">
@@ -3325,7 +3337,7 @@
   <!-- ============================================================== -->
   <!-- 3. AI CLEANLINESS COMPARISON & WASTE CLEARANCE AUDIT MODAL -->
   <!-- ============================================================== -->
-  <div id="modal-ai-cleanliness-comparison" class="hidden fixed inset-0 z-[160] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+  <div id="modal-ai-cleanliness-comparison" class="hidden fixed inset-0 z-[160] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 overflow-y-auto" style="display: none;">
     <div class="bg-slate-900 border border-emerald-500/40 rounded-3xl max-w-2xl w-full shadow-2xl p-5 sm:p-7 space-y-5 relative my-auto animate-slide-down">
       
       <!-- Modal Header -->
@@ -3444,7 +3456,7 @@
   </div>
 
   <!-- Modal: Citizen Report Dispatch Success & Surrounding Employee Link -->
-  <div id="modal-citizen-dispatch-success" class="hidden fixed inset-0 z-[170] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+  <div id="modal-citizen-dispatch-success" class="hidden fixed inset-0 z-[170] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4" style="display: none;">
     <div class="bg-slate-900 border-2 border-emerald-500/50 rounded-2xl p-6 max-w-md w-full shadow-2xl space-y-4 text-center">
       <div class="w-16 h-16 rounded-full bg-emerald-500/20 border-2 border-emerald-400 text-3xl flex items-center justify-center mx-auto shadow-lg shadow-emerald-500/30">
         🎉
@@ -3525,6 +3537,51 @@
     };
     let currentSelectedGender = 'Male';
     let isAadhaarVisible = false;
+
+    // ============================================================
+    // UNIVERSAL MODAL SYSTEM (Zero click blocking, deterministic visibility)
+    // ============================================================
+    const ALL_APP_MODAL_IDS = [
+      'app-splash-screen',
+      'modal-auth-onboarding',
+      'modal-citizen-profile-detail',
+      'modal-edit-citizen-profile',
+      'modal-employee-profile-detail',
+      'modal-staff-login',
+      'modal-edit-home',
+      'modal-mobile-qr',
+      'modal-inapp-scanner',
+      'modal-ai-cleanliness-comparison',
+      'modal-citizen-dispatch-success'
+    ];
+
+    function showModal(id) {
+      const m = document.getElementById(id);
+      if (m) {
+        m.classList.remove('hidden');
+        m.style.setProperty('display', 'flex', 'important');
+        m.style.pointerEvents = 'auto';
+        try {
+          if (window.lucide && typeof window.lucide.createIcons === 'function') {
+            window.lucide.createIcons();
+          }
+        } catch(e) {}
+      }
+    }
+
+    function hideModal(id) {
+      const m = document.getElementById(id);
+      if (m) {
+        m.classList.add('hidden');
+        m.style.setProperty('display', 'none', 'important');
+        m.style.pointerEvents = 'none';
+      }
+    }
+
+    function hideAllModals() {
+      ALL_APP_MODAL_IDS.forEach(id => hideModal(id));
+      document.body.style.overflow = 'auto';
+    }
 
     // Splash screen disabled - instant portal access
     function initSplashScreen() {
@@ -3622,8 +3679,7 @@
       if (toggleBtn) toggleBtn.innerText = "Show";
 
       updateAvatarImages(gender);
-      document.getElementById('modal-citizen-profile-detail')?.classList.remove('hidden');
-      lucide.createIcons();
+      showModal('modal-citizen-profile-detail');
     }
 
     function toggleAadhaarVisibility() {
@@ -3644,7 +3700,7 @@
     }
 
     function closeCitizenProfileModal() {
-      document.getElementById('modal-citizen-profile-detail')?.classList.add('hidden');
+      hideModal('modal-citizen-profile-detail');
     }
 
     // ============================================================
@@ -3690,12 +3746,11 @@
       if (elLat) elLat.value = (user.home_lat || homeCenter.lat || 15.8345);
       if (elLng) elLng.value = (user.home_lng || homeCenter.lng || 74.5015);
 
-      document.getElementById('modal-edit-citizen-profile')?.classList.remove('hidden');
-      lucide.createIcons();
+      showModal('modal-edit-citizen-profile');
     }
 
     function closeEditCitizenProfileModal() {
-      document.getElementById('modal-edit-citizen-profile')?.classList.add('hidden');
+      hideModal('modal-edit-citizen-profile');
     }
 
     function setEditHomePreset(lat, lng, ward, address) {
@@ -4043,6 +4098,10 @@
     // Initialize application safely
     function initApp() {
       try {
+        hideAllModals();
+      } catch(e) {}
+
+      try {
         if (window.lucide && typeof window.lucide.createIcons === 'function') {
           window.lucide.createIcons();
         }
@@ -4077,10 +4136,10 @@
           try { localStorage.setItem('bcc_user', JSON.stringify(currentUser)); } catch(e){}
           applyUserSession(currentUser);
         }
-        closeOnboardingModal();
+        hideAllModals();
       } catch (e) {
         console.warn("User session initialization warning:", e);
-        closeOnboardingModal();
+        hideAllModals();
       }
 
       try { updateAvatarImages(currentUser?.gender || 'Male'); } catch (e) {}
@@ -4105,11 +4164,7 @@
     // ONBOARDING & LOGIN FLOW (BELAGAVI)
     // ============================================================
     function openOnboardingModal() {
-      const modal = document.getElementById('modal-auth-onboarding');
-      if (modal) {
-        modal.classList.remove('hidden');
-        modal.style.setProperty('display', 'flex', 'important');
-      }
+      showModal('modal-auth-onboarding');
       if (currentUser) {
         const lockBadge = document.getElementById('onboard-name-lock-badge');
         const fInput = document.getElementById('onboard-first-name');
@@ -4136,11 +4191,7 @@
     }
 
     function closeOnboardingModal() {
-      const modal = document.getElementById('modal-auth-onboarding');
-      if (modal) {
-        modal.classList.add('hidden');
-        modal.style.setProperty('display', 'none', 'important');
-      }
+      hideModal('modal-auth-onboarding');
       document.body.style.overflow = 'auto';
     }
 
@@ -4255,9 +4306,12 @@
         applyUserSession(currentUser);
         switchRole('worker');
         if (typeof loadWorkerProfile === 'function') loadWorkerProfile(activeWorkerId);
-        closeOnboardingModal();
-        closeStaffLoginModal();
+        hideAllModals();
         showToast(`👷 Opened Employee Portal: ${currentUser.name} (${currentUser.emp_id})`, 'success');
+        setTimeout(() => {
+          const vw = document.getElementById('view-worker');
+          if (vw) vw.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
         return;
       }
 
@@ -4275,9 +4329,12 @@
         localStorage.setItem('bcc_user', JSON.stringify(currentUser));
         applyUserSession(currentUser);
         switchRole('officer');
-        closeOnboardingModal();
-        closeStaffLoginModal();
+        hideAllModals();
         showToast(`🏛️ Opened Officer Console: Anand Patil (BCC-OFF01)`, 'success');
+        setTimeout(() => {
+          const vo = document.getElementById('view-officer');
+          if (vo) vo.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
         return;
       }
 
@@ -4296,9 +4353,12 @@
       localStorage.setItem('bcc_user', JSON.stringify(currentUser));
       applyUserSession(currentUser);
       switchRole('citizen');
-      closeOnboardingModal();
-      closeStaffLoginModal();
+      hideAllModals();
       showToast(`👤 Opened Citizen Portal: Praveen Kulkarni (${currentUser.emp_id})`, 'success');
+      setTimeout(() => {
+        const vc = document.getElementById('view-citizen');
+        if (vc) vc.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
     }
 
     function openWithTypedId() {
@@ -4762,7 +4822,7 @@
     // STAFF LOGIN & WORKER PRIVACY CONTROL
     // ============================================================
     async function openStaffLoginModal() {
-      document.getElementById('modal-staff-login').classList.remove('hidden');
+      showModal('modal-staff-login');
       if (!workersList || workersList.length === 0) {
         try {
           const res = await fetch('/api/workers/list');
@@ -4777,7 +4837,7 @@
     }
 
     function closeStaffLoginModal() {
-      document.getElementById('modal-staff-login').classList.add('hidden');
+      hideModal('modal-staff-login');
     }
 
     function switchStaffTab(tab) {
@@ -5492,7 +5552,7 @@
             if (wardEl) wardEl.innerText = w.ward || 'Belagavi Beat';
             if (phoneEl) phoneEl.innerText = w.phone || '9845011001';
 
-            document.getElementById('modal-citizen-dispatch-success')?.classList.remove('hidden');
+            showModal('modal-citizen-dispatch-success');
           }
           showToast(`✅ Report #${data.report_id} submitted! Dispatched to ${w ? w.name : 'Sanitation Employee'}.`, "success");
           document.getElementById('report-description').value = '';
@@ -5514,7 +5574,7 @@
     let lastDispatchedReportId = null;
 
     function closeDispatchModal() {
-      document.getElementById('modal-citizen-dispatch-success')?.classList.add('hidden');
+      hideModal('modal-citizen-dispatch-success');
     }
 
     function openDispatchedWorkerPortal() {
@@ -6574,11 +6634,11 @@
       document.getElementById('edit-home-lat').value = homeCenter.lat;
       document.getElementById('edit-home-lng').value = homeCenter.lng;
       document.getElementById('edit-home-address').value = homeCenter.address;
-      document.getElementById('modal-edit-home').classList.remove('hidden');
+      showModal('modal-edit-home');
     }
 
     function closeChangeHomeCenterModal() {
-      document.getElementById('modal-edit-home').classList.add('hidden');
+      hideModal('modal-edit-home');
     }
 
     function setQuickEditHome(lat, lng, address) {
@@ -6629,14 +6689,11 @@
     // (Requirement: mobile scanner / mobile sconer)
     // ============================================================
     function openMobileQrModal() {
-      const modal = document.getElementById('modal-mobile-qr');
-      if (modal) modal.classList.remove('hidden');
-      lucide.createIcons();
+      showModal('modal-mobile-qr');
     }
 
     function closeMobileQrModal() {
-      const modal = document.getElementById('modal-mobile-qr');
-      if (modal) modal.classList.add('hidden');
+      hideModal('modal-mobile-qr');
     }
 
     function copyMobileUrl() {
@@ -6659,14 +6716,11 @@
     }
 
     function openInAppScanner() {
-      const modal = document.getElementById('modal-inapp-scanner');
-      if (modal) modal.classList.remove('hidden');
-      lucide.createIcons();
+      showModal('modal-inapp-scanner');
     }
 
     function closeInAppScanner() {
-      const modal = document.getElementById('modal-inapp-scanner');
-      if (modal) modal.classList.add('hidden');
+      hideModal('modal-inapp-scanner');
     }
 
     function simulateQrScan(type) {
@@ -6868,15 +6922,11 @@
       const elCoords = document.getElementById('emp-detail-coords');
       if (elCoords) elCoords.innerText = `${lat}, ${lng}`;
 
-      const modal = document.getElementById('modal-employee-profile-detail');
-      if (modal) modal.classList.remove('hidden');
-
-      lucide.createIcons();
+      showModal('modal-employee-profile-detail');
     }
 
     function closeEmployeeProfileModal() {
-      const modal = document.getElementById('modal-employee-profile-detail');
-      if (modal) modal.classList.add('hidden');
+      hideModal('modal-employee-profile-detail');
     }
 
     function toggleEmpAadhaarVisibility() {
@@ -7913,13 +7963,11 @@
       if (scoreBar) scoreBar.style.width = `${simScore}%`;
       if (blockHash) blockHash.innerText = apiResult.blockchain_hash || '0xb61eb0f738456791625e...';
 
-      modal.classList.remove('hidden');
-      lucide.createIcons();
+      showModal('modal-ai-cleanliness-comparison');
     }
 
     function closeAiComparisonModal() {
-      const modal = document.getElementById('modal-ai-cleanliness-comparison');
-      if (modal) modal.classList.add('hidden');
+      hideModal('modal-ai-cleanliness-comparison');
 
       // Scroll to Completed Cleanups Table
       const completedSection = document.getElementById('worker-completed-section');
