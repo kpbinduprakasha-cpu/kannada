@@ -183,7 +183,8 @@ def init_db():
         ('password_hint', 'TEXT'),
         ('alt_phone', 'TEXT'),
         ('house_no', 'TEXT'),
-        ('landmark', 'TEXT')
+        ('landmark', 'TEXT'),
+        ('github_account', 'TEXT DEFAULT "kpbinduprakasha-cpu"')
     ]:
         try:
             c.execute(f"ALTER TABLE users ADD COLUMN {col_name} {col_def}")
@@ -664,7 +665,8 @@ def verify_login_otp():
             'home_lat': u.get('home_lat', 15.8345),
             'home_lng': u.get('home_lng', 74.5015),
             'home_address': u.get('home_address', 'Congress Road, Tilakwadi, Belagavi'),
-            'ward': u.get('ward')
+            'ward': u.get('ward'),
+            'github_account': u.get('github_account', 'kpbinduprakasha-cpu')
         }
     })
 
@@ -686,6 +688,7 @@ def save_profile_home():
     home_lng = float(data.get('home_lng', 74.5015))
     home_address = data.get('home_address', 'Congress Road, Tilakwadi, Belagavi').strip()
     ward = data.get('ward', 'Ward 21 - Tilakwadi, Belagavi')
+    github_account = data.get('github_account', 'kpbinduprakasha-cpu').strip()
 
     if not phone and not email:
         return jsonify({'success': False, 'message': 'Mobile Number or Email is required.'}), 400
@@ -718,9 +721,10 @@ def save_profile_home():
             email = COALESCE(?, email),
             aadhaar = COALESCE(?, aadhaar),
             home_lat = ?, home_lng = ?, home_address = ?, ward = ?,
-            gender = COALESCE(?, gender), avatar = COALESCE(?, avatar)
+            gender = COALESCE(?, gender), avatar = COALESCE(?, avatar),
+            github_account = COALESCE(?, github_account)
         WHERE id = ?
-        ''', (phone or None, alt_phone, alt_phone, house_no, house_no, landmark, landmark, email or None, aadhaar or None, home_lat, home_lng, home_address, ward, gender, avatar or None, existing['id']))
+        ''', (phone or None, alt_phone, alt_phone, house_no, house_no, landmark, landmark, email or None, aadhaar or None, home_lat, home_lng, home_address, ward, gender, avatar or None, github_account, existing['id']))
         user_id = existing['id']
         role = existing['role']
     else:
@@ -731,9 +735,9 @@ def save_profile_home():
         saved_last_name = last_name
         fallback_phone = phone if phone else f"988{int(time.time()) % 10000000:07d}"
         c.execute('''
-        INSERT INTO users (name, first_name, last_name, role, phone, alt_phone, house_no, landmark, email, aadhaar, home_lat, home_lng, home_address, ward, gender, avatar, status)
-        VALUES (?, ?, ?, 'citizen', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'active')
-        ''', (saved_full_name, saved_first_name, saved_last_name, fallback_phone, alt_phone, house_no, landmark, email, aadhaar, home_lat, home_lng, home_address, ward, gender, avatar))
+        INSERT INTO users (name, first_name, last_name, role, phone, alt_phone, house_no, landmark, email, aadhaar, home_lat, home_lng, home_address, ward, gender, avatar, github_account, status)
+        VALUES (?, ?, ?, 'citizen', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'active')
+        ''', (saved_full_name, saved_first_name, saved_last_name, fallback_phone, alt_phone, house_no, landmark, email, aadhaar, home_lat, home_lng, home_address, ward, gender, avatar, github_account))
         user_id = c.lastrowid
         role = 'citizen'
 
@@ -760,7 +764,8 @@ def save_profile_home():
             'home_lat': home_lat,
             'home_lng': home_lng,
             'home_address': home_address,
-            'ward': ward
+            'ward': ward,
+            'github_account': github_account
         }
     })
 
@@ -817,6 +822,7 @@ def update_user_profile():
     gender = data.get('gender', user['gender'] if 'gender' in user.keys() else 'Male').strip()
     home_lat = float(data.get('home_lat', user['home_lat'] or 15.8345))
     home_lng = float(data.get('home_lng', user['home_lng'] or 74.5015))
+    github_account = data.get('github_account', user['github_account'] if 'github_account' in user.keys() else 'kpbinduprakasha-cpu').strip()
 
     c.execute('''
     UPDATE users
@@ -829,9 +835,10 @@ def update_user_profile():
         ward = ?,
         gender = ?,
         home_lat = ?,
-        home_lng = ?
+        home_lng = ?,
+        github_account = ?
     WHERE id = ?
-    ''', (new_phone, alt_phone, house_no, landmark, aadhaar, home_address, ward, gender, home_lat, home_lng, user['id']))
+    ''', (new_phone, alt_phone, house_no, landmark, aadhaar, home_address, ward, gender, home_lat, home_lng, github_account, user['id']))
     conn.commit()
     conn.close()
 
@@ -853,7 +860,8 @@ def update_user_profile():
             'ward': ward,
             'gender': gender,
             'home_lat': home_lat,
-            'home_lng': home_lng
+            'home_lng': home_lng,
+            'github_account': github_account
         }
     })
 
@@ -886,7 +894,8 @@ def get_user_profile_detail(user_id):
             'home_lat': u.get('home_lat', 15.8345),
             'home_lng': u.get('home_lng', 74.5015),
             'home_address': u.get('home_address', 'Congress Road, Tilakwadi, Belagavi'),
-            'ward': u.get('ward', 'Ward 21 - Tilakwadi, Belagavi')
+            'ward': u.get('ward', 'Ward 21 - Tilakwadi, Belagavi'),
+            'github_account': u.get('github_account', 'kpbinduprakasha-cpu')
         }
     })
 
