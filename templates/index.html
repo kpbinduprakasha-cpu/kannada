@@ -2612,14 +2612,15 @@
             </div>
 
             <!-- Viewfinder Stream Feed -->
-            <div class="relative bg-black rounded-lg overflow-hidden aspect-video border border-slate-700 flex items-center justify-center">
+            <div class="relative bg-black rounded-lg overflow-hidden aspect-video border border-slate-700 flex items-center justify-center cursor-pointer" onclick="openWorkerCameraFromViewfinder()">
               <video id="live-camera-feed" autoplay playsinline class="w-full h-full object-cover hidden"></video>
               <canvas id="camera-snapshot-canvas" class="hidden w-full h-full object-cover"></canvas>
               
-              <div id="camera-mock-preview" class="flex items-center justify-center p-6">
-                <div class="w-14 h-14 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30 shadow-lg">
+              <div id="camera-mock-preview" class="flex flex-col items-center justify-center p-6 space-y-1">
+                <div class="w-14 h-14 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30 shadow-lg hover:scale-105 transition">
                   <i data-lucide="camera" class="w-7 h-7"></i>
                 </div>
+                <span class="text-[10px] text-slate-400 font-medium">Click to open live webcam / camera</span>
               </div>
 
               <!-- Live GPS Watermark Overlay -->
@@ -2632,13 +2633,39 @@
               </div>
             </div>
 
-            <!-- Single Universal 1-Click Cleaned Photo Button -->
-            <div class="pt-1">
-              <label for="worker-hardware-cam" class="w-full cursor-pointer py-3 px-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold flex items-center justify-center space-x-2 transition shadow text-center">
+            <!-- Live Photo Confirmation Badge & Retake -->
+            <div id="worker-photo-confirmed-badge" class="hidden flex items-center justify-between bg-emerald-500/10 border border-emerald-500/30 rounded-xl px-3 py-1.5 text-xs text-emerald-300">
+              <div class="flex items-center space-x-1.5">
+                <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+                <span class="font-bold">Live Cleaned Photo Captured</span>
+              </div>
+              <button type="button" onclick="retakeWorkerPhoto()" class="text-sky-400 hover:underline font-semibold text-[11px]">
+                Retake Photo
+              </button>
+            </div>
+
+            <!-- Ready Controls: 1-Click Turn ON Live Camera OR Upload Image File -->
+            <div id="worker-cam-controls-ready" class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+              <button type="button" id="btn-open-worker-cam" onclick="startCamera()" class="w-full py-3 px-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-xl text-xs font-bold flex items-center justify-center space-x-2 transition shadow-lg shadow-emerald-600/30">
                 <i data-lucide="camera" class="w-4 h-4 shrink-0"></i>
-                <span>Take Live Cleaned Photo</span>
+                <span>📷 Turn ON Live Camera</span>
+              </button>
+              <label for="worker-hardware-cam" class="w-full cursor-pointer py-3 px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-xl text-xs font-semibold flex items-center justify-center space-x-2 transition text-center">
+                <i data-lucide="upload" class="w-4 h-4 text-slate-400"></i>
+                <span>📁 Upload Photo File</span>
                 <input type="file" id="worker-hardware-cam" accept="image/*" capture="environment" onchange="previewWorkerHardwareImage(this)" class="hidden">
               </label>
+            </div>
+
+            <!-- Active Live Camera Controls (When camera is streaming) -->
+            <div id="worker-cam-controls-active" class="hidden flex items-center gap-2 pt-1">
+              <button type="button" id="btn-snap-worker-cam" onclick="captureLiveSnapshot()" class="flex-1 py-3 px-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-extrabold flex items-center justify-center space-x-2 shadow-lg shadow-emerald-600/30 transition animate-pulse">
+                <i data-lucide="aperture" class="w-4 h-4"></i>
+                <span>🔴 SNAP LIVE CLEANED PHOTO</span>
+              </button>
+              <button type="button" onclick="stopWorkerCamera()" class="py-3 px-3.5 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-slate-700 rounded-xl text-xs font-bold transition">
+                <span>✕ Close Camera</span>
+              </button>
             </div>
 
           </div>
@@ -5581,29 +5608,105 @@
     // Camera Hardware Stream & Snapshot (Laptop & Mobile)
     async function startCamera() {
       const video = document.getElementById('live-camera-feed');
+      const canvas = document.getElementById('camera-snapshot-canvas');
       const mock = document.getElementById('camera-mock-preview');
-      try {
-        cameraStream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: { ideal: 'environment' } }
-        });
-        video.srcObject = cameraStream;
-        video.classList.remove('hidden');
-        mock.classList.add('hidden');
-      } catch (err) {
-        showToast("Camera active (Belagavi GPS stamped).", "info");
+      const readyControls = document.getElementById('worker-cam-controls-ready');
+      const activeControls = document.getElementById('worker-cam-controls-active');
+      const confirmedBadge = document.getElementById('worker-photo-confirmed-badge');
+
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        showToast("WebRTC live camera not supported on this browser/protocol. Please upload or use mobile.", "warning");
+        generateSampleLiveSnapshot('worker');
+        return;
       }
+
+      if (cameraStream) {
+        cameraStream.getTracks().forEach(t => t.stop());
+        cameraStream = null;
+      }
+
+      try {
+        try {
+          cameraStream = await navigator.mediaDevices.getUserMedia({
+            video: {
+              facingMode: { ideal: 'environment' },
+              width: { ideal: 1280 },
+              height: { ideal: 720 }
+            },
+            audio: false
+          });
+        } catch(envErr) {
+          cameraStream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: false
+          });
+        }
+
+        if (video) {
+          video.srcObject = cameraStream;
+          video.classList.remove('hidden');
+          await video.play().catch(() => {});
+        }
+        if (canvas) canvas.classList.add('hidden');
+        if (mock) mock.classList.add('hidden');
+        if (confirmedBadge) confirmedBadge.classList.add('hidden');
+        if (readyControls) readyControls.classList.add('hidden');
+        if (activeControls) activeControls.classList.remove('hidden');
+
+        showToast("🎥 Live camera active! Point at cleaned spot and click 'SNAP LIVE CLEANED PHOTO'.", "info");
+      } catch (err) {
+        console.warn("Worker live camera access error:", err);
+        showToast("Camera access denied or webcam not available. Generating live simulated proof.", "warning");
+        generateSampleLiveSnapshot('worker');
+      }
+    }
+
+    function openWorkerCameraFromViewfinder() {
+      const video = document.getElementById('live-camera-feed');
+      if (video && !video.classList.contains('hidden')) {
+        captureLiveSnapshot();
+      } else {
+        startCamera();
+      }
+    }
+
+    function stopWorkerCamera() {
+      if (cameraStream) {
+        cameraStream.getTracks().forEach(t => t.stop());
+        cameraStream = null;
+      }
+      const video = document.getElementById('live-camera-feed');
+      if (video) {
+        video.srcObject = null;
+        video.classList.add('hidden');
+      }
+      document.getElementById('camera-mock-preview')?.classList.remove('hidden');
+      document.getElementById('worker-cam-controls-ready')?.classList.remove('hidden');
+      document.getElementById('worker-cam-controls-active')?.classList.add('hidden');
+      showToast("Camera closed", "info");
+    }
+
+    function retakeWorkerPhoto() {
+      const canvas = document.getElementById('camera-snapshot-canvas');
+      if (canvas) canvas.classList.add('hidden');
+      document.getElementById('worker-photo-confirmed-badge')?.classList.add('hidden');
+      startCamera();
     }
 
     function captureLiveSnapshot() {
       const video = document.getElementById('live-camera-feed');
       const canvas = document.getElementById('camera-snapshot-canvas');
       const mock = document.getElementById('camera-mock-preview');
+      const readyControls = document.getElementById('worker-cam-controls-ready');
+      const activeControls = document.getElementById('worker-cam-controls-active');
+      const confirmedBadge = document.getElementById('worker-photo-confirmed-badge');
 
+      if (!canvas) return;
       canvas.width = 640;
       canvas.height = 360;
       const ctx = canvas.getContext('2d');
 
-      if (!video.classList.contains('hidden') && video.readyState >= 2) {
+      if (cameraStream && video && !video.classList.contains('hidden') && video.readyState >= 2) {
         ctx.drawImage(video, 0, 0, 640, 360);
       } else {
         // High-fidelity cleaned pavement simulator
@@ -5628,43 +5731,20 @@
         ctx.fillText('100% GARBAGE CLEARED', 320, 210);
       }
 
-      const task = allReports.find(r => r.id === activeAcceptedTaskId);
-      const lat = task ? task.latitude : (document.getElementById('camera-watermark-lat').innerText || '15.8340');
-      const lng = task ? task.longitude : (document.getElementById('camera-watermark-lng').innerText || '74.5020');
-      const addr = task ? task.address : 'Tilakwadi, Belagavi';
-      const timeStr = new Date().toISOString().replace('T', ' ').substring(0, 19);
-
-      const currWorker = workersList.find(w => w.worker_id === activeWorkerId);
-      const workerEmp = currWorker ? currWorker.worker_emp_id : 'BCC-W2101';
-      const workerName = currWorker ? currWorker.worker_name : 'Basavaraj Belagavi';
-
-      ctx.fillStyle = 'rgba(2, 6, 23, 0.85)';
-      ctx.fillRect(10, 275, 620, 75);
-      ctx.strokeStyle = '#10b981';
-      ctx.lineWidth = 2;
-      ctx.strokeRect(10, 275, 620, 75);
-
-      ctx.fillStyle = '#10b981';
-      ctx.font = 'bold 12px monospace';
-      ctx.textAlign = 'left';
-      ctx.fillText(`📍 GPS: ${lat}° N, ${lng}° E | ${addr}`, 22, 298);
-
-      ctx.fillStyle = '#f8fafc';
-      ctx.font = '11px monospace';
-      ctx.fillText(`🕒 CLEANED: ${timeStr} IST | HARDWARE LIVE SNAPSHOT`, 22, 318);
-
-      ctx.fillStyle = '#f59e0b';
-      ctx.font = 'bold 11px monospace';
-      ctx.fillText(`👷 ATTRIBUTED WORKER: ${workerEmp} (${workerName}) | BCC SWACHHA BELAGAVI`, 22, 338);
+      stampGpsWatermark(ctx, 'worker');
 
       canvas.classList.remove('hidden');
-      video.classList.add('hidden');
-      mock.classList.add('hidden');
+      if (video) video.classList.add('hidden');
+      if (mock) mock.classList.add('hidden');
+      if (confirmedBadge) confirmedBadge.classList.remove('hidden');
+      if (readyControls) readyControls.classList.remove('hidden');
+      if (activeControls) activeControls.classList.add('hidden');
 
       if (cameraStream) {
         cameraStream.getTracks().forEach(t => t.stop());
         cameraStream = null;
       }
+      showToast("📸 Live cleaned photo captured successfully with GPS watermark!", "success");
     }
 
     function previewWorkerHardwareImage(input) {
