@@ -34,6 +34,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
 app.config['SECRET_KEY'] = 'belagavi-smart-waste-secret-2026'
+app.config['MAX_CONTENT_LENGTH'] = 32 * 1024 * 1024
 
 DB_PATH = os.path.join(os.path.dirname(__file__), 'bbmp_waste.db')
 UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), 'uploads')
@@ -1391,69 +1392,90 @@ def update_worker_duty():
 @app.route('/api/reports/create', methods=['POST'])
 def create_report():
     """Citizen creates report -> Dynamic Decision Engine attributes best worker and alerts 5km radius."""
-    data = request.json or {}
-    citizen_id = data.get('citizen_id', 4)
-    citizen_name = data.get('citizen_name', 'Praveen Kulkarni')
-    waste_type = data.get('waste_type', 'plastic_bottles')
-    description = data.get('description', '')
-    lat = float(data.get('latitude', 15.8340))
-    lng = float(data.get('longitude', 74.5020))
-    address = data.get('address', 'Tilakwadi, Belagavi')
-    before_image = data.get('before_image', '')
+    try:
+        data = request.json or {}
+        citizen_id = data.get('citizen_id') or 4
+        citizen_name = data.get('citizen_name') or 'Praveen Kulkarni'
+        waste_type = data.get('waste_type') or 'plastic_bottles'
+        description = data.get('description') or ''
+        
+        # Safely parse latitude and longitude
+        raw_lat = data.get('latitude')
+        raw_lng = data.get('longitude')
+        try:
+            lat = float(raw_lat) if raw_lat is not None and str(raw_lat).strip() not in ('', 'null', 'nan', 'NaN', 'None') else 15.8285
+        except (ValueError, TypeError):
+            lat = 15.8285
 
-    conn = get_db_connection()
-    c = conn.cursor()
+        try:
+            lng = float(raw_lng) if raw_lng is not None and str(raw_lng).strip() not in ('', 'null', 'nan', 'NaN', 'None') else 74.4690
+        except (ValueError, TypeError):
+            lng = 74.4690
 
-    # Dynamic Decision Engine: Pick best worker in Belagavi
-    best_worker, rationale = dynamic_decision_dispatch(lat, lng, c)
+        address = data.get('address') or 'Tilakwadi, Belagavi'
+        before_image = data.get('before_image') or ''
+        if not before_image:
+            before_image = 'https://images.unsplash.com/photo-1605600659873-d808a13e4d2a?w=500&auto=format&fit=crop&q=60' 
 
-    assigned_id = best_worker['worker_id'] if best_worker else None
-    assigned_name = best_worker['name'] if best_worker else None
-    assigned_emp_id = best_worker['emp_id'] if best_worker else None
-    assigned_phone = best_worker['phone'] if best_worker else None
-
-    c.execute('''
-    INSERT INTO waste_reports (
-        citizen_id, citizen_name, waste_type, description, latitude, longitude, address,
-        before_image, status, assigned_worker_id, assigned_worker_name, assigned_worker_emp_id,
-        assigned_worker_phone, dynamic_decision_note, created_at
-    )
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending', ?, ?, ?, ?, ?, datetime('now'))
-    ''', (citizen_id, citizen_name, waste_type, description, lat, lng, address, before_image,
-          assigned_id, assigned_name, assigned_emp_id, assigned_phone, rationale))
-    report_id = c.lastrowid
-    conn.commit()
-
-    # Find all workers within 5km for general broadcast
-    workers = c.execute('''
-    SELECT wp.*, u.phone FROM worker_progress wp
-    JOIN users u ON wp.worker_id = u.id
-    WHERE wp.duty_status = 'on_duty'
-    ''').fetchall()
-
-    alerted_workers = []
-    for w in workers:
-        if w['current_lat'] and w['current_lng']:
-            dist = calculate_distance_km(lat, lng, w['current_lat'], w['current_lng'])
-            if dist <= 5.0:
-                alerted_workers.append({
-                    'worker_id': w['worker_id'],
-                    'name': w['worker_name'],
-                    'emp_id': w['worker_emp_id'],
-                    'distance_km': dist,
-                    'phone': w['phone']
-                })
-
-    conn.close()
-
-    return jsonify({
-        'success': True,
-        'message': f'Report #{report_id} registered! {rationale}',
-        'report_id': report_id,
-        'dynamic_decision_note': rationale,
-        'attributed_worker': best_worker,
-        'alerted_workers': alerted_workers
-    })
+        conn = get_db_connection()
+        c = conn.cursor()
+    
+        # Dynamic Decision Engine: Pick best worker in Belagavi
+        best_worker, rationale = dynamic_decision_dispatch(lat, lng, c)
+    
+        assigned_id = best_worker['worker_id'] if best_worker else None
+        assigned_name = best_worker['name'] if best_worker else None
+        assigned_emp_id = best_worker['emp_id'] if best_worker else None
+        assigned_phone = best_worker['phone'] if best_worker else None
+    
+        c.execute('''
+        INSERT INTO waste_reports (
+            citizen_id, citizen_name, waste_type, description, latitude, longitude, address,
+            before_image, status, assigned_worker_id, assigned_worker_name, assigned_worker_emp_id,
+            assigned_worker_phone, dynamic_decision_note, created_at
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending', ?, ?, ?, ?, ?, datetime('now'))
+        ''', (citizen_id, citizen_name, waste_type, description, lat, lng, address, before_image,
+              assigned_id, assigned_name, assigned_emp_id, assigned_phone, rationale))
+        report_id = c.lastrowid
+        conn.commit()
+    
+        # Find all workers within 5km for general broadcast
+        workers = c.execute('''
+        SELECT wp.*, u.phone FROM worker_progress wp
+        JOIN users u ON wp.worker_id = u.id
+        WHERE wp.duty_status = 'on_duty'
+        ''').fetchall()
+    
+        alerted_workers = []
+        for w in workers:
+            if w['current_lat'] and w['current_lng']:
+                dist = calculate_distance_km(lat, lng, w['current_lat'], w['current_lng'])
+                if dist <= 5.0:
+                    alerted_workers.append({
+                        'worker_id': w['worker_id'],
+                        'name': w['worker_name'],
+                        'emp_id': w['worker_emp_id'],
+                        'distance_km': dist,
+                        'phone': w['phone']
+                    })
+    
+        conn.close()
+    
+        return jsonify({
+            'success': True,
+            'message': f'Report #{report_id} registered! {rationale}',
+            'report_id': report_id,
+            'dynamic_decision_note': rationale,
+            'attributed_worker': best_worker,
+            'alerted_workers': alerted_workers
+        })
+    except Exception as e:
+        print(f"Error in create_report: {e}")
+        return jsonify({
+            'success': False,
+            'message': f"Server error processing report: {str(e)}"
+        }), 500
 
 @app.route('/api/reports', methods=['GET'])
 def get_reports():
@@ -1520,8 +1542,16 @@ def submit_cleanup():
     report_id = data.get('report_id')
     worker_id = data.get('worker_id')
     after_image = data.get('after_image')
-    worker_lat = float(data.get('latitude', 15.8340))
-    worker_lng = float(data.get('longitude', 74.5020))
+    raw_worker_lat = data.get('latitude')
+    raw_worker_lng = data.get('longitude')
+    try:
+        worker_lat = float(raw_worker_lat) if raw_worker_lat is not None and str(raw_worker_lat).strip() not in ('', 'null', 'nan', 'NaN', 'None') else 15.8340
+    except (ValueError, TypeError):
+        worker_lat = 15.8340
+    try:
+        worker_lng = float(raw_worker_lng) if raw_worker_lng is not None and str(raw_worker_lng).strip() not in ('', 'null', 'nan', 'NaN', 'None') else 74.5020
+    except (ValueError, TypeError):
+        worker_lng = 74.5020
 
     conn = get_db_connection()
     c = conn.cursor()

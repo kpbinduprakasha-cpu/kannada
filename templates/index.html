@@ -4811,7 +4811,7 @@
 
       stampGpsWatermark(ctx, 'citizen');
 
-      const snapshotUrl = canvas.toDataURL('image/jpeg', 0.85);
+      const snapshotUrl = canvas.toDataURL('image/jpeg', 0.70);
       capturedPhotoData = snapshotUrl;
 
       if (img) {
@@ -4838,61 +4838,63 @@
     }
 
     async function previewCitizenImage(input) {
-      if (input.files && input.files[0]) {
-        // Step 1: Immediately fetch live GPS from device hardware to avoid defaulting to home location
-        try {
-          if (navigator.geolocation) {
-            await new Promise((resolve) => {
-              navigator.geolocation.getCurrentPosition((pos) => {
-                const liveLat = pos.coords.latitude;
-                const liveLng = pos.coords.longitude;
-                document.getElementById('report-lat').value = liveLat.toFixed(4);
-                document.getElementById('report-lng').value = liveLng.toFixed(4);
-                const resolvedArea = resolveBelagaviLocality(liveLat, liveLng);
-                const addrInput = document.getElementById('report-address');
-                if (addrInput && (!addrInput.value || addrInput.value === 'Congress Road, Tilakwadi, Belagavi')) {
-                  addrInput.value = resolvedArea;
-                }
-                resolve();
-              }, () => resolve(), { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 });
-            });
+      if (!input.files || !input.files[0]) return;
+      const file = input.files[0];
+
+      // Instant preview without blocking on geolocation
+      const reader = new FileReader();
+      reader.onload = e => {
+        const imgObj = new Image();
+        imgObj.onload = () => {
+          const canvas = document.getElementById('citizen-live-canvas');
+          if (!canvas) return;
+          canvas.width = 640;
+          canvas.height = 360;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(imgObj, 0, 0, 640, 360);
+
+          stampGpsWatermark(ctx, 'citizen');
+
+          capturedPhotoData = canvas.toDataURL('image/jpeg', 0.70);
+          const snapshotImg = document.getElementById('citizen-live-snapshot-img');
+          if (snapshotImg) {
+            snapshotImg.src = capturedPhotoData;
+            snapshotImg.classList.remove('hidden');
           }
-        } catch (e) {
-          console.warn("GPS fetch error during photo capture:", e);
-        }
+          document.getElementById('citizen-camera-idle')?.classList.add('hidden');
+          document.getElementById('citizen-camera-stream')?.classList.add('hidden');
+          document.getElementById('citizen-camera-watermark')?.classList.add('hidden');
+          document.getElementById('citizen-cam-controls-ready')?.classList.remove('hidden');
+          document.getElementById('citizen-cam-controls-active')?.classList.add('hidden');
+          document.getElementById('citizen-photo-confirmed-badge')?.classList.remove('hidden');
 
-        const reader = new FileReader();
-        reader.onload = e => {
-          const imgObj = new Image();
-          imgObj.onload = () => {
-            const canvas = document.getElementById('citizen-live-canvas');
-            canvas.width = 640;
-            canvas.height = 360;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(imgObj, 0, 0, 640, 360);
-
-            // Watermark uses live spot location (e.g. Machhe or detected live GPS)
-            stampGpsWatermark(ctx, 'citizen');
-
-            capturedPhotoData = canvas.toDataURL('image/jpeg', 0.85);
-            const snapshotImg = document.getElementById('citizen-live-snapshot-img');
-            if (snapshotImg) {
-              snapshotImg.src = capturedPhotoData;
-              snapshotImg.classList.remove('hidden');
-            }
-            document.getElementById('citizen-camera-idle')?.classList.add('hidden');
-            document.getElementById('citizen-camera-stream')?.classList.add('hidden');
-            document.getElementById('citizen-camera-watermark')?.classList.add('hidden');
-            document.getElementById('citizen-photo-confirmed-badge')?.classList.remove('hidden');
-            const spotLoc = document.getElementById('report-address')?.value || 'Machhe, Belagavi';
-            const liveLatVal = parseFloat(document.getElementById('report-lat')?.value || 15.8285);
-            const liveLngVal = parseFloat(document.getElementById('report-lng')?.value || 74.4690);
-            showLiveCapturedSpotOnMap(liveLatVal, liveLngVal, spotLoc, capturedPhotoData);
-            showToast(`📸 Live photo captured & geotagged at ${spotLoc}!`, "success");
-          };
-          imgObj.src = e.target.result;
+          const spotLoc = document.getElementById('report-address')?.value || 'Machhe, Belagavi';
+          const liveLatVal = parseFloat(document.getElementById('report-lat')?.value) || 15.8285;
+          const liveLngVal = parseFloat(document.getElementById('report-lng')?.value) || 74.4690;
+          showLiveCapturedSpotOnMap(liveLatVal, liveLngVal, spotLoc, capturedPhotoData);
+          showToast(`📸 Live photo captured & geotagged at ${spotLoc}!`, "success");
         };
-        reader.readAsDataURL(input.files[0]);
+        imgObj.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+
+      // Background GPS resolve
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((pos) => {
+          const liveLat = pos.coords.latitude;
+          const liveLng = pos.coords.longitude;
+          const latInput = document.getElementById('report-lat');
+          const lngInput = document.getElementById('report-lng');
+          if (latInput) latInput.value = liveLat.toFixed(4);
+          if (lngInput) lngInput.value = liveLng.toFixed(4);
+          const resolvedArea = resolveBelagaviLocality(liveLat, liveLng);
+          const addrInput = document.getElementById('report-address');
+          if (addrInput && (!addrInput.value || addrInput.value === 'Congress Road, Tilakwadi, Belagavi')) {
+            addrInput.value = resolvedArea;
+          }
+        }, (err) => {
+          console.warn("Background GPS lookup skipped:", err.message);
+        }, { enableHighAccuracy: true, timeout: 4000, maximumAge: 60000 });
       }
     }
 
@@ -4974,14 +4976,24 @@
     // Citizen Submit Report with Dynamic Decision Dispatch
     async function handleCitizenSubmitReport(e) {
       e.preventDefault();
-      const wasteType = document.querySelector('input[name="waste_type"]:checked').value;
-      const desc = document.getElementById('report-description').value;
-      const lat = parseFloat(document.getElementById('report-lat').value);
-      const lng = parseFloat(document.getElementById('report-lng').value);
-      const address = document.getElementById('report-address').value;
+      const wasteType = document.querySelector('input[name="waste_type"]:checked')?.value || 'plastic_bottles';
+      const descInput = document.getElementById('report-description');
+      const desc = descInput ? descInput.value.trim() : '';
 
-      const citizenId = currentUser ? currentUser.id : 4;
-      const citizenName = currentUser ? (currentUser.name || `${currentUser.first_name || ''} ${currentUser.last_name || ''}`) : 'Praveen Kulkarni';
+      const latEl = document.getElementById('report-lat');
+      const lngEl = document.getElementById('report-lng');
+      const addrEl = document.getElementById('report-address');
+
+      const rawLat = latEl ? parseFloat(latEl.value) : 15.8285;
+      const rawLng = lngEl ? parseFloat(lngEl.value) : 74.4690;
+      const lat = (!isNaN(rawLat) && rawLat) ? rawLat : 15.8285;
+      const lng = (!isNaN(rawLng) && rawLng) ? rawLng : 74.4690;
+      const address = (addrEl && addrEl.value.trim()) ? addrEl.value.trim() : 'Machhe, Belagavi';
+
+      const citizenId = (currentUser && currentUser.id) ? currentUser.id : 4;
+      const citizenName = currentUser ? (currentUser.name || `${currentUser.first_name || ''} ${currentUser.last_name || ''}`.trim() || 'Praveen Kulkarni') : 'Praveen Kulkarni';
+
+      const reportImage = capturedPhotoData || 'https://images.unsplash.com/photo-1605600659873-d808a13e4d2a?w=500&auto=format&fit=crop&q=60';
 
       const payload = {
         citizen_id: citizenId,
@@ -4991,7 +5003,7 @@
         latitude: lat,
         longitude: lng,
         address: address,
-        before_image: capturedPhotoData || 'https://images.unsplash.com/photo-1605600659873-d808a13e4d2a?w=500&auto=format&fit=crop&q=60'
+        before_image: reportImage
       };
 
       const btn = document.getElementById('btn-submit-report');
@@ -5005,8 +5017,15 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
-        const data = await res.json();
-        if (data.success) {
+
+        let data;
+        try {
+          data = await res.json();
+        } catch(jErr) {
+          throw new Error(`Server response error (HTTP ${res.status})`);
+        }
+
+        if (res.ok && data.success) {
           const w = data.attributed_worker;
           lastDispatchedWorkerId = w ? w.worker_id : 2;
           lastDispatchedReportId = data.report_id;
@@ -5029,14 +5048,15 @@
             document.getElementById('modal-citizen-dispatch-success')?.classList.remove('hidden');
           }
           showToast(`✅ Report #${data.report_id} submitted! Dispatched to ${w ? w.name : 'Sanitation Employee'}.`, "success");
-          document.getElementById('report-description').value = '';
+          if (descInput) descInput.value = '';
           retakeCitizenPhoto();
           loadAllReports();
         } else {
-          showToast(data.message || "Failed to submit report.", "error");
+          showToast(data.message || `Failed to submit report (HTTP ${res.status}).`, "error");
         }
       } catch (err) {
-        showToast("Error submitting report.", "error");
+        console.error("Citizen report submission failed:", err);
+        showToast(err.message || "Error submitting report.", "error");
       } finally {
         btn.disabled = false;
         btn.innerHTML = `<i data-lucide="send" class="w-4 h-4"></i><span>Submit Report</span>`;
