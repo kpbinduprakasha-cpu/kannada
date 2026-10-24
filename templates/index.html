@@ -69,24 +69,22 @@
       --clay-radius-btn: 16px;
     }
 
-    /* 1. CLAYMORPHIC CARDS, PANELS & SURFACES (INFLATED 3D VOLUME) */
-    .bg-slate-800,
-    .bg-slate-800\/80,
-    .bg-slate-800\/90,
-    .bg-slate-900:not(#app-splash-screen):not(#camera-video):not(#camera-canvas),
-    .bg-slate-900\/50,
-    .bg-slate-900\/60,
-    .bg-slate-900\/70,
-    .bg-slate-900\/80,
-    .bg-slate-900\/90,
-    .bg-slate-950\/60,
-    .bg-slate-950\/70,
-    .bg-slate-950\/80,
-    .bg-slate-950\/85,
-    .bg-slate-950\/90,
-    .bg-slate-950\/95,
-    [class*="rounded-2xl"]:not(input):not(textarea):not(select):not(img):not(video):not(canvas):not(.leaflet-container):not(.leaflet-pane *):not(#worker-tracking-map):not(#map),
-    [class*="rounded-3xl"]:not(input):not(textarea):not(select):not(img):not(video):not(canvas):not(.leaflet-container):not(.leaflet-pane *):not(#worker-tracking-map):not(#map) {
+    /* 1. DARK THEME CARDS & PANELS */
+    body.theme-dark .bg-slate-800,
+    body.theme-dark .bg-slate-800\/80,
+    body.theme-dark .bg-slate-800\/90,
+    body.theme-dark .bg-slate-900:not(#app-splash-screen):not(#camera-video):not(#camera-canvas),
+    body.theme-dark .bg-slate-900\/50,
+    body.theme-dark .bg-slate-900\/60,
+    body.theme-dark .bg-slate-900\/70,
+    body.theme-dark .bg-slate-900\/80,
+    body.theme-dark .bg-slate-900\/90,
+    body.theme-dark .bg-slate-950\/60,
+    body.theme-dark .bg-slate-950\/70,
+    body.theme-dark .bg-slate-950\/80,
+    body.theme-dark .bg-slate-950\/85,
+    body.theme-dark .bg-slate-950\/90,
+    body.theme-dark .bg-slate-950\/95 {
       border-radius: 24px !important;
       background: linear-gradient(145deg, #1e293b, #0f172a) !important;
       box-shadow: 10px 18px 30px -4px rgba(0, 0, 0, 0.55), -4px -4px 12px -2px rgba(255, 255, 255, 0.04), inset 2.5px 2.5px 5px rgba(255, 255, 255, 0.13), inset -3.5px -3.5px 7px rgba(0, 0, 0, 0.6) !important;
@@ -100,15 +98,15 @@
       box-shadow: 12px 22px 36px -4px rgba(0, 0, 0, 0.65), -5px -5px 14px -2px rgba(255, 255, 255, 0.06), inset 2.5px 2.5px 5px rgba(255, 255, 255, 0.16), inset -3.5px -3.5px 7px rgba(0, 0, 0, 0.65) !important;
     }
 
-    /* 2. CLAYMORPHIC MODAL DIALOGS (HIGH ELEVATION 3D INFLATION) */
-    #modal-auth-onboarding > div,
-    #modal-employee-profile-detail > div,
-    #modal-citizen-profile-detail > div,
-    #modal-edit-citizen-profile > div,
-    #modal-ai-cleanliness-comparison > div,
-    #staff-login-modal > div,
-    #mobile-qr-modal > div,
-    #modal-officer-console > div {
+    /* 2. DARK THEME MODAL DIALOGS */
+    body.theme-dark #modal-auth-onboarding > div,
+    body.theme-dark #modal-employee-profile-detail > div,
+    body.theme-dark #modal-citizen-profile-detail > div,
+    body.theme-dark #modal-edit-citizen-profile > div,
+    body.theme-dark #modal-ai-cleanliness-comparison > div,
+    body.theme-dark #staff-login-modal > div,
+    body.theme-dark #mobile-qr-modal > div,
+    body.theme-dark #modal-officer-console > div {
       border-radius: 32px !important;
       background: linear-gradient(145deg, #1e293b, #090e17) !important;
       box-shadow: 0 30px 70px -10px rgba(0, 0, 0, 0.85), inset 3px 3px 6px rgba(255, 255, 255, 0.16), inset -4px -4px 10px rgba(0, 0, 0, 0.75) !important;
@@ -256,8 +254,8 @@
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25), inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.3), inset -1.5px -1.5px 3px rgba(0, 0, 0, 0.3) !important;
     }
 
-    /* 6. CLAYMORPHIC STICKY HEADER */
-    header {
+    /* 6. DARK THEME STICKY HEADER */
+    body.theme-dark header {
       background: linear-gradient(180deg, #090e17 0%, #0f172a 100%) !important;
       border-bottom: 1.5px solid rgba(255, 255, 255, 0.1) !important;
       box-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.65), inset 0 2px 4px rgba(255, 255, 255, 0.1) !important;
@@ -390,6 +388,7 @@
     /* ============================================================== */
     /* THEME: WASTEWISE ENVIRONMENTAL (WHITE & DARK FOREST GREEN)     */
     /* Inspired by WasteWise: Clean, Modern, Eco-Corporate Aesthetic  */
+    /* High-contrast, crystal-clear typography for all sections       */
     /* ============================================================== */
 
     html {
@@ -402,33 +401,44 @@
       color: #0f172a !important;
     }
 
+    /* 1. Header (Clean White with Dark Green Logo & Dark Charcoal Nav) */
     body.theme-wastewise header {
       background: #ffffff !important;
       border-bottom: 1.5px solid #e2e8f0 !important;
       box-shadow: 0 4px 20px -2px rgba(6, 78, 59, 0.08) !important;
     }
-
     body.theme-wastewise header h1,
-    body.theme-wastewise header h2,
-    body.theme-wastewise header .text-white {
+    body.theme-wastewise header h2 {
       color: #064e3b !important;
       text-shadow: none !important;
     }
-
+    body.theme-wastewise header .text-white:not(button):not(button *) {
+      color: #064e3b !important;
+    }
     body.theme-wastewise header .text-slate-300,
     body.theme-wastewise header .text-slate-400 {
       color: #475569 !important;
     }
-
     body.theme-wastewise header #header-user-card {
       background: #f1f5f9 !important;
       border-color: #cbd5e1 !important;
     }
-
     body.theme-wastewise header #header-user-card .text-white {
       color: #0f172a !important;
     }
 
+    /* 2. Light Green Section Containers (How It Works, About Us, Impact) */
+    body.theme-wastewise #how-it-works-section,
+    body.theme-wastewise #about-us-section > div,
+    body.theme-wastewise .section-light-green,
+    body.theme-wastewise [class*="bg-emerald-500/5"] {
+      background-color: #f0fdf4 !important;
+      border: 1.5px solid #bbf7d0 !important;
+      box-shadow: 0 10px 25px -5px rgba(6, 78, 59, 0.06) !important;
+    }
+
+    /* 3. Eco-Cards & Service Cards (Crisp White Background with Soft Shadow) */
+    body.theme-wastewise .eco-card,
     body.theme-wastewise .bg-slate-800,
     body.theme-wastewise .bg-slate-800\/80,
     body.theme-wastewise .bg-slate-800\/90,
@@ -442,46 +452,12 @@
     body.theme-wastewise .bg-slate-950\/70,
     body.theme-wastewise .bg-slate-950\/80,
     body.theme-wastewise .bg-slate-950\/90,
-    body.theme-wastewise .bg-slate-950:not(#app-splash-screen):not(#camera-video):not(#camera-canvas):not(#live-camera-feed):not(#citizen-camera-stream):not(header) {
+    body.theme-wastewise .bg-slate-950:not(#app-splash-screen):not(#camera-video):not(#camera-canvas):not(#live-camera-feed):not(#citizen-camera-stream):not(header):not(footer) {
       background: #ffffff !important;
-      border: 1px solid #e2e8f0 !important;
+      border: 1.5px solid #e2e8f0 !important;
+      border-radius: 20px !important;
       box-shadow: 0 4px 16px -2px rgba(6, 78, 59, 0.05), 0 1px 3px rgba(0, 0, 0, 0.04) !important;
       color: #1e293b !important;
-    }
-
-    body.theme-wastewise .text-white {
-      color: #064e3b !important;
-      text-shadow: none !important;
-    }
-
-    body.theme-wastewise .text-slate-200,
-    body.theme-wastewise .text-slate-300 {
-      color: #334155 !important;
-    }
-
-    body.theme-wastewise .text-slate-400 {
-      color: #64748b !important;
-    }
-
-    body.theme-wastewise input:not([type="checkbox"]):not([type="radio"]),
-    body.theme-wastewise textarea,
-    body.theme-wastewise select {
-      background-color: #f8fafc !important;
-      border: 1.5px solid #cbd5e1 !important;
-      color: #0f172a !important;
-    }
-
-    body.theme-wastewise input:focus,
-    body.theme-wastewise textarea:focus {
-      border-color: #059669 !important;
-      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15) !important;
-    }
-
-    body.theme-wastewise .eco-card {
-      background: #ffffff !important;
-      border: 1px solid #e2e8f0 !important;
-      border-radius: 20px !important;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
 
     body.theme-wastewise .eco-card:hover {
@@ -490,32 +466,161 @@
       border-color: #10b981 !important;
     }
 
-    body.theme-wastewise .section-light-green {
-      background-color: #f0fdf4 !important;
-      border-color: #dcfce7 !important;
-    }
-
-    body.theme-wastewise .bg-gradient-to-r.from-slate-900 {
-      background: linear-gradient(135deg, #064e3b 0%, #022c22 100%) !important;
-      border: 2px solid rgba(16, 185, 129, 0.4) !important;
-      color: #ffffff !important;
-      box-shadow: 0 10px 25px -5px rgba(6, 78, 59, 0.25) !important;
-    }
-    body.theme-wastewise .bg-gradient-to-r.from-slate-900 h2 {
-      color: #ffffff !important;
+    /* 4. HIGH CONTRAST TYPOGRAPHY - HEADINGS (DARK GREEN #064E3B) */
+    body.theme-wastewise h1:not(#hero-section h1):not(#app-splash-screen h1),
+    body.theme-wastewise h2:not(#hero-section h2):not(#app-splash-screen h2),
+    body.theme-wastewise h3:not(#hero-section h3),
+    body.theme-wastewise h4,
+    body.theme-wastewise .text-slate-900,
+    body.theme-wastewise .text-slate-800 {
+      color: #064e3b !important;
       text-shadow: none !important;
-    }
-    body.theme-wastewise .bg-gradient-to-r.from-slate-900 p {
-      color: #d1fae5 !important;
+      font-weight: 800 !important;
     }
 
+    /* 5. HIGH CONTRAST TYPOGRAPHY - BODY & PARAGRAPHS (SLATE-700 CHARCOAL #334155) */
+    body.theme-wastewise p:not(#hero-section p):not(#app-splash-screen p):not(footer p),
+    body.theme-wastewise .text-slate-600,
+    body.theme-wastewise .text-slate-700,
+    body.theme-wastewise .text-slate-300:not(#hero-section *):not(#app-splash-screen *):not(footer *):not(button *),
+    body.theme-wastewise .text-slate-200:not(#hero-section *):not(#app-splash-screen *):not(footer *):not(button *) {
+      color: #334155 !important;
+      opacity: 1 !important;
+    }
+
+    /* 6. SECONDARY MUTED LABELS (#475569) */
+    body.theme-wastewise .text-slate-500,
+    body.theme-wastewise .text-slate-400:not(#hero-section *):not(#app-splash-screen *):not(footer *) {
+      color: #475569 !important;
+    }
+
+    /* 7. Numbers in How It Works (01, 02, 03, 04) */
+    body.theme-wastewise #how-it-works-section .text-3xl {
+      color: #059669 !important;
+      opacity: 0.85 !important;
+      font-weight: 900 !important;
+    }
+
+    /* 8. Badges & Pill Chips */
+    body.theme-wastewise span[class*="bg-emerald-500/10"],
+    body.theme-wastewise span[class*="text-emerald-600"],
+    body.theme-wastewise span[class*="bg-emerald-500/20"] {
+      background-color: #dcfce7 !important;
+      color: #065f46 !important;
+      border: 1px solid #86efac !important;
+      font-weight: 800 !important;
+    }
+
+    /* 9. Hero Section (Must maintain crisp white text on photographic dark green backdrop) */
+    #hero-section h1,
+    #hero-section .text-white,
+    #hero-section span.text-white {
+      color: #ffffff !important;
+    }
+    #hero-section p {
+      color: #ecfdf5 !important;
+    }
+
+    /* 10. Buttons - Ensure text inside primary buttons stays bright white */
+    button.bg-gradient-to-r,
+    button[class*="bg-emerald"],
+    button[class*="bg-sky"],
+    button[class*="bg-indigo"],
+    button[class*="bg-rose"] {
+      color: #ffffff !important;
+    }
+    button[class*="bg-emerald"] span,
+    button[class*="bg-sky"] span,
+    button[class*="bg-indigo"] span,
+    button[class*="bg-rose"] span {
+      color: #ffffff !important;
+    }
+
+    /* 11. Form Inputs */
+    body.theme-wastewise input:not([type="checkbox"]):not([type="radio"]),
+    body.theme-wastewise textarea,
+    body.theme-wastewise select {
+      background-color: #f8fafc !important;
+      border: 1.5px solid #cbd5e1 !important;
+      color: #0f172a !important;
+    }
+    body.theme-wastewise input:focus,
+    body.theme-wastewise textarea:focus {
+      border-color: #059669 !important;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15) !important;
+    }
+
+    /* 12. Modals */
+    body.theme-wastewise #modal-auth-onboarding > div,
+    body.theme-wastewise #modal-employee-profile-detail > div,
+    body.theme-wastewise #modal-citizen-profile-detail > div,
+    body.theme-wastewise #modal-edit-citizen-profile > div,
+    body.theme-wastewise #modal-ai-cleanliness-comparison > div,
+    body.theme-wastewise #staff-login-modal > div,
+    body.theme-wastewise #mobile-qr-modal > div,
+    body.theme-wastewise #modal-officer-console > div {
+      background: #ffffff !important;
+      border: 1.5px solid #cbd5e1 !important;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+      color: #0f172a !important;
+    }
+
+    /* 13. Footer */
     body.theme-wastewise footer {
       background-color: #022c22 !important;
       border-top: 1px solid #064e3b !important;
       color: #f1f5f9 !important;
     }
 
-</style>
+    /* ============================================================== */
+    /* THEME: OBSIDIAN DARK MODE TYPOGRAPHY & HIGH CONTRAST          */
+    /* ============================================================== */
+    body.theme-dark {
+      background-color: #090e17 !important;
+      color: #f1f5f9 !important;
+    }
+    body.theme-dark h1,
+    body.theme-dark h2,
+    body.theme-dark h3,
+    body.theme-dark h4,
+    body.theme-dark .text-slate-900,
+    body.theme-dark .text-slate-800,
+    body.theme-dark .text-white {
+      color: #ffffff !important;
+      text-shadow: none !important;
+    }
+    body.theme-dark p,
+    body.theme-dark .text-slate-600,
+    body.theme-dark .text-slate-700,
+    body.theme-dark .text-slate-500,
+    body.theme-dark .text-slate-400,
+    body.theme-dark .text-slate-300,
+    body.theme-dark .text-slate-200 {
+      color: #cbd5e1 !important;
+    }
+    body.theme-dark #how-it-works-section,
+    body.theme-dark #about-us-section > div,
+    body.theme-dark .section-light-green,
+    body.theme-dark [class*="bg-emerald-500/5"] {
+      background-color: #0f172a !important;
+      border-color: #334155 !important;
+    }
+    body.theme-dark .eco-card {
+      background: #1e293b !important;
+      border-color: #334155 !important;
+      color: #f1f5f9 !important;
+    }
+    body.theme-dark #how-it-works-section .text-3xl {
+      color: #34d399 !important;
+    }
+    body.theme-dark input:not([type="checkbox"]):not([type="radio"]),
+    body.theme-dark textarea,
+    body.theme-dark select {
+      background-color: #0f172a !important;
+      border: 1.5px solid #334155 !important;
+      color: #f8fafc !important;
+    }
+    </style>
 </head>
 <body class="theme-wastewise bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans pb-20 sm:pb-4 select-none">
 
