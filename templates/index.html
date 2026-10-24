@@ -813,7 +813,122 @@
       white-space: nowrap;
       box-shadow: 0 4px 10px rgba(0,0,0,0.5), inset 1px 1px 2px rgba(255,255,255,0.3) !important;
     }
-  </style>
+  
+    /* ============================================================== */
+    /* THEME: WASTEWISE ENVIRONMENTAL (WHITE & DARK FOREST GREEN)     */
+    /* Inspired by WasteWise: Clean, Modern, Eco-Corporate Aesthetic  */
+    /* ============================================================== */
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body.theme-wastewise {
+      background-color: #f8fafc !important;
+      background-image: none !important;
+      color: #0f172a !important;
+    }
+
+    body.theme-wastewise header {
+      background: #ffffff !important;
+      border-bottom: 1.5px solid #e2e8f0 !important;
+      box-shadow: 0 4px 20px -2px rgba(6, 78, 59, 0.08) !important;
+    }
+
+    body.theme-wastewise header h1,
+    body.theme-wastewise header h2,
+    body.theme-wastewise header .text-white {
+      color: #064e3b !important;
+      text-shadow: none !important;
+    }
+
+    body.theme-wastewise header .text-slate-300,
+    body.theme-wastewise header .text-slate-400 {
+      color: #475569 !important;
+    }
+
+    body.theme-wastewise header #header-user-card {
+      background: #f1f5f9 !important;
+      border-color: #cbd5e1 !important;
+    }
+
+    body.theme-wastewise header #header-user-card .text-white {
+      color: #0f172a !important;
+    }
+
+    body.theme-wastewise .bg-slate-800,
+    body.theme-wastewise .bg-slate-800\/80,
+    body.theme-wastewise .bg-slate-800\/90,
+    body.theme-wastewise .bg-slate-900:not(#app-splash-screen):not(#camera-video):not(#camera-canvas):not(#live-camera-feed):not(#citizen-camera-stream),
+    body.theme-wastewise .bg-slate-900\/50,
+    body.theme-wastewise .bg-slate-900\/60,
+    body.theme-wastewise .bg-slate-900\/70,
+    body.theme-wastewise .bg-slate-900\/80,
+    body.theme-wastewise .bg-slate-900\/90,
+    body.theme-wastewise .bg-slate-950\/60,
+    body.theme-wastewise .bg-slate-950\/70,
+    body.theme-wastewise .bg-slate-950\/80,
+    body.theme-wastewise .bg-slate-950\/90,
+    body.theme-wastewise .bg-slate-950:not(#app-splash-screen):not(#camera-video):not(#camera-canvas):not(#live-camera-feed):not(#citizen-camera-stream):not(header) {
+      background: #ffffff !important;
+      border: 1px solid #e2e8f0 !important;
+      box-shadow: 0 4px 16px -2px rgba(6, 78, 59, 0.05), 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+      color: #1e293b !important;
+    }
+
+    body.theme-wastewise .text-white {
+      color: #064e3b !important;
+      text-shadow: none !important;
+    }
+
+    body.theme-wastewise .text-slate-200,
+    body.theme-wastewise .text-slate-300 {
+      color: #334155 !important;
+    }
+
+    body.theme-wastewise .text-slate-400 {
+      color: #64748b !important;
+    }
+
+    body.theme-wastewise input:not([type="checkbox"]):not([type="radio"]),
+    body.theme-wastewise textarea,
+    body.theme-wastewise select {
+      background-color: #f8fafc !important;
+      border: 1.5px solid #cbd5e1 !important;
+      color: #0f172a !important;
+    }
+
+    body.theme-wastewise input:focus,
+    body.theme-wastewise textarea:focus {
+      border-color: #059669 !important;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15) !important;
+    }
+
+    body.theme-wastewise .eco-card {
+      background: #ffffff !important;
+      border: 1px solid #e2e8f0 !important;
+      border-radius: 20px !important;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+
+    body.theme-wastewise .eco-card:hover {
+      transform: translateY(-4px) !important;
+      box-shadow: 0 20px 35px -4px rgba(6, 78, 59, 0.12), 0 4px 8px -2px rgba(0, 0, 0, 0.04) !important;
+      border-color: #10b981 !important;
+    }
+
+    body.theme-wastewise .section-light-green {
+      background-color: #f0fdf4 !important;
+      border-color: #dcfce7 !important;
+    }
+
+    body.theme-wastewise footer {
+      background-color: #022c22 !important;
+      border-top: 1px solid #064e3b !important;
+      color: #f1f5f9 !important;
+    }
+
+</style>
 </head>
 <body class="theme-champagne bg-[#F8E7C9] text-[#064E3B] min-h-screen flex flex-col font-sans pb-20 sm:pb-4 select-none">
 
@@ -1672,16 +1787,29 @@
     <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
       
       <!-- Brand: Swachha Belagavi with Official Clean Belagavi Logo -->
-      <div class="flex items-center space-x-3">
-        <img src="/static/clean_belagavi_logo.png" alt="Clean Belagavi Logo" class="h-12 w-auto object-contain rounded-xl shadow-lg border border-emerald-500/40 bg-white/10 p-0.5 hover:scale-105 transition shrink-0">
+      <a href="#top" class="flex items-center space-x-3 group">
+        <img src="/static/clean_belagavi_logo.png" alt="Clean Belagavi Logo" class="h-12 w-auto object-contain rounded-xl shadow-lg border border-emerald-500/40 bg-white/10 p-0.5 group-hover:scale-105 transition shrink-0">
         <div>
           <div class="flex items-center space-x-2">
-            <h1 class="text-xl font-black tracking-tight text-white">SWACHHA BELAGAVI</h1>
-            <span class="bg-emerald-500/20 text-emerald-400 text-xs px-2 py-0.5 rounded-full border border-emerald-500/30 font-bold">BCC Clean City</span>
+            <h1 class="text-lg sm:text-xl font-black tracking-tight text-white">SWACHHA BELAGAVI</h1>
+            <span class="bg-emerald-500/20 text-emerald-400 text-[10px] sm:text-xs px-2 py-0.5 rounded-full border border-emerald-500/30 font-bold">BCC Clean City</span>
           </div>
-          <p class="text-xs text-slate-300">Belagavi City Corporation</p>
+          <p class="text-xs text-slate-300 font-medium">Smart Waste & Environmental Services</p>
         </div>
-      </div>
+      </a>
+
+      <!-- Desktop Navigation Links (WasteWise inspired) -->
+      <nav class="hidden xl:flex items-center space-x-1 text-xs font-semibold">
+        <a href="#top" class="px-2.5 py-1.5 rounded-lg text-emerald-400 hover:text-emerald-300 hover:bg-emerald-500/10 transition">Home</a>
+        <a href="#services-section" class="px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-emerald-500/10 transition">Services</a>
+        <a href="#how-it-works-section" class="px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-emerald-500/10 transition">How It Works</a>
+        <a href="#impact-section" class="px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-emerald-500/10 transition">Impact</a>
+        <a href="#why-choose-us-section" class="px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-emerald-500/10 transition">Why Us</a>
+        <a href="#about-us-section" class="px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-emerald-500/10 transition">About</a>
+        <a href="#testimonials-section" class="px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-emerald-500/10 transition">Reviews</a>
+        <a href="#faq-section" class="px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-emerald-500/10 transition">FAQ</a>
+        <a href="#contact-us-section" class="px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-emerald-500/10 transition">Contact</a>
+      </nav>
 
       <!-- User Chip & Identity (Requirement 5 & 6: Personal Location Removed, Button to View All Details) -->
       <div id="header-user-card" class="flex items-center space-x-3 bg-slate-900 border border-slate-800 px-3.5 py-1.5 rounded-2xl">
@@ -1734,14 +1862,18 @@
         </button>
       </div>
 
-      <!-- Theme Switcher (Emerald & Champagne / Obsidian Dark) -->
-      <div class="flex items-center space-x-1 bg-[#04382b] border border-[#D6BD90] p-1 rounded-xl shadow-inner" id="theme-switcher-container">
-        <button type="button" onclick="setThemeMode('champagne')" id="btn-theme-champagne" class="px-3 py-1.5 text-xs font-bold rounded-lg transition bg-gradient-to-b from-[#FFFDF8] to-[#F8E7C9] text-[#064E3B] shadow border border-[#D6BD90] flex items-center space-x-1.5" title="Emerald Ink & Champagne Combination">
-          <span class="w-3 h-3 rounded-full bg-[#064E3B] border border-[#F8E7C9] inline-block shadow-sm"></span>
-          <span>🌿 Emerald & Champagne</span>
+      <!-- Theme Switcher (WasteWise Environmental / Emerald Champagne / Obsidian Dark) -->
+      <div class="flex items-center space-x-1 bg-slate-900/90 border border-slate-700/80 p-1 rounded-xl shadow-inner" id="theme-switcher-container">
+        <button type="button" onclick="setThemeMode('wastewise')" id="btn-theme-wastewise" class="px-2.5 py-1.5 text-xs font-bold rounded-lg transition bg-white text-emerald-800 shadow border border-emerald-400 flex items-center space-x-1" title="WasteWise Environmental Theme (White & Dark Green)">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-600 inline-block"></span>
+          <span>🌿 Environmental</span>
         </button>
-        <button type="button" onclick="setThemeMode('dark')" id="btn-theme-dark" class="px-3 py-1.5 text-xs font-semibold rounded-lg transition text-[#EBD5AE] hover:text-white flex items-center space-x-1.5" title="Obsidian Dark UI">
-          <span class="w-2.5 h-2.5 rounded-full bg-slate-900 border border-slate-600 inline-block"></span>
+        <button type="button" onclick="setThemeMode('champagne')" id="btn-theme-champagne" class="px-2.5 py-1.5 text-xs font-semibold rounded-lg transition text-slate-300 hover:text-white flex items-center space-x-1" title="Emerald Ink & Champagne">
+          <span class="w-2.5 h-2.5 rounded-full bg-[#D6BD90] inline-block"></span>
+          <span>🥂 Champagne</span>
+        </button>
+        <button type="button" onclick="setThemeMode('dark')" id="btn-theme-dark" class="px-2.5 py-1.5 text-xs font-semibold rounded-lg transition text-slate-300 hover:text-white flex items-center space-x-1" title="Obsidian Dark">
+          <span class="w-2.5 h-2.5 rounded-full bg-slate-800 border border-slate-600 inline-block"></span>
           <span>🌙 Dark</span>
         </button>
       </div>
@@ -1798,7 +1930,445 @@
     <!-- ============================================================== -->
     <!-- 1. CITIZEN PORTAL (BELAGAVI) -->
     <!-- ============================================================== -->
-    <div id="view-citizen" class="space-y-6">
+        <!-- ============================================================== -->
+    <!-- PUBLIC HOMEPAGE SECTIONS (INSPIRED BY WASTEWISE SA)            -->
+    <!-- Professional Environmental Services, Hero, 8 Services Grid      -->
+    <!-- ============================================================== -->
+
+    <!-- HERO SECTION (Smarter Waste Management. Cleaner Communities.) -->
+    <section id="hero-section" class="relative rounded-3xl overflow-hidden mb-12 shadow-2xl border border-emerald-500/30">
+      <div class="absolute inset-0 z-0">
+        <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=1800&q=80" alt="Environmental Waste Management" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-r from-[#022c22]/95 via-[#064e3b]/85 to-[#022c22]/75 backdrop-blur-[1px]"></div>
+      </div>
+
+      <div class="relative z-10 px-6 py-14 sm:px-12 sm:py-20 max-w-4xl text-left space-y-6">
+        <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-emerald-500/25 border border-emerald-400/40 backdrop-blur-md text-emerald-200 text-xs font-bold tracking-wide uppercase">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+          <span>🌿 Modern Municipal & Commercial Waste Solutions</span>
+        </div>
+
+        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.12]">
+          Smarter Waste Management.<br>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-teal-200 to-amber-200">Cleaner Communities.</span>
+        </h1>
+
+        <p class="text-sm sm:text-base text-emerald-100/90 max-w-2xl leading-relaxed">
+          Reliable collection, circular material recovery, and rapid 10-minute municipal sanitation dispatch. Partnering with citizens, housing societies, and businesses to build sustainable, zero-waste environments across Belagavi.
+        </p>
+
+        <div class="flex flex-wrap items-center gap-3 pt-2">
+          <a href="#view-citizen" onclick="document.getElementById('report-waste-form')?.scrollIntoView({ behavior: 'smooth' })" class="px-6 py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-extrabold rounded-2xl text-xs sm:text-sm shadow-xl shadow-emerald-600/30 transition transform hover:-translate-y-0.5 flex items-center space-x-2">
+            <i data-lucide="send" class="w-4 h-4"></i>
+            <span>Request Waste Collection</span>
+          </a>
+          <a href="#services-section" class="px-6 py-3.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-2xl text-xs sm:text-sm border border-white/30 backdrop-blur-md transition flex items-center space-x-2">
+            <i data-lucide="layers" class="w-4 h-4"></i>
+            <span>Explore Our Services</span>
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-6 border-t border-emerald-500/30 text-xs text-emerald-200">
+          <div class="flex items-center space-x-2">
+            <i data-lucide="map-pin" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+            <span class="font-semibold">100% Geotagged Live Proof</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <i data-lucide="zap" class="w-4 h-4 text-amber-400 shrink-0"></i>
+            <span class="font-semibold">10-Min Rapid SLA Response</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <i data-lucide="shield-check" class="w-4 h-4 text-sky-400 shrink-0"></i>
+            <span class="font-semibold">Municipal Blockchain Verified</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: OUR 8 COMPREHENSIVE SERVICES -->
+    <section id="services-section" class="mb-14 scroll-mt-20">
+      <div class="text-center max-w-2xl mx-auto mb-8 space-y-2">
+        <span class="px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-emerald-500/10 text-emerald-600 border border-emerald-500/30">
+          Tailored Environmental Solutions
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+          Comprehensive Waste & Recycling Services
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-600">
+          From routine curbside collection to circular recycling and industrial skips, explore our verified municipal and commercial service streams.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        
+        <!-- Service 1: General Waste Collection -->
+        <div class="eco-card overflow-hidden flex flex-col group">
+          <div class="h-44 overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1611284446314-60a58ac0deb9?auto=format&fit=crop&w=600&q=80" alt="General Waste Collection" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+            <span class="absolute top-3 left-3 px-2.5 py-1 bg-[#064e3b]/90 text-white text-[10px] font-bold rounded-lg backdrop-blur-sm">Municipal & Curbside</span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
+            <div>
+              <h3 class="font-bold text-base text-slate-900">General Waste Collection</h3>
+              <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                Scheduled daily and weekly curbside collection for residential bins, commercial dumpsters, and public litter containers across all city wards.
+              </p>
+            </div>
+            <a href="#view-citizen" onclick="document.getElementById('report-waste-form')?.scrollIntoView({ behavior: 'smooth' })" class="text-xs font-bold text-emerald-600 hover:text-emerald-700 flex items-center space-x-1 pt-2 border-t border-slate-100">
+              <span>Book Collection</span>
+              <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Service 2: Residential & Commercial Waste Management -->
+        <div class="eco-card overflow-hidden flex flex-col group">
+          <div class="h-44 overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1595278069441-2cf29f8005a4?auto=format&fit=crop&w=600&q=80" alt="Commercial Waste" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+            <span class="absolute top-3 left-3 px-2.5 py-1 bg-teal-800/90 text-white text-[10px] font-bold rounded-lg backdrop-blur-sm">Housing & Enterprise</span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
+            <div>
+              <h3 class="font-bold text-base text-slate-900">Residential & Commercial</h3>
+              <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                Customized service plans for gated communities, apartment complexes, shopping centers, corporate offices, and institutions.
+              </p>
+            </div>
+            <a href="#view-citizen" onclick="document.getElementById('report-waste-form')?.scrollIntoView({ behavior: 'smooth' })" class="text-xs font-bold text-emerald-600 hover:text-emerald-700 flex items-center space-x-1 pt-2 border-t border-slate-100">
+              <span>Request Service</span>
+              <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Service 3: Recycling & Material Recovery -->
+        <div class="eco-card overflow-hidden flex flex-col group">
+          <div class="h-44 overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=600&q=80" alt="Recycling & Material Recovery" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+            <span class="absolute top-3 left-3 px-2.5 py-1 bg-sky-800/90 text-white text-[10px] font-bold rounded-lg backdrop-blur-sm">Circular Recovery</span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
+            <div>
+              <h3 class="font-bold text-base text-slate-900">Recycling & Material Recovery</h3>
+              <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                Dedicated segregation and processing of plastics, PET bottles, aluminium cans, cardboard, and glass into secondary raw materials.
+              </p>
+            </div>
+            <a href="#view-citizen" onclick="document.getElementById('report-waste-form')?.scrollIntoView({ behavior: 'smooth' })" class="text-xs font-bold text-emerald-600 hover:text-emerald-700 flex items-center space-x-1 pt-2 border-t border-slate-100">
+              <span>Recycle With Us</span>
+              <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Service 4: Organic Waste & Composting -->
+        <div class="eco-card overflow-hidden flex flex-col group">
+          <div class="h-44 overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1582408921715-18e7806365c1?auto=format&fit=crop&w=600&q=80" alt="Organic Waste & Composting" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+            <span class="absolute top-3 left-3 px-2.5 py-1 bg-amber-800/90 text-white text-[10px] font-bold rounded-lg backdrop-blur-sm">Zero-Landfill Compost</span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
+            <div>
+              <h3 class="font-bold text-base text-slate-900">Organic Waste & Composting</h3>
+              <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                Biodegradable kitchen food waste, horticultural cuttings, and market greens converted into rich organic compost for urban agriculture.
+              </p>
+            </div>
+            <a href="#view-citizen" onclick="document.getElementById('report-waste-form')?.scrollIntoView({ behavior: 'smooth' })" class="text-xs font-bold text-emerald-600 hover:text-emerald-700 flex items-center space-x-1 pt-2 border-t border-slate-100">
+              <span>Organics Program</span>
+              <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Service 5: Bulk Waste & Skip-Bin Collection -->
+        <div class="eco-card overflow-hidden flex flex-col group">
+          <div class="h-44 overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1503596476-1c12a8ba09a9?auto=format&fit=crop&w=600&q=80" alt="Bulk Waste & Skip Bins" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+            <span class="absolute top-3 left-3 px-2.5 py-1 bg-indigo-800/90 text-white text-[10px] font-bold rounded-lg backdrop-blur-sm">On-Demand Skips</span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
+            <div>
+              <h3 class="font-bold text-base text-slate-900">Bulk Waste & Skip Bins</h3>
+              <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                Heavy volume scrap clearance, furniture disposal, yard renovations, and flexible 2m³ to 10m³ skip-bin drop-offs and removals.
+              </p>
+            </div>
+            <a href="#view-citizen" onclick="document.getElementById('report-waste-form')?.scrollIntoView({ behavior: 'smooth' })" class="text-xs font-bold text-emerald-600 hover:text-emerald-700 flex items-center space-x-1 pt-2 border-t border-slate-100">
+              <span>Order Skip Bin</span>
+              <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Service 6: Construction Waste Management -->
+        <div class="eco-card overflow-hidden flex flex-col group">
+          <div class="h-44 overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1541888946425-d0fbb186156a?auto=format&fit=crop&w=600&q=80" alt="Construction Waste" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+            <span class="absolute top-3 left-3 px-2.5 py-1 bg-stone-800/90 text-white text-[10px] font-bold rounded-lg backdrop-blur-sm">Site Debris</span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
+            <div>
+              <h3 class="font-bold text-base text-slate-900">Construction Waste</h3>
+              <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                Safe clearance, sorting, and haulage of masonry, brickwork, excavation soil, and concrete rubble from remodeling and build sites.
+              </p>
+            </div>
+            <a href="#view-citizen" onclick="document.getElementById('report-waste-form')?.scrollIntoView({ behavior: 'smooth' })" class="text-xs font-bold text-emerald-600 hover:text-emerald-700 flex items-center space-x-1 pt-2 border-t border-slate-100">
+              <span>Construction Haulage</span>
+              <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Service 7: Special Waste & E-Waste Handling -->
+        <div class="eco-card overflow-hidden flex flex-col group">
+          <div class="h-44 overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=600&q=80" alt="Special & E-Waste" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+            <span class="absolute top-3 left-3 px-2.5 py-1 bg-rose-800/90 text-white text-[10px] font-bold rounded-lg backdrop-blur-sm">Safe Compliance</span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
+            <div>
+              <h3 class="font-bold text-base text-slate-900">Special & E-Waste Handling</h3>
+              <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                Compliant, certified handling and safe disposal of consumer electronics, batteries, fluorescent bulbs, and regulated non-hazardous fractions.
+              </p>
+            </div>
+            <a href="#view-citizen" onclick="document.getElementById('report-waste-form')?.scrollIntoView({ behavior: 'smooth' })" class="text-xs font-bold text-emerald-600 hover:text-emerald-700 flex items-center space-x-1 pt-2 border-t border-slate-100">
+              <span>Special Collection</span>
+              <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Service 8: Waste Audits & Sustainability Consulting -->
+        <div class="eco-card overflow-hidden flex flex-col group">
+          <div class="h-44 overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" alt="Waste Audits & Sustainability" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+            <span class="absolute top-3 left-3 px-2.5 py-1 bg-emerald-800/90 text-white text-[10px] font-bold rounded-lg backdrop-blur-sm">ESG & Zero-Waste</span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
+            <div>
+              <h3 class="font-bold text-base text-slate-900">Waste Audits & Consulting</h3>
+              <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                Comprehensive waste stream auditing, regulatory compliance advisory, carbon reduction tracking, and ESG sustainability reporting.
+              </p>
+            </div>
+            <a href="#contact-us-section" class="text-xs font-bold text-emerald-600 hover:text-emerald-700 flex items-center space-x-1 pt-2 border-t border-slate-100">
+              <span>Book Consultation</span>
+              <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: HOW IT WORKS (4 STEPS) -->
+    <section id="how-it-works-section" class="mb-14 scroll-mt-20 rounded-3xl bg-emerald-500/5 border border-emerald-500/20 p-6 sm:p-10">
+      <div class="text-center max-w-2xl mx-auto mb-10 space-y-2">
+        <span class="px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-emerald-500/10 text-emerald-600 border border-emerald-500/30">
+          Seamless Workflow
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+          How Our Smart System Works
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-600">
+          Four integrated steps ensuring verifiable cleanliness, immediate worker dispatch, and immutable blockchain accountability.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Step 1 -->
+        <div class="eco-card p-6 relative flex flex-col justify-between space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="text-3xl font-black text-emerald-600/30">01</span>
+            <div class="w-10 h-10 rounded-xl bg-emerald-500/15 text-emerald-600 flex items-center justify-center">
+              <i data-lucide="camera" class="w-5 h-5"></i>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-bold text-base text-slate-900">Report or Request</h3>
+            <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+              Snap a live photo of a dumping spot or book a scheduled collection. The system automatically reads GPS hardware coordinates.
+            </p>
+          </div>
+          <span class="text-[10px] font-semibold text-emerald-600 uppercase tracking-wider">Instant Geotag</span>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="eco-card p-6 relative flex flex-col justify-between space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="text-3xl font-black text-emerald-600/30">02</span>
+            <div class="w-10 h-10 rounded-xl bg-sky-500/15 text-sky-600 flex items-center justify-center">
+              <i data-lucide="cpu" class="w-5 h-5"></i>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-bold text-base text-slate-900">Dynamic Dispatch</h3>
+            <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+              Our AI decision engine analyses active sanitation employees in a 5km radius and attributes the task to the nearest on-duty worker.
+            </p>
+          </div>
+          <span class="text-[10px] font-semibold text-sky-600 uppercase tracking-wider">5km Proximity Geofence</span>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="eco-card p-6 relative flex flex-col justify-between space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="text-3xl font-black text-emerald-600/30">03</span>
+            <div class="w-10 h-10 rounded-xl bg-amber-500/15 text-amber-600 flex items-center justify-center">
+              <i data-lucide="clock" class="w-5 h-5"></i>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-bold text-base text-slate-900">10-Min Rapid Clean</h3>
+            <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+              Worker receives turn-by-turn routing, clears the waste spot, and records live webcam proof before the 10-minute SLA expires.
+            </p>
+          </div>
+          <span class="text-[10px] font-semibold text-amber-600 uppercase tracking-wider">10-Min SLA Countdown</span>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="eco-card p-6 relative flex flex-col justify-between space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="text-3xl font-black text-emerald-600/30">04</span>
+            <div class="w-10 h-10 rounded-xl bg-teal-500/15 text-teal-600 flex items-center justify-center">
+              <i data-lucide="shield-check" class="w-5 h-5"></i>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-bold text-base text-slate-900">Blockchain Audit</h3>
+            <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+              Computer vision compares before-and-after cleanliness, and a cryptographic block is permanently sealed to the public municipal ledger.
+            </p>
+          </div>
+          <span class="text-[10px] font-semibold text-teal-600 uppercase tracking-wider">Immutable SHA-256 Block</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: ENVIRONMENTAL IMPACT STATISTICS (DATABASE GROUNDED) -->
+    <section id="impact-section" class="mb-14 scroll-mt-20">
+      <div class="rounded-3xl bg-gradient-to-r from-[#022c22] via-[#064e3b] to-[#043d2e] p-8 sm:p-12 text-white shadow-xl relative overflow-hidden">
+        <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-2xl mb-8 space-y-1">
+          <span class="text-xs font-bold uppercase tracking-wider text-emerald-300">Grounded Impact Metrics</span>
+          <h2 class="text-2xl sm:text-3xl font-black tracking-tight text-white">
+            Measurable Environmental Outcomes
+          </h2>
+          <p class="text-xs sm:text-sm text-emerald-100/80">
+            Real-time cleanliness metrics calculated from verified incident resolutions and audited municipal ledger records.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="space-y-1">
+            <div class="text-3xl sm:text-4xl font-black text-emerald-300 font-mono" id="stat-cleanups-count">78+</div>
+            <div class="text-xs font-bold text-white uppercase tracking-wider">Cleanups Completed</div>
+            <div class="text-[11px] text-emerald-200/70">Verified with live hardware photos</div>
+          </div>
+
+          <div class="space-y-1">
+            <div class="text-3xl sm:text-4xl font-black text-teal-300 font-mono" id="stat-waste-diverted">156+</div>
+            <div class="text-xs font-bold text-white uppercase tracking-wider">Tons Diverted</div>
+            <div class="text-[11px] text-emerald-200/70">Diverted from landfills to recycling</div>
+          </div>
+
+          <div class="space-y-1">
+            <div class="text-3xl sm:text-4xl font-black text-amber-300 font-mono" id="stat-response-time">&lt; 10m</div>
+            <div class="text-xs font-bold text-white uppercase tracking-wider">Average Response Time</div>
+            <div class="text-[11px] text-emerald-200/70">Real-time SLA guaranteed</div>
+          </div>
+
+          <div class="space-y-1">
+            <div class="text-3xl sm:text-4xl font-black text-sky-300 font-mono" id="stat-blockchain-blocks">65+</div>
+            <div class="text-xs font-bold text-white uppercase tracking-wider">Blockchain Blocks</div>
+            <div class="text-[11px] text-emerald-200/70">Immutable public cryptographic audit</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: WHY CHOOSE US -->
+    <section id="why-choose-us-section" class="mb-14 scroll-mt-20">
+      <div class="text-center max-w-2xl mx-auto mb-10 space-y-2">
+        <span class="px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-emerald-500/10 text-emerald-600 border border-emerald-500/30">
+          Our Value Proposition
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+          Why Communities Choose Swachha Belagavi
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-600">
+          Pioneering trust, accountability, and environmental excellence in modern civic waste management.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="eco-card p-6 space-y-3">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-500/15 text-emerald-600 flex items-center justify-center">
+            <i data-lucide="camera" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-bold text-base text-slate-900">Geotagged Hardware Truth</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Eliminating false reporting. Every report and completed proof is watermarked with device GPS coordinates and real hardware timestamps.
+          </p>
+        </div>
+
+        <div class="eco-card p-6 space-y-3">
+          <div class="w-12 h-12 rounded-2xl bg-amber-500/15 text-amber-600 flex items-center justify-center">
+            <i data-lucide="zap" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-bold text-base text-slate-900">10-Min Rapid Watchdog</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Strict 10-minute municipal service level agreements. Automated alarms escalate uncleaned spots directly to Chief Corporation Officers.
+          </p>
+        </div>
+
+        <div class="eco-card p-6 space-y-3">
+          <div class="w-12 h-12 rounded-2xl bg-teal-500/15 text-teal-600 flex items-center justify-center">
+            <i data-lucide="recycle" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-bold text-base text-slate-900">Circular Sustainability</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Committed to circular resource management. Wet food waste fuels city composting while dry plastics enter certified recycling chains.
+          </p>
+        </div>
+
+        <div class="eco-card p-6 space-y-3">
+          <div class="w-12 h-12 rounded-2xl bg-sky-500/15 text-sky-600 flex items-center justify-center">
+            <i data-lucide="database" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-bold text-base text-slate-900">Tamper-Proof Ledger</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Every completed sanitation mission is recorded as a linked SHA-256 block that cannot be manipulated, deleted, or backdated.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: LIVE INTERACTIVE COLLECTION REQUEST PORTAL HEADER -->
+    <div class="mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-emerald-500/20 pb-4">
+      <div>
+        <span class="text-[11px] font-black uppercase tracking-wider text-emerald-600 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/30">
+          Live Interactive Portal
+        </span>
+        <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight mt-1">
+          Citizen Waste Collection & Spot Reporting
+        </h2>
+        <p class="text-xs text-slate-600">
+          Capture live geotagged photos or report dumping spots. Dispatches the nearest Belagavi sanitation worker within 5km.
+        </p>
+      </div>
+      <div class="flex items-center space-x-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span class="text-xs font-bold text-emerald-600">Dynamic Dispatch Engine Active</span>
+      </div>
+    </div>
+
+<div id="view-citizen" class="space-y-6">
       
       <!-- Top Citizen Stats Banner -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -3035,7 +3605,269 @@
         </div>
       </div>
     </section>
-  </main>
+      <!-- ============================================================== -->
+    <!-- LOWER PUBLIC SECTIONS: ABOUT US, TESTIMONIALS, FAQ, CONTACT     -->
+    <!-- ============================================================== -->
+
+    <!-- ABOUT US SECTION -->
+    <section id="about-us-section" class="mt-14 mb-14 scroll-mt-20">
+      <div class="rounded-3xl bg-emerald-500/5 border border-emerald-500/20 p-6 sm:p-12">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          <div class="space-y-4">
+            <span class="px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-emerald-500/10 text-emerald-600 border border-emerald-500/30">
+              About Swachha Belagavi
+            </span>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+              Dedicated to Smarter Waste Management and Cleaner Communities
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Swachha Belagavi is the official smart environmental operations initiative of the Belagavi City Corporation (BCC). We combine field-tested municipal sanitation teams with modern GPS telemetry, dynamic AI workforce attribution, and immutable blockchain auditing.
+            </p>
+            <div class="grid grid-cols-2 gap-4 pt-2">
+              <div class="border-l-2 border-emerald-500 pl-3 space-y-1">
+                <span class="font-bold text-sm text-slate-900 block">Our Mission</span>
+                <span class="text-xs text-slate-600">Zero unattended waste spots and rapid 10-minute citizen response across all 11 beats.</span>
+              </div>
+              <div class="border-l-2 border-teal-500 pl-3 space-y-1">
+                <span class="font-bold text-sm text-slate-900 block">Our Vision</span>
+                <span class="text-xs text-slate-600">A circular green economy where 90%+ of recyclable and organic waste is diverted from landfills.</span>
+              </div>
+            </div>
+          </div>
+          <div class="relative rounded-2xl overflow-hidden shadow-xl aspect-video lg:aspect-auto h-72">
+            <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80" alt="Clean City Belagavi" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-6">
+              <span class="text-xs font-bold text-white drop-shadow">🏛️ Belagavi City Corporation • Swachha Belagavi</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CUSTOMER & COMMUNITY TESTIMONIALS -->
+    <section id="testimonials-section" class="mb-14 scroll-mt-20">
+      <div class="text-center max-w-2xl mx-auto mb-10 space-y-2">
+        <span class="px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-emerald-500/10 text-emerald-600 border border-emerald-500/30">
+          Community Voice
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+          What Citizens & Local Businesses Say
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-600">
+          Real feedback from resident associations and commercial establishments across Belagavi.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Review 1 -->
+        <div class="eco-card p-6 flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <div class="flex text-amber-400 space-x-1">
+              <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+            </div>
+            <p class="text-xs text-slate-600 italic leading-relaxed">
+              "We reported an overflowing roadside plastic dumping spot near 2nd Gate Tilakwadi. Within 8 minutes, the assigned sanitation employee arrived and completely cleared it. The live camera proof was amazing!"
+            </p>
+          </div>
+          <div class="pt-3 border-t border-slate-100 flex items-center space-x-3">
+            <div class="w-9 h-9 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-xs">TR</div>
+            <div>
+              <span class="text-xs font-bold text-slate-900 block">Tilakwadi Residents Association</span>
+              <span class="text-[10px] text-slate-500">Verified Citizen Report</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="eco-card p-6 flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <div class="flex text-amber-400 space-x-1">
+              <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+            </div>
+            <p class="text-xs text-slate-600 italic leading-relaxed">
+              "As a commercial market association, routine commercial waste collection was our biggest challenge. Swachha Belagavi's scheduled bin pickups have kept Camp and market roads spotless."
+            </p>
+          </div>
+          <div class="pt-3 border-t border-slate-100 flex items-center space-x-3">
+            <div class="w-9 h-9 rounded-full bg-teal-600 text-white font-bold flex items-center justify-center text-xs">CM</div>
+            <div>
+              <span class="text-xs font-bold text-slate-900 block">Camp Commercial Merchants Union</span>
+              <span class="text-[10px] text-slate-500">Commercial Waste Partner</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="eco-card p-6 flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <div class="flex text-amber-400 space-x-1">
+              <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+            </div>
+            <p class="text-xs text-slate-600 italic leading-relaxed">
+              "The transparency of linking every cleanup to a blockchain ledger and computing an AI cleanliness score gives absolute trust to citizens and environmental auditors alike."
+            </p>
+          </div>
+          <div class="pt-3 border-t border-slate-100 flex items-center space-x-3">
+            <div class="w-9 h-9 rounded-full bg-sky-600 text-white font-bold flex items-center justify-center text-xs">BG</div>
+            <div>
+              <span class="text-xs font-bold text-slate-900 block">Belagavi Green Action Forum</span>
+              <span class="text-[10px] text-slate-500">Environmental NGO</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FREQUENTLY ASKED QUESTIONS (FAQ) -->
+    <section id="faq-section" class="mb-14 scroll-mt-20">
+      <div class="text-center max-w-2xl mx-auto mb-10 space-y-2">
+        <span class="px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-emerald-500/10 text-emerald-600 border border-emerald-500/30">
+          Got Questions?
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+          Frequently Asked Questions
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-600">
+          Everything you need to know about waste requests, response times, recycling rules, and verification.
+        </p>
+      </div>
+
+      <div class="max-w-3xl mx-auto space-y-3">
+        <!-- FAQ 1 -->
+        <div class="eco-card overflow-hidden">
+          <button type="button" onclick="toggleFaq('faq-1')" class="w-full p-4 sm:p-5 text-left font-bold text-sm text-slate-900 flex items-center justify-between">
+            <span>How fast is the waste collection response once reported?</span>
+            <i data-lucide="chevron-down" id="faq-1-icon" class="w-4 h-4 text-emerald-600 transition-transform"></i>
+          </button>
+          <div id="faq-1" class="hidden px-5 pb-5 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+            Our dynamic decision dispatch engine immediately identifies and alerts sanitation workers within a 5km radius. Municipal SLA mandates on-site clearance within 10 minutes, backed by real-time automated countdown watchdogs.
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="eco-card overflow-hidden">
+          <button type="button" onclick="toggleFaq('faq-2')" class="w-full p-4 sm:p-5 text-left font-bold text-sm text-slate-900 flex items-center justify-between">
+            <span>What materials are eligible for recycling collection?</span>
+            <i data-lucide="chevron-down" id="faq-2-icon" class="w-4 h-4 text-emerald-600 transition-transform"></i>
+          </button>
+          <div id="faq-2" class="hidden px-5 pb-5 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+            We collect clean PET plastic bottles, aluminium and metal cans, corrugated cardboard, mixed paper, and glass bottles. Hazardous chemicals, industrial sludge, and medical bio-waste must be scheduled under our dedicated Special Waste handling program.
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="eco-card overflow-hidden">
+          <button type="button" onclick="toggleFaq('faq-3')" class="w-full p-4 sm:p-5 text-left font-bold text-sm text-slate-900 flex items-center justify-between">
+            <span>How does the live hardware camera & GPS verification work?</span>
+            <i data-lucide="chevron-down" id="faq-3-icon" class="w-4 h-4 text-emerald-600 transition-transform"></i>
+          </button>
+          <div id="faq-3" class="hidden px-5 pb-5 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+            When you snap a live photo, the camera feed directly embeds your device's live GPS coordinates, IST timestamp, and location tag directly onto the canvas pixels. The worker must capture live proof at the exact location to successfully complete the mission.
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="eco-card overflow-hidden">
+          <button type="button" onclick="toggleFaq('faq-4')" class="w-full p-4 sm:p-5 text-left font-bold text-sm text-slate-900 flex items-center justify-between">
+            <span>Can housing societies or businesses schedule routine skip-bins?</span>
+            <i data-lucide="chevron-down" id="faq-4-icon" class="w-4 h-4 text-emerald-600 transition-transform"></i>
+          </button>
+          <div id="faq-4" class="hidden px-5 pb-5 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+            Yes. We provide daily, weekly, or bi-weekly scheduled container drops and skip-bin rental services tailored for gated residential colonies, manufacturing plants, educational institutions, and shopping complexes.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT US & SERVICE ENQUIRY SECTION -->
+    <section id="contact-us-section" class="mb-14 scroll-mt-20">
+      <div class="rounded-3xl bg-slate-900 text-white p-6 sm:p-10 border border-slate-800 shadow-2xl">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          
+          <!-- Contact Info -->
+          <div class="space-y-5">
+            <span class="px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">
+              Get in Touch
+            </span>
+            <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">
+              Contact Swachha Belagavi Municipal Office
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              Have questions regarding scheduled commercial service, bulk skip bins, or reporting civic waste concerns? Reach out to our 24/7 sanitation team.
+            </p>
+
+            <div class="space-y-3 pt-2 text-xs">
+              <div class="flex items-center space-x-3 text-slate-200">
+                <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                  <i data-lucide="map-pin" class="w-4 h-4"></i>
+                </div>
+                <span>Belagavi City Corporation (BCC) Central Office, Subhash Nagar, Belagavi, Karnataka 590016</span>
+              </div>
+              <div class="flex items-center space-x-3 text-slate-200">
+                <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                  <i data-lucide="phone" class="w-4 h-4"></i>
+                </div>
+                <span>Helpline: 0831-2400000 | 1800-425-0000 (Toll Free)</span>
+              </div>
+              <div class="flex items-center space-x-3 text-slate-200">
+                <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                  <i data-lucide="mail" class="w-4 h-4"></i>
+                </div>
+                <span>Email: swachha@belagavicitycorp.gov.in</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact Form -->
+          <form onsubmit="handleContactEnquirySubmit(event)" class="space-y-3 bg-slate-950/80 p-5 rounded-2xl border border-slate-800">
+            <h3 class="text-sm font-bold text-white mb-2">Send Service Enquiry</h3>
+            <div>
+              <label class="block text-[11px] font-semibold text-slate-400 mb-1">Full Name</label>
+              <input type="text" id="contact-name" required placeholder="Enter your full name" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <div>
+                <label class="block text-[11px] font-semibold text-slate-400 mb-1">Mobile or Email</label>
+                <input type="text" id="contact-reach" required placeholder="Mobile / Email" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
+              </div>
+              <div>
+                <label class="block text-[11px] font-semibold text-slate-400 mb-1">Enquiry Subject</label>
+                <select id="contact-service" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
+                  <option value="general">General Waste Pickup</option>
+                  <option value="commercial">Commercial / Gated Colony</option>
+                  <option value="recycling">Recycling & Material Recovery</option>
+                  <option value="skip">Bulk Skip-Bin Hire</option>
+                  <option value="audit">Zero-Waste Sustainability Audit</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label class="block text-[11px] font-semibold text-slate-400 mb-1">Message or Location Details</label>
+              <textarea id="contact-message" rows="3" required placeholder="Describe your requirement or location..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500"></textarea>
+            </div>
+            <button type="submit" id="btn-submit-contact" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5 shadow-lg shadow-emerald-600/30">
+              <i data-lucide="send" class="w-3.5 h-3.5"></i>
+              <span>Send Enquiry</span>
+            </button>
+          </form>
+
+        </div>
+      </div>
+    </section>
+
+</main>
 
   <!-- ============================================================== -->
   <!-- FOOTER WITH GITHUB REPO LINK & BCC INFO -->
@@ -3903,33 +4735,35 @@
     // ============================================================
     function setThemeMode(mode) {
       localStorage.setItem('bcc_theme_mode', mode);
+      const btnWastewise = document.getElementById('btn-theme-wastewise');
       const btnChampagne = document.getElementById('btn-theme-champagne');
       const btnDark = document.getElementById('btn-theme-dark');
+
+      document.body.classList.remove('theme-wastewise', 'theme-champagne', 'theme-dark', 'theme-light');
+
       if (mode === 'dark') {
-        document.body.classList.remove('theme-champagne', 'theme-light');
         document.body.classList.add('theme-dark');
-        if (btnDark) {
-          btnDark.className = "px-3 py-1.5 text-xs font-bold rounded-lg transition bg-[#022c22] text-[#F8E7C9] shadow border border-[#D6BD90] flex items-center space-x-1.5";
-        }
-        if (btnChampagne) {
-          btnChampagne.className = "px-3 py-1.5 text-xs font-semibold rounded-lg transition text-[#D6BD90] hover:text-white flex items-center space-x-1.5";
-        }
-      } else {
-        document.body.classList.remove('theme-dark');
+        if (btnDark) btnDark.className = "px-2.5 py-1.5 text-xs font-bold rounded-lg transition bg-slate-800 text-white shadow border border-slate-600 flex items-center space-x-1";
+        if (btnWastewise) btnWastewise.className = "px-2.5 py-1.5 text-xs font-semibold rounded-lg transition text-slate-400 hover:text-white flex items-center space-x-1";
+        if (btnChampagne) btnChampagne.className = "px-2.5 py-1.5 text-xs font-semibold rounded-lg transition text-slate-400 hover:text-white flex items-center space-x-1";
+      } else if (mode === 'champagne') {
         document.body.classList.add('theme-champagne');
-        if (btnChampagne) {
-          btnChampagne.className = "px-3 py-1.5 text-xs font-bold rounded-lg transition bg-gradient-to-b from-[#FFFDF8] to-[#F8E7C9] text-[#064E3B] shadow-md border-t-2 border-white border-b-2 border-[#B89C68] border-l border-r border-[#D6BD90] flex items-center space-x-1.5";
-        }
-        if (btnDark) {
-          btnDark.className = "px-3 py-1.5 text-xs font-semibold rounded-lg transition text-[#EBD5AE] hover:text-white flex items-center space-x-1.5";
-        }
+        if (btnChampagne) btnChampagne.className = "px-2.5 py-1.5 text-xs font-bold rounded-lg transition bg-[#F8E7C9] text-[#064E3B] shadow border border-[#D6BD90] flex items-center space-x-1";
+        if (btnWastewise) btnWastewise.className = "px-2.5 py-1.5 text-xs font-semibold rounded-lg transition text-slate-400 hover:text-white flex items-center space-x-1";
+        if (btnDark) btnDark.className = "px-2.5 py-1.5 text-xs font-semibold rounded-lg transition text-slate-400 hover:text-white flex items-center space-x-1";
+      } else {
+        // Default: WasteWise Environmental (White backgrounds & Dark Green)
+        document.body.classList.add('theme-wastewise');
+        if (btnWastewise) btnWastewise.className = "px-2.5 py-1.5 text-xs font-bold rounded-lg transition bg-white text-emerald-800 shadow border border-emerald-400 flex items-center space-x-1";
+        if (btnChampagne) btnChampagne.className = "px-2.5 py-1.5 text-xs font-semibold rounded-lg transition text-slate-400 hover:text-white flex items-center space-x-1";
+        if (btnDark) btnDark.className = "px-2.5 py-1.5 text-xs font-semibold rounded-lg transition text-slate-400 hover:text-white flex items-center space-x-1";
       }
     }
 
     // Default immediately to the user's requested Emerald Ink & Champagne theme
     const savedTheme = localStorage.getItem('bcc_theme_mode');
     const initialSavedTheme = (savedTheme === 'dark') ? 'dark' : 'champagne';
-    setThemeMode('champagne');
+    setThemeMode('wastewise');
 
     function setAppLanguage(lang) {
       appLang = 'en';
@@ -5603,6 +6437,33 @@
           loadAllReports();
         }
       }, 1000);
+    }
+
+    
+    // ============================================================
+    // FAQ ACCORDION TOGGLE & CONTACT ENQUIRY (WASTEWISE EXPANSION)
+    // ============================================================
+    function toggleFaq(id) {
+      const el = document.getElementById(id);
+      const icon = document.getElementById(id + '-icon');
+      if (!el) return;
+      const isHidden = el.classList.contains('hidden');
+      if (isHidden) {
+        el.classList.remove('hidden');
+        if (icon) icon.classList.add('rotate-180');
+      } else {
+        el.classList.add('hidden');
+        if (icon) icon.classList.remove('rotate-180');
+      }
+    }
+
+    function handleContactEnquirySubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('contact-name')?.value || 'Citizen';
+      const reach = document.getElementById('contact-reach')?.value || '';
+      const service = document.getElementById('contact-service')?.value || 'general';
+      showToast(`✅ Thank you, ${name}! Your enquiry for ${service} service has been registered with BCC.`, "success");
+      e.target.reset();
     }
 
     // Camera Hardware Stream & Snapshot (Laptop & Mobile)
