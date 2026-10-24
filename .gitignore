@@ -20,3 +20,5 @@ uploads/*
 *.log
 .DS_Store
 Thumbs.db
+
+tunnel_url.txt
